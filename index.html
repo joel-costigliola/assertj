@@ -56,9 +56,9 @@ The idea is that, when writing unit tests, we should have at our disposal assert
 <p>AssertJ is composed of several modules :</p>
 
 <ul>
-<li>A core module (this one) to provide assertions for JDK types (String, Collections, File, Map ...). </li>
-<li>A <strong><a href="https://github.com/joel-costigliola/assertj-guava#readme" target="_blank">Guava module</a></strong> to provide assertions for Guava types (Multimap,Optional, ...).</li>
-<li>A <strong><a href="https://github.com/joel-costigliola/assertj-joda-time#readme" target="_blank">Joda Time module</a></strong> to provide assertions for Joda Time types (DateTime, LocalDateTime) - see <a href="jodatime/javadoc/index.html">javadoc</a>.</li>
+<li>A core module (this one) to provide assertions for JDK types (String, Collections, File, Map ...) - see <a href="core/api/index.html">javadoc</a>.</li>
+<li>A <strong><a href="https://github.com/joel-costigliola/assertj-guava#readme" target="_blank">Guava module</a></strong> to provide assertions for Guava types (Multimap,Optional, ...) - see <a href="guava/api/index.html">javadoc</a>.</li>
+<li>A <strong><a href="https://github.com/joel-costigliola/assertj-joda-time#readme" target="_blank">Joda Time module</a></strong> to provide assertions for Joda Time types (DateTime, LocalDateTime) - see <a href="jodatime/api/index.html">javadoc</a>.</li>
 </ul>
 
 <p>Assertion missing ? Please <a href="https://github.com/joel-costigliola/assertj-core/issues">fill a ticket</a> ! </p>
@@ -73,14 +73,14 @@ A lot of efforts have to provide intuitive error messages showing as clearly as 
 
 <p>For more details check <strong><a href="https://github.com/joel-costigliola/assertj-core/wiki/" target="_blank">AssertJ wiki</a></strong>.</p>
 
-<h2>
-<a name="news"></a>Latest News</h2>
+<h2><a name="news"></a>Latest News</h2>
 
 <p>
-<strong>2013-06-30 : AssertJ core 1.3.0 release</strong>
-<strong>2013-05-12 : AssertJ core 1.2.0 release</strong>
-<strong>2013-04-15 : AssertJ core 1.1.0 release</strong>
-<strong>2013-03-28 : AssertJ quickie presentation at Devoxx France !</strong>
+<strong>2013-07-14 : AssertJ Joda Time 1.1.0 release</strong><br>
+<strong>2013-06-30 : AssertJ core 1.3.0 release</strong><br>
+<strong>2013-05-12 : AssertJ core 1.2.0 release</strong><br>
+<strong>2013-04-15 : AssertJ core 1.1.0 release</strong><br>
+<strong>2013-03-28 : AssertJ quickie presentation at Devoxx France !</strong><br>
 </p>
 
 <p><strong>2013-03-26 - AssertJ train releases :</strong>  </p>
@@ -105,7 +105,7 @@ A lot of efforts have to provide intuitive error messages showing as clearly as 
 <div class="highlight"><pre><span class="nt">&lt;dependency&gt;</span>
    <span class="nt">&lt;groupId&gt;</span>org.assertj<span class="nt">&lt;/groupId&gt;</span>
    <span class="nt">&lt;artifactId&gt;</span>assertj-core<span class="nt">&lt;/artifactId&gt;</span>
-   <span class="nt">&lt;version&gt;</span>1.1.0<span class="nt">&lt;/version&gt;</span>
+   <span class="nt">&lt;version&gt;</span>1.3.0<span class="nt">&lt;/version&gt;</span>
    <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
@@ -182,8 +182,7 @@ Moreover, to ease your work, we provide assertions generator that can take a bun
 
 <ul>
 <li>a <strong><a href="https://github.com/joel-costigliola/assertj-assertions-generator#readme" target="_blank">CLI assertions generator</a></strong> </li>
-<li>A <strong><a href="https://github.com/joel-costigliola/assertj-assertions-generator-maven-plugin#readme" target="_blank">Maven plugin assertions generator</a></strong><br>
-</li>
+<li>A <strong><a href="https://github.com/joel-costigliola/assertj-assertions-generator-maven-plugin#readme" target="_blank">Maven plugin assertions generator</a></strong><br></li>
 <li>An Eclipe plugin assertions generator (available soon)</li>
 </ul><h2>
 <a name="junit-to-assertj-assertions"></a>Replacing JUnit assertions by AssertJ Assertions</h2>
@@ -198,8 +197,7 @@ Moreover, to ease your work, we provide assertions generator that can take a bun
 <p>Well there are two main reasons : </p>
 
 <ul>
-<li>FEST 2.0 will only provide a limited set of assertions, far less than Fest 2.0M10 and even less than FEST 1.x.<br>
-</li>
+<li>FEST 2.0 will only provide a limited set of assertions, far less than Fest 2.0M10 and even less than FEST 1.x.<br></li>
 <li>FEST is not enough open to users demands and contributions.</li>
 </ul><p>On the contrary <strong>AssertJ goal is to provide a rich set of assertions</strong> and any resonable requests to enrich AssertJ assertions is welcome as we know it will be useful to someone. Said otherwise, AssertJ is <strong>community driven</strong>, we listen to our users because AssertJ is built for them. </p>
 
