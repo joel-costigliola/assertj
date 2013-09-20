@@ -8,3 +8,4 @@ org.assertj.core.groups
 org.assertj.core.internal
 org.assertj.core.util
 org.assertj.core.util.introspection
+org.assertj.core.util.xml
