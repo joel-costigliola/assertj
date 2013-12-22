@@ -315,6 +315,20 @@ section {
   padding-left:150px;
 }
 
+.warning {
+  font-weight: bold;
+  font-size: 24px;
+  color: #F00;
+}
+
+.warning-underline {
+  font-weight: bold;
+  font-size: 24px;
+  color: #F00;
+  text-decoration:underline;
+
+}
+
 
 /* Footer */
 
