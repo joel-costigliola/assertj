@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="description" content="AssertJ site">
+   <meta name="author" content="Joel Costigliola">
+
+   <title>AssertJ - A fluent assertion library for java</title>
+
+   <!-- CSS -->
+   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata|Source+Code+Pro|Open+Sans|Ubuntu|Varela+Round|Karla">
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+   <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+   <script src="highlight/highlight.pack.js"></script>
+   <link rel="stylesheet" href="highlight/styles/railscasts.css">
+   <script>hljs.initHighlightingOnLoad();</script>
+   <link href="css/assertj.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+   <div class="container">
+      <div class="navbar-header">
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+         </button>
+         <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
+         <a class="navbar-brand" href="index.html">AssertJ / Fluent assertions for java</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+         <ul class="nav navbar-nav navbar-right">
+            <li><a href="assertj-core-quick-start.html">Quick start</a></li>
+            <li><a href="assertj-news.html">News</a></li>
+            <li><a href="assertj-core.html">Core</a></li>
+            <li><a href="assertj-assertions-generator.html">Assertions generator</a></li>
+            <li><a href="assertj-guava.html">Guava</a></li>
+            <li><a href="assertj-joda-time.html">Joda-Time</a></li>
+            <li><a href="assertj-neo4j.html">Neo4j</a></li>
+         </ul>
+      </div>
+   </div>
+</nav>
+
+
+<div class="container">
+   <div class="row">
+
+            <div class="col-md-2 assertj-sidebar-menu">
+         <div class="bs-sidebar hidden-print affix-top" role="complementary">
+            <ul class="bs-sidenav nav ">
+               <li class="sidenav-header">Main</li>
+               <li><a href="assertj-core.html">Overview</a></li>
+               <li><a href="assertj-core-quick-start.html">Quick start</a></li>
+               <li><a href="assertj-core-news.html">News & releases</a></li>
+               <li><a href="assertj-core-features-highlight.html">Features highlight</a></li>
+               <li><a href="assertj-core-conditions.html">Using conditions</a></li>
+               <li><a href="assertj-core-custom-assertions.html">Custom assertions</a></li>
+               <li><a href="http://joel-costigliola.github.io/assertj/core/api/index.html" target="_blank">Javadoc</a></li>
+               <li><a href="assertj-core.html#mailing-list">Mailing list</a></li>
+               <li><a href="assertj-core.html#code">Code & issues</a></li>
+               <li><a href="assertj-core.html#contributing">Contributing</a></li>
+               <li class="sidenav-header">Migrating</li>
+               <li><a href="assertj-core-migrating-from-fest.html">From Fest 2.x</a></li>
+               <li><a href="assertj-core-migrating-from-fest.html#fest-1.4">From Fest 1.4</a></li>
+               <li class="sidenav-header">Tools</li>
+               <li><a href="assertj-core-converting-junit-assertions-to-assertj.html">Converting JUnit assertions to AssertJ</a></li>
+               <li><a href="assertj-assertions-generator.html">Assertions generator</a></li>
+            </ul>
+         </div>
+      </div>
+
+
+      <div class="col-lg-10 col-md-10 col-sm-10 text-left">
+      <h1 class="page-header">Converting your JUnit assertions to AssertJ</h1>
+
+         <p>This page will help you converting your existing JUnit assertions to AssertJ ones, note though that both assertions can coexist together, you don't have to migrate all in one time.</p>
+         <p>For the time being we propose only to the <a href="#manual-conversion">conversion manually using regexp</a> but we plan to provide a <a href="#automatic-conversion">script</a> to automate this task.</p>
+
+         <p>If you are using IntelliJ IDEA, you probably can use the Structured Search and Replace (SSR) feature to do the conversion.</p>
+
+         <h3 class="page-header"><span id="manual-conversion"></span>Converting your JUnit assertions to AssertJ with regexp</h3>
+
+         <p>Here's a list of find/replace based on regexp that allow to change JUnit assertion into AssertJ assertion (don't forget to check regexp mode in your editor replace window).</p>
+         <p>The order of find/replace is important, so that you can benefit of the most relevant AssertJ assertions. For example you should convert <span class="small-code">assertEquals(0, myList.size())</span> to <span class="small-code">assertThat(myList).isEmpty()</span> instead of
+            <span class="small-code">assertThat(myList.size()).isEqualTo(0)</span>
+         </p>
+
+         <h5 class="page-header">1 - Converting <span class="small-code">assertEquals(0, myList.size())</span> to <span class="small-code">assertThat(myList).isEmpty()</span></h5>
+         <p>Find/replace Regexp :</p>
+         <pre><code class="java">assertEquals(0,(.*).size()); -> assertThat(\1).isEmpty();</code></pre>
+
+         <p>It's important to run this one before the <span class="small-code">assertEquals</span> -> <span class="small-code">isEqualTo</span> conversion to avoid ending with :  <span class="small-code">assertThat(myList.size()).isEqualTo(0)</span></p>
+
+         <h5 class="page-header">2 - Converting <span class="small-code">assertEquals(expectedSize, myList.size())</span> to <span class="small-code">assertThat(myList).hasSize(expectedSize)</h5>
+         <p>Find/replace Regexp :</p>
+         <pre><code class="java">assertEquals((.*),(*.).size()); -> assertThat(\2).hasSize(\1);</code></pre>
+         <p>It's important to run this one before the <span class="small-code">assertEquals</span> -> <span class="small-code">isEqualTo</span> conversion to avoid ending with : <span class="small-code">assertThat(myList.size()).isEqualTo(expectedSize)</span></p>
+
+         <h5 class="page-header">3 - Converting <span class="small-code">assertEquals(value, valueUnderTest)</span> to <span class="small-code">assertThat(valueUnderTest).isEqualTo(value)</h5>
+         <p>Find/replace Regexp :</p>
+         <pre><code class="java">assertEquals((.),(.)); -> assertThat(\2).isEqualTo(\1);</code></pre>
+
+         <h5 class="page-header">4 - Converting <span class="small-code">assertNotEquals(value, valueUnderTest)</span> to <span class="small-code">assertThat(valueUnderTest).isNotEqualTo(value)</h5>
+         <p>Find/replace Regexp :</p>
+         <pre><code class="java">assertNotEquals((.),(.)); -> assertThat(\2).isNotEqualTo(\1);</code></pre>
+
+         <h5 class="page-header">5 - Converting <span class="small-code">assertNull(objectUnderTest)</span> to <span class="small-code">assertThat(objectUnderTest).isNull()</h5>
+         <p>Find/replace Regexp :</p><pre><code class="java">assertNull((.*)); -> assertThat(\1).isNull();</code></pre>
+
+         <h5 class="page-header">6 - Converting <span class="small-code">assertNotNull(objectUnderTest)</span> to <span class="small-code">assertThat(objectUnderTest).isNotNull()</h5>
+         <p>Find/replace Regexp :</p>
+         <pre><code class="java">assertNotNull((.*)); -> assertThat(\1).isNotNull();</code></pre>
+
+         <h5 class="page-header">7 - Converting <span class="small-code">assertTrue(logicalCondition)</span> to <span class="small-code">assertThat(logicalCondition).isTrue()</h5>
+
+         <p>Find/replace Regexp :</p>
+         <pre><code class="java">assertTrue((.*)); -> assertThat(\1).isTrue();</code></pre>
+
+         <h5 class="page-header">8 - Converting <span class="small-code">assertFalse(logicalCondition)</span> to <span class="small-code">assertThat(logicalCondition).isFalse()</h5>
+         <p>Find/replace Regexp :</p>
+         <pre><code class="java">assertFalse((.*)); -> assertThat(\1).isFalse();</code></pre>
+
+         <h3 class="page-header"><span id="automatic-conversion"></span>Automatically converting your JUnit assertions</h3>
+
+         <p>THIS FEATURE IS PLANNED BUT NOT YET DONE.</p>
+
+      </div>
+   </div>
+</div>
+
+
+<br>
+<!--
+<div class="container">
+   <footer>
+      <div class="row">
+         <div class="col-lg-12">
+            <p>AssertJ - Licensed under the Apache License, Version 2.0.</p>
+         </div>
+      </div>
+   </footer>
+</div>
+-->
+
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/modern-business.js"></script>
+<script src="js/assertj.js"></script>
+
+</body>
+</html>

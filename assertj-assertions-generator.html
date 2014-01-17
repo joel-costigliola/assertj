@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="description" content="AssertJ site">
+   <meta name="author" content="Joel Costigliola">
+
+   <title>AssertJ - A fluent assertion library for java</title>
+
+   <!-- CSS -->
+   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata|Source+Code+Pro|Open+Sans|Ubuntu|Varela+Round|Karla">
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+   <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+   <script src="highlight/highlight.pack.js"></script>
+   <link rel="stylesheet" href="highlight/styles/railscasts.css">
+   <script>hljs.initHighlightingOnLoad();</script>
+   <link href="css/assertj.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+   <div class="container">
+      <div class="navbar-header">
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+         </button>
+         <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
+         <a class="navbar-brand" href="index.html">AssertJ / Fluent assertions for java</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+         <ul class="nav navbar-nav navbar-right">
+            <li><a href="assertj-core-quick-start.html">Quick start</a></li>
+            <li><a href="assertj-news.html">News</a></li>
+            <li><a href="assertj-core.html">Core</a></li>
+            <li><a href="assertj-assertions-generator.html">Assertions generator</a></li>
+            <li><a href="assertj-guava.html">Guava</a></li>
+            <li><a href="assertj-joda-time.html">Joda-Time</a></li>
+            <li><a href="assertj-neo4j.html">Neo4j</a></li>
+         </ul>
+      </div>
+   </div>
+</nav>
+
+
+<div class="container">
+   <div class="row">
+
+            <div class="col-md-2 assertj-sidebar-menu">
+         <div class="bs-sidebar hidden-print affix-top" role="complementary">
+            <ul class="bs-sidenav nav ">
+               <li class="sidenav-header">Assertions generator</li>
+               <li><a href="assertj-assertions-generator.html">Overview</a></li>
+               <li><a href="assertj-assertions-generator.html#quickstart">Quick start</a></li>
+               <li><a href="assertj-assertions-generator.html#news">News & releases</a></li>
+               <li class="sidenav-header">Maven plugin</li>
+               <li><a href="assertj-assertions-generator-maven-plugin.html">Overview</a></li>
+               <li><a href="assertj-assertions-generator-maven-plugin.html#quickstart">Quick start</a></li>
+               <li><a href="assertj-assertions-generator-maven-plugin.html#configuration">Configuration</a></li>
+               <li><a href="assertj-assertions-generator-maven-plugin.html#news">News & releases</a></li>
+            </ul>
+         </div>
+      </div>
+
+
+      <div class="col-lg-10 col-md-10 col-sm-10 text-left">
+         <h1 class="page-header">AssertJ assertions generator</h1>
+
+         <p>The Assertion Generator is able to create assertions specific to your own classes, it comes with a simple <a href="#quickstart">command line tool</a> and a <a href="assertj-assertions-generator-maven-plugin.html">maven plugin</a>.</p>
+
+         <p>Having the possibility to create assertions specific to your own classes is important because it makes your test assertions reflect the domain model. It's a way to use Domain Driven Design ubiquitous language in your tests. Custom assertions can be seen as a DSL of domain assertions.</p>
+
+         <p>Let's say that you have a <span class="small-code">Player</span> class with <span class="small-code">name</span> and <span class="small-code">team</span> properties,
+            the generator is able to create a <span class="small-code">PlayerAssert</span> assertions class with
+            <span class="small-code">hasName</span> and <span class="small-code">hasTeam</span> assertions. Use it to write code like :</p>
+         <pre><code class="java">assertThat(mvp).hasName("Lebron James").hasTeam("Miami Heat");</code></pre>
+
+         <p>The generator will also create an <span class="small-code">Assertions</span> class with <span class="small-code">assertThat</span> methods giving access to each generated <span class="small-code">*Assert</span> classes.
+            In the case where <span class="small-code">PlayerAssert</span> and <span class="small-code">GameAssert</span> have been generated, the generated <span class="small-code">Assertions</span> class will be :
+         </p>
+<pre><code class="java">public class Assertions {
+
+  /**
+   * Creates a new instance of &lt;code&gt;{@link GameAssert}&lt;/code&gt;.
+   *
+   * @param actual the actual value.
+   * @return the created assertion object.
+   */
+  public static GameAssert assertThat(Game actual) {
+    return new GameAssert(actual);
+  }
+
+  /**
+   * Creates a new instance of &lt;code&gt;{@link PlayerAssert}&lt;/code&gt;.
+   *
+   * @param actual the actual value.
+   * @return the created assertion object.
+   */
+  public static PlayerAssert assertThat(Player actual) {
+    return new PlayerAssert(actual);
+  }
+
+  /**
+   * Creates a new &lt;/code&gt;{@link Assertions}&lt;/code&gt;.
+   */
+  protected Assertions() {
+    // empty
+  }
+}</code></pre>
+
+         <h3 class="page-header"><span id="quickstart"></span>Quickstart for NON Maven users</h3>
+
+         <p>This quickstart guide is for non maven users, if you are a maven user, you should use the <a href="assertj-assertions-generator-maven-plugin.html">assertions generator maven plugin</a>.</p>
+
+         <h4 class="page-header">1 - Get AssertJ assertions generator</h4>
+
+         <p>Get the AssertJ Assertions Generator <a href="http://search.maven.org/#search|ga|1|a%3A%22assertj-assertions-generator%22">archive</a> (either for unix or windows) and extract it, its structure is :</p>
+<pre><code class="bash">assertion-generator/
+  |-- lib/
+  |-- templates/
+  |-- generate-assertions script (.bat or .sh)</code></pre>
+
+         <h4 class="page-header">2 - Generate assertions</h4>
+
+         <p>First, put in <span class="small-code">lib/</span> the jars containing the classes you want to generate assertions for,
+            then run the script with either the classes or the packages containing the classes you want to generate assertions for.</p>
+
+         <p>Example : generating assertions for <span class="small-code">TolkienCharacter</span> class :</p>
+         <pre><code class="bash">generate-assertions.sh org.assertj.examples.data.TolkienCharacter</code></pre>
+
+         <p>Example : generating assertions for all classes in <span class="small-code">org.assertj.examples.data</span> :</p>
+         <pre><code class="bash">generate-assertions.sh org.assertj.examples.data</code></pre>
+
+          <p>Your assertions classes have been generated ! You can find them in the current directory.</p>
+
+         <h5>Tip :</h5>
+         <p>You can change what is generated by modifying the templates used for assertions creation (have a look at templates directory)</p>
+
+         <h3 class="page-header"><span id="news"></span><span id="1.2.0"></span>Assertions generator 1.2.0 release</h3>
+         <p>Release date : 2013-12-08</p>
+
+         <div class="release-section-category">Release notes:</div>
+         <ul>
+            <li>To ease using generated assertions, generate an entry point class <span class="small-code">Assertions</span> providing <span class="small-code">assertThat</span> methods giving access to each generated <span class="small-code">*Assert</span> classes.</li>
+            <li>Don't generate <span class="small-code">hasDeclaringClass</span> assertion for <span class="small-code">Enum</span>.</li>
+            <li>In generated method assertions, rename <span class="small-code">errorMessage</span> local variable to <span class="small-code">assertjErrorMessage</span> to avoid collision when object under test has an <span class="small-code">errorMessage</span> property. <span class="contributor">(William Delanoue)</span></li>
+         </ul>
+
+         <h3 class="page-header"><span id="assertions-generator-1.1.0"></span>Assertions generator 1.1.0 release</h3>
+         <p>Release date : 2013-09-15</p>
+         <p>Big thanks to <span class="contributor">Fabien Duminy</span>, he has done most of the work of this release !</p>
+
+         <div class="release-section-category">Release notes:</div>
+         <ul>
+            <li>Generated assertions use null safe equals for non primtive types.</li>
+            <li>Add exceptions to assertion method signature if underlying getter of class to assert throws some</span>. <span class="contributor">(Fabien Duminy)</span></li>
+            <li>Generate assertions for nested/inner classes. <span class="contributor">(Fabien Duminy)</span></li>
+            <li>Fix error message displaying unrelevant property value when getter of class to assert doesn't return the same value on successive calls. <span class="contributor">(Fabien Duminy)</span></li>
+         </ul>
+
+         <h3 class="page-header"><span id="assertions-generator-1.0.0"></span>Assertions generator 1.0.0 release</h3>
+         <p>Release date : 2013-03-26</p>
+         <p>It's the first release after Fest fork, generated assertions are cleaner.</p>
+
+      </div>
+   </div>
+</div>
+
+
+<br>
+<!--
+<div class="container">
+   <footer>
+      <div class="row">
+         <div class="col-lg-12">
+            <p>AssertJ - Licensed under the Apache License, Version 2.0.</p>
+         </div>
+      </div>
+   </footer>
+</div>
+-->
+
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/modern-business.js"></script>
+<script src="js/assertj.js"></script>
+
+</body>
+</html>

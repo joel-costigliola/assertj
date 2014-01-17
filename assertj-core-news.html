@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="description" content="AssertJ site">
+   <meta name="author" content="Joel Costigliola">
+
+   <title>AssertJ - A fluent assertion library for java</title>
+
+   <!-- CSS -->
+   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata|Source+Code+Pro|Open+Sans|Ubuntu|Varela+Round|Karla">
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+   <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+   <script src="highlight/highlight.pack.js"></script>
+   <link rel="stylesheet" href="highlight/styles/railscasts.css">
+   <script>hljs.initHighlightingOnLoad();</script>
+   <link href="css/assertj.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+   <div class="container">
+      <div class="navbar-header">
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+         </button>
+         <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
+         <a class="navbar-brand" href="index.html">AssertJ / Fluent assertions for java</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+         <ul class="nav navbar-nav navbar-right">
+            <li><a href="assertj-core-quick-start.html">Quick start</a></li>
+            <li><a href="assertj-news.html">News</a></li>
+            <li><a href="assertj-core.html">Core</a></li>
+            <li><a href="assertj-assertions-generator.html">Assertions generator</a></li>
+            <li><a href="assertj-guava.html">Guava</a></li>
+            <li><a href="assertj-joda-time.html">Joda-Time</a></li>
+            <li><a href="assertj-neo4j.html">Neo4j</a></li>
+         </ul>
+      </div>
+   </div>
+</nav>
+
+
+<div class="container">
+
+<div class="row">
+         <div class="col-md-2 assertj-sidebar-menu">
+         <div class="bs-sidebar hidden-print affix-top" role="complementary">
+            <ul class="bs-sidenav nav ">
+               <li class="sidenav-header">Main</li>
+               <li><a href="assertj-core.html">Overview</a></li>
+               <li><a href="assertj-core-quick-start.html">Quick start</a></li>
+               <li><a href="assertj-core-news.html">News & releases</a></li>
+               <li><a href="assertj-core-features-highlight.html">Features highlight</a></li>
+               <li><a href="assertj-core-conditions.html">Using conditions</a></li>
+               <li><a href="assertj-core-custom-assertions.html">Custom assertions</a></li>
+               <li><a href="http://joel-costigliola.github.io/assertj/core/api/index.html" target="_blank">Javadoc</a></li>
+               <li><a href="assertj-core.html#mailing-list">Mailing list</a></li>
+               <li><a href="assertj-core.html#code">Code & issues</a></li>
+               <li><a href="assertj-core.html#contributing">Contributing</a></li>
+               <li class="sidenav-header">Migrating</li>
+               <li><a href="assertj-core-migrating-from-fest.html">From Fest 2.x</a></li>
+               <li><a href="assertj-core-migrating-from-fest.html#fest-1.4">From Fest 1.4</a></li>
+               <li class="sidenav-header">Tools</li>
+               <li><a href="assertj-core-converting-junit-assertions-to-assertj.html">Converting JUnit assertions to AssertJ</a></li>
+               <li><a href="assertj-assertions-generator.html">Assertions generator</a></li>
+            </ul>
+         </div>
+      </div>
+
+
+   <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
+      <h1 class="page-header">AssertJ Core latest news</h1>
+      <ul>
+         <li><a href="#assertj-core-next">AssertJ core next release</a></li>
+         <li><a href="#assertj-core-1.5.0">AssertJ core 1.5.0 release</a></li>
+         <li><a href="#assertj-core-1.4.0">AssertJ core 1.4.0 release</a></li>
+         <li><a href="#assertj-core-1.3.0">AssertJ core 1.3.0 release</a></li>
+         <li><a href="#assertj-core-1.2.0">AssertJ core 1.2.0 release</a></li>
+         <li><a href="#assertj-core-1.1.0">AssertJ core 1.1.0 release</a></li>
+         <li><a href="#assertj-core-1.0.0">AssertJ core 1.0.0 release</a></li>
+      </ul>
+
+<h3 class="page-header" ><span id="assertj-core-next"></span>What's coming in AssertJ core next release</h3>
+<p>Thanks to <span class="contributor">Mariusz Smykula</span> for its contributions.</p>
+<h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> BDD assertions style</h4>
+
+<p>Instead of using <span class="small-code">assertThat</span> use <span class="small-code">then</span> to start assertions, example:</p>
+
+  <pre><code class="java">@Test
+public void host_dinner_party_where_nobody_dies() {
+   //given
+   Mansion mansion = new Mansion();
+
+   //when
+   mansion.hostPotentiallyMurderousDinnerParty();
+
+   then(mansion.guests()).isEqualTo(6);
+   then(mansion.kitchen()).isEqualTo("clean");
+   then(mansion.library()).isEqualTo("messy");
+   then(mansion.revolverAmmo()).isEqualTo(6);
+   then(mansion.candlestick()).isEqualTo("bent");
+   then(mansion.colonel()).isEqualTo("well kempt");
+   then(mansion.professor()).isEqualTo("bloodied and disheveled");
+}  </code></pre>
+
+<h3 class="page-header"><span id="assertj-core-1.5.0"></span>AssertJ core 1.5.0 release : New and noteworthy</h3>
+<p>Release date : 2013-11-06<br>
+   Thanks to <span class="contributor">William Delanoue</span>, <span class="contributor">Jean Christophe Gay</span>, <span class="contributor">Tomasz Bartczak</span> and <span class="contributor">Michał Piotrkowski</span> for their contributions.</p>
+<h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> Extracting feature for method calls</h4>
+
+<p>Like <span class="small-code">extracting</span> feature but instead of extracting properties/fields, it extracts the result of given method invocation on the elements of Iterable/Array under test and puts the results into a new Iterable/Array which becomes the object under test.<br>
+   It allows you to test the results of method call on elements instead of testing the elements themselves, it's especially usefull for classes that does not conform to Java Bean's getter specification (e.g <span class="small-code">toString()</span> or <span class="small-code">String status()</span> instead of <span class="small-code">String getStatus()</span>).
+</p>
+<p>Let's take an example to make things clearer :</p>
+  <pre><code class="java">// Build a array of WesterosHouse, a WesterosHouse has a method: public String sayTheWords()
+List&lt;WesterosHouse&gt; greatHouses = new ArrayList&lt;WesterosHouse&gt;();
+greatHouses.add(new WesterosHouse("Stark", "Winter is Comming"));
+greatHouses.add(new WesterosHouse("Lannister", "Hear Me Roar!"));
+greatHouses.add(new WesterosHouse("Greyjoy", "We Do Not Sow"));
+greatHouses.add(new WesterosHouse("Baratheon", "Our is the Fury"));
+greatHouses.add(new WesterosHouse("Martell", "Unbowed, Unbent, Unbroken"));
+greatHouses.add(new WesterosHouse("Tyrell", "Growing Strong"));
+
+// let's verify the words of great houses in Westeros:
+assertThat(greatHouses).extractingResultOf("sayTheWords")
+                       .contains("Winter is Comming", "We Do Not Sow", "Hear Me Roar")
+                       .doesNotContain("Lannisters always pay their debts");</code></pre>
+
+<p>Thanks to <span class="contributor">Michał Piotrkowski</span> for this contribution.</p>
+
+<h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> New Date assertions to compare two dates ignoring some time fields</h4>
+<p><span class="small-code">isEqualToIgnoring&lt;Millis/Seconds/Minutes/Hours&gt;</span> assertions allow you to compare two dates ignoring time fields below given precision, for example if you ignore minutes then seconds and milliseconds will be ignored too.<br>
+   Code example: compare two dates without minutes, seconds and milliseconds</p>
+         <pre><code class="java">Date date1 = parseDatetime("2003-04-26T13:01:35");
+Date date2 = parseDatetime("2003-04-26T13:02:00");
+
+// OK : all dates fields are the same if we leave minutes seconds and milliseconds fields
+assertThat(date1).isEqualToIgnoringMinutes(date2);
+
+// KO : fail as minute fields differ
+assertThat(date1).isEqualToIgnoringSeconds(date2);  </code></pre>
+
+<p>Thanks to <span class="contributor">William Delanoue</span> for this contribution.</p>
+
+<h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> New Date assertions to check that two dates are in the same time window</h4>
+<p>With <span class="small-code">isInSame&lt;Second/Minute/Hour>WindowAs&gt;</span> you can check that two dates are in the same time window with a true chronological comparison and not a field by field comparison like we do in <span class="small-code">isInSame&lt;Second/Minute/Hour&gt;As</span>.<br>
+   Let's see that on an example :</p>
+         <pre><code class="java">Date date1 = parseDatetimeWithMs("2003-04-26T13:01:02.999");
+Date date2 = parseDatetimeWithMs("2003-04-26T13:01:03.000");
+
+// OK : assertion succeeds as time difference is 1ms < 1s
+assertThat(date1).isInSameSecondWindowAs(date2);
+
+// KO : isInSameSecondAs assertion fails as seconds fields differ.
+assertThat(date1).isInSameSecondAs(date2);</code></pre>
+
+<h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> More friendly Date assertions</h4>
+<p>You can use date String representation with various format, AssertJ takes care of parsing String as Date:</p>
+<pre><code class="java">// - yyyy-MM-dd
+assertThat(theTwoTowers.getReleaseDate()).isEqualTo("2002-12-18");
+// - yyyy-MM-dd'T'HH:mm:ss
+assertThat(theTwoTowers.getReleaseDate()).isEqualTo("2002-12-18T00.00.00");
+// - yyyy-MM-dd'T'HH:mm:ss.SSS
+assertThat(theTwoTowers.getReleaseDate()).isEqualTo("2002-12-18T00.00.00.000");</code></pre>
+
+<h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> New Map assertions</h4>
+
+<p>Add <span class="small-code">containsOnly</span> and <span class="small-code">containsExactly</span> to Map assertions using the same semantics as the one in Iterable assertions:</p>
+         <pre><code class="java">import static org.assertj.core.api.Assertions.entry;
+
+Map&lt;String, TolkienCharacter&gt; characters = new LinkedHashMap&lt;String, TolkienCharacter&gt;();
+characters.put(frodo.getName(), frodo);
+characters.put(galadriel.getName(), galadriel);
+characters.put(gandalf.getName(), gandalf);
+characters.put(sam.getName(), sam);
+
+assertThat(characters).containsOnly(entry(sam.getName(), sam),
+                                    entry(frodo.getName(), frodo),
+                                    entry(gandalf.getName(), gandalf),
+                                    entry(galadriel.getName(), galadriel));
+
+assertThat(characters).containsExactly(entry(frodo.getName(), frodo),
+                                       entry(galadriel.getName(), galadriel),
+                                       entry(gandalf.getName(), gandalf),
+                                       entry(sam.getName(), sam));</code></pre>
+
+
+<h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> Complete release notes</h4>
+<div class="release-section-category">New features:</div>
+<ul>
+   <li>Extracting feature for method calls. <span class="contributor">(Mariusz Smykula)</span></li>
+   <li>Add <span class="small-code">isInSame&lt;Second/Minute/Hour&gt;WindowAs</span> assertions</li>
+   <li>Add <span class="small-code">isEqualToIgnoring&lt;Millis/Seconds/Minutes/Hours&gt;</span> assertions. <span class="contributor">(William Delanoue)</span></li>
+   <li>New Iterable assertion feature: <span class="small-code">extractingResultOf</span>. <span class="contributor">(Michał Piotrkowski)</span></li>
+   <li>New Map assertions: <span class="small-code">containsExactly</span> and <span class="small-code">containsOnly</span> (already existed for iterables). <span class="contributor">(Jean Christophe Gay)</span></li>
+</ul>
+<div class="release-section-category">Improvements:</div>
+<ul>
+   <li>Various Javadoc API improvements (have a look at date assertions)</li>
+</ul>
+<div class="release-section-category">Bugs:</div>
+<ul>
+   <li><span class="small-code">AbstractIterableAssert.containsOnlyOnce()</span> should not require objects to implement <span class="small-code">Comparable</span>. <span class="contributor">(Tomasz Bartczak)</span></li>
+   <li><span class="small-code">hasSameSizeAs()</span> was not working with primitive arrays</li>
+</ul>
+
+<h3 class="page-header"><span id="assertj-core-1.4.0"></span>AssertJ core 1.4.0 release : New and noteworthy</h3>
+
+<p>Release date : 2013-11-06<br>
+   Thanks to <span class="contributor">Brian Laframboise</span>, <span class="contributor">William Delanoue</span>, <span class="contributor">Marcus Klimstra</span>, <span class="contributor">Ted Young</span>, <span class="contributor">Piotr Betkier</span>, <span class="contributor">Marcin Mikosik</span> and  <span class="contributor">Jean Christophe Gay</span> for their contributions.
+</p>
+<h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> XML assertions</h4>
+
+<p>String based XML assertions have been added, it allows you to compare a String representing an XML document with another one whatever how formatted the XML is.
+
+   Let's see that with some examples :
+</p>
+<pre><code class="java">String expectedXml = "&lt;rings&gt;\n" +
+                     "  &lt;bearer&gt;\n" +
+                     "    &lt;name&gt;Frodo&lt;/name&gt;\n" +
+                     "      &lt;ring&gt;\n" +
+                     "        &lt;name&gt;one ring&lt;/name&gt;\n" +
+                     "        &lt;createdBy&gt;Sauron&lt;/createdBy&gt;\n" +
+                     "      &lt;/ring&gt;\n" +
+                     "  &lt;/bearer&gt;\n" +
+                     "&lt;/rings&gt;";
+
+// XML String don't need to be formatted, isXmlEqualTo is able to compare it with another xml String.
+String oneLineXml = "&lt;rings&gt;&lt;bearer&gt;&lt;name&gt;Frodo&lt;/name&gt;"
+                  + "&lt;ring&gt;&lt;name&gt;one ring&lt;/name&gt;&lt;createdBy&gt;Sauron&lt;/createdBy&gt;"
+                  + "&lt;/ring&gt;&lt;/bearer&gt;&lt;/rings&gt;";
+
+assertThat(oneLineXml).isXmlEqualTo(expectedXml);</code></pre>
+<p>Since AssertJ formats both actual and expected XML String the same way, it's easy to see what was different in case of error.</p>
+<p>You can also easily compare your XML String to the content of an XML file, e.g:</p>
+
+<pre><code class="java">assertThat(xmlString).isXmlEqualToContentOf(new File("expected.xml"));</code></pre>
+
+
+<h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> Soft assertions</h4>
+
+<p>Using soft assertions, AssertJ collects all assertion errors instead of stopping at the first one.<br>
+So, assuming something goes awry at your dinner party, when using "standard" assertions, this test ...</p>
+  <pre><code class="java">@Test
+public void host_dinner_party_where_nobody_dies() {
+   Mansion mansion = new Mansion();
+   mansion.hostPotentiallyMurderousDinnerParty();
+   assertThat(mansion.guests()).as("Living Guests").isEqualTo(7);
+   assertThat(mansion.kitchen()).as("Kitchen").isEqualTo("clean");
+   assertThat(mansion.library()).as("Library").isEqualTo("clean");
+   assertThat(mansion.revolverAmmo()).as("Revolver Ammo").isEqualTo(6);
+   assertThat(mansion.candlestick()).as("Candlestick").isEqualTo("pristine");
+   assertThat(mansion.colonel()).as("Colonel").isEqualTo("well kempt");
+   assertThat(mansion.professor()).as("Professor").isEqualTo("well kempt");
+}  </code></pre>
+
+   <p>... will yield the less-than-ideal exception message :<br>
+   <pre><code class="diff">org.junit.ComparisonFailure: [Living Guests] expected:<[7]> but was<[6]></code></pre>
+
+<p>Using soft assertions you can collect all the failed assertions together like so:</p>
+
+  <pre><code class="java">@Test
+public void host_dinner_party_where_nobody_dies() {
+   Mansion mansion = new Mansion();
+   mansion.hostPotentiallyMurderousDinnerParty();
+   // use SoftAssertions instead of direct assertThat methods
+   SoftAssertions softly = new SoftAssertions();
+   softly.assertThat(mansion.guests()).as("Living Guests").isEqualTo(7);
+   softly.assertThat(mansion.kitchen()).as("Kitchen").isEqualTo("clean");
+   softly.assertThat(mansion.library()).as("Library").isEqualTo("clean");
+   softly.assertThat(mansion.revolverAmmo()).as("Revolver Ammo").isEqualTo(6);
+   softly.assertThat(mansion.candlestick()).as("Candlestick").isEqualTo("pristine");
+   softly.assertThat(mansion.colonel()).as("Colonel").isEqualTo("well kempt");
+   softly.assertThat(mansion.professor()).as("Professor").isEqualTo("well kempt");
+   // Don't forget to call SoftAssertions global verification !
+   softly.assertAll();
+}</code></pre>
+
+<p>When the collected assertions are all asserted together they yield a more descriptive error message:</p>
+
+  <pre><code class="diff">org.assertj.core.api.SoftAssertionError:
+     The following 4 assertions failed:
+     1) [Living Guests] expected:<[7]> but was:<[6]>
+     2) [Library] expected:<'[clean]'> but was:<'[messy]'>
+     3) [Candlestick] expected:<'[pristine]'> but was:<'[bent]'>
+     4) [Professor] expected:<'[well kempt]'> but was:<'[bloodied and disheveled]'></code></pre>
+
+<p>Thanks to <span class="contributor">Brian Laframboise</span> for this contribution.</p>
+
+<h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> Complete release notes</h4>
+<div class="release-section-category">Breaking changes:</div>
+<ul>
+   <li><span class="small-code">isLenientEqualsToByIgnoringFields</span> renamed to <span class="small-code">isEqualToIgnoringGivenFields</span></li>
+   <li><span class="small-code">isLenientEqualsToByAcceptingFields</span> renamed to <span class="small-code">isEqualToComparingOnlyGivenFields</span></li>
+   <li><span class="small-code">isLenientEqualsToByIgnoringNullFields</span> renamed to <span class="small-code">isEqualToIgnoringNullFields</span></li>
+   <li><span class="small-code">isEqualsToByComparingFields</span> renamed to <span class="small-code">isEqualToComparingFieldByField</span></li>
+</ul>
+<div class="release-section-category">New features:</div>
+<ul>
+   <li>XML String assertions</li>
+   <li>Soft assertions to gather all error messages instead of stopping at the first one. <span class="contributor">(Brian Laframboise)</span></li>
+   <li>New Iterable assertion : <span class="small-code">containsExactlyElementsOf</span>. <span class="contributor">(Jean Christophe Gay)</span></li>
+   <li>New Iterable assertion : <span class="small-code">containsSubsequence</span>. <span class="contributor">(Marcin Mikosik)</span></li>
+   <li>Assertion file template for IntelliJ. <span class="contributor">(Piotr Betkier)</span></li>
+</ul>
+<div class="release-section-category">Improvements:</div>
+<ul>
+   <li>Test description (i.e. <span class="small-code">as()</span> method) now supports <span class="small-code">String.format</span> <span class="contributor">(William Delanoue)</span></li>
+   <li>Added Javadoc for String assertions and cleaned up English in Contributing.md <span class="contributor">(Ted Young)</span></li>
+   <li>Properties of inner classes that are indirectly visible through an interface should be accessible <span class="contributor">(Marcus Klimstra)</span></li>
+   <li>Various Javadoc API improvements</li>
+</ul>
+
+<h3 class="page-header"><span id="assertj-core-1.3.0"></span>AssertJ core 1.3.0 release : New and noteworthy</h3>
+<p>Release date : 2013-06-30<br>
+   Thanks to <span class="contributor">William Delanoue</span>, <span class="contributor">Jean Christophe Gay</span>, <span class="contributor">Ted M. Young</span> and <span class="contributor">Mikhail Mazursky</span> for their contributions.</p>
+
+<h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> Breaking changes</h4>
+<p>The following assertions that were deprecated since the first version (and coming from Fest Assert) have been removed, we thought that they were very unclear:</p>
+<ul>
+   <li><span class="small-code">areNotAtLeast</span>, <span class="small-code">areNotAtMost</span>, <span class="small-code">areNotExactly</span></li>
+   <li><span class="small-code">haveNotAtLeast</span>, <span class="small-code">haveNotAtMost</span>, <span class="small-code">haveNotExactly</span></li>
+</ul>
+
+<h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> Class assertions</h4>
+
+<p>Class assertions have been added, let's see that with some examples:</p>
+  <pre><code class="java">assertThat(Magical.class).isAnnotation();
+assertThat(Ring.class).isNotAnnotation()
+                      .hasAnnotation(Magical.class);
+
+assertThat(TolkienCharacter.class).isNotInterface();
+assertThat(Person.class).isAssignableFrom(Employee.class);
+
+// You can check Class fields with :
+// - hasFields for public fields
+assertThat(TolkienCharacter.class).hasFields("age");
+// - hasDeclaredFields for all declared fields (whatever field's visibility)
+assertThat(TolkienCharacter.class).hasDeclaredFields("name", "race");</code></pre>
+
+<h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> Complete release notes</h4>
+<div class="release-section-category">Breaking changes:</div>
+<ul>
+   <li>Removed : <span class="small-code">areNotAtLeast</span>, <span class="small-code">areNotAtMost</span>, <span class="small-code">areNotExactly</span></li>
+   <li>Removed : <span class="small-code">haveNotAtLeast</span>, <span class="small-code">haveNotAtMost</span>, <span class="small-code">haveNotExactly</span></li>
+</ul>
+<div class="release-section-category">New features:</div>
+<ul>
+   <li>Introduce Class assertions <span class="contributor">(William Delanoue)</span></li>
+   <li>New Throwables assertions : <span class="small-code">hasCauseInstanceOf</span>, <span class="small-code">hasCauseExactlyInstanceOf</span>, <span class="small-code">hasRootCauseInstanceOf</span> and <span class="small-code">hasRootCauseExactlyInstanceOf</span> <span class="contributor">(Jean Christophe Gay)</span></li>
+   <li>Add <span class="small-code">containsExactly</span> assertion for arrays (already existed for iterables) <span class="contributor">(Jean Christophe Gay)</span></li>
+   <li>Add <span class="small-code">containsOnlyOnce</span> assertion for arrays and iterables <span class="contributor">(William Delanoue)</span></li>
+</ul>
+<div class="release-section-category">Improvements:</div>
+<ul>
+   <li>Provide a way to extend AssertJ existing assertions that does not break assertion chaining, see <a href="https://github.com/joel-costigliola/assertj-core/issues/9) for a detailed explanation">issue 9</a> <span class="contributor">(Mikhail Mazursky)</span></li>
+   <li>Make <span class="small-code">isNotEqualTo</span>, <span class="small-code">isIn</span> and <span class="small-code">isNotIn</span> assertions more flexible by not using generics in "expected" parameter <span class="contributor">(Mikhail Mazursky)</span></li>
+
+   <li>Allow defining the extracted type of extracted values from array in <span class="small-code">extracting</span> feature <span class="contributor">(William Delanoue)</span></li>
+   <li><span class="small-code">assertDoesNotMatch()</span> String assertion should not allow object to check to be null <span class="contributor">(Mikhail Mazursky)</span></li>
+   <li>Javadoc API improvements</li>
+   <li>Cleaned up English in README.md <span class="contributor">(Ted Young)</span></li>
+</ul>
+<div class="release-section-category">Bugs:</div>
+<ul>
+   <li>Fix <span class="small-code">IterableAssert.startsWith</span> infinite loop for inifinite iterables</li>
+</ul>
+
+<h3 class="page-header"><span id="assertj-core-1.2.0"></span>AssertJ core 1.2.0 release : New and noteworthy</h3>
+<p>Release date : 2013-05-12<br>
+   Thanks to <span class="contributor">William Delanoue</span> and <span class="contributor">Mikhail Mazursky</span> for their contributions.</p>
+
+<h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> Improved Map assertions</h4>
+
+<p>The First improvement is related to map entries, often testing map entries looks like :</p>
+  <pre><code class="java">Map&lt;String, String&gt; address = ....
+assertThat(address).includes(MapAssert.entry("zip", "43865"),
+                             MapAssert.entry("lastName", "Frazier"),
+                             MapAssert.entry("state", "IA"),
+                             MapAssert.entry("city", "Culloden"));</code></pre>
+<p>We can simplify this by getting rid of the repeated MapAssert.entry calls:</p>
+<pre><code class="java">assertThat(address).containsEntry("zip", "43865")
+                   .containsEntry("lastName", "Frazier")
+                   .containsEntry("state", "IA")
+                   .containsEntry("city", "Culloden");</code></pre>
+<p>Same thing has been done with <span class="small-code">doesNotContainEntry</span>.</p>
+
+<p>The second improvement is to allow checking that a Map contains multiple keys at once, so instead of :</p>
+<pre><code class="java">assertThat(elvesRingBearers).containsKey(nenya).containsKey(narya).containsKey(vilya);</code></pre>
+<p>you can now write :</p>
+<pre><code class="java">assertThat(elvesRingBearers).containsKeys(nenya, narya, vilya);</code></pre>
+
+<h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> More flexible assertions</h4>
+
+<p>Make <span class="small-code">isEqualTo</span>, <span class="small-code">isSameAs</span> and <span class="small-code">isNotSameAs</span> assertions more flexible by not using generics in "expected" parameter.<br>
+It solves the following problem where an Employee class inherits from Person :</p>
+<pre><code class="java">Employee bill = new Employee("Bill", 50, "micro$oft");
+// OK
+assertThat(bill).isEqualTo(bill);
+
+// now let's view billou as a Person and not an Employee anymore
+Person billou = bill;
+
+// Before 1.2.0 version, the next line used led to a compile error as
+// parameter expected type is Employee (although bill and billou are identical).
+assertThat(bill).isEqualTo(billou);</code></pre>
+
+<p>The only drawback is less strongly type checking but we think flexibility was more important that type checks.<br>
+   Note that this is the beginning of making AssertJ more flexible, there is still work to be done in this area.
+</p>
+
+<h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> Complete release notes</h4>
+<div class="release-section-category">New features:</div>
+<ul>
+   <li>Introduce <span class="small-code">CharSequenceAssert</span> to support <span class="small-code">StringBuffer</span>, <span class="small-code">StringBuilder</span> and all subtypes of <span class="small-code">CharSequence</span> assertions <span class="contributor">(Mikhail Mazursky)</span></li>
+   <li>New Iterable assertion : <span class="small-code">doesNotContainAnyElementsOf(Iterable)</span> <span class="contributor">(William Delanoue)</span></li>
+   <li>New Number assertions : <span class="small-code">isBetween</span> and <span class="small-code">isStrictlyBetween</span> <span class="contributor">(William Delanoue)</span></li>
+</ul>
+<div class="release-section-category">Improvements:</div>
+<ul>
+   <li>Code coverage improvements</li>
+   <li>Make <span class="small-code">isEqualTo</span>, <span class="small-code">isSameAs</span> and <span class="small-code">isNotSameAs</span> assertions more flexible by not using generics in "expected" parameter <span class="contributor">(William Delanoue / Mikhail Mazursky)</span></li>
+   <li><span class="small-code">IterableAssert.doesNotHaveDuplicates</span> performance enhancement (~500x faster)</li>
+   <li>Improve Map assertions related to entries <span class="contributor">(William Delanoue)</span></li>
+   <li>Improve Map assertions when checking several keys presence <span class="contributor">(William Delanoue)</span></li>
+   <li>Deprecate methods that are useless to avoid misleading users <span class="contributor">(Mikhail Mazursky)</span></li>
+   <li>Javadoc API improvements (still a lot to do ...)</li>
+</ul>
+<div class="release-section-category">Bugs:</div>
+<ul>
+   <li>Fix <span class="small-code">containsSequence</span> assertion that stopped after first partial match</li>
+</ul>
+
+
+<h3 class="page-header"><span id="assertj-core-1.1.0"></span>AssertJ core 1.1.0 release : New and noteworthy</h3>
+<p>Release date : 2013-04-15</p>
+
+<h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> Extracting feature</h4>
+
+<p>With <span class="small-code">extracting</span> you can extract values from an array/iterable elements and perform assertions on those extracted values.<br>
+   It is similar to <span class="small-code">extractProperty</span> feature but is easier to use (I think), it is also able to extract properties as well as public fields while <span class="small-code">extractProperty</span> can only extract properties (as its name suggests).<br></p>
+<p>Last but not least, you can <span class="contributor">extract several public fields and properties at once</span>, the extracted values corresponding to the same element being grouped in a tuple.</p>
+<p>Simple example showing how to check the names of TolkienCharacter elements in fellowshipOfTheRing list :</p>
+
+<pre><code class="java">// "name" need to be either a property or a public field of TolkienCharacter class.
+assertThat(fellowshipOfTheRing).extracting("name")
+                               .contains("Boromir", "Gandalf", "Frodo", "Legolas")
+                               .doesNotContain("Sauron", "Elrond");</code></pre>
+
+<p>Example showing how to check the name, age and race's name of each TolkienCharacter elements :<br>
+   the extracted name, age and race's name values corresponding to the same element are grouped in a tuple, thus you need to use tuples for expected values.
+</p>
+  <pre><code class="java">// tuple comes from : import static org.assertj.core.api.Assertions.tuple;
+assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name")
+                               .contains(tuple("Boromir", 37, "Man"),
+                                         tuple("Sam", 38, "Hobbit"),
+                                         tuple("Legolas", 1000, "Elf"));</code></pre>
+
+<p>This feature is a much more powerful version of <span class="small-code">onProperty </span> that was introduced in Fest 1.4.</p>
+
+<h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> Error messages improvements</h4>
+
+<p>Error messages are now multiline to ease comparing the actual value to the expected one.</p>
+
+<p>Here an example with a failing Date assertion :</p>
+
+<pre><code class="java">// failing assertion !
+assertThat(parse("2013-01-01")).isBefore(parse("2000-01-01"));</code></pre>
+
+<p>In assertj-core 1.0.0, it produces this error message :</p>
+<pre><code class="diff">expected:<2013-01-01T00:00:00> to be strictly before:<2000-01-01T00:00:00></code></pre>
+
+<p>In assertj-core 1.1.0 the error message is now :</p>
+<pre><code class="diff">Expecting:
+   <2013-01-01T00:00:00>
+   to be strictly before:
+   <2000-01-01T00:00:00>
+</code></pre>
+
+<p>Note that involved objects are aligned to the same column to ease comparing them.</p>
+
+<h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> Complete release notes</h4>
+<div class="release-section-category">New features:</div>
+<ul>
+   <li>Reintroduce <span class="small-code">onProperty</span> feature but named it <span class="small-code">extracting</span></li>
+   <li><span class="small-code">extracting()</span> method is now able to extract fields</li>
+   <li>Allow extracting several fields or properties in iterable or array assertions</span></li>
+</ul>
+<div class="release-section-category">Improvements:</div>
+<ul>
+   <li>Assertions error messages are now multiline for better readability</li>
+</ul>
+<div class="release-section-category">Bugs:</div>
+<ul>
+   <li>Fix Problem with <span class="small-code">AbstractAssert.overridingErrorMessage(String newErrorMessage, Object[] args)</span></li>
+   <li>All <span class="small-code">contains</span> assertions should not throw an exception if <span class="small-code">actual</span> and <span class="small-code">values</span> are empty</span></li>
+</ul>
+
+
+<h3 class="page-header"><span id="assertj-core-1.0.0"></span>AssertJ core 1.0.0 release : New and noteworthy</h3>
+<p>Release date : 2013-03-26</p>
+
+<p>1.0.0 version is the first AssertJ release after the fork from FEST 2.0M10, here are the changes compared to FEST 2.0M10 :</p>
+
+<div class="release-section-category">New features:</div>
+<ul>
+   <li>Add <span class="small-code">StringAssert.containsSequence</span> assertion</li>
+</ul>
+<div class="release-section-category">Improvements:</div>
+<ul>
+   <li>Make custom assertions easier to write</li>
+   <li>Varargs for <span class="small-code">StringAssert.contains()</span> to avoid repeating contains several times</li>
+   <li>Add osgi metadata to MANIFEST</li>
+   <li><span class="small-code">assertThat()</span> should accept an <span class="small-code">Iterator</span></li>
+</ul>
+
+</div>
+</div>
+
+</div>
+
+<br>
+<!--
+<div class="container">
+   <footer>
+      <div class="row">
+         <div class="col-lg-12">
+            <p>AssertJ - Licensed under the Apache License, Version 2.0.</p>
+         </div>
+      </div>
+   </footer>
+</div>
+-->
+
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/modern-business.js"></script>
+<script src="js/assertj.js"></script>
+
+</body>
+</html>

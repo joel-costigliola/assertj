@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="description" content="AssertJ site">
+   <meta name="author" content="Joel Costigliola">
+
+   <title>AssertJ - A fluent assertion library for java</title>
+
+   <!-- CSS -->
+   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata|Source+Code+Pro|Open+Sans|Ubuntu|Varela+Round|Karla">
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+   <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+   <script src="highlight/highlight.pack.js"></script>
+   <link rel="stylesheet" href="highlight/styles/railscasts.css">
+   <script>hljs.initHighlightingOnLoad();</script>
+   <link href="css/assertj.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+   <div class="container">
+      <div class="navbar-header">
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+         </button>
+         <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
+         <a class="navbar-brand" href="index.html">AssertJ / Fluent assertions for java</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+         <ul class="nav navbar-nav navbar-right">
+            <li><a href="assertj-core-quick-start.html">Quick start</a></li>
+            <li><a href="assertj-news.html">News</a></li>
+            <li><a href="assertj-core.html">Core</a></li>
+            <li><a href="assertj-assertions-generator.html">Assertions generator</a></li>
+            <li><a href="assertj-guava.html">Guava</a></li>
+            <li><a href="assertj-joda-time.html">Joda-Time</a></li>
+            <li><a href="assertj-neo4j.html">Neo4j</a></li>
+         </ul>
+      </div>
+   </div>
+</nav>
+
+
+<div class="container">
+   <div class="row" >
+
+      <div class="col-md-2 assertj-sidebar-menu">
+         <div class="bs-sidebar hidden-print affix-top" role="complementary">
+            <ul class="bs-sidenav nav ">
+               <li class="sidenav-header">Main</li>
+               <li><a href="assertj-core.html">Overview</a></li>
+               <li><a href="assertj-core-quick-start.html">Quick start</a></li>
+               <li><a href="assertj-core-news.html">News & releases</a></li>
+               <li><a href="assertj-core-features-highlight.html">Features highlight</a></li>
+               <li><a href="assertj-core-conditions.html">Using conditions</a></li>
+               <li><a href="assertj-core-custom-assertions.html">Custom assertions</a></li>
+               <li><a href="http://joel-costigliola.github.io/assertj/core/api/index.html" target="_blank">Javadoc</a></li>
+               <li><a href="assertj-core.html#mailing-list">Mailing list</a></li>
+               <li><a href="assertj-core.html#code">Code & issues</a></li>
+               <li><a href="assertj-core.html#contributing">Contributing</a></li>
+               <li class="sidenav-header">Migrating</li>
+               <li><a href="assertj-core-migrating-from-fest.html">From Fest 2.x</a></li>
+               <li><a href="assertj-core-migrating-from-fest.html#fest-1.4">From Fest 1.4</a></li>
+               <li class="sidenav-header">Tools</li>
+               <li><a href="assertj-core-converting-junit-assertions-to-assertj.html">Converting JUnit assertions to AssertJ</a></li>
+               <li><a href="assertj-assertions-generator.html">Assertions generator</a></li>
+            </ul>
+         </div>
+      </div>
+
+
+      <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
+         <h1 class="page-header">One minute starting guide</h1>
+         <p>This guide is for AssertJ core module, you can also find quick start guides for:
+         <ul>
+            <li><a href="assertj-guava.html#quickstart">Guava assertions quick start</a></li>
+            <li><a href="assertj-joda-time.html#quickstart">Joda Time assertions quick start</a></li>
+            <li><a href="assertj-neo4j.html#quickstart">Neo4J assertions quick start</a></li>
+         </ul>
+        </p>
+         <h3 class="page-header">1 - Get AssertJ Core assertions</h3>
+
+         <div class="row">
+            <div class="col-md-6 portfolio-item">
+               <h3 class="quickstart">Maven</h3>
+               <p>AssertJ artifacts are in Maven central repository.</p>
+                  <pre><code class="xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.assertj&lt;/groupId&gt;
+  &lt;artifactId&gt;assertj-core&lt;/artifactId&gt;
+  &lt;version&gt;1.5.0&lt;/version&gt;
+  &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+            </div>
+
+            <div class="col-md-6 portfolio-item">
+               <h3 class="quickstart">Gradle</h3>
+               <p>For Gradle users (using Maven Central Repository)</p>
+               <pre><code class="java">testCompile 'org.assertj:assertj-core:1.5.0'</code></pre>
+            </div>
+            <div class="col-md-12">
+               <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-core|1.5.0|bundle">assertj dependency declaration</a> for your tool.</p>
+            </div>
+
+         </div>
+
+         <h3 class="page-header">2 - Add AssertJ methods static import</h3>
+
+         <p>import all in once ...</p>
+            <pre><code class="language-java">import static org.assertj.core.api.Assertions.*;</code></pre>
+         <p>... or only what you need</p>
+         <pre><code class="language-java">import static org.assertj.core.api.Assertions.assertThat;  // main one
+import static org.assertj.core.api.Assertions.atIndex; // for List assertions
+import static org.assertj.core.api.Assertions.entry;  // for Map assertions
+import static org.assertj.core.api.Assertions.tuple; // when extracting several properties at once
+import static org.assertj.core.api.Assertions.fail; // use when making exception tests
+import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown; // idem
+import static org.assertj.core.api.Assertions.filter; // for Iterable/Array assertions
+import static org.assertj.core.api.Assertions.offset; // for floating number assertions
+import static org.assertj.core.api.Assertions.anyOf; // use with Condition
+import static org.assertj.core.api.Assertions.contentOf; // use with File assertions</code></pre>
+         <p>You can even configure your IDE, so that when you type <span class="small-code">as</span> and trigger code completion, it will suggest <span class="small-code">assertThat</span>, see <a href="assertj-core-features-highlight.html#ide-automatic-static-import">this tip</a>.</p>
+
+         <h3 class="page-header">3 - Use code completion</h3>
+         <p>
+         Type <span class="small-code">assertThat</span> followed by the object to test and a dot ... and any Java IDE code completion will show you all the assertions available.
+            <pre><code class="language-java">assertThat(objectToTest). // code completion -> assertions specific to objectToTest</code></pre>
+         <p> That's all !</p>
+
+         <h3 class="page-header">4 - Want to see more ?</h3>
+         <p>
+         See some of <a href="assertj-core-features-highlight.html">AssertJ noteworthy features</a> to get the maximum of it !
+         </p>
+         <p>
+         You can learn more by looking at <a href="http://joel-costigliola.github.io/assertj/core/api/index.html">AssertJ core javadoc</a>.
+         </p>
+         <p>
+         Another way is to go see <a href="https://github.com/joel-costigliola/assertj-examples/tree/master/src/test/java/org/assertj/examples">assertj-examples tests</a>, it covers what is possible with AssertJ Assertions with running code, you can clone it and run its tests !
+         </p>
+
+      </div>
+   </div>
+</div>
+
+
+<br>
+<!--
+<div class="container">
+   <footer>
+      <div class="row">
+         <div class="col-lg-12">
+            <p>AssertJ - Licensed under the Apache License, Version 2.0.</p>
+         </div>
+      </div>
+   </footer>
+</div>
+-->
+
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/modern-business.js"></script>
+<script src="js/assertj.js"></script>
+
+</body>
+</html>

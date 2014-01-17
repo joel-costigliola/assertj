@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="description" content="AssertJ site">
+   <meta name="author" content="Joel Costigliola">
+
+   <title>AssertJ - A fluent assertion library for java</title>
+
+   <!-- CSS -->
+   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata|Source+Code+Pro|Open+Sans|Ubuntu|Varela+Round|Karla">
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+   <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+   <script src="highlight/highlight.pack.js"></script>
+   <link rel="stylesheet" href="highlight/styles/railscasts.css">
+   <script>hljs.initHighlightingOnLoad();</script>
+   <link href="css/assertj.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+   <div class="container">
+      <div class="navbar-header">
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+         </button>
+         <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
+         <a class="navbar-brand" href="index.html">AssertJ / Fluent assertions for java</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+         <ul class="nav navbar-nav navbar-right">
+            <li><a href="assertj-core-quick-start.html">Quick start</a></li>
+            <li><a href="assertj-news.html">News</a></li>
+            <li><a href="assertj-core.html">Core</a></li>
+            <li><a href="assertj-assertions-generator.html">Assertions generator</a></li>
+            <li><a href="assertj-guava.html">Guava</a></li>
+            <li><a href="assertj-joda-time.html">Joda-Time</a></li>
+            <li><a href="assertj-neo4j.html">Neo4j</a></li>
+         </ul>
+      </div>
+   </div>
+</nav>
+
+
+<div class="container">
+   <div class="row">
+
+            <div class="col-md-2 assertj-sidebar-menu">
+         <div class="bs-sidebar hidden-print affix-top" role="complementary">
+            <ul class="bs-sidenav nav ">
+               <li class="sidenav-header">Assertions generator</li>
+               <li><a href="assertj-assertions-generator.html">Overview</a></li>
+               <li><a href="assertj-assertions-generator.html#quickstart">Quick start</a></li>
+               <li><a href="assertj-assertions-generator.html#news">News & releases</a></li>
+               <li class="sidenav-header">Maven plugin</li>
+               <li><a href="assertj-assertions-generator-maven-plugin.html">Overview</a></li>
+               <li><a href="assertj-assertions-generator-maven-plugin.html#quickstart">Quick start</a></li>
+               <li><a href="assertj-assertions-generator-maven-plugin.html#configuration">Configuration</a></li>
+               <li><a href="assertj-assertions-generator-maven-plugin.html#news">News & releases</a></li>
+            </ul>
+         </div>
+      </div>
+
+
+      <div class="col-lg-10 col-md-10 col-sm-10 text-left">
+         <h1 class="page-header">AssertJ assertions generator maven plugin</h1>
+
+         <p>This maven plugin generates AssertJ assertions specific to your own classes, it's a wrapper on <a href="assertj-assertions-generator.html">AssertJ Assertions Generator</a>.</p>
+         <p>Big thanks to <a href="https://github.com/mostr"><span class="contributor">Michal Ostruszka</span></a> for its major contribution on this plugin.</p>
+
+         <h3 class="page-header"><span id="quickstart"></span>Quickstart</h3>
+
+         <p>You need to configure your project <span class="small-code">pom.xml</span> in order to use maven assertions generator plugin.</p>
+
+         <h4 class="page-header">1 - Add AssertJ Core dependency to your pom.xml</h4>
+
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.assertj&lt;/groupId&gt;
+    &lt;artifactId&gt;assertj-core&lt;/artifactId&gt;
+    &lt;version&gt;1.5.0&lt;/version&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+
+         <h4 class="page-header">2 - Configure the plugin in the build/plugins section of your pom.xml</h4>
+
+         <p>To generate custom assertions, add the following plugin to your <span class="small-code">pom.xml</span> :</p>
+
+<pre><code class="xml">&lt;plugin&gt;
+    &lt;groupId&gt;org.assertj&lt;/groupId&gt;
+    &lt;artifactId&gt;assertj-assertions-generator-maven-plugin&lt;/artifactId&gt;
+    &lt;version&gt;1.2.0&lt;/version&gt;
+    &lt;configuration&gt;
+        &lt;packages&gt;
+            &lt;param&gt;your.first.package&lt;/param&gt;
+            &lt;param&gt;your.second.package&lt;/param&gt;
+        &lt;/packages&gt;
+        &lt;classes&gt;
+            &lt;param&gt;your.third.package.YourClass&lt;/param&gt;
+        &lt;/classes&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;</code></pre>
+
+         <h4 class="page-header">3 - launch the maven plugin</h4>
+
+         <p>Execute the command :</p>
+         <pre><code class="bash">mvn assertj:generate-assertions</code></pre>
+
+         <p>The assertions are generated in : <span class="small-code">target/generated-test-sources/assertj-assertions/</span></p>
+
+         <p>Example of plugin execution when executing <span class="small-code">maven install</span> command on <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project :</p>
+<pre><code class="bash">====================================
+AssertJ assertions generation report
+====================================
+
+--- Generator input parameters ---
+
+Generating AssertJ assertions for classes in following packages and subpackages:
+- org.assertj.examples.data
+
+--- Generator results ---
+
+Directory where custom assertions files have been generated :
+- /home/joe/assertj/assertj-examples/target/generated-test-sources/assertj-assertions
+
+Custom assertions files generated :
+- TeamAssert.java
+- BasketBallPlayerAssert.java
+- EmployeeAssert.java
+- NameAssert.java
+- MagicalAssert.java
+- PersonAssert.java
+- RaceAssert.java
+- GameServiceAssert.java
+- MansionAssert.java
+- TitleAssert.java
+- AlignmentAssert.java
+- TolkienCharacterAssert.java
+- RingAssert.java
+- MovieAssert.java
+- TeamManagerAssert.java
+
+Assertions entry point class has been generated in file:
+- /home/joe/assertj/assertj-examples/target/generated-test-sources/assertj-assertions/org/assertj/examples/data/Assertions.java</code></pre>
+
+         <h3 class="page-header"><span id="configuration"></span>Plugin configuration</h3>
+
+         <span class="small-code">packages</span> and <span class="small-code">classes</span> configuration elements indicate where to find classes you want to generate assertions for.
+
+         <p>One who don't want to declare packages / classes in its <span class="small-code">pom.xml</span> can use properties <span class="small-code">assertj.packages</span> and <span class="small-code">assertj.classes</span>:
+         <pre><code class="bash">mvn assertj:generate-assertions -Dassertj.packages=your.first.package,your.second.package</code></pre></p>
+
+         <p>You can also specify non-standard destination directory for assertion files using <span class="small-code">targetDir</span> configuration element e.g.</p>
+
+<pre><code class="xml">&lt;configuration&gt;
+    &lt;packages&gt;
+        &lt;param&gt;your.first.package&lt;/param&gt;
+        &lt;param&gt;your.second.package&lt;/param&gt;
+    &lt;/packages&gt;
+    &lt;!-- YOUR_NON_STANDARD_DIR --&gt;
+    &lt;targetDir&gt;src/test/java&lt;/targetDir&gt;
+&lt;/configuration&gt;</code></pre>
+
+         <p>To generate assertions classes at every build, add an <span class="small-code">&lt;executions&gt;</span> section as shown below :</p>
+
+<pre><code class="xml">&lt;plugin&gt;
+    &lt;groupId&gt;org.assertj&lt;/groupId&gt;
+    &lt;artifactId&gt;assertj-assertions-generator-maven-plugin&lt;/artifactId&gt;
+    &lt;version&gt;1.2.0&lt;/version&gt;
+    &lt;executions&gt;
+        &lt;execution&gt;
+            &lt;goals&gt;
+                &lt;goal&gt;generate-assertions&lt;/goal&gt;
+            &lt;/goals&gt;
+        &lt;/execution&gt;
+    &lt;/executions&gt;
+    &lt;configuration&gt;
+        &lt;packages&gt;
+            &lt;param&gt;your.first.package&lt;/param&gt;
+            &lt;param&gt;your.second.package&lt;/param&gt;
+        &lt;/packages&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;</code></pre>
+
+         <h3 class="page-header"><span id="news"></span>Assertions generator maven plugin 1.2.0 release</h3>
+         <p>Release date : 2013-12-08</p>
+
+         <p>Special thanks to <span class="contributor">Jean Christophe Gay</span> for its contributions to this version.</p>
+
+         <div class="release-section-category">Release notes:</div>
+         <ul>
+            <li>Uses <a href="assertj-assertions-generator.html#1.2.0">assertj-assertions-generator 1.2.0</a>.</li>
+            <li>To ease using generated assertions, generate an entry point class <span class="small-code">Assertions</span> providing <span class="small-code">assertThat</span> methods giving access to each generated <span class="small-code">*Assert</span> classes.</li>
+            <li>Better logs to understand what the plugin is doing.</li>
+            <li>Define property for each parameter: classes, packages and targetDir. <span class="contributor">(Jean Christophe Gay)</span></li>
+            <li>Generate Help Mojo accessible via command <span class="small-code">mvn assertj:help</span>. <span class="contributor">(Jean Christophe Gay)</span></li>
+            <li>Define property for each parameter: classes, packages and targetDir. <span class="contributor">(Jean Christophe Gay)</span></li>
+            <li>Use up to date @parameter syntax to fix warning logs. <span class="contributor">(Jean Christophe Gay)</span></li>
+         </ul>
+
+         <h3 class="page-header">Assertions generator maven plugin 1.1.0 release</h3>
+         <p>Release date : 2013-09-15</p>
+
+         <p>This version uses assertj-assertions-generator 1.1.0.</p>
+
+         <h3 class="page-header">Assertions generator maven plugin 1.0.0 release</h3>
+         <p>Release date : 2013-03-26</p>
+
+         <p>The first release after Fest fork, generated assertions are cleaner.</p>
+
+      </div>
+   </div>
+</div>
+
+
+<br>
+<!--
+<div class="container">
+   <footer>
+      <div class="row">
+         <div class="col-lg-12">
+            <p>AssertJ - Licensed under the Apache License, Version 2.0.</p>
+         </div>
+      </div>
+   </footer>
+</div>
+-->
+
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/modern-business.js"></script>
+<script src="js/assertj.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="description" content="AssertJ site">
+   <meta name="author" content="Joel Costigliola">
+
+   <title>AssertJ - A fluent assertion library for java</title>
+
+   <!-- CSS -->
+   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata|Source+Code+Pro|Open+Sans|Ubuntu|Varela+Round|Karla">
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+   <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+   <script src="highlight/highlight.pack.js"></script>
+   <link rel="stylesheet" href="highlight/styles/railscasts.css">
+   <script>hljs.initHighlightingOnLoad();</script>
+   <link href="css/assertj.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+   <div class="container">
+      <div class="navbar-header">
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+         </button>
+         <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
+         <a class="navbar-brand" href="index.html">AssertJ / Fluent assertions for java</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+         <ul class="nav navbar-nav navbar-right">
+            <li><a href="assertj-core-quick-start.html">Quick start</a></li>
+            <li><a href="assertj-news.html">News</a></li>
+            <li><a href="assertj-core.html">Core</a></li>
+            <li><a href="assertj-assertions-generator.html">Assertions generator</a></li>
+            <li><a href="assertj-guava.html">Guava</a></li>
+            <li><a href="assertj-joda-time.html">Joda-Time</a></li>
+            <li><a href="assertj-neo4j.html">Neo4j</a></li>
+         </ul>
+      </div>
+   </div>
+</nav>
+
+
+<div class="container">
+   <div class="row">
+
+            <div class="col-md-2 assertj-sidebar-menu">
+         <div class="bs-sidebar hidden-print affix-top" role="complementary">
+            <ul class="bs-sidenav nav ">
+               <li class="sidenav-header"></li>
+               <li><a href="assertj-neo4j.html">Overview</a></li>
+               <li><a href="assertj-neo4j.html#quickstart">Quick start</a></li>
+               <li><a href="assertj-neo4j.html#latest-release">Releases</a></li>
+               <li><a href="http://joel-costigliola.github.io/assertj/neo4j/api/index.html" target="_blank">Javadoc</a></li>
+               <li><a href="assertj-neo4j.html#mailing-list">Mailing list</a></li>
+               <li><a href="assertj-neo4j.html#code">Code & issues</a></li>
+               <li><a href="assertj-neo4j.html#contributing">Contributing</a></li>
+            </ul>
+         </div>
+      </div>
+
+
+      <div class="col-lg-10 col-md-10 col-sm-10 text-left">
+         <h1 class="page-header">AssertJ Neo4j assertions</h1>
+
+         <p>Provides assertions for <a href="http://www.neo4j.org/">Neo4j</a> 2 or higher.</p>
+
+         <p>This module have been written by <span class="contributor">Florent Biville</span>, huge thanks to him ! Great Work !<br>
+            If you need additional assertions, just fill a ticket in <a href="https://github.com/joel-costigliola/assertj-neo4j/issues?labels=&milestone=&page=1&state=open">Assert Neo4j issue tracker</a>.</p>
+
+         <p>Assert neo4j is hosted on github : <a href="https://github.com/joel-costigliola/assertj-neo4j">https://github.com/joel-costigliola/assertj-neo4j</a>.</p>
+
+         <h3 class="page-header"><span id="quickstart"></span>Neo4j assertions quickstart guide</h3>
+
+         <p>To quickly start using Neo4j assertions, follow the steps below.</p>
+
+         <h4 class="page-header">1 - Add assertj-neo4j dependency to your project pom.xml</h4>
+
+<pre><code class="xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.assertj&lt;/groupId&gt;
+  &lt;artifactId&gt;assertj-neo4j&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+  &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+
+         <p>You also need to provide neo4j 2+ dependencies.</p>
+         <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-neo4j|1.0.0|bundle">assertj dependency declaration</a> for your tool.</p>
+
+         <h4 class="page-header">2 - Statically import <span class="small-code">org.assertj.neo4j.api.Assertions.assertThat</span> ...</h4>
+         <p>... and use your preferred IDE code completion after <span class="small-code">assertThat.</span></p>
+
+         <p>Example from <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/src/test/java/org/assertj/examples/neo4j/PathAssertionExamples.java">PathAssertionExamples.java</a> :</p>
+
+<pre><code class="java">import static org.assertj.neo4j.api.Assertions.assertThat;
+
+// initialization ommited for brevity ...
+Path bulmaToMasterRoshiPath = dragonBallGraph.findShortestPathBetween("Bulma", "Master Roshi");
+
+Node bulmaNode = dragonBallGraph.findCharacter("Bulma");
+Node masterRoshiNode = dragonBallGraph.findCharacter("Master Roshi");
+Relationship trainingFromSonGoku = dragonBallGraph.findTrainingFrom("Son Goku");
+
+// you can test several Path properties such as length, start/end node and last relationship
+assertThat(bulmaToMasterRoshiPath).hasLength(3)
+                                  .startsWithNode(bulmaNode)
+                                  .endsWithNode(masterRoshiNode)
+                                  .endsWithRelationship(trainingFromSonGoku);</code></pre>
+
+         <p><span class="small-code">assertThat</span> and <span class="small-code">entry</span> are static imports from the <span class="small-code">Assertions</span> class.</p>
+
+         <p>Note that you can find more working examples in <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/src/test/java/org/assertj/examples/neo4j">neo4j package</a> of <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project.</p>
+
+         <h3 class="page-header"><span id="latest-release"/></span>Neo4j assertions 1.0.0 release</h3>
+         <p>Release date : 2014-01-02</p>
+
+         <div class="release-section-category">Available assertions:</div>
+         <ul>
+            <li>Node assertions</li>
+            <li>Path assertions</li>
+            <li>Relationship assertions</li>
+            <li>PropertyContainer assertions</li>
+         </ul>
+
+         <h3 class="page-header"><span id="javadoc"/></span>Javadoc of latest release</h3>
+
+         <p>Latest javadoc release : <a href="http://joel-costigliola.github.io/assertj/neo4j/api/index.html">AssertJ Neo4j javadoc</a>.</p>
+
+         <h3 class="page-header"><span id="core-and-neo4j-assertions"/></span>Using both AssertJ <a href="https://github.com/joel-costigliola/assertj-core">Core assertions</a> and neo4j assertions</h3>
+
+         <p>You will have to make two static import : one for <span class="small-code">org.assertj.core.api.Assertions.assertThat</span>
+            to get core assertions and one <span class="small-code">org.assertj.neo4j.api.Assertions.assertThat</span> for neo4j assertions.</p>
+
+<pre><code class="java">import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.neo4j.api.Assertions.assertThat;
+
+// initialization ommited for brevity ...
+Node firstDisciple = ...;
+
+// assertThat comes from org.assertj.neo4j.api.Assertions.assertThat static import
+assertThat(firstDisciple).hasPropertyKey("name")
+                         .hasProperty("name", "Son Goku")
+                         .doesNotHavePropertyKey("firstName")
+                         .doesNotHaveProperty("name", "Bulma");
+
+// assertThat comes from org.assertj.core.api.Assertions.assertThat static import
+assertThat("hello world").startsWith("hello");</code></pre>
+
+         <h3 class="page-header"><span id="mailing-list"/></span>Mailing list</h3>
+
+         <p>If you have any questions, please use
+            <a href="https://groups.google.com/forum/?fromgroups=#!forum/assertj">AssertJ google group</a>.</p>
+
+         <h3 class="page-header"><span id="code"/></span>Code and issue tracker</h3>
+
+         <p>Assert neo4j is hosted on github : <a href="https://github.com/joel-costigliola/assertj-neo4j">https://github.com/joel-costigliola/assertj-neo4j</a>.</p>
+
+         <p>Please report bugs or missing features in <a href="https://github.com/joel-costigliola/assertj-neo4j/issues?labels=&milestone=&page=1&state=open">Assert neo4j issue tracker</a>.</p>
+
+         <h3 class="page-header"><span id="contributing"/></span>Contributing</h3>
+
+         <p>Thanks for your interest ! Please check our <a href="https://github.com/joel-costigliola/assertj-neo4j/blob/master/CONTRIBUTING.md#contributing">contributor's guidelines</a>.</p>
+
+         <p>Special thanks to <span class="contributor">Florent Biville</span> Assert Neo4j main contributor.</p>
+
+      </div>
+   </div>
+</div>
+
+
+<br>
+<!--
+<div class="container">
+   <footer>
+      <div class="row">
+         <div class="col-lg-12">
+            <p>AssertJ - Licensed under the Apache License, Version 2.0.</p>
+         </div>
+      </div>
+   </footer>
+</div>
+-->
+
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/modern-business.js"></script>
+<script src="js/assertj.js"></script>
+
+</body>
+</html>
