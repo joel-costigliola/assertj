@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+$head
+
+<body>
+
+$menu
+
+<div class="container">
+   <div class="row" >
+
+$assertj_core_side_menu
+
+      <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
+         <h1 class="page-header">One minute starting guide</h1>
+         <p>This guide is for AssertJ core module, you can also find quick start guides for:
+         <ul>
+            <li><a href="assertj-guava.html#quickstart">Guava assertions quick start</a></li>
+            <li><a href="assertj-joda-time.html#quickstart">Joda Time assertions quick start</a></li>
+            <li><a href="assertj-neo4j.html#quickstart">Neo4J assertions quick start</a></li>
+         </ul>
+        </p>
+         <h3 class="page-header">1 - Get AssertJ Core assertions</h3>
+
+         <div class="row">
+            <div class="col-md-6 portfolio-item">
+               <h3 class="quickstart">Maven</h3>
+               <p>AssertJ artifacts are in Maven central repository.</p>
+                  <pre><code class="xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.assertj&lt;/groupId&gt;
+  &lt;artifactId&gt;assertj-core&lt;/artifactId&gt;
+  &lt;version&gt;1.5.0&lt;/version&gt;
+  &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+            </div>
+
+            <div class="col-md-6 portfolio-item">
+               <h3 class="quickstart">Gradle</h3>
+               <p>For Gradle users (using Maven Central Repository)</p>
+               <pre><code class="java">testCompile 'org.assertj:assertj-core:1.5.0'</code></pre>
+            </div>
+            <div class="col-md-12">
+               <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-core|1.5.0|bundle">assertj dependency declaration</a> for your tool.</p>
+            </div>
+
+         </div>
+
+         <h3 class="page-header">2 - Add AssertJ methods static import</h3>
+
+         <p>import all in once ...</p>
+            <pre><code class="language-java">import static org.assertj.core.api.Assertions.*;</code></pre>
+         <p>... or only what you need</p>
+         <pre><code class="language-java">import static org.assertj.core.api.Assertions.assertThat;  // main one
+import static org.assertj.core.api.Assertions.atIndex; // for List assertions
+import static org.assertj.core.api.Assertions.entry;  // for Map assertions
+import static org.assertj.core.api.Assertions.tuple; // when extracting several properties at once
+import static org.assertj.core.api.Assertions.fail; // use when making exception tests
+import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown; // idem
+import static org.assertj.core.api.Assertions.filter; // for Iterable/Array assertions
+import static org.assertj.core.api.Assertions.offset; // for floating number assertions
+import static org.assertj.core.api.Assertions.anyOf; // use with Condition
+import static org.assertj.core.api.Assertions.contentOf; // use with File assertions</code></pre>
+         <p>You can even configure your IDE, so that when you type <span class="small-code">as</span> and trigger code completion, it will suggest <span class="small-code">assertThat</span>, see <a href="assertj-core-features-highlight.html#ide-automatic-static-import">this tip</a>.</p>
+
+         <h3 class="page-header">3 - Use code completion</h3>
+         <p>
+         Type <span class="small-code">assertThat</span> followed by the object to test and a dot ... and any Java IDE code completion will show you all the assertions available.
+            <pre><code class="language-java">assertThat(objectToTest). // code completion -> assertions specific to objectToTest</code></pre>
+         <p> That's all !</p>
+
+         <h3 class="page-header">4 - Want to see more ?</h3>
+         <p>
+         See some of <a href="assertj-core-features-highlight.html">AssertJ noteworthy features</a> to get the maximum of it !
+         </p>
+         <p>
+         You can learn more by looking at <a href="http://joel-costigliola.github.io/assertj/core/api/index.html">AssertJ core javadoc</a>.
+         </p>
+         <p>
+         Another way is to go see <a href="https://github.com/joel-costigliola/assertj-examples/tree/master/src/test/java/org/assertj/examples">assertj-examples tests</a>, it covers what is possible with AssertJ Assertions with running code, you can clone it and run its tests !
+         </p>
+
+      </div>
+   </div>
+</div>
+
+
+$footer
+
+$javascript
+
+</body>
+</html>

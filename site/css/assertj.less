@@ -1,0 +1,245 @@
+@import "custom-variables";
+
+html, body {
+   height: 100%;
+}
+
+body {
+   /* body padding for fixed top nav */
+   padding-top: 30px;
+}
+
+h1, h4, h3 {
+   position: relative;
+}
+
+.quickstart {
+   margin-top: 0px;
+   margin-bottom: (@line-height-computed / 2);
+}
+
+h3 span {
+   position: absolute;
+   top: (@navbar-height + 10) * -1;
+}
+
+span.adjustAnchor {
+   position: absolute;
+   top: (@navbar-height + 10) * -1;
+}
+
+h1 span {
+   position: absolute;
+   top: (@navbar-height + 15) * -1;
+}
+
+pre {
+   border: 0px;
+   /*background: #222222;*/
+}
+
+.hljs {
+   padding: 10px 15px;
+}
+
+.breadcrumb {
+   margin-top: 10px;
+   margin-bottom: 10px;
+}
+
+.navbar-fixed-top {
+   border-bottom-width: 0px;
+}
+
+.navbar-nav > li > a:hover {
+   transition: all 0.2s ease;
+}
+
+pre {
+   padding: 0px;
+}
+
+pre code {
+   display: block;
+   /*border: 2px solid rgb(188, 148, 88);*/
+   /*border: 2px solid rgb(221, 179, 96);*/
+   //   border: 2px solid #FF9641;
+//   border: 1px solid #FFAD6B;
+   border-radius: 8px;
+   font-size: 17px;
+   padding: 10px 20px;
+}
+
+.small-code {
+   font-family: 'Source Code Pro', sans-serif;
+   font-weight: normal;
+   font-style: normal;
+   color: @code-color;
+}
+
+.release-point-span {
+   font-weight: normal;
+   font-size: larger;
+   //   border-bottom: 1px solid @ps-link-text;
+   border-bottom: 1px solid;
+
+   padding: 2px 8px;
+   //   border-bottom: 1px solid;
+   color: @ps-bg;
+   background-color: @ps-text;
+   border-radius: 6px;
+}
+
+.release-point-div {
+   margin-top: 30px;
+   margin-bottom: 20px;
+}
+
+h5,
+.list-section {
+   text-decoration: underline;
+}
+h5.page-header {
+   text-decoration: none;
+}
+
+.release-section-category {
+   font-weight: normal;
+   font-style: normal;
+   text-decoration: underline;
+   /*color: #ffffff;*/
+}
+
+.contributor {
+   /*font-family: 'Source Code Pro', sans-serif;*/
+   font-weight: normal;
+   font-style: italic;
+   //   color: #8cc1ff;
+}
+
+.navbar {
+   margin-bottom: 0px;
+}
+
+.masthead h1 {
+   font-size: 100px;
+   font-family: 'Source Code Pro', sans-serif;
+   line-height: 1;
+   letter-spacing: -2px;
+   text-align: center;
+   background-color: #FFE68E;
+   color: #222222;
+}
+
+.main-section {
+   text-align: center;
+   font-size: 50px;
+}
+
+.main-section h1 {
+   margin-top: -10px;
+   font-family: 'Source Code Pro', sans-serif;
+   font-size: 110px;
+   /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+
+}
+
+.img-home-portfolio,
+.img-customer,
+.portfolio-item {
+   margin-bottom: 30px;
+}
+
+.tab-pane {
+   margin-top: 15px;
+}
+
+/* Page Sections */
+.section,
+.section-colored {
+   padding: 50px 0;
+}
+
+.section-colored {
+   background-color: #FFE68E;
+   color: #222222;
+   background-color: #444444;
+   color: #FFE68E;
+}
+
+/* Side navigation */
+
+@sidemenu-default-width: 162px;
+
+.bs-sidebar.affix-top {
+   position: fixed;
+   width: @sidemenu-default-width;
+   padding: 15px 0px 0px 0px;
+}
+
+/* First level of nav */
+.bs-sidenav {
+   margin: 0px;
+   padding: 0px;
+   width: @sidemenu-default-width - 5;
+}
+
+.sidenav-header {
+   margin-top: 15px;
+   text-decoration: underline;
+   /*background-color: #FFE68E;*/
+   /*color: #222222;*/
+}
+
+/* All levels of nav */
+.bs-sidebar .nav > li > a {
+   display: block;
+   color: @ps-link-text;
+   padding: 3px 2px 3px 5px;
+}
+
+.bs-sidebar .nav > li > a:hover,
+.bs-sidebar .nav > li > a:focus {
+   text-decoration: none;
+//   background-color: transparent;
+   background-color: #E8BF6A;
+   color: @link-hover-color;
+//   border-radius: 5px;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+   .bs-sidebar.affix-top {
+      width: @sidemenu-default-width;
+   }
+}
+
+@media (min-width: 1200px) {
+   /*Widen the fixed sidebar again */
+   .bs-sidebar.affix-top,
+   .bs-sidenav {
+      width: @sidemenu-default-width + 20;
+   }
+}
+
+@media (min-width: 1300px) {
+   /* Widen the usable main area */
+   .container {
+      width: 1270px;
+   }
+}
+
+@media (min-width: 1400px) {
+   /* Widen the usable main area */
+   .container {
+      width: 1350px;
+   }
+}
+
+@media (max-width: 992px) {
+   .assertj-sidebar-menu {
+      /* hide sidebar menu */
+      display: none;
+   }
+}
+

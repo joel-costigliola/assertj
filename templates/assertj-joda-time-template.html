@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+$head
+
+<body>
+
+$menu
+
+<div class="container">
+   <div class="row">
+
+      $assertj_jodatime_side_menu
+
+      <div class="col-lg-10 col-md-10 col-sm-10 text-left">
+         <h1 class="page-header">AssertJ assertions for Joda-Time</h1>
+
+         <p>AssertJ assertions for <a href="http://www.joda.org/joda-time/">Joda-Time</a> provides assertions for Joda-Time types like <span class="small-code">DateTime</span> and <span class="small-code">LocalDateTime</span>.<br>
+            If you need additional assertions, just fill a ticket in <a href="https://github.com/joel-costigliola/assertj-joda-time/issues?labels=&milestone=&page=1&state=open">Assert Joda-Time issue tracker</a>.</p>
+         <p>Assert Joda-Time is hosted on github : <a href="https://github.com/joel-costigliola/assertj-joda-time">https://github.com/joel-costigliola/assertj-joda-time</a>.</p>
+
+         <h3 class="page-header"><span id="quickstart"></span>Joda-Time assertions quickstart guide</h3>
+
+         <p>To quickly start using Joda-Time assertions, follow the steps below.</p>
+
+         <h4 class="page-header">1 - Add assertj-joda-time dependency to your project pom.xml</h4>
+
+<pre><code class="xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.assertj&lt;/groupId&gt;
+  &lt;artifactId&gt;assertj-joda-time&lt;/artifactId&gt;
+  &lt;version&gt;1.1.0&lt;/version&gt;
+  &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+
+         <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-joda-time|1.1.0|bundle">assertj dependency declaration</a> for your tool.</p>
+
+         <h4 class="page-header">2 - Statically import <span class="small-code">org.assertj.jodatime.api.Assertions.assertThat</span> ...</h4>
+         <p>... and use your preferred IDE code completion after <span class="small-code">assertThat.</span></p>
+
+         <p>Examples :</p>
+
+<pre><code class="java">import static org.assertj.jodatime.api.Assertions.assertThat;
+...
+assertThat(dateTime).isBefore(firstDateTime);
+assertThat(dateTime).isAfterOrEqualTo(secondDateTime);
+
+// you can use directly String in comparison to avoid a conversion (we do that for you)
+assertThat(new DateTime("2000-01-01")).isEqualTo("2000-01-01");
+
+// compare DateTime ignoring seconds and milliseconds in comparison
+dateTime1 = new DateTime(2000, 1, 1, 23, 50, 0, 0, UTC);
+dateTime2 = new DateTime(2000, 1, 1, 23, 50, 10, 456, UTC);
+// assertion succeeds
+assertThat(dateTime1).isEqualToIgnoringSeconds(dateTime2);</code></pre>
+
+<p>For <span class="small-code">DateTime</span> assertions, comparison is performed in the <span class="small-code">DateTimeZone</span> of <span class="small-code">DateTime</span> to test, consequently the following assertion passes :</p>
+
+<pre><code class="java">DateTime utcTime = new DateTime(2013, 6, 10, 0, 0, DateTimeZone.UTC);
+DateTime cestTime = new DateTime(2013, 6, 10, 2, 0, DateTimeZone.forID("Europe/Berlin"));
+
+assertThat(utcTime).as("in UTC time").isEqualTo(cestTime);</code></pre>
+
+         <p>You can compare <span class="small-code">DateTime</span> to another <span class="small-code">DateTime</span>, or <span class="small-code">LocalDateTime</span> to <span class="small-code">LocalDateTime</span>, but not <span class="small-code">DateTime</span> to <span class="small-code">LocalDateTime</span>, it doesn't make sense as one is timezone dependent and the other is not.</p>
+
+         <p>Note that you can find more working examples in <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/src/test/java/org/assertj/examples/JodaTimeAssertionsExamples.java">JodaTimeAssertionsExamples.java</a> of <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project.</p>
+
+         <h3 class="page-header"><span id="tips"/></span>Tips & tricks</h3>
+
+         <h5>Using date string representation</h5>
+
+         <p>To be even easier to use, one can specify <span class="small-code">DateTime</span> or <span class="small-code">LocalDateTime</span> with their String representation to avoid manual String conversion, like in the example below :</p>
+
+         <p>Example :</p>
+<pre><code class="java">// instead of writing ...
+assertThat(dateTime).isBefore(new DateTime("2004-12-13T21:39:45.618-08:00"));
+// ... you can simply write (if you prefer)
+assertThat(dateTime).isBefore("2004-12-13T21:39:45.618-08:00");</code></pre>
+
+         <h5>Comparing with a precision level</h5>
+
+         <p>It is possible to compare <span class="small-code">DateTime</span> or <span class="small-code">LocalDateTime</span> ignoring time fields below a given a precision.
+            This is handy if you don't want, for example, to consider minutes in the comparison (which also implies to ignore seconds and milliseconds too).</p>
+
+         <p>Example :</p>
+<pre><code class="java">import static org.assertj.jodatime.api.Assertions.assertThat;
+
+// compare DateTime or LocalDateTime with a precision level, ignoring time fields
+dateTime1 = new DateTime(2000, 1, 1, 23, 50, 0, 0, UTC);
+dateTime2 = new DateTime(2000, 1, 1, 23, 50, 10, 456, UTC);
+
+// ignore seconds and milliseconds in comparison
+assertThat(dateTime1).isEqualToIgnoringSeconds(dateTime2);</code></pre>
+
+         <h3 class="page-header"><span id="latest-release"/></span>Joda-Time assertions 1.1.0 release</h3>
+         <p>Release date : 2013-07-14</p>
+
+         <div class="release-section-category">Release notes:</div>
+         <ul>
+            <li>In <span class="small-code">DateTime</span> assertions, comparison is performed in the <span class="small-code">DateTimeZone</span> of <span class="small-code">DateTime</span> to check.</li>
+            <li>assertj-joda-time does not impose joda-time 2.2 version anymore, it is compatible with any 2.0+ version.</li>
+            <li>Multiline error message improvements to ease see what was wrong.</li>
+            <li>Javadoc improvements : fix inconsistencies and add more code examples.</li>
+         </ul>
+
+         <h3 class="page-header">Joda-Time assertions 1.0.0 release</h3>
+         <p>2013-03-26 : 1.0.0 release</p>
+
+         <p>First release after Fest fork.</p>
+
+         <h3 class="page-header"><span id="javadoc"/></span>Javadoc of latest release</h3>
+
+         <p>Latest javadoc release : <a href="http://joel-costigliola.github.io/assertj/jodatime/api/index.html">AssertJ Joda-Time javadoc</a>.</p>
+
+          <h3 class="page-header"><span id="migrating-from-fest"/></span>Migrating from Fest Joda-Time assertions</h3>
+
+         <p>Migrating from Fest Joda-Time to AssertJ Joda-Time Assertions is easy, you only have to change your static import, just replace :
+         </p>
+
+         <pre><code class="java">import static org.fest.assertions.api.JODA_TIME</code></pre>
+
+         <p>by :</p>
+
+         <pre><code class="java">import static org.assertj.joda-time.api.Assertions</code></pre>
+
+         <h3 class="page-header"><span id="core-and-joda-time-assertions"/></span>Using both AssertJ <a href="https://github.com/joel-costigliola/assertj-core">Core assertions</a> and Joda-Time assertions</h3>
+
+         <p>You will have to make two static import : one for <span class="small-code">org.assertj.core.api.Assertions.assertThat</span>
+            to get core assertions and one <span class="small-code">org.assertj.jodatime.api.Assertions.assertThat</span> for Joda-Time assertions.</p>
+
+<pre><code class="java">import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.jodatime.api.Assertions.assertThat;
+...
+// assertThat comes from org.assertj.jodatime.api.Assertions.assertThat static import
+assertThat(new DateTime("2000-01-01")).isAfter(new DateTime("1999-12-31"));
+
+// assertThat comes from org.assertj.core.api.Assertions.assertThat static import
+assertThat("hello world").startsWith("hello");</code></pre>
+
+         <h3 class="page-header"><span id="mailing-list"/></span>Mailing list</h3>
+
+         <p>If you have any questions, please use
+            <a href="https://groups.google.com/forum/?fromgroups=#!forum/assertj">AssertJ google group</a>.</p>
+
+         <h3 class="page-header"><span id="code"/></span>Code and issue tracker</h3>
+
+         <p>Assert Joda-Time is hosted on github : <a href="https://github.com/joel-costigliola/assertj-joda-time">https://github.com/joel-costigliola/assertj-joda-time</a>.</p>
+
+         <p>Please report bugs or missing features in <a href="https://github.com/joel-costigliola/assertj-joda-time/issues?labels=&milestone=&page=1&state=open">Assert Joda-Time issue tracker</a>.</p>
+
+         <h3 class="page-header"><span id="contributing"/></span>Contributing</h3>
+
+         <p>Thanks for your interest ! Please check our <a href="https://github.com/joel-costigliola/assertj-joda-time/blob/master/CONTRIBUTING.md#contributing">contributor's guidelines</a>.</p>
+
+      </div>
+   </div>
+</div>
+
+
+$footer
+
+$javascript
+
+</body>
+</html>

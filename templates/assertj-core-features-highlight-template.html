@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+$head
+
+<body>
+
+$menu
+
+<div class="container">
+
+<div class="row">
+$assertj_core_side_menu
+
+   <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
+      <h1 class="page-header">AssertJ Core features highlight</h1>
+
+      <p>Assert has some great features that people don't always know, the purpose of this page is to show them so that you take the most of AssertJ.</p>
+
+      <ul>
+         <li><a href="#extracted-properties-assertion">Assertions on extracted properties/fields of iterable/array elements</a></li>
+         <li><a href="#extracted-method-result-assertion">Assertions on results of method call on iterable/array elements</a></li>
+         <li><a href="#file-content-string-assertions">Using String assertions on the content of a file</a></li>
+         <li><a href="#ide-automatic-static-import">IDE configuration to directly get <span class="small-code">assertThat</span> in code completion</a></li>
+         <li><a href="#filters">Filtering a group of objects before making assertions</a></li>
+         <li><a href="#exception-assertion">Exception assertions best practices</a></li>
+         <li><a href="#custom-comparison-strategy">Using a custom comparison strategy in assertions</a></li>
+      </ul>
+
+      <h3 class="page-header" ><span id="extracted-properties-assertion"></span><i class="fa fa-star"></i> Assertions on extracted properties/fields of iterable/array elements</h3>
+
+<p>Let's say you have queried some service/dao and got a list (or an array) of TolkienCharacter, to check the results you have to build the expected TolkienCharacter(s), which can be a lot of work !</p>
+
+<pre><code class="java">List&lt;TolkienCharacter&gt; fellowshipOfTheRing = tolkienDao.findHeroes();  // frodo, sam, aragorn ...
+
+// need to build frodo and aragorn the expected TolkienCharacter.
+assertThat(fellowshipOfTheRing).contains(frodo, aragorn);</code></pre>
+
+<p>Instead, it is usually sufficiant to only check some fields or properties of TolkienCharacter results elements.
+   This easy but you have to write some code to extract the fields/properties before performing your assertions, something like :</p>
+
+<pre><code class="java">// extract the names ...
+List&lt;String&gt; names = new ArrayList&lt;String&gt;();
+for (TolkienCharacter tolkienCharacter : fellowshipOfTheRing) {
+  names.add(tolkienCharacter.getName());
+}
+// ... and finally assert something
+assertThat(names).contains("Boromir", "Gandalf", "Frodo", "Legolas");</code></pre>
+
+<p>Hey ! It is too much work to have to extract fields or properties, let AssertJ help you taking care of that, see below
+   how to check the names of TolkienCharacter elements in fellowshipOfTheRing list:</p>
+
+<pre><code class="java">// "name" need to be either a property or a public field of TolkienCharacter class.
+assertThat(fellowshipOfTheRing).extracting("name")
+                               .contains("Boromir", "Gandalf", "Frodo", "Legolas")
+                               .doesNotContain("Sauron", "Elrond");</code></pre>
+
+<p>But there is more ! You can extract several fields/properties and check them using tuples. As an example, let's check the name, age and race's name of each TolkienCharacter elements :</p>
+<pre><code class="java">// when checking several properties/fields you need to use tuples :
+import static org.assertj.core.api.Assertions.tuple;
+
+// extracting name, age and and race.name nested property
+assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name")
+                               .contains(tuple("Boromir", 37, "Man"),
+                                         tuple("Sam", 38, "Hobbit"),
+                                         tuple("Legolas", 1000, "Elf"));</code></pre>
+
+<p>The extracted name, age and race's name values of the current element are grouped in a tuple, thus you need to use tuples for expected values.</p>
+
+<p>More examples are available in test method <span class="small-code">iterable_assertions_on_extracted_property_values_example</span> in <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/src/test/java/org/assertj/examples/IterableAssertionsExamples.java">IterableAssertionsExamples.java</a> from <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project.</p>
+
+<p>Note that <span class="small-code">extracting</span> feature is similar to <span class="small-code">extractProperty</span>, the only advantage of <span class="small-code">extractProperty</span> is strong typing</p>
+
+<pre><code class="java">assertThat(extractProperty("id").from(fellowshipOfTheRing)).contains(1L, 2L, 3L);
+// to be more type safe, you can define the property type with extractProperty second parameter
+assertThat(extractProperty("id", Long.class).from(fellowshipOfTheRing)).contains(1L, 2L, 3L);</code></pre>
+
+      <h3 class="page-header" ><span id="extracted-method-result-assertion"></span><i class="fa fa-star"></i> Assertions on results of method call on iterable/array elements</h3>
+
+      <p>Like <span class="small-code">extracting</span> feature but instead of extracting properties/fields, it extracts the result of given method invocation on the elements of Iterable/Array under test and puts the results into a new Iterable/Array which becomes the object under test.<br>
+         It allows you to test the results of method call on elements instead of testing the elements themselves, it's especially usefull for classes that does not conform to Java Bean's getter specification (e.g <span class="small-code">toString()</span> or <span class="small-code">String status()</span> instead of <span class="small-code">String getStatus()</span>).
+      </p>
+      <p>Let's take an example to make things clearer :</p>
+<pre><code class="java">// Build a array of WesterosHouse, a WesterosHouse has a method: public String sayTheWords()
+List&lt;WesterosHouse&gt; greatHouses = new ArrayList&lt;WesterosHouse&gt;();
+greatHouses.add(new WesterosHouse("Stark", "Winter is Comming"));
+greatHouses.add(new WesterosHouse("Lannister", "Hear Me Roar!"));
+greatHouses.add(new WesterosHouse("Greyjoy", "We Do Not Sow"));
+greatHouses.add(new WesterosHouse("Baratheon", "Our is the Fury"));
+greatHouses.add(new WesterosHouse("Martell", "Unbowed, Unbent, Unbroken"));
+greatHouses.add(new WesterosHouse("Tyrell", "Growing Strong"));
+
+// let's verify the words of great houses in Westeros:
+assertThat(greatHouses).extractingResultOf("sayTheWords")
+                       .contains("Winter is Comming", "We Do Not Sow", "Hear Me Roar")
+                       .doesNotContain("Lannisters always pay their debts");</code></pre>
+
+
+      <h3 class="page-header"><span id="file-content-string-assertions"></span><i class="fa fa-star"></i> Using String assertions on the content of a file</h3>
+
+      <p>File assertions are rather poor when it comes to check the file content, so we had the idea to reuse AssertJ String assertions on the content of a file.<br>
+         See the example below :</p>
+
+<pre><code class="java">File xFile = writeFile("xFile", "The Truth Is Out There");
+
+// classic File assertions
+assertThat(xFile).exists().isFile().isRelative();
+
+// String assertions on the file content : contentOf() comes from Assertions.contentOf static import
+assertThat(contentOf(xFile)).startsWith("The Truth").contains("Is Out").endsWith("There");</code></pre>
+
+      <p>Note that it is meant to be used with small files since the whole content is loaded in memory.</p>
+
+
+      <h3 class="page-header"><span id="ide-automatic-static-import"></span><i class="fa fa-star"></i> IDE configuration to directly get assertThat with code completion</h3>
+
+      <p>We want here to start typing <span class="small-code">asser</span> and let code completion suggest you <span class="small-code">assertThat</span> from AssertJ (and not the one from Hamcrest !).</p>
+
+      <p class="list-section">Eclipse configuration</p>
+      <ol>
+         <li>Go to : preferences > Java > Editor > Content assist > Favorites > New Type</li>
+         <li>Enter : org.assertj.core.api.Assertions</li>
+         <li>You should see : org.assertj.core.api.Assertions.* in a the list.</li>
+      </ol>
+
+      <p class="list-section">IntelliJ Idea, I don't know how to get Eclise like behavior but these steps helps :</p>
+      <ol>
+         <li>Go to : File > Settings > Editor > Auto Import</li>
+         <li>In Java, enable 'Add unambiguous imports on the fly'</li>
+         <li>In excludes, add 'org.junit.Assert.assertThat'</li>
+         <li>Go to : File -> Settings -> Code Style -> Imports. table.</li>
+         <li>Under Packages to Use Import with '*', add org.assertj.core.api.Assertions</li>
+      </ol>
+      <p>If someones know how to configure IntelliJ Idea to get Eclipse behavior for static import, please let me know.</p>
+
+      <h3 class="page-header"><span id="filters"></span><i class="fa fa-star"></i> Filtering a group of objects before making assertions</h3>
+
+      <p>
+         Filtering can be done on arrays or iterables, filters criteria are expressed by :
+      <ul>
+         <li>a condition (<span class="small-code">org.assertj.assertions.core.Condition</span>)</li>
+         <li>some operation on property of array/iterable elements</li>
+      </ul>
+      </p>
+
+      <p>Let's see both options on some examples taken from <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/src/test/java/org/assertj/examples/FilterExamples.java">FilterExamples.java</a> from <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project.</p>
+
+      <p class="list-section">Filtering on extracted properties values</p>
+
+<pre><code class="java">// with(property).equalsTo(someValue) works by introspection on specified property
+assertThat(filter(fellowshipOfTheRing).with("race").equalsTo(HOBBIT).get())
+          .containsOnly(sam, frodo, pippin, merry);
+// same thing - shorter way
+assertThat(filter(fellowshipOfTheRing).with("race", HOBBIT).get())
+          .containsOnly(sam, frodo, pippin, merry);
+
+// nested property are supported
+assertThat(filter(fellowshipOfTheRing).with("race.name").equalsTo("Man").get())
+          .containsOnly(aragorn, boromir);
+
+// you can apply different comparison
+assertThat(filter(fellowshipOfTheRing).with("race").notIn(HOBBIT, MAN).get())
+          .containsOnly(gandalf, gimli, legolas);
+assertThat(filter(fellowshipOfTheRing).with("race").in(MAIA, MAN).get())
+          .containsOnly(gandalf, boromir, aragorn);
+assertThat(filter(fellowshipOfTheRing).with("race").notEqualsTo(HOBBIT).get())
+          .contains(gandalf, boromir, gimli,aragorn, legolas);
+
+// you can chain multiple filter criteria
+assertThat(filter(fellowshipOfTheRing).with("race").equalsTo(MAN)
+                                      .and("name").notEqualsTo("Boromir").get())
+                                      .contains(aragorn);</code></pre>
+
+      <p class="list-section">Filtering with <span class="small-code">Condition</span></p>
+
+      <p>Two methods are available : <span class="small-code">being(Condition)</span> and <span class="small-code">having(Condition)</span>, they do the same job - pick the one that makes your code the more readable !</p>
+
+<pre><code class="java">import org.assertj.assertions.core.Condition;
+
+// having(condition) example
+Condition&lt;Player&gt; mvpStats= new Condition&lt;Player&gt;() {
+  @Override
+  public boolean matches(Player player) {
+    return player.pointsPerGame() > 20 && (player.assistsPerGame() >= 8 || player.reboundsPerGame() >= 8);
+  }
+};
+assertThat(filter(players).having(mvpStats).get()).containsOnly(rose, james);
+
+// being(condition) example : same condition can be applied but is renamed to be more readable
+Condition&lt;Player&gt; potentialMvp= mvpStats;
+assertThat(filter(players).being(potentialMvp).get()).containsOnly(rose, james);</code></pre>
+
+
+      <h3 class="page-header"><span id="exception-assertion"></span><i class="fa fa-star"></i> Exception assertions best practices</h3>
+
+      <p>The goal here is to assert that an exception has been thrown and that exception is the one expected..</p>
+      <ol>
+         <li>Put the code to should throw in a try-catch.</li>
+         <li>Call <span class="small-code">fail</span> method immediately after the code that should throw the exception, so that if it is not thrown, the test fails.</li>
+         <li>Make assertions on the caught exception</li>
+      </ol>
+
+      <p>Note that <span class="small-code">fail</span> method can be statically imported from <span class="small-code">Assertions</span> class</p>
+
+      <p>Example taken from <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/src/test/java/org/assertj/examples/FailUsageExamples.java">FailUsageExamples.java</a> in <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a>.</p>
+
+<pre><code class="java">import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
+// ... code omitted for brevety
+
+assertThat(fellowshipOfTheRing).hasSize(9);
+
+// here's the typical pattern to use Fail :
+try {
+  fellowshipOfTheRing.get(9); // argggl !
+  // we should not arrive here => use fail to expresses that
+  // if IndexOutOfBoundsException was not thrown, test would fail the specified message
+  fail("IndexOutOfBoundsException expected because fellowshipOfTheRing has only 9 elements");
+} catch (IndexOutOfBoundsException e) {
+  assertThat(e).hasMessage("Index: 9, Size: 9");
+}
+
+// Warning : don't catch Throwable as it would also catch the AssertionError thrown by fail method
+
+// another way to do the same thing
+try {
+  fellowshipOfTheRing.get(9); // argggl !
+  // if IndexOutOfBoundsException was not thrown, test would fail with message :
+  // "Expected IndexOutOfBoundsException to be thrown"
+  failBecauseExceptionWasNotThrown(IndexOutOfBoundsException.class);
+} catch (IndexOutOfBoundsException e) {
+  assertThat(e).hasMessage("Index: 9, Size: 9");
+}</code></pre>
+
+      <p>Testing assertions could be much more elegant, we are thinking of another approach based on JUnit rule, that woud be like :</p>
+
+<pre><code class="java">@Rule
+public FluentExpectedException thrown = FluentExpectedException.none();
+...
+assertThat(fellowshipOfTheRing).hasSize(9);
+thrown.exception(IndexOutOfBoundsException.class).hasMessage("Index: 9, Size: 9")</code></pre>
+
+      <h3 class="page-header"><span id="custom-comparison-strategy"></span><i class="fa fa-star"></i> Using a custom comparison strategy in assertions</h3>
+
+      <p>Sometime you want to compare objects with strategy not relying on <span class="small-code">equals</span> method, this is possible in AssertJ thanks to two methods :
+         <ul>
+            <li><span class="small-code">usingComparator(Comparator)</span> : concerns object under assertion</li>
+            <li><span class="small-code">usingElementComparator(Comparator)</span> : concerns elements of iterable/array under assertion</li>
+         </ul>
+      </p>
+
+      <p><span class="small-code">usingComparator(Comparator)</span> example :</p>
+
+<pre><code class="java">// frodo and sam are instances of TolkienCharacter with Hobbit race (obviously :), they are not equal ...
+assertThat(frodo).isNotEqualTo(sam);
+
+// ... but if we compare race only, they are (raceComparator implements Comparator&lt;TolkienCharacter&gt;)
+assertThat(frodo).usingComparator(raceComparator).isEqualTo(sam);</code></pre>
+
+      <p><span class="small-code">usingElementComparator(Comparator)</span> example :</p>
+
+<pre><code class="java">// standard comparison : the fellowshipOfTheRing includes Gandalf but not Sauron (believe me) ...
+assertThat(fellowshipOfTheRing).contains(gandalf).doesNotContain(sauron);
+
+// ... but if we compare race only, Sauron is in fellowshipOfTheRing (he's a Maia like Gandalf)
+assertThat(fellowshipOfTheRing).usingElementComparator(raceComparator).contains(sauron);</code></pre>
+
+   </div>
+</div>
+
+</div>
+
+$footer
+
+$javascript
+
+</body>
+</html>

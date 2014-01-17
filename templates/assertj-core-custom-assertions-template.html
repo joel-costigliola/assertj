@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+$head
+
+<body>
+
+$menu
+
+<div class="container">
+
+<div class="row">
+   $assertj_core_side_menu
+
+   <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
+      <h1 class="page-header">Creating assertions specific to your classes</h1>
+      <p>Having the possibility to create assertions specific to your own classes is important because it makes your test assertions reflect the domain model. It's a way to use Domain Driven Design ubiquitous language in your tests. Custom assertions can be seen as a DSL of domain assertions.</p>
+      <p>Writing its own assertions is simple : create a class inheriting from <span class="small-code">AbstractAssert</span> and add your custom assertions methods.<br>
+         To be easy to use, you should also add a static method <span class="small-code">assertThat</span> to provide an handy entry point to your new assertion class.
+      </p>
+
+      <p>If you have a lot of classes you want to have assertions for, consider using <a href="assertj-assertions-generator.html">AssertJ assertions generator</a>.</p>
+
+      <h3 class="page-header"> Creating your own assertion class</h3>
+
+      <p>Let's see how to do that on an example !<br>
+      The example is taken from <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> and more specifically <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/src/test/java/org/assertj/examples/custom/TolkienCharacterAssert.java">TolkienCharacterAssert.java</a>.
+      </p>
+
+      <p>We want to have assertion for the <span class="small-code">TolkienCharacter</span> domain model class shown below :</p>
+
+<pre><code class="java">// getter/setter not shown for brevity
+public class TolkienCharacter {
+  private String name;
+  private Race race;
+  private int age;
+}</code></pre>
+
+      <p>Let's name our assertion class <span class="small-code">TolkienCharacterAssert</span> to follow AssertJ convention,
+         we make it inherit from <span class="small-code">AbstractAssert</span> and specify the generic parameters, first is the class itself (needed for assertion chaining) and second is the class we want to make assertions on : <span class="small-code">TolkienCharacter</span>.</p>
+
+      <p>Inheriting from <span class="small-code">AbstractAssert</span> will give you all the basic assertions : <span class="small-code">isEqualTo</span>, <span class="small-code">isNull</span>, ...</p>
+
+<pre><code class="java">// javadoc omitted for brevity
+// 1 - inherits from AbstractAssert !
+public class TolkienCharacterAssert extends AbstractAssert&lt;TolkienCharacterAssert, TolkienCharacter&gt; {
+
+  // 2 - Write a constructor to build your assertion class with the object you want make assertions on.
+  public TolkienCharacterAssert(TolkienCharacter actual) {
+    super(actual, TolkienCharacterAssert.class);
+  }
+
+  // 3 - A fluent entry point to your specific assertion class, use it with static import.
+  public static TolkienCharacterAssert assertThat(TolkienCharacter actual) {
+    return new TolkienCharacterAssert(actual);
+  }
+
+  // 4 - a specific assertion !
+  public TolkienCharacterAssert hasName(String name) {
+    // check that actual TolkienCharacter we want to make assertions on is not null.
+    isNotNull();
+
+    // check condition
+    if (!actual.getName().equals(name)) {
+      failWithMessage("Expected character's name to be <%s> but was <%s>", name, actual.getName());
+    }
+
+    // return the current assertion for method chaining
+    return this;
+  }
+
+  // 4 - another specific assertion !
+  public TolkienCharacterAssert hasAge(int age) {
+    // check that actual TolkienCharacter we want to make assertions on is not null.
+    isNotNull();
+
+    // check condition
+    if (actual.getAge() != age) {
+      failWithMessage("Expected character's age to be <%s> but was <%s>", age, actual.getAge());
+    }
+
+    // return the current assertion for method chaining
+    return this;
+  }
+}</code></pre>
+
+      <h3 class="page-header"> Providing a single entry point for all assertions : yours + AssertJ ones</h3>
+
+      <p>It's easy :</p>
+
+      <ol>
+         <li>Create a class inheriting from <span class="small-code">org.assertj.core.api.Assertions</span>.</li>
+         <li>Add <span class="small-code">assertThat</span> static method providing entry point to your own assertion
+         </li>
+      </ol>
+
+      <p>Example taken from
+         <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/src/test/java/org/assertj/examples/custom/MyProjectAssertions.java">MyProjectAssertions.java</a> in
+         <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> :</p>
+
+      <p>Note that if you use <a href="assertj-assertions-generator.html">AssertJ assertions generator</a>, this class will be generated for you.</p>
+
+<pre><code class="java">// extending make all standard AssertJ assertions available.
+public class MyProjectAssertions extends Assertions {
+
+  // add the custom assertions related to MyProject
+  public static TolkienCharacterAssert assertThat(TolkienCharacter actual) {
+    return new TolkienCharacterAssert(actual);
+  }
+}</code></pre>
+
+      <h5>WARNING !</h5>
+      <p>If you create several <span class="small-code">Assertions</span> entry point, all inheriting from <span class="small-code">org.assertj.core.api.Assertions</span>,
+         you will have a problem if you use them in the same test and import <span class="small-code">assertThat</span> statically. There will be a compiler error when using a basic assertion method like <span class="small-code">assertThat(String)</span>
+         because it will be available from the two <span class="small-code">Assertions</span> entry point classes your are using, the compiler won't know which one to use.</p>
+      <p>To solve this problem, don't make your <span class="small-code">Assertions</span> class inherit from <span class="small-code">org.assertj.core.api.Assertions</span> and import statically <span class="small-code">org.assertj.core.api.Assertions.assertThat</span> to use basic core assertions.<br>
+         This is the strategy followed with Guava, JodaTime and Neo4J assertions extension module.</p>
+
+      <h3 class="page-header">Generating specific assertions with AssertJ assertions generator</h3>
+
+      <p>If you have a lot of classes and want custom assertions for all of them, it can be a lot of work !<br>
+         In that case, you can generate custom assertions with <a href="assertj-assertions-generator.html">AssertJ assertions generator</a> which comes with a <a href="assertj-assertions-generator-maven-plugin.html">maven plugin</a>, it takes classes or packages as input and generates the corresponding specific assertions classes (for all classes of specified packages and subpackages).</p>
+
+      <p>The assertions generator looks for properties to know what to generate. For example, if you have a <span class="small-code">Person</span> class with an <span class="small-code">address</span> property, it will generate <span class="small-code">hasAddress</span> assertion as part of <span class="small-code">PersonAssert</span> assertion class.<br>
+      Once assertions classes are generated, you can put them in source control and enrich them with new assertions.</p>
+
+      <p>We plan to provide assertions generator plugins for eclipse and idea but we don't have a time table for them.</p>
+
+   </div>
+</div>
+
+</div>
+
+$footer
+
+$javascript
+
+</body>
+</html>

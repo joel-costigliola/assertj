@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+$head
+
+<body>
+
+$menu
+
+<div class="container">
+   <div class="row">
+
+      $assertj_core_side_menu
+
+      <div class="col-lg-10 col-md-10 col-sm-10 text-left">
+         <h1 class="page-header">Migrating from Fest 2.x</h1>
+
+         <p>Migrating from Fest 2.x is easy since AssertJ is a fork of Fest, there are very few breaking changes.</p>
+
+         <p>First thing first, change your static import, from:</p>
+
+         <pre><code class="java">import static org.fest.assertions.api.Assertions</code></pre>
+         <p>to</p>
+         <pre><code class="java">import static org.assertj.core.api.Assertions</code></pre>
+
+         <p>For most users, that should be all you need to do !</p>
+
+         <p>For linux users, a quick way to do that is to use something like:</p>
+         <pre><code class="bash">find . -name "*.java" -exec sed -i "s/org.fest.assertions.api.Assertions/org.assertj.core.api.Assertions/g" '{}' \;</code></pre>
+
+         <h5>Renamed assertions since Fest fork :</h5>
+         <ul>
+            <li><span class="small-code">isLenientEqualsToByIgnoringFields</span> renamed to <span class="small-code">isEqualToIgnoringGivenFields</span></li>
+            <li><span class="small-code">isLenientEqualsToByAcceptingFields</span> renamed to <span class="small-code">isEqualToComparingOnlyGivenFields</span></li>
+            <li><span class="small-code">isLenientEqualsToByIgnoringNullFields</span> renamed to <span class="small-code">isEqualToIgnoringNullFields</span></li>
+            <li><span class="small-code">isEqualsToByComparingFields</span> renamed to <span class="small-code">isEqualToComparingFieldByField</span></li>
+         </ul>
+
+         <h5>Removed assertions since Fest fork (we thought that they were very unclear) :</h5>
+         <ul>
+            <li><span class="small-code">areNotAtLeast</span>, <span class="small-code">areNotAtMost</span>, <span class="small-code">areNotExactly</span></li>
+            <li><span class="small-code">haveNotAtLeast</span>, <span class="small-code">haveNotAtMost</span>, <span class="small-code">haveNotExactly</span></li>
+         </ul>
+
+         <p>If something's missing or doesn't work, please <a href="https://github.com/joel-costigliola/assertj-core/issues?state=open">create an issue</a> to update this section.</p>
+
+         <h1 class="page-header"><span id="fest-1.4" class="adjustAnchor"></span>Migrating from Fest 1.4</h1>
+
+         <p>Migrating Fest Assert 1.4 is a little more longer than migrating from Fest Assert 2.x but is not difficult.</p>
+
+         <h5>Major changes</h5>
+         <ul>
+            <li>the package change, API is now in <span class="small-code">org.assertj.core.api</span></li>
+            <li><span class="small-code">onProperty</span> feature has been renamed to the more powerful <span class="small-code">extracting</span></li>
+         </ul>
+
+         <h5>Minor changes</h5>
+         <ul>
+            <li><span class="small-code">IteratorAssert</span> has been replaced by <span class="small-code">IterableAssert</span></li>
+            <li><span class="small-code">satisfies()</span> method has been replaced by <span class="small-code">is()</span> or <span class="small-code">has()</span> (hint: use the more readable for your code)</li>
+            <li><span class="small-code">Delta.delta()</span> becomes <span class="small-code">offset()</span>, it is directly available from <span class="small-code">Assertions.offset()</span></li>
+            <li><span class="small-code">fail()</span> method has been removed - prefer <span class="small-code">failBecauseExceptionWasNotThrown(exception class)</span>.</li>
+            <li>make your own assertion inheriting from <span class="small-code">AbstractAssert</span> (more details below)</li>
+            <li><span class="small-code">description()</span> becomes <span class="small-code">descriptionText()</span></li>
+            <li><span class="small-code">excludes()</span> becomes <span class="small-code">doesNotContain()</span></li>
+         </ul>
+
+         <h3 class="page-header">Migration detailed steps</h3>
+         <ul>
+            <li><a href="#migrating-custom-assertions">Migrating custom assertions</a></li>
+            <li><a href="#failure-to-fail"><span class="small-code">failure(String message)</span> replaced by <span class="small-code">fail(String message)</span></a></li>
+            <li><a href="#fail-no-params-removed"><span class="small-code">fail()</span> method removed</a></li>
+            <li><a href="#onProperty-to-extracting">Migrating <span class="small-code">onProperty</span> usage to <span class="small-code">extracting</span></a></li>
+         </ul>
+
+         <h4 class="page-header"><span id="migrating-custom-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Migrating custom assertions</h4>
+
+<p>It is simple, instead of inheriting from <span class="small-code">GenericAssert</span> you must inherit from <span class="small-code">AbstractAssert</span> and invert the parameters order in the constructor.</p>
+
+<p>in Fest 1.4 :</p>
+
+<pre><code class="java">public DateTimeAssert(DateTime actual) {
+    super(DateTimeAssert.class, actual);
+}</code></pre>
+
+<p>in AssertJ :</p>
+
+<pre><code class="java">public DateTimeAssert(DateTime actual) {
+    super(actual, DateTimeAssert.class);
+}</code></pre>
+
+         <h4 class="page-header"><span id="failure-to-fail" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> <span class="small-code">failure(String message)</span> replaced by <span class="small-code">fail(String message)</span></h4>
+
+         <p>In Fest 1.4 :</p>
+         <pre><code class="java">throw failure(concat("expecting ", objectName, " value not to be null"));</code></pre>
+         <p>In AssertJ :</p>
+         <pre><code class="java">Fail.fail(String.format("expecting %s value not to be null", objectName));</code></pre>
+
+         <h4 class="page-header"><span id="fail-no-params-removed" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> <span class="small-code">fail()</span> method removed</h4>
+
+         <p>We think that when using <span class="small-code">fail</span> in a test, one should always set a meaningful failure message, thus the removing of no arg <span class="small-code">fail()</span> method.
+         Since <span class="small-code">fail()</span> was mainly used when expecting an exception, you can replace it by : <span class="small-code">failBecauseExceptionWasNotThrown(Exception class)</span>.
+         </p>
+         <p>For example, executing :</p>
+         <pre><code class="java">failBecauseExceptionWasNotThrown(FileNotFoundException.class)</code></pre>
+         <p>will throw an <span class="small-code">AssertionError</span> with message "Expected FileNotFoundException to be thrown"</p>
+
+         <p>All <span class="small-code">fail</span> methods are available from <span class="small-code">Assertions</span> or <span class="small-code">Fail</span> class.</p>
+
+         <h4 class="page-header"><span id="onProperty-to-extracting" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Migrating <span class="small-code">onProperty</span> usage to <span class="small-code">extracting</span></h4>
+
+         <p>In FEST 1.4 :</p>
+         <pre><code class="java">assertThat(fellowshipOfTheRing).onProperty("name").contains("Gandalf", "Frodo", "Legolas");</code></pre>
+         <p>In AssertJ :</p>
+         <pre><code class="java">assertThat(fellowshipOfTheRing).extracting("name").contains("Gandalf", "Frodo", "Legolas");</code></pre>
+
+         <p>Moreover <span class="small-code">extracting</span> is able to extract both property and field while Fest only extract property.</p>
+
+      </div>
+   </div>
+</div>
+
+
+$footer
+
+$javascript
+
+</body>
+</html>
