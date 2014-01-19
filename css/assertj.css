@@ -44,6 +44,9 @@ pre {
 .navbar-nav > li > a:hover {
   transition: all 0.2s ease;
 }
+.navbar-nav > li > a:focus {
+  outline: none;
+}
 pre {
   padding: 0px;
 }
