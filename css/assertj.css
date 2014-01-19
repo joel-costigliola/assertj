@@ -42,7 +42,7 @@ pre {
   border-bottom-width: 0px;
 }
 .navbar-nav > li > a:hover {
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
 }
 .navbar-nav > li > a:focus {
   outline: none;
