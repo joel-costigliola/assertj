@@ -29,7 +29,6 @@ h1 span {
 }
 pre {
   border: 0px;
-  /*background: #222222;*/
 }
 .hljs {
   padding: 10px 15px;
@@ -52,8 +51,6 @@ pre {
 }
 pre code {
   display: block;
-  /*border: 2px solid rgb(188, 148, 88);*/
-  /*border: 2px solid rgb(221, 179, 96);*/
   border-radius: 8px;
   font-size: 17px;
   padding: 10px 20px;
@@ -88,10 +85,8 @@ h5.page-header {
   font-weight: normal;
   font-style: normal;
   text-decoration: underline;
-  /*color: #ffffff;*/
 }
 .contributor {
-  /*font-family: 'Source Code Pro', sans-serif;*/
   font-weight: normal;
   font-style: italic;
 }
@@ -104,8 +99,6 @@ h5.page-header {
   line-height: 1;
   letter-spacing: -2px;
   text-align: center;
-  background-color: #FFE68E;
-  color: #222222;
 }
 .main-section {
   text-align: center;
@@ -126,15 +119,8 @@ h5.page-header {
   margin-top: 15px;
 }
 /* Page Sections */
-.section,
-.section-colored {
+.section {
   padding: 50px 0;
-}
-.section-colored {
-  background-color: #FFE68E;
-  color: #222222;
-  background-color: #444444;
-  color: #FFE68E;
 }
 /* Side navigation */
 .bs-sidebar.affix-top {
@@ -151,8 +137,6 @@ h5.page-header {
 .sidenav-header {
   margin-top: 15px;
   text-decoration: underline;
-  /*background-color: #FFE68E;*/
-  /*color: #222222;*/
 }
 /* All levels of nav */
 .bs-sidebar .nav > li > a {

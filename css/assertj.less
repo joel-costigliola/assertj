@@ -35,7 +35,6 @@ h1 span {
 
 pre {
    border: 0px;
-   /*background: #222222;*/
 }
 
 .hljs {
@@ -65,10 +64,6 @@ pre {
 
 pre code {
    display: block;
-   /*border: 2px solid rgb(188, 148, 88);*/
-   /*border: 2px solid rgb(221, 179, 96);*/
-   //   border: 2px solid #FF9641;
-//   border: 1px solid #FFAD6B;
    border-radius: 8px;
    font-size: 17px;
    padding: 10px 20px;
@@ -84,11 +79,9 @@ pre code {
 .release-point-span {
    font-weight: normal;
    font-size: larger;
-   //   border-bottom: 1px solid @ps-link-text;
    border-bottom: 1px solid;
 
    padding: 2px 8px;
-   //   border-bottom: 1px solid;
    color: @ps-bg;
    background-color: @ps-text;
    border-radius: 6px;
@@ -111,14 +104,11 @@ h5.page-header {
    font-weight: normal;
    font-style: normal;
    text-decoration: underline;
-   /*color: #ffffff;*/
 }
 
 .contributor {
-   /*font-family: 'Source Code Pro', sans-serif;*/
    font-weight: normal;
    font-style: italic;
-   //   color: #8cc1ff;
 }
 
 .navbar {
@@ -131,8 +121,6 @@ h5.page-header {
    line-height: 1;
    letter-spacing: -2px;
    text-align: center;
-   background-color: #FFE68E;
-   color: #222222;
 }
 
 .main-section {
@@ -159,16 +147,8 @@ h5.page-header {
 }
 
 /* Page Sections */
-.section,
-.section-colored {
+.section {
    padding: 50px 0;
-}
-
-.section-colored {
-   background-color: #FFE68E;
-   color: #222222;
-   background-color: #444444;
-   color: #FFE68E;
 }
 
 /* Side navigation */
@@ -191,8 +171,6 @@ h5.page-header {
 .sidenav-header {
    margin-top: 15px;
    text-decoration: underline;
-   /*background-color: #FFE68E;*/
-   /*color: #222222;*/
 }
 
 /* All levels of nav */
@@ -205,10 +183,9 @@ h5.page-header {
 .bs-sidebar .nav > li > a:hover,
 .bs-sidebar .nav > li > a:focus {
    text-decoration: none;
-//   background-color: transparent;
+   // can't express background-color from predefined colors, keep hard coded value
    background-color: #E8BF6A;
    color: @link-hover-color;
-//   border-radius: 5px;
 }
 
 /* Show and affix the side nav when space allows it */
