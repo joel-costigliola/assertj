@@ -16,9 +16,52 @@ $menu
       <h1 class="page-header">Converting your JUnit assertions to AssertJ</h1>
 
          <p>This page will help you converting your existing JUnit assertions to AssertJ ones, note though that both assertions can coexist together, you don't have to migrate all in one time.</p>
-         <p>For the time being we propose only to the <a href="#manual-conversion">conversion manually using regexp</a> but we plan to provide a <a href="#automatic-conversion">script</a> to automate this task.</p>
+         <p>The idea here is to convert code like :<pre><code class="java">assertEquals(expected, actual);</code></pre> to :</p><p><pre><code class="java">assertThat(actual).isEqualTo(expected);</code></pre> </p>
+         <p>You have several ways to perform the conversion :</p>
+         <ul>
+            <li><a href="#automatic-conversion">automatically</a> with a shell script.</span></li>
+            <li><a href="#manual-conversion">manually</a> using the regexps described in this page.</li>
+            <li>With IntelliJ IDEA, using the Structured Search and Replace (SSR) feature.</li>
+         </ul>
 
-         <p>If you are using IntelliJ IDEA, you probably can use the Structured Search and Replace (SSR) feature to do the conversion.</p>
+         <h3 class="page-header"><span id="automatic-conversion"></span>Automatically converting your JUnit assertions</h3>
+
+         <p>Use <a href="https://github.com/joel-costigliola/assertj-core/blob/master/src/main/scripts/convert-junit-assertions-to-assertj.sh">convert-junit-assertions-to-assertj.sh</a> a shell script based on sed command line editor and regexps. It looks at all Test.java files and performs search and replace to convert JUnit assertions to AssertJ ones (if the Test.java file pattern does not suit you, just edit the script and change it according to your needs).</p>
+
+         <p>The script works on windows within a bash console like git bash (tested) or cygwin (but not tested).</p>
+
+         <p>It is not perfect but should do most of the job, after executing it, you will need to optimize imports with your IDE to remove unused imports and if you were using <span class="small-code">assertEquals</span> with delta to compare numbers, you will probably need to import statically : <span class="small-code">import static org.assertj.core.api.Assertions.offset;</span> which is the way you express delta/offset with AssertJ.</p>
+
+         <p>The script handles the cases where you give an assertion description, for example :<pre><code class="java">assertEquals("test context", "a", "a");</code></pre> will be replaced by :</p><p><pre><code class="java">assertThat("a").as("test context").isEqualTo("a");</code></pre> </p>
+
+         <p>See below the output of the script execution :</p>
+
+<pre><code class="diff" style="font-size:83%;">Converting JUnit assertions to AssertJ assertions on files matching pattern : *Test.java
+
+ 1 - Replacing : assertEquals(0, myList.size()) ................. by : assertThat(myList).isEmpty()
+ 2 - Replacing : assertEquals(expectedSize, myList.size()) ...... by : assertThat(myList).hasSize(expectedSize)
+ 3 - Replacing : assertEquals(expectedDouble, actual, delta) .... by : assertThat(actual).isEqualTo(expectedDouble, offset(delta))
+ 4 - Replacing : assertEquals(expected, actual) ................. by : assertThat(actual).isEqualTo(expected)
+ 5 - Replacing : assertArrayEquals(expectedArray, actual) ....... by : assertThat(actual).isEqualTo(expectedArray)
+ 6 - Replacing : assertNull(actual) ............................. by : assertThat(actual).isNull()
+ 7 - Replacing : assertNotNull(actual) .......................... by : assertThat(actual).isNotNull()
+ 8 - Replacing : assertTrue(logicalCondition) ................... by : assertThat(logicalCondition).isTrue()
+ 9 - Replacing : assertFalse(logicalCondition) .................. by : assertThat(logicalCondition).isFalse()
+10 - Replacing : assertSame(expected, actual) ................... by : assertThat(actual).isSameAs(expected)
+11 - Replacing : assertNotSame(expected, actual) ................ by : assertThat(actual).isNotSameAs(expected)
+
+12 - Replacing JUnit static import by AssertJ ones, at this point you will probably need to :
+12 --- optimize imports with your IDE to remove unused imports
+12 --- add "import static org.assertj.core.api.Assertions.offset;" if you were using JUnit number assertions with delta</code></pre>
+
+         <p>On windows you might have permission problems as sed creates temp files, if you got the following error, you just have to grant write permissions to current user for the folder where your test files live.</p>
+
+<pre><code class="diff" style="font-size:83%;">Converting JUnit assertions to AssertJ assertions on files matching pattern : *Test.java
+
+ 1 - Replacing : assertEquals(0, myList.size()) ................. by : assertThat(myList).isEmpty()
+sed: preserving permissions for `./sed005904': Permission denied
+sed: preserving permissions for `./sed004220': Permission denied</code></pre>
+
 
          <h3 class="page-header"><span id="manual-conversion"></span>Converting your JUnit assertions to AssertJ with regexp</h3>
 
@@ -40,31 +83,23 @@ $menu
 
          <h5 class="page-header">3 - Converting <span class="small-code">assertEquals(value, valueUnderTest)</span> to <span class="small-code">assertThat(valueUnderTest).isEqualTo(value)</h5>
          <p>Find/replace Regexp :</p>
-         <pre><code class="java">assertEquals((.),(.)); -> assertThat(\2).isEqualTo(\1);</code></pre>
+         <pre><code class="java">assertEquals((.*),(.*)); -> assertThat(\2).isEqualTo(\1);</code></pre>
 
-         <h5 class="page-header">4 - Converting <span class="small-code">assertNotEquals(value, valueUnderTest)</span> to <span class="small-code">assertThat(valueUnderTest).isNotEqualTo(value)</h5>
-         <p>Find/replace Regexp :</p>
-         <pre><code class="java">assertNotEquals((.),(.)); -> assertThat(\2).isNotEqualTo(\1);</code></pre>
-
-         <h5 class="page-header">5 - Converting <span class="small-code">assertNull(objectUnderTest)</span> to <span class="small-code">assertThat(objectUnderTest).isNull()</h5>
+         <h5 class="page-header">4 - Converting <span class="small-code">assertNull(objectUnderTest)</span> to <span class="small-code">assertThat(objectUnderTest).isNull()</h5>
          <p>Find/replace Regexp :</p><pre><code class="java">assertNull((.*)); -> assertThat(\1).isNull();</code></pre>
 
-         <h5 class="page-header">6 - Converting <span class="small-code">assertNotNull(objectUnderTest)</span> to <span class="small-code">assertThat(objectUnderTest).isNotNull()</h5>
+         <h5 class="page-header">5 - Converting <span class="small-code">assertNotNull(objectUnderTest)</span> to <span class="small-code">assertThat(objectUnderTest).isNotNull()</h5>
          <p>Find/replace Regexp :</p>
          <pre><code class="java">assertNotNull((.*)); -> assertThat(\1).isNotNull();</code></pre>
 
-         <h5 class="page-header">7 - Converting <span class="small-code">assertTrue(logicalCondition)</span> to <span class="small-code">assertThat(logicalCondition).isTrue()</h5>
+         <h5 class="page-header">6 - Converting <span class="small-code">assertTrue(logicalCondition)</span> to <span class="small-code">assertThat(logicalCondition).isTrue()</h5>
 
          <p>Find/replace Regexp :</p>
          <pre><code class="java">assertTrue((.*)); -> assertThat(\1).isTrue();</code></pre>
 
-         <h5 class="page-header">8 - Converting <span class="small-code">assertFalse(logicalCondition)</span> to <span class="small-code">assertThat(logicalCondition).isFalse()</h5>
+         <h5 class="page-header">7 - Converting <span class="small-code">assertFalse(logicalCondition)</span> to <span class="small-code">assertThat(logicalCondition).isFalse()</h5>
          <p>Find/replace Regexp :</p>
          <pre><code class="java">assertFalse((.*)); -> assertThat(\1).isFalse();</code></pre>
-
-         <h3 class="page-header"><span id="automatic-conversion"></span>Automatically converting your JUnit assertions</h3>
-
-         <p>THIS FEATURE IS PLANNED BUT NOT YET DONE.</p>
 
       </div>
    </div>
