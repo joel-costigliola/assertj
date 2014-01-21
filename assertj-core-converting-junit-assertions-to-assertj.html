@@ -93,16 +93,20 @@
 
          <h3 class="page-header"><span id="automatic-conversion"></span>Automatically converting your JUnit assertions</h3>
 
-         <p>Use <a href="https://github.com/joel-costigliola/assertj-core/blob/master/src/main/scripts/convert-junit-assertions-to-assertj.sh">convert-junit-assertions-to-assertj.sh</a> a shell script based on sed command line editor and regexps. It looks recursively at all Test.java files and performs search and replace to convert JUnit assertions to AssertJ ones (if the Test.java file pattern does not suit you, just edit the script and change it according to your needs).</p>
+         <p>It is simple : use <a href="https://github.com/joel-costigliola/assertj-core/blob/master/src/main/scripts/convert-junit-assertions-to-assertj.sh">convert-junit-assertions-to-assertj.sh</a> shell script which is based on <span class="small-code">sed</span> stream editor and regexps. It looks recursively at all <span class="small-code">*Test.java</span> files and performs search and replace to convert JUnit assertions to AssertJ ones (if <span class="small-code">*Test.java</span> file pattern does not suit you, just change it according to your needs in the script).</p>
 
          <p>The script works on windows within a bash console like git bash (tested) or cygwin (but not tested).</p>
 
-         <p>Usage : simply execute the script in the base directory containing the test files :</p>
+         <p>Usage : execute the script in the base directory containing the test files :</p>
 
 <pre><code class="bash"># in the directory containing the test files
 convert-junit-assertions-to-assertj.sh</code></pre>
 
-         <p>It is not perfect but should do most of the job. After executing it, you will need to optimize imports with your IDE to remove unused imports and if you were using <span class="small-code">assertEquals</span> with delta to compare numbers, you will probably need to import statically : <span class="small-code">import static org.assertj.core.api.Assertions.offset;</span> which is the way you express delta/offset with AssertJ.</p>
+         <p>It is not perfect but should do most of the job. After executing it, you will need to  and </p>
+         <ul>
+            <li>optimize imports with your IDE to remove unused imports.</span></li>
+            <li>if you were using <span class="small-code">assertEquals</span> with delta to compare numbers, you will probably need to import statically <span class="small-code">org.assertj.core.api.Assertions.offset</span> which is how you express delta in AssertJ (see <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/src/test/java/org/assertj/examples/NumberAssertionsExamples.java">number_assertions_with_offset_examples()</a> test at the end of NumberAssertionsExamples).</li>
+         </ul>
 
          <p>The script handles the cases where you give an assertion description, for example :<pre><code class="java">assertEquals("test context", "a", "a");</code></pre> will be replaced by :</p><p><pre><code class="java">assertThat("a").as("test context").isEqualTo("a");</code></pre> </p>
 
