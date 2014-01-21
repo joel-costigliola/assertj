@@ -26,14 +26,25 @@ $menu
 
          <h3 class="page-header"><span id="automatic-conversion"></span>Automatically converting your JUnit assertions to AssertJ</h3>
 
-         <p>It is simple : use <a href="https://github.com/joel-costigliola/assertj-core/blob/master/src/main/scripts/convert-junit-assertions-to-assertj.sh">convert-junit-assertions-to-assertj.sh</a> shell script which is based on <span class="small-code">sed</span> stream editor and regexps. It looks recursively at all <span class="small-code">*Test.java</span> files and performs search and replace to convert JUnit assertions to AssertJ ones (if <span class="small-code">*Test.java</span> file pattern does not suit you, just change it according to your needs in the script).</p>
+         <p>It is simple : use the proper script depending on your OS :</p>
+         <ul>
+            <li>unix and windows : <a href="https://github.com/joel-costigliola/assertj-core/blob/master/src/main/scripts/convert-junit-assertions-to-assertj.sh">convert-junit-assertions-to-assertj.sh</a></span></li>
+            <li>osx : <a href="https://github.com/joel-costigliola/assertj-core/blob/master/src/main/scripts/convert-junit-assertions-to-assertj-on-osx.sh">convert-junit-assertions-to-assertj-on-osx.sh</a></span></li>
+         </ul>
 
-         <p>The script works on windows within a bash console like git bash (tested) or cygwin (but not tested).</p>
+         <p>Each shell scripts is based on <span class="small-code">sed</span> stream editor and regexps. It looks recursively at all <span class="small-code">*Test.java</span> files and performs search and replace to convert JUnit assertions to AssertJ ones (if <span class="small-code">*Test.java</span> file pattern does not suit you, just change it according to your needs in the script).</p>
 
-         <p>Usage : execute the script in the base directory containing the test files :</p>
+         <p>The script works on windows within a bash console like git bash (tested) or cygwin (but not tested). I haven't tested the OSX script yet since I don't have a mac.</p>
+
+         <p>Usage : On windows or unix execute the script in the base directory containing the test files :</p>
 
 <pre><code class="bash"># in the directory containing the test files
 convert-junit-assertions-to-assertj.sh</code></pre>
+
+         <p>Usage : On OSX execute the script in the base directory containing the test files :</p>
+
+<pre><code class="bash"># in the directory containing the test files
+convert-junit-assertions-to-assertj-on-osx.sh</code></pre>
 
          <p>It is not perfect but should do most of the job. After executing it, you will need to  and </p>
          <ul>
