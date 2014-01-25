@@ -20,6 +20,7 @@ $assertj_core_side_menu
       <ul>
          <li><a href="#extracted-properties-assertion">Assertions on extracted properties/fields of iterable/array elements</a></li>
          <li><a href="#extracted-method-result-assertion">Assertions on results of method call on iterable/array elements</a></li>
+         <li><a href="#soft-assertions">Gather all errors message with Soft assertions</a></li>
          <li><a href="#file-content-string-assertions">Using String assertions on the content of a file</a></li>
          <li><a href="#ide-automatic-static-import">IDE configuration to directly get <span class="small-code">assertThat</span> in code completion</a></li>
          <li><a href="#filters">Filtering a group of objects before making assertions</a></li>
@@ -95,6 +96,73 @@ assertThat(greatHouses).extractingResultOf("sayTheWords")
                        .contains("Winter is Comming", "We Do Not Sow", "Hear Me Roar")
                        .doesNotContain("Lannisters always pay their debts");</code></pre>
 
+      <h3 class="page-header"><span id="soft-assertions"></span><i class="fa fa-star"></i> Collect all errors with Soft assertions</h3>
+
+<p>Using soft assertions, AssertJ collects all assertion errors instead of stopping at the first one.<br>
+So, assuming something goes awry at your dinner party, when using "standard" assertions, this test ...</p>
+  <pre><code class="java">@Test
+public void host_dinner_party_where_nobody_dies() {
+   Mansion mansion = new Mansion();
+   mansion.hostPotentiallyMurderousDinnerParty();
+   assertThat(mansion.guests()).as("Living Guests").isEqualTo(7);
+   assertThat(mansion.kitchen()).as("Kitchen").isEqualTo("clean");
+   assertThat(mansion.library()).as("Library").isEqualTo("clean");
+   assertThat(mansion.revolverAmmo()).as("Revolver Ammo").isEqualTo(6);
+   assertThat(mansion.candlestick()).as("Candlestick").isEqualTo("pristine");
+   assertThat(mansion.colonel()).as("Colonel").isEqualTo("well kempt");
+   assertThat(mansion.professor()).as("Professor").isEqualTo("well kempt");
+}  </code></pre>
+
+      <p>... will yield the less-than-ideal exception message :<br>
+      <pre><code class="diff">org.junit.ComparisonFailure: [Living Guests] expected:<[7]> but was<[6]></code></pre>
+
+      <p>Using soft assertions you can collect all the failed assertions together like so:</p>
+
+  <pre><code class="java">@Test
+public void host_dinner_party_where_nobody_dies() {
+   Mansion mansion = new Mansion();
+   mansion.hostPotentiallyMurderousDinnerParty();
+   // use SoftAssertions instead of direct assertThat methods
+   SoftAssertions softly = new SoftAssertions();
+   softly.assertThat(mansion.guests()).as("Living Guests").isEqualTo(7);
+   softly.assertThat(mansion.kitchen()).as("Kitchen").isEqualTo("clean");
+   softly.assertThat(mansion.library()).as("Library").isEqualTo("clean");
+   softly.assertThat(mansion.revolverAmmo()).as("Revolver Ammo").isEqualTo(6);
+   softly.assertThat(mansion.candlestick()).as("Candlestick").isEqualTo("pristine");
+   softly.assertThat(mansion.colonel()).as("Colonel").isEqualTo("well kempt");
+   softly.assertThat(mansion.professor()).as("Professor").isEqualTo("well kempt");
+   // Don't forget to call SoftAssertions global verification !
+   softly.assertAll();
+}</code></pre>
+
+      <p>When the collected assertions are all asserted together they yield a more descriptive error message:</p>
+
+  <pre><code class="diff">org.assertj.core.api.SoftAssertionError:
+     The following 4 assertions failed:
+     1) [Living Guests] expected:<[7]> but was:<[6]>
+     2) [Library] expected:<'[clean]'> but was:<'[messy]'>
+     3) [Candlestick] expected:<'[pristine]'> but was:<'[bent]'>
+     4) [Professor] expected:<'[well kempt]'> but was:<'[bloodied and disheveled]'></code></pre>
+
+      <p>In assertj-core 1.6.0, a JUnit rule will provided to take care of triggering automatically the assertions global verification :</p>
+
+  <pre><code class="java">@Rule
+public final JUnitSoftAssertions softly = new JUnitSoftAssertions();
+
+@Test
+public void host_dinner_party_where_nobody_dies() {
+   Mansion mansion = new Mansion();
+   mansion.hostPotentiallyMurderousDinnerParty();
+   // use SoftAssertions instead of direct assertThat methods
+   softly.assertThat(mansion.guests()).as("Living Guests").isEqualTo(7);
+   softly.assertThat(mansion.kitchen()).as("Kitchen").isEqualTo("clean");
+   softly.assertThat(mansion.library()).as("Library").isEqualTo("clean");
+   softly.assertThat(mansion.revolverAmmo()).as("Revolver Ammo").isEqualTo(6);
+   softly.assertThat(mansion.candlestick()).as("Candlestick").isEqualTo("pristine");
+   softly.assertThat(mansion.colonel()).as("Colonel").isEqualTo("well kempt");
+   softly.assertThat(mansion.professor()).as("Professor").isEqualTo("well kempt");
+   // No call to softly.assertAll(), assertions global verification is done by JUnitSoftAssertions rule
+}</code></pre>
 
       <h3 class="page-header"><span id="file-content-string-assertions"></span><i class="fa fa-star"></i> Using String assertions on the content of a file</h3>
 
