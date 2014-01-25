@@ -164,6 +164,8 @@ public void host_dinner_party_where_nobody_dies() {
    // No call to softly.assertAll(), assertions global verification is done by JUnitSoftAssertions rule
 }</code></pre>
 
+      <p>This works only for JUnit, in TestNG however it does not seem possible to make the glocal verification in an @AfterMethod method because if it throws an exception, TestNG skips all subsequent tests.</p>
+
       <h3 class="page-header"><span id="file-content-string-assertions"></span><i class="fa fa-star"></i> Using String assertions on the content of a file</h3>
 
       <p>File assertions are rather poor when it comes to check the file content, so we had the idea to reuse AssertJ String assertions on the content of a file.<br>
