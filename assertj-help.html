@@ -70,24 +70,51 @@
 
 
       <div class="col-lg-10 col-md-10 col-sm-10 text-left">
-         <h1 class="page-header">AssertJ latest news</h1>
-         This page summarizes what happened recently in AssertJ projects and the current work.
+         <h1 class="page-header">AssertJ Help and F.A.Q.</h1>
+         <ul>
+            <li><a href="#assertj-build-site">How to edit this site ?</a></li>
+         </ul>
 
-         <h4 class="page-header">What we are working on ...</h4>
+         <h3 class="page-header"><span id="assertj-build-site"></span>How to edit this site ?</h3>
 
-         <p>Preparing next AssertJ core version (1.6.0)</p>
+         <p>AssertJ site is hosted in github, in <span class="small-code">gh-pages</span> branch of <a href="https://github.com/joel-costigliola/assertj">assertj repository</a>, just use github pull requests to contribute to it.</p>
+         <p>The site is a composed of static HTML pages based on Bootstrap. A simple templating system is used to avoid duplicating site elements like menus or headers. The style aspects of AssertJ site is managed with LESS files thanks to Bootstrap.</p>
 
-         <h4 class="page-header">AssertJ Neo4J 1.0.0 release</h4>
-         <p>Release date : 2014-01-02</p>
-         <p>A new AssertJ module written by Florent Biville, see the details <a href="assertj-neo4j.html">here</a>.</p>
+         <p>To generate the full site : use the command:</p>
+         <pre><code class="bash">./build-site.sh</code></pre>
 
-         <h4 class="page-header">AssertJ Guava 1.1.0 release</h4>
-         <p>Release date : 2013-12-27</p>
-         <p>See what's <a href="assertj-guava.html#1.1.0">new and noteworthy</a></p>
+         <h4 class="page-header">Templating system</h4>
 
-         <h4 class="page-header">AssertJ core 1.5.0 release</h4>
-         <p>Release date : 2013-11-06</p>
-         <p>See what's <a href="assertj-core-news.html#assertj-core-1.5.0">new and noteworthy</a></p>
+         <p>The templating system is a simple python script <span class="small-code">generate-html.py</span> which peforms the following steps :</p>
+         <ul>
+            <li>read HTML fragments from files like <span class="small-code">assertj-head.html</span> and store their content in a map under predefined keys.</li>
+            <li>process all <span class="small-code">*template.html</span> files replacing <span class="small-code">&#36;key</span> by their map value, e.g. <span class="small-code">&#36;head</span> by <span class="small-code">assertj-head.html</span> content</li>
+            <li>dump the resulting content in a file without the template extension, e.g. <span class="small-code">assertj-neo4j.html</span> for <span class="small-code">assertj-neo4j-template.html</span></li>
+         </ul>
+
+         <p>Thus the rule : Never edit directly generated files !<br/>
+         Note that the generated files have to be commited to be published (after a git push)</p>
+
+         <p>To generate HTML files (without building CSS files), use the command:</p>
+         <pre><code class="bash">python generate-html.py</code></pre>
+
+         <h4 class="page-header">CSS files</h4>
+
+         <p>The css files used are built from the following LESS files :</p>
+         <ul>
+            <li><span class="small-code">custom-bootstrap.less</span> : main LESS file importing all the needed LESS files for Bootstrap</li>
+            <li><span class="small-code">custom-variables.less</span> : a link to the LESS file containing the main variables used by Bootstrap</li>
+            <li><span class="small-code">custom-other.less</span> : additional LESS instructions related to Bootstrap</li>
+            <li><span class="small-code">assertj.less</span> : additional LESS instructions for stuff not directly related to Bootstrap.</li>
+         </ul>
+
+         <p>To modify AssertJ style, either change existing values in <span class="small-code">custom-variables.less</span>
+            or add new intructions in <span class="small-code">assertj.less</span>.</p>
+
+         <p>To generate the CSS files, it is best to reuse the build all command since generating HTML files is super fast:</p>
+         <pre><code class="bash">./build-site.sh</code></pre>
+
+
       </div>
    </div>
 
