@@ -92,8 +92,11 @@
 
          <p>For most users, that should be all you need to do !</p>
 
-         <p>For linux users, a quick way to do that is to use something like:</p>
+         <p>For linux users, a quick way to do that is to use the following command:</p>
          <pre><code class="bash">find . -name "*.java" -exec sed -i "s/org.fest.assertions.api.Assertions/org.assertj.core.api.Assertions/g" '{}' \;</code></pre>
+
+         <p>For mac users, you have an almost indentical command (notice the "" after -i) :</p>
+         <pre><code class="bash">find . -name "*.java" -exec sed -i "" "s/org.fest.assertions.api.Assertions/org.assertj.core.api.Assertions/g" '{}' \;</code></pre>                                 
 
          <h5>Renamed assertions since Fest fork :</h5>
          <ul>
