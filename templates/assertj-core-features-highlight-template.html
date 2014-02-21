@@ -68,7 +68,7 @@ assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name")
 
 <p>The extracted name, age and race's name values of the current element are grouped in a tuple, thus you need to use tuples for expected values.</p>
 
-<p>More examples are available in test method <span class="small-code">iterable_assertions_on_extracted_property_values_example</span> in <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/src/test/java/org/assertj/examples/IterableAssertionsExamples.java">IterableAssertionsExamples.java</a> from <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project.</p>
+<p>More examples are available in test method <span class="small-code">iterable_assertions_on_extracted_property_values_example</span> in <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/IterableAssertionsExamples.java">IterableAssertionsExamples.java</a> from <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project.</p>
 
 <p>Note that <span class="small-code">extracting</span> feature is similar to <span class="small-code">extractProperty</span>, the only advantage of <span class="small-code">extractProperty</span> is strong typing</p>
 
@@ -213,7 +213,7 @@ assertThat(contentOf(xFile)).startsWith("The Truth").contains("Is Out").endsWith
       </ul>
       </p>
 
-      <p>Let's see both options on some examples taken from <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/src/test/java/org/assertj/examples/FilterExamples.java">FilterExamples.java</a> from <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project.</p>
+      <p>Let's see both options on some examples taken from <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/FilterExamples.java">FilterExamples.java</a> from <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project.</p>
 
       <p class="list-section">Filtering on extracted properties values</p>
 
@@ -272,7 +272,7 @@ assertThat(filter(players).being(potentialMvp).get()).containsOnly(rose, james);
 
       <p>Note that <span class="small-code">fail</span> method can be statically imported from <span class="small-code">Assertions</span> class</p>
 
-      <p>Example taken from <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/src/test/java/org/assertj/examples/FailUsageExamples.java">FailUsageExamples.java</a> in <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a>.</p>
+      <p>Example taken from <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/FailUsageExamples.java">FailUsageExamples.java</a> in <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a>.</p>
 
 <pre><code class="java">import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
