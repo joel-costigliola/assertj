@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="description" content="AssertJ site">
+   <meta name="author" content="Joel Costigliola">
+
+   <title>AssertJ / Fluent assertions for java</title>
+
+   <!-- CSS -->
+   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata|Source+Code+Pro|Open+Sans|Ubuntu|Varela+Round|Karla">
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+   <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+   <script src="highlight/highlight.pack.js"></script>
+   <link rel="stylesheet" href="highlight/styles/railscasts.css">
+   <script>hljs.initHighlightingOnLoad();</script>
+   <link href="css/assertj.min.css" rel="stylesheet">
+   <link rel="shortcut icon" href="favicon.png" />
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+   <div class="container">
+      <div class="navbar-header">
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+         </button>
+         <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
+         <a class="navbar-brand" href="index.html">AssertJ / Fluent assertions for java</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+         <ul class="nav navbar-nav navbar-right">
+            <li><a href="assertj-core-quick-start.html">Quick start</a></li>
+            <li><a href="assertj-news.html">News</a></li>
+            <li><a href="assertj-core.html">Core</a></li>
+            <li><a href="assertj-assertions-generator.html">Assertions generator</a></li>
+            <li><a href="assertj-guava.html">Guava</a></li>
+            <li><a href="assertj-joda-time.html">Joda-Time</a></li>
+            <li><a href="assertj-neo4j.html">Neo4j</a></li>
+         </ul>
+      </div>
+   </div>
+</nav>
+
+
+<div class="container">
+   <div class="row" >
+
+      <div class="col-md-2 assertj-sidebar-menu">
+         <div class="bs-sidebar hidden-print affix-top" role="complementary">
+            <ul class="bs-sidenav nav ">
+               <li class="sidenav-header">About</li>
+               <li><a href="assertj-swing.html">Overview</a></li>
+               <li><a href="assertj-swing-quick-start.html">Quick start</a></li>
+               <!--<li><a href="assertj-swing-news.html">News & releases</a></li>-->
+               <!--<li><a href="swing/api/index.html">Javadoc</a></li>-->
+               <li><a href="assertj-swing.html#code">Code & issues <i class="fa fa-github"></i></a></li>
+               <li><a href="assertj-swing.html#contributing">Contributing</a></li>
+
+               <li class="sidenav-header">Working with it</li>
+               <li><a href="assertj-swing-getting-started.html">Getting started</a></li>
+               <!--<li><a href="assertj-swing-basics.html">Basics</a></li>-->
+               <!--<li><a href="assertj-swing-edt.html">EDT</a></li>-->
+               <!--<li><a href="assertj-swing-lookup.html">Component lookup</a></li>-->
+               <!--<li><a href="assertj-swing-launch.html">Launching</a></li>-->
+               <!--<li><a href="assertj-swing-input.html">Input simulation</a></li>-->
+               <!--<li><a href="assertj-swing-running.html">Running tests</a></li>-->
+               <!--<li><a href="assertj-swing-ci.html">CI</a></li>-->
+               <!--<li><a href="assertj-swing-troubleshooting.html">Troubleshooting</a></li>-->
+               <!--<li><a href="assertj-swing-advanced.html">Advanced features</a></li>-->
+
+               <li class="sidenav-header">Migrating</li>
+               <li><i>Coming soon..</i></li>
+               <!--<li><a href="assertj-swing-migrating.html">From Fest</a></li>-->
+            </ul>
+         </div>
+      </div>
+
+
+      <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
+         <h1 class="page-header">Getting started guide</h1>
+
+         <p>Assuming you have a bit time, here's a detailed introduction to AssertJ Swing. You may want to have a
+            look at <a href="assertj-swing-quick-start.html">the quick start guide</a> that allows you to create
+            and run an AssertJ Swing test case in the least possible time.</p>
+
+         <h3 class="page-header">Get AssertJ Swing</h3>
+
+         <p>AssertJ Swing artifacts are in Maven central repository. There are two main artifacts:
+            <code>assertj-swing-testng</code> and <code>assertj-swing-junit-4.5</code>.</p>
+
+         <p>While the dependency for TestNG is obvious, JUnit users need to know that there are three artifacts
+            for JUnit:
+            <ul>
+               <li><code>assertj-swing-junit-4.3.1</code> should be used if your JUnit version is less than
+                  <code>4.5</code></li>
+               <li><code>assertj-swing-junit-4.5</code> should be used if your JUnit version is greater than or equal to
+                  <code>4.5</code></li>
+               <li><code>assertj-swing-junit</code> contains the basic JUnit dependencies - you should
+                  <strong>not</strong> reference this artifact directly!</li>
+            </ul>
+         </p>
+
+         <div class="row">
+            <div class="col-md-6 portfolio-item">
+               <h3 class="quickstart">TestNG</h3>
+                  <pre><code class="xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.assertj&lt;/groupId&gt;
+  &lt;artifactId&gt;assertj-swing-testng&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+  &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+            </div>
+
+            <div class="col-md-6 portfolio-item">
+               <h3 class="quickstart">JUnit</h3>
+                  <pre><code class="xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.assertj&lt;/groupId&gt;
+  &lt;artifactId&gt;assertj-swing-junit-4.5&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+  &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+            </div>
+         </div>
+
+         <p>If you use another dependency tool, please check
+            <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-swing|1.0.0|bundle">this page</a>
+            to find the relevant assertj dependency declaration for your tool.
+         </p>
+
+         <h3 class="page-header">Write your first GUI test</h3>
+         <p>As the <code>Assertions</code> class is the main entry point to use AssertJ Core, the package
+            <a href="swing/api/org/assertj/swing/fixture/package-summary.html" target="_blank">org.assertj.swing.fixture</a>
+            is the main entry point to use AssertJ Swing. These fixtures provide specific methods to simulate
+            user interaction with a GUI component and also provide assertion methods that verify the state of such
+            a GUI component. Although you could work with the
+            <a href="swing/api/org/assertj/swing/core/Robot.html" target="_blank">Robot</a> directly, the Robot is too
+            low-level and requires considerably more code than the fixtures.</p>
+
+         <p>There is one fixture per Swing component. Each fixture has the same name as the Swing component they can
+            handle ending with <em>Fixture</em>. For example, a <code>JButtonFixture</code> knows how to simulate user
+            interaction and verify the state of a <code>JButton</code>.</p>
+
+         <p>You're now going to write your first test, let's assume we have a simple <code>JFrame</code> that contains
+            a <code>JTextField</code>, a <code>JLabel</code> and a <code>JButton</code>:</p>
+
+         <img src="images/swing-getting-started-application.png" alt="Screenshot of the sample frame to test" />
+
+         <p>The expected behavior of this GUI is, when the user clicks on the button, the text of the text field
+            should be copied to the label. Now, which steps are necessary to test this GUI?</p>
+
+         <p>The source code of this sample application can be found <a
+               href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertj-swing-aut/src/main/java/org/assertj/swing/aut/getting_started/SimpleCopyApplication.java"
+               target="_blank">here</a>. The test we are going to develop can be found <a
+               href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertj-swing-junit-examples/src/test/java/org/assertj/swing/junit/examples/getting_started/SimpleCopyApplicationTest.java"
+               target="_blank">here</a>.</p>
+
+         <h4>1. Enable checks for EDT access violation</h4>
+         <p>AssertJ provides the class <code>FailOnThreadViolationRepaintManager</code> that forces a test to fail if
+            access to GUI components is not performed on the EDT. You can find more details
+            <a href="assertj-swing-edt-testing-violations.html">here</a>.</p>
+
+         <h4>2. Create a fixture for the frame</h4>
+         <p>Depending on the GUI to test, create a fixture to handle either a <code>Frame</code> or a <code>Dialog</code>
+            in the <code>setUp()</code> method of your test. The <code>setUp()</code> method is the method that
+            initializes the test fixtures, it should run every time <strong>before</strong> a test method is
+            executed:
+            <ul>
+               <li>When using <em>JUnit 3.8.x</em>, this is the method named <code>setUp()</code></li>
+               <li>When using <em>JUnit 4.x</em>, this is the method marked with <code>@Before</code></li>
+               <li>When using <em>TestNG</em>, this is the method marked with <code>@BeforeMethod</code></li>
+            </ul>
+         </p>
+
+         <p>Since our example uses a <code>JFrame</code>, we have to use a <code>FrameFixture</code>.</p>
+
+         <pre><code class="language-java">private FrameFixture window;
+
+@Before
+public void setUp() {
+  SimpleCopyApplication frame = GuiActionRunner.execute(new GuiQuery&lt;SimpleCopyApplication&gt;() {
+    protected SimpleCopyApplication executeInEDT() {
+      return new SimpleCopyApplication();
+    }
+  });
+  window = new FrameFixture(frame);
+  window.show(); // shows the frame to test
+}</code></pre>
+
+         <p>It may seem a little weird the way we create a new instance of <code>SimpleCopyApplication</code>. Since
+            creation of a frame triggers a <em>paint</em> action, we need to create the frame in the Event Dispatch
+            Thread (EDT.) More details about the EDT and Swing threading can be found
+            <a href="assertj-swing-edt.html">here</a>.</p>
+
+         <h4>3. Write methods to test your GUI's behavior</h4>
+         <p>Now you can start by using the fixtures to test the GUI. AssertJ Swing fixtures simulate a user interacting
+            with the GUI in order to verify that such GUI behaves as we expect. For our example, we need to verify that
+            the text in the text field is copied to the label when the button is clicked:</p>
+
+         <pre><code class="language-java">@Test
+public void shouldCopyTextInLabelWhenClickingButton() {
+  window.textBox("textToCopy").enterText("Some random text");
+  window.button("copyButton").click();
+  window.label("copiedText").requireText("Some random text");
+}</code></pre>
+
+         <p>As you probably noticed already, in our example we look up UI components by their unique name. This is
+            probably the most stable way, more about finding the components can be found
+            <a href="assertj-swing-lookup.html">here</a>.</p>
+
+         <h4>4. Cleaning up resources used by AssertJ Swing</h4>
+         <p>AssertJ Swing forces sequential test execution, regardless of the testing framework. To do so, it uses a
+            semaphore to give access to the keyboard and mouse to a single test. Cleaning up resources after running
+            each test method releases the lock on such semaphore. To clean up resources simply call the method
+            <code>cleanUp()</code> on the AssertJ Swing fixture inside:
+            <ul>
+               <li><code>tearDown()</code>, when using <em>JUnit 3.8.x</em></li>
+               <li>the method marked with <code>@After</code>, when using <em>JUnit 4.x</em></li>
+               <li>the method marked with <code>@AfterMethod</code>, when using <em>TestNG</em></li>
+            </ul>
+         </p>
+
+         <pre><code class="language-java">@After
+public void tearDown() {
+  window.cleanUp();
+}</code></pre>
+
+         <h4>Putting everything together</h4>
+         <pre><code class="language-java">public class SimpleCopyApplicationTest {
+  private FrameFixture window;
+
+  @BeforeClass
+  public void setUpOnce() {
+    FailOnThreadViolationRepaintManager.install();
+  }
+
+  @Before
+  public void setUp() {
+    SimpleCopyApplication frame = GuiActionRunner.execute(new GuiQuery&lt;SimpleCopyApplication&gt;() {
+      protected SimpleCopyApplication executeInEDT() {
+        return new SimpleCopyApplication();
+      }
+    });
+    window = new FrameFixture(frame);
+    window.show(); // shows the frame to test
+  }
+
+  @Test
+  public void shouldCopyTextInLabelWhenClickingButton() {
+    window.textBox("textToCopy").enterText("Some random text");
+    window.button("copyButton").click();
+    window.label("copiedText").requireText("Some random text");
+  }
+
+  @After
+  public void tearDown() {
+    window.cleanUp();
+  }
+}</code></pre>
+
+         <h3 class="page-header">Alternatively, extend a AssertJ Swing test case</h3>
+         <p>AssertJ Swing provides a base test class, to simplify creation of GUI tests. The following code listing
+            provides the same functionality as the code above, with less code, thanks to
+            <code>AssertJSwingJUnitTestCase</code>. The full test can be found <a
+                  href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertj-swing-junit-examples/src/test/java/org/assertj/swing/junit/examples/getting_started/SimpleCopyApplication_UseBaseTest.java"
+                  target="_blank">here</a>.</p>
+
+         <pre><code class="language-java">public class SimpleCopyApplication_UseBaseTest extends AssertJSwingJUnitTestCase {
+  private FrameFixture window;
+
+  @Override
+  protected void onSetUp() {
+    SimpleCopyApplication frame = GuiActionRunner.execute(new GuiQuery&lt;SimpleCopyApplication&gt;() {
+      protected SimpleCopyApplication executeInEDT() {
+        return new SimpleCopyApplication();
+      }
+    });
+    // IMPORTANT: note the call to 'robot()'
+    // we must use the Robot from AssertJSwingJUnitTestCase
+    window = new FrameFixture(robot(), frame);
+    window.show(); // shows the frame to test
+  }
+
+  @Test
+  public void shouldCopyTextInLabelWhenClickingButton() {
+    window.textBox("textToCopy").enterText("Some random text");
+    window.button("copyButton").click();
+    window.label("copiedText").requireText("Some random text");
+  }
+}</code></pre>
+      </div>
+   </div>
+</div>
+
+
+<br>
+<!--
+<div class="container">
+   <footer>
+      <div class="row">
+         <div class="col-lg-12">
+            <p>AssertJ - Licensed under the Apache License, Version 2.0.</p>
+         </div>
+      </div>
+   </footer>
+</div>
+-->
+
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/modern-business.js"></script>
+<script src="js/assertj.js"></script>
+
+</body>
+</html>
