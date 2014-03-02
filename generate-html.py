@@ -4,7 +4,7 @@ import glob
 
 
 def content_of(filename):
-    with open(filename) as file_to_read:
+    with open("./template-data/" + filename) as file_to_read:
         return file_to_read.read()
 
 print " "
