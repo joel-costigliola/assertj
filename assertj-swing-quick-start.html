@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="description" content="AssertJ site">
+   <meta name="author" content="Joel Costigliola">
+
+   <title>AssertJ / Fluent assertions for java</title>
+
+   <!-- CSS -->
+   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata|Source+Code+Pro|Open+Sans|Ubuntu|Varela+Round|Karla">
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+   <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+   <script src="highlight/highlight.pack.js"></script>
+   <link rel="stylesheet" href="highlight/styles/railscasts.css">
+   <script>hljs.initHighlightingOnLoad();</script>
+   <link href="css/assertj.min.css" rel="stylesheet">
+   <link rel="shortcut icon" href="favicon.png" />
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+   <div class="container">
+      <div class="navbar-header">
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+         </button>
+         <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
+         <a class="navbar-brand" href="index.html">AssertJ / Fluent assertions for java</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+         <ul class="nav navbar-nav navbar-right">
+            <li><a href="assertj-core-quick-start.html">Quick start</a></li>
+            <li><a href="assertj-news.html">News</a></li>
+            <li><a href="assertj-core.html">Core</a></li>
+            <li><a href="assertj-assertions-generator.html">Assertions generator</a></li>
+            <li><a href="assertj-guava.html">Guava</a></li>
+            <li><a href="assertj-joda-time.html">Joda-Time</a></li>
+            <li><a href="assertj-neo4j.html">Neo4j</a></li>
+         </ul>
+      </div>
+   </div>
+</nav>
+
+
+<div class="container">
+   <div class="row" >
+
+      <div class="col-md-2 assertj-sidebar-menu">
+         <div class="bs-sidebar hidden-print affix-top" role="complementary">
+            <ul class="bs-sidenav nav ">
+               <li class="sidenav-header">About</li>
+               <li><a href="assertj-swing.html">Overview</a></li>
+               <li><a href="assertj-swing-quick-start.html">Quick start</a></li>
+               <!--<li><a href="assertj-swing-news.html">News & releases</a></li>-->
+               <!--<li><a href="swing/api/index.html">Javadoc</a></li>-->
+               <li><a href="assertj-swing.html#code">Code & issues <i class="fa fa-github"></i></a></li>
+               <li><a href="assertj-swing.html#contributing">Contributing</a></li>
+
+               <li class="sidenav-header">Working with it</li>
+               <li><i>Coming soon..</i></li>
+               <!--<li><a href="assertj-swing-getting-started.html">Getting started</a></li>-->
+               <!--<li><a href="assertj-swing-basics.html">Basics</a></li>-->
+               <!--<li><a href="assertj-swing-edt.html">EDT</a></li>-->
+               <!--<li><a href="assertj-swing-component-lookup.html">Component lookup</a></li>-->
+               <!--<li><a href="assertj-swing-launching.html">Launching</a></li>-->
+               <!--<li><a href="assertj-swing-input-simulation.html">Input simulation</a></li>-->
+               <!--<li><a href="assertj-swing-running.html">Running tests</a></li>-->
+               <!--<li><a href="assertj-swing-ci.html">CI</a></li>-->
+               <!--<li><a href="assertj-swing-troubleshooting.html">Troubleshooting</a></li>-->
+               <!--<li><a href="assertj-swing-advanced.html">Advanced features</a></li>-->
+
+               <li class="sidenav-header">Migrating</li>
+               <li><i>Coming soon..</i></li>
+               <!--<li><a href="assertj-swing-migrating-from-fest.html">From Fest</a></li>-->
+            </ul>
+         </div>
+      </div>
+
+
+      <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
+         <h1 class="page-header">One minute starting guide</h1>
+
+         <p>Assuming you have only little time, here's the quickest introduction to AssertJ Swing. Depending on your
+            reading and coding skills, this should be done in about one minute. &#9786;</p>
+
+         <h3 class="page-header">Get AssertJ Swing</h3>
+
+         <p>AssertJ Swing artifacts are in Maven central repository. There are two main artifacts:
+            <code>assertj-swing-testng</code> and <code>assertj-swing-junit-4.5</code>.</p>
+
+         <p>While the dependency for TestNG is obvious, JUnit users need to know that there are three artifacts
+            for JUnit:
+            <ul>
+               <li><code>assertj-swing-junit-4.3.1</code> should be used if your JUnit version is less than
+                  <code>4.5</code></li>
+               <li><code>assertj-swing-junit-4.5</code> should be used if your JUnit version is greater than or equal to
+                  <code>4.5</code></li>
+               <li><code>assertj-swing-junit</code> contains the basic JUnit dependencies - you should
+                  <strong>not</strong> reference this artifact directly!</li>
+            </ul>
+         </p>
+
+         <div class="row">
+            <div class="col-md-6 portfolio-item">
+               <h3 class="quickstart">TestNG</h3>
+                  <pre><code class="xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.assertj&lt;/groupId&gt;
+  &lt;artifactId&gt;assertj-swing-testng&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+  &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+            </div>
+
+            <div class="col-md-6 portfolio-item">
+               <h3 class="quickstart">JUnit</h3>
+                  <pre><code class="xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.assertj&lt;/groupId&gt;
+  &lt;artifactId&gt;assertj-swing-junit-4.5&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+  &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+            </div>
+         </div>
+
+         <p>If you use another dependency tool, please check
+            <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-swing|1.0.0|bundle">this page</a>
+            to find the relevant assertj dependency declaration for your tool.
+         </p>
+
+         <h3 class="page-header">Setup your test case</h3>
+
+         <p>Make some static imports</p>
+         <pre><code class="language-java">import static org.assertj.swing.launcher.ApplicationLauncher.application;
+import static org.assertj.swing.finder.WindowFinder.findFrame;</code></pre>
+
+         <p>extend our base test case,</p>
+         <pre><code class="language-java">// either for JUnit
+AssertJSwingJUnitTestCase
+// or for TestNG
+AssertJSwingTestngTestCase</code></pre>
+
+         <p>and add the following to the <code>onSetUp()</code> method to start your application via
+          its <code>main</code> method.</p>
+         <pre><code class="language-java">// without arguments
+application(YourMainClass.class).start();
+// with arguments
+application(YourMainClass.class).withArgs(arguments).start();</code></pre>
+
+         <p>Then you just need to tell AssertJ Swing to find the main frame of your application and start testing:</p>
+         <pre><code class="language-java">FrameFixture frame = findFrame(new GenericTypeMatcher&lt;Frame&gt;(Frame.class) {
+  protected boolean isMatching(Frame frame) {
+    return "Your application title".equals(frame.getTitle()) && frame.isShowing();
+  }
+}).using(robot());</code></pre>
+
+         <p>Now <code>frame</code> refers to the test fixture for your main frame and you're ready to test it.</p>
+
+         <h3 class="page-header">Use code completion</h3>
+         <p>Type <code>frame.</code> and your IDE will show you the available commands. Assuming your frame
+            contains a table that should have 42 rows you could for instance write:</p>
+
+         <pre><code class="language-java">frame.table().requireRowCount(42);</code></pre>
+         <p> That's all!</p>
+
+         <h3 class="page-header">Want to see more?</h3>
+         <p>See our more detailed <a href="assertj-swing-getting-started.html">getting started guide</a> to get
+            the maximum out of it!</p>
+
+         <p>You can learn more by looking at <a href="swing/api/index.html" target="_blank">AssertJ Swing javadoc</a>.</p>
+
+         <p>Another way is to go see <a href="https://github.com/joel-costigliola/assertj-examples/tree/master">assertj-examples</a>,
+            it covers what is possible with AssertJ and contains projects for AssertJ Swing, too. You can clone it
+            and run its tests!</p>
+
+      </div>
+   </div>
+</div>
+
+
+<br>
+<!--
+<div class="container">
+   <footer>
+      <div class="row">
+         <div class="col-lg-12">
+            <p>AssertJ - Licensed under the Apache License, Version 2.0.</p>
+         </div>
+      </div>
+   </footer>
+</div>
+-->
+
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/modern-business.js"></script>
+<script src="js/assertj.js"></script>
+
+</body>
+</html>
