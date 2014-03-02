@@ -54,28 +54,129 @@
 <div class="container">
    <div class="row">
 
-            <div class="col-md-2 assertj-sidebar-menu">
-         <div class="bs-sidebar hidden-print affix-top" role="complementary">
-            <ul class="bs-sidenav nav ">
-               <li class="sidenav-header">Main</li>
-               <li><a href="assertj-swing.html">Overview</a></li>
-            </ul>
+      <div class="col-md-2 assertj-sidebar-menu">
+          <div class="bs-sidebar hidden-print affix-top" role="complementary">
+              <ul class="bs-sidenav nav ">
+                  <li class="sidenav-header">About</li>
+                  <li><a href="assertj-swing.html">Overview</a></li>
+                 <!--<li><a href="assertj-swing-quick-start.html">Quick start</a></li>-->
+                 <!--<li><a href="assertj-swing-news.html">News & releases</a></li>-->
+                 <!--<li><a href="swing/api/index.html">Javadoc</a></li>-->
+                 <li><a href="assertj-swing.html#code">Code & issues <i class="fa fa-github"></i></a></li>
+                 <li><a href="assertj-swing.html#contributing">Contributing</a></li>
+
+                 <li class="sidenav-header">Working with it</li>
+                 <li><i>Coming soon..</i></li>
+                 <!--<li><a href="assertj-swing-getting-started.html">Getting started</a></li>-->
+                 <!--<li><a href="assertj-swing-basics.html">Basics</a></li>-->
+                 <!--<li><a href="assertj-swing-edt.html">EDT</a></li>-->
+                 <!--<li><a href="assertj-swing-component-lookup.html">Component lookup</a></li>-->
+                 <!--<li><a href="assertj-swing-launching.html">Launching</a></li>-->
+                 <!--<li><a href="assertj-swing-input-simulation.html">Input simulation</a></li>-->
+                 <!--<li><a href="assertj-swing-running.html">Running tests</a></li>-->
+                 <!--<li><a href="assertj-swing-ci.html">CI</a></li>-->
+                 <!--<li><a href="assertj-swing-troubleshooting.html">Troubleshooting</a></li>-->
+                 <!--<li><a href="assertj-swing-advanced.html">Advanced features</a></li>-->
+
+                <li class="sidenav-header">Migrating</li>
+                 <li><i>Coming soon..</i></li>
+                 <!--<li><a href="assertj-swing-migrating-from-fest.html">From Fest</a></li>-->
+             </ul>
          </div>
-      </div>
+     </div>
 
 
       <div class="col-lg-10 col-md-10 col-sm-10 text-left">
-         <h1 class="page-header">AssertJ Swing overview</h1>
+         <h1 class="page-header">AssertJ Swing</h1>
 
-         <p>AssertJ Swing is a Java library that provides a fluent interface for writing assertions for Swing applications. Its main goal is to
-            improve test code readability and make maintenance of tests easier.<br>
-            AssertJ Swing is based on JDK standard types assertions, it requires Java SE 6.0 or later and can be used with either
-            JUnit or TestNG.
+         <p>AssertJ Swing is a Java library that provides a fluent interface for functional Swing UI testing.<br />
+            AssertJ Swing is based on JDK standard types assertions, it requires Java SE 6.0 or later and can be used
+            with either JUnit or TestNG.
          </p>
 
-         <p>AssertJ Swing <a href="https://github.com/joel-costigliola/assertj-swing">code</a> and
-            <a href="https://github.com/joel-costigliola/assertj-swing/issues?state=open">issue tracker</a> are hosted on github.
+         <h4 class="page-header">Features of AssertJ Swing</h4>
+
+         <ul>
+            <li><a href="assertj-swing-input-simulation.html">Simulation of user interaction</a> with a GUI (e.g.
+                                                                                                 drag 'n drop)</li>
+            <li>Reliable <a href="assertj-swing-component-lookup.html">GUI component lookup</a> (by type, by name or
+                custom search criteria)</li>
+            <li>Support for all Swing components included in the JDK</li>
+            <li>Compact and powerful API for creation and maintenance of functional GUI tests</li>
+            <li>Supports <a href="assertj-swing-launching-applets.html">Applet testing</a></li>
+            <li>Ability to embed <a href="assertj-swing-troubleshooting-via-screenshots.html">screenshots of failed GUI
+                                                                                              tests</a> in HTML test
+                reports</li>
+            <li>Can be used with either <a href="http://testng.org/" target="_blank">TestNG</a> or <a
+                  href="http://junit.org/" target="_blank">JUnit</a></li>
+            <li>Supports <a href="assertj-swing-edt-testing-violations.html">testing violations</a> of Swing's
+                threading rules</li>
+         </ul>
+
+         <h3 class="page-header">Getting started</h3>
+
+         <p>To get quickly started, just have a look at our
+            <a href="assertj-core-quick-start.html">one minute starting guide</a>.
          </p>
+
+         <p>If you have a bit more time, start with our
+            <a href="assertj-core-getting-started.html">getting started guide</a>.
+         </p>
+
+         <h3 class="page-header"><span id="fork"></span>Why having forked Fest Swing?</h3>
+
+         <p>AssertJ Swing is a fork of FEST Swing, a great project I have used for five years and Joel has contributed
+            to during 3 years, so why having forked it?</p>
+
+         <p>Well the main reason is, FEST Swing isn't really being continued. On 10th September, 2012
+            <a href="https://groups.google.com/d/msg/easytesting/bAt1nWx55FM/e3DF0bxGUf8J" target="_blank">Alex announced</a>
+            that he stopped development and that Yvonne is going to continue FEST Swing. Unfortunately except February
+            and March of 2013 there were no further commit activities on FEST Swing.
+         </p>
+
+         <p>I think even if some developers declare Swing as dead, FEST Swing is still used a lot and the
+            development should continue. Not only support for the next Java releases should be ensured. But there
+            are also a lot of issues that would improve FEST Swing. Therefore we added AssertJ Swing to the
+            AssertJ suite.</p>
+
+         <p>If you feel that something is missing, please <a
+               href="https://github.com/joel-costigliola/assertj-swing/issues?state=open" target="_blank">file a ticket</a>
+            or even better make a contribution!
+         </p>
+
+         <i>Joel Costigliola (AssertJ creator) and Christian R&ouml;sch (maintainer of AssertJ Swing)</i>
+
+         <h3 class="page-header"><span id="code"></span>Code and issue tracker</h3>
+         <p>AssertJ Swing is hosted on github:
+            <a href="https://github.com/joel-costigliola/assertj-swing" target="_blank">https://github.com/joel-costigliola/assertj-swing</a>.</p>
+
+         <p>Please report bugs or missing features in
+            <a href="https://github.com/joel-costigliola/assertj-swing/issues" target="_blank">AssertJ Swing issue tracker</a>.</p>
+
+         <h3 class="page-header"><span id="contributing"></span>Contributing to AssertJ Swing</h3>
+
+         <p>You are very welcome to contribute, we really want to offer the richer and easy to use Swing testing API,
+            so ideas from our users are very appreciated.</p>
+
+         <p>Contributing is easy and we try to help people contributing, have a look at the
+            <a href="https://github.com/joel-costigliola/assertj-swing/blob/master/CONTRIBUTING.md" target="_blank">
+               contributor guidelines</a> (these are the same guidelines shown when you create a new issue).
+         </p>
+
+<!--         <p>Special thanks assertj-swing contributors:
+         <ul>
+         </ul>
+         </p>-->
+
+         <h3 class="page-header">Thanks</h3>
+
+         <p>AssertJ Swing has its roots in FEST Swing, a project I have used for 5 years, so thanks to Alex Ruiz
+             FEST's creator!</p>
+
+          <p>This documentation is based on the
+             <a href="http://docs.codehaus.org/display/FEST/Swing+Module" target="_blank">large documentation of FEST
+                                                                                          Swing</a>.
+             So thanks a lot to all the original authors!</p>
       </div>
    </div>
 </div>
