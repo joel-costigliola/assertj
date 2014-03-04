@@ -18,6 +18,7 @@ template_data_map = {
     'javascript': content_of('assertj-javascript.html'),
     'assertj_core_side_menu': content_of('assertj-core-side-menu.html'),
     'assertj_swing_side_menu': content_of('assertj-swing-side-menu.html'),
+    'assertj_swing_danger_two_robots': content_of('assertj-swing-danger-two-robots.html'),
     'assertj_swing_get_it': content_of('assertj-swing-get-it.html'),
     'assertj_news_side_menu': content_of('assertj-news-side-menu.html'),
     'assertj_guava_side_menu': content_of('assertj-guava-side-menu.html'),
