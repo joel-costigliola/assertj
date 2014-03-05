@@ -119,37 +119,7 @@ public void tearDown() {
 }</code></pre>
 
          <h4>Putting everything together</h4>
-         <pre><code class="language-java">public class SimpleCopyApplicationTest {
-  private FrameFixture window;
-
-  @BeforeClass
-  public static void setUpOnce() {
-    FailOnThreadViolationRepaintManager.install();
-  }
-
-  @Before
-  public void setUp() {
-    SimpleCopyApplication frame = GuiActionRunner.execute(new GuiQuery&lt;SimpleCopyApplication&gt;() {
-      protected SimpleCopyApplication executeInEDT() {
-        return new SimpleCopyApplication();
-      }
-    });
-    window = new FrameFixture(frame);
-    window.show(); // shows the frame to test
-  }
-
-  @Test
-  public void shouldCopyTextInLabelWhenClickingButton() {
-    window.textBox("textToCopy").enterText("Some random text");
-    window.button("copyButton").click();
-    window.label("copiedText").requireText("Some random text");
-  }
-
-  @After
-  public void tearDown() {
-    window.cleanUp();
-  }
-}</code></pre>
+$assertj_swing_sample_without_base_test
 
          <h3 class="page-header">Alternatively, extend a AssertJ Swing test case</h3>
          <p>AssertJ Swing provides a base test class, to simplify creation of GUI tests. The following code listing
@@ -157,30 +127,7 @@ public void tearDown() {
             <code>AssertJSwingJUnitTestCase</code>. The source can be found <a
                   href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertj-swing-junit-examples/src/test/java/org/assertj/swing/junit/examples/getting_started/SimpleCopyApplication_UseBaseTest.java"
                   target="_blank">here</a>.</p>
-
-         <pre><code class="language-java">public class SimpleCopyApplication_UseBaseTest extends AssertJSwingJUnitTestCase {
-  private FrameFixture window;
-
-  @Override
-  protected void onSetUp() {
-    SimpleCopyApplication frame = GuiActionRunner.execute(new GuiQuery&lt;SimpleCopyApplication&gt;() {
-      protected SimpleCopyApplication executeInEDT() {
-        return new SimpleCopyApplication();
-      }
-    });
-    // IMPORTANT: note the call to 'robot()'
-    // we must use the Robot from AssertJSwingJUnitTestCase
-    window = new FrameFixture(robot(), frame);
-    window.show(); // shows the frame to test
-  }
-
-  @Test
-  public void shouldCopyTextInLabelWhenClickingButton() {
-    window.textBox("textToCopy").enterText("Some random text");
-    window.button("copyButton").click();
-    window.label("copiedText").requireText("Some random text");
-  }
-}</code></pre>
+$assertj_swing_sample_with_base_test
 $assertj_swing_danger_two_robots
       </div>
    </div>

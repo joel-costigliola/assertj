@@ -20,6 +20,8 @@ template_data_map = {
     'assertj_swing_side_menu': content_of('assertj-swing-side-menu.html'),
     'assertj_swing_danger_two_robots': content_of('assertj-swing-danger-two-robots.html'),
     'assertj_swing_get_it': content_of('assertj-swing-get-it.html'),
+    'assertj_swing_sample_with_base_test': content_of('assertj-swing-sample-with-base-test.html'),
+    'assertj_swing_sample_without_base_test': content_of('assertj-swing-sample-without-base-test.html'),
     'assertj_news_side_menu': content_of('assertj-news-side-menu.html'),
     'assertj_guava_side_menu': content_of('assertj-guava-side-menu.html'),
     'assertj_neo4j_side_menu': content_of('assertj-neo4j-side-menu.html'),

@@ -1,0 +1,24 @@
+         <pre class="pre-scrollable"><code class="language-java">
+public class SimpleCopyApplication_UseBaseTest extends AssertJSwingJUnitTestCase {
+  private FrameFixture window;
+
+  @Override
+  protected void onSetUp() {
+    SimpleCopyApplication frame = GuiActionRunner.execute(new GuiQuery&lt;SimpleCopyApplication&gt;() {
+      protected SimpleCopyApplication executeInEDT() {
+        return new SimpleCopyApplication();
+      }
+    });
+    // IMPORTANT: note the call to 'robot()'
+    // we must use the Robot from AssertJSwingJUnitTestCase
+    window = new FrameFixture(robot(), frame);
+    window.show(); // shows the frame to test
+  }
+
+  @Test
+  public void shouldCopyTextInLabelWhenClickingButton() {
+    window.textBox("textToCopy").enterText("Some random text");
+    window.button("copyButton").click();
+    window.label("copiedText").requireText("Some random text");
+  }
+}</code></pre>
