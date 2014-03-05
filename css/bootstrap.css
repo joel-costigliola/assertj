@@ -471,10 +471,10 @@ cite {
   color: #2b542c;
 }
 .text-info {
-  color: #31708f;
+  color: #111111;
 }
 .text-info:hover {
-  color: #245269;
+  color: #000000;
 }
 .text-left {
   text-align: left;
@@ -4439,15 +4439,15 @@ a.thumbnail.active {
   color: #2b542c;
 }
 .alert-info {
-  background-color: #d9edf7;
-  border-color: #bce8f1;
-  color: #31708f;
+  background-color: #e6bd89;
+  border-color: #df996b;
+  color: #111111;
 }
 .alert-info hr {
-  border-top-color: #a6e1ec;
+  border-top-color: #db8b56;
 }
 .alert-info .alert-link {
-  color: #245269;
+  color: #000000;
 }
 .alert-warning {
   background-color: #fcf8e3;
@@ -4860,18 +4860,18 @@ a.list-group-item.active:focus .list-group-item-text {
   border-bottom-color: #973b48;
 }
 .panel-info {
-  border-color: #bce8f1;
+  border-color: #df996b;
 }
 .panel-info > .panel-heading {
-  color: #31708f;
-  background-color: #d9edf7;
-  border-color: #bce8f1;
+  color: #111111;
+  background-color: #e6bd89;
+  border-color: #df996b;
 }
 .panel-info > .panel-heading + .panel-collapse .panel-body {
-  border-top-color: #bce8f1;
+  border-top-color: #df996b;
 }
 .panel-info > .panel-footer + .panel-collapse .panel-body {
-  border-bottom-color: #bce8f1;
+  border-bottom-color: #df996b;
 }
 .well {
   min-height: 20px;
