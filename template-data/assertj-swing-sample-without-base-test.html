@@ -1,0 +1,31 @@
+         <pre class="pre-scrollable"><code class="language-java">public class SimpleCopyApplicationTest {
+  private FrameFixture window;
+
+  @BeforeClass
+  public static void setUpOnce() {
+    FailOnThreadViolationRepaintManager.install();
+  }
+
+  @Before
+  public void setUp() {
+    SimpleCopyApplication frame = GuiActionRunner.execute(new GuiQuery&lt;SimpleCopyApplication&gt;() {
+      protected SimpleCopyApplication executeInEDT() {
+        return new SimpleCopyApplication();
+      }
+    });
+    window = new FrameFixture(frame);
+    window.show(); // shows the frame to test
+  }
+
+  @Test
+  public void shouldCopyTextInLabelWhenClickingButton() {
+    window.textBox("textToCopy").enterText("Some random text");
+    window.button("copyButton").click();
+    window.label("copiedText").requireText("Some random text");
+  }
+
+  @After
+  public void tearDown() {
+    window.cleanUp();
+  }
+}</code></pre>

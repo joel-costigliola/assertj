@@ -14,11 +14,94 @@ $assertj_swing_side_menu
 
       <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
          <h1 class="page-header">Basics of AssertJ Swing</h1>
+         <p>This section introduces the basics of AssertJ Swing to you. The basics are:</p>
+         <ul>
+            <li><a href="#base-test-case">Base test class</a></li>
+            <li><a href="#configuration">Configuration</a></li>
+            <li><a href="#verifications">Verifications with AssertJ Swing</a></li>
+            <li><a href="#verifying-colors-fonts">Special case: font and color verifications</a></li>
+         </ul>
 
-         <h3 class="page-header">Write your first GUI test</h3>
+         <h3 class="page-header"><span id="base-test-case"></span>Base test class</h3>
 
-         asd bla    <code>Robot</code>         <pre><code>Not supported</code></pre>
+         <p>AssertJ Swing provides base test case classes that take care of most of the plumbing involved when writing a
+         GUI test. This feature is available for TestNG via <code>AssertJSwingTestngTestCase</code> and for JUnit via
+         <code>AssertJSwingJUnitTestCase</code>.</p>
+
+         <p>In general, the provided test classes do the following</p>
+         <ol>
+            <li>Install <code>FailOnThreadViolationRepaintManager</code> to check that all access to Swing components
+                is performed in the EDT</li>
+            <li>Create a new <code>Robot</code>, using a new component hierarchy</li>
+            <li>Clean up resources (e.g. release the semaphore that ensures sequential test execution)</li>
+         </ol>
 $assertj_swing_danger_two_robots
+
+         <p>To compare both scenarios (with and without using the base test cases), here is the example code from
+            the <a href="assertj-swing-getting-started.html">getting started</a> site. Without base test case:</p>
+
+$assertj_swing_sample_without_base_test
+
+         <p>And the following is with using the base test case:</p>
+$assertj_swing_sample_with_base_test
+
+         <h3 class="page-header"><span id="configuration"></span>Configuration</h3>
+         <p>AssertJ Swing provides the class <code>org.assertj.swing.core.Settings</code> to configure instances of
+            <code>org.assertj.swing.core.Robot</code>. Configuration options include scope of component look-ups, delays
+            and timeouts for different actions, and many more.</p>
+
+         <p>For example to set the delay between generated events to 50&nbsp;ms, you would write</p>
+         <pre><code class="language-java">Robot robot = BasicRobot.robotWithNewAwtHierarchy();
+robot.settings().delayBetweenEvents(50);</code></pre>
+
+         <p>For more information about the available configuration settings (including defaults and valid values),
+            see the
+            <a href="swing/api/org/assertj/swing/core/Settings.html" target="_blank">Settings Javadoc</a>.</p>
+
+         <div class="panel panel-info">
+            <div class="panel-heading">Note</div>
+            <div class="panel-body">
+               <p>Currently configuration settings can be set per <code>Robot</code> instance. Settings can be changed
+               <strong>per test</strong> only. We consider that the provided default values are good enough for general
+               GUI testing. So far, we have not provided a way to have general settings that can affect all instances of
+               <code>Robot</code> in a test suite (e.g. a configuration file).</p>
+               <p>If you need global configuration settings, please let us know!</p>
+            </div>
+         </div>
+
+         <h3 class="page-header"><span id="verifications"></span>Verifications with AssertJ Swing</h3>
+         <p>AssertJ Swing allows you to check the state of the components via the component fixtures. Each fixture
+            has different verification methods.</p>
+
+         <p>For example the <code>JLabelFixture</code> allows you to verify the state of a <code>JLabel</code> and
+            therefore provides the following methods</p>
+         <pre><code class="language-java">label.requireDisabled();
+label.requireEnabled();
+label.requireFocused();
+label.requireText("expected");
+label.requireToolTip("expected tooltip");
+label.requireNotVisible();
+label.requireVisible();</code></pre>
+
+         <p>As you can see, the verification methods usually start with <code>require</code>. Therefore your IDE
+            should support you finding all possible verification methods.</p>
+
+         <h3 class="page-header"><span id="verifying-colors-fonts"></span>Font and color verifications</h3>
+         <p>AssertJ Swing supports <em>just functional</em> GUI testing and therefore testing the <em>behavior</em>
+            of a system. We don't provide a pixel verification tool.</p>
+
+         <p>Regardless whether wise men think font and color verification is part of <em>functional</em> GUI
+            testing we allow you to do it! Whereas in general colors and fonts might not be part of the
+            functionality, we can think of cases where the color and font are part of the functionality.</p>
+
+         <p>All component fixtures allow you to verify their color and font via a <code>ColorFixture</code> or a
+            <code>FontFixture</code>. These verifications are accessed via the <code>foreground()</code>,
+            <code>background()</code> and <code>font()</code> methods of a component fixture. Let's assume we want
+            to check that a label shows black font on a blue background being bold:</p>
+         <pre><code class="language-java">label.background().requireEqualTo("0000FF");
+label.foreground().requireEqualTo(Color.BLACK);
+label.font().requireBold();</code></pre>
+
       </div>
    </div>
 </div>
