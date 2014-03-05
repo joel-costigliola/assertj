@@ -59,7 +59,7 @@ pre code {
   font-family: 'Source Code Pro', sans-serif;
   font-weight: normal;
   font-style: normal;
-  color: #111111;
+  color: inherit;
 }
 .release-point-span {
   font-weight: normal;
