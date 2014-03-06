@@ -13,18 +13,18 @@ $menu
 $assertj_swing_side_menu
 
       <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
-         <h1 class="page-header">Basics of AssertJ Swing</h1>
-         <p>This section introduces the basics of AssertJ Swing to you. The basics are:</p>
+         <h1 class="page-header">Basics of $assertj_swing_name</h1>
+         <p>This section introduces the basics of $assertj_swing_name to you. The basics are:</p>
          <ul>
             <li><a href="#base-test-case">Base test class</a></li>
             <li><a href="#configuration">Configuration</a></li>
-            <li><a href="#verifications">Verifications with AssertJ Swing</a></li>
+            <li><a href="#verifications">Verifications with $assertj_swing_name</a></li>
             <li><a href="#verifying-colors-fonts">Special case: font and color verifications</a></li>
          </ul>
 
          <h3 class="page-header"><span id="base-test-case"></span>Base test class</h3>
 
-         <p>AssertJ Swing provides base test case classes that take care of most of the plumbing involved when writing a
+         <p>$assertj_swing_name provides base test case classes that take care of most of the plumbing involved when writing a
          GUI test. This feature is available for TestNG via <code>AssertJSwingTestngTestCase</code> and for JUnit via
          <code>AssertJSwingJUnitTestCase</code>.</p>
 
@@ -46,7 +46,7 @@ $assertj_swing_sample_without_base_test
 $assertj_swing_sample_with_base_test
 
          <h3 class="page-header"><span id="configuration"></span>Configuration</h3>
-         <p>AssertJ Swing provides the class <code>org.assertj.swing.core.Settings</code> to configure instances of
+         <p>$assertj_swing_name provides the class <code>org.assertj.swing.core.Settings</code> to configure instances of
             <code>org.assertj.swing.core.Robot</code>. Configuration options include scope of component look-ups, delays
             and timeouts for different actions, and many more.</p>
 
@@ -69,8 +69,8 @@ robot.settings().delayBetweenEvents(50);</code></pre>
             </div>
          </div>
 
-         <h3 class="page-header"><span id="verifications"></span>Verifications with AssertJ Swing</h3>
-         <p>AssertJ Swing allows you to check the state of the components via the component fixtures. Each fixture
+         <h3 class="page-header"><span id="verifications"></span>Verifications with $assertj_swing_name</h3>
+         <p>$assertj_swing_name allows you to check the state of the components via the component fixtures. Each fixture
             has different verification methods.</p>
 
          <p>For example the <code>JLabelFixture</code> allows you to verify the state of a <code>JLabel</code> and
@@ -87,7 +87,7 @@ label.requireVisible();</code></pre>
             should support you finding all possible verification methods.</p>
 
          <h3 class="page-header"><span id="verifying-colors-fonts"></span>Font and color verifications</h3>
-         <p>AssertJ Swing supports <em>just functional</em> GUI testing and therefore testing the <em>behavior</em>
+         <p>$assertj_swing_name supports <em>just functional</em> GUI testing and therefore testing the <em>behavior</em>
             of a system. We don't provide a pixel verification tool.</p>
 
          <p>Regardless whether wise men think font and color verification is part of <em>functional</em> GUI
