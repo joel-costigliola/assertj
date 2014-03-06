@@ -60,35 +60,121 @@
                <li class="sidenav-header">About</li>
                <li><a href="assertj-swing.html">Overview</a></li>
                <li><a href="assertj-swing-quick-start.html">Quick start</a></li>
-               <!--<li><a href="assertj-swing-news.html">News & releases</a></li>-->
-               <!--<li><a href="swing/api/index.html">Javadoc</a></li>-->
+               <li><a href="assertj-swing-news.html">News & releases</a></li>
+               <li><a href="swing/api/index.html">Javadoc</a></li>
                <li><a href="assertj-swing.html#code">Code & issues <i class="fa fa-github"></i></a></li>
                <li><a href="assertj-swing.html#contributing">Contributing</a></li>
 
                <li class="sidenav-header">Working with it</li>
                <li><a href="assertj-swing-getting-started.html">Getting started</a></li>
-               <!--<li><a href="assertj-swing-basics.html">Basics</a></li>-->
-               <!--<li><a href="assertj-swing-edt.html">EDT</a></li>-->
-               <!--<li><a href="assertj-swing-lookup.html">Component lookup</a></li>-->
-               <!--<li><a href="assertj-swing-launch.html">Launching</a></li>-->
-               <!--<li><a href="assertj-swing-input.html">Input simulation</a></li>-->
-               <!--<li><a href="assertj-swing-running.html">Running tests</a></li>-->
-               <!--<li><a href="assertj-swing-ci.html">CI</a></li>-->
-               <!--<li><a href="assertj-swing-troubleshooting.html">Troubleshooting</a></li>-->
-               <!--<li><a href="assertj-swing-advanced.html">Advanced features</a></li>-->
+               <li><a href="assertj-swing-basics.html">Basics</a></li>
+               <li><a href="assertj-swing-edt.html">EDT</a></li>
+               <li><a href="assertj-swing-lookup.html">Component lookup</a></li>
+               <li><a href="assertj-swing-launch.html">Launching</a></li>
+               <li><a href="assertj-swing-input.html">Input simulation</a></li>
+               <li><a href="assertj-swing-running.html">Running tests</a></li>
+               <li><a href="assertj-swing-ci.html">CI</a></li>
+               <li><a href="assertj-swing-troubleshooting.html">Troubleshooting</a></li>
+               <li><a href="assertj-swing-advanced.html">Advanced features</a></li>
 
                <li class="sidenav-header">Migrating</li>
-               <li><i>Coming soon..</i></li>
-               <!--<li><a href="assertj-swing-migrating.html">From Fest</a></li>-->
+               <li><a href="assertj-swing-migrating.html">From Fest</a></li>
             </ul>
          </div>
       </div>
 
 
       <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
-         <h1 class="page-header">TODO</h1>
+         <h1 class="page-header">Swing's Event Dispatch Thread (EDT)</h1>
 
-         <p><em>Coming soon ...</em></p>
+         <p>The cardinal rule of
+            <a href="http://docs.oracle.com/javase/6/docs/api/javax/swing/package-summary.html#threading"
+               target="_blank">Swing threading</a> states that all access to all Swing components should be done in
+            the event dispatch thread (EDT). To avoid unexpected behavior in your GUI tests (e.g. random test
+            failures), this rule also applies to test code.</p>
+
+         <h3 class="page-header">Writing EDT-safe GUI tests</h3>
+
+         <p>If you follow these tips you ensure that your GUI tests respect Swing's threading rules:</p>
+
+         <ul>
+            <li>Read about
+               <a href="http://docs.oracle.com/javase/6/docs/api/javax/swing/package-summary.html#threading"
+                  target="_blank">Swing's threading rules</a>. Keep in mind the
+               <strong><abbr title="ALL access to all Swing components should be done in the EDT"
+                             class="initialism">cardinal rule</abbr></strong></li>
+            <li>Creation and any direct access to Swing components should be done via <code>GuiActionRunner</code>
+                using a <code>GuiQuery</code> or <code>GuiTask</code>, because JUnit and TestNG tests do not run on
+                the EDT. More details <a href="#accessing-on-edt">below on this page</a>.</li>
+            <li>Access of Swing components through AssertJ Swing APIs is already EDT-safe.</li>
+            <li>It is strongly recommended to use <code>FailOnThreadViolationRepaintManager</code> to catch EDT-access
+                violations. More details <a href="#testing-violations">below on this page</a>.</li>
+         </ul>
+
+         <p>Alex Ruiz wrote an <a href="http://alexruiz.developerblogs.com/?p=160" target="_blank">entry on his blog</a>
+            about how to write EDT-safe GUI tests.</p>
+
+         <h3 class="page-header"><span id="accessing-on-edt"></span>Accessing Swing Components in the EDT</h3>
+
+         <p>AssertJ Swing performs all access to Swing components in the EDT. AssertJ Swing also exposes a convenient
+            mechanism to access Swing components in the EDT from your test code. This mechanism involves three classes:</p>
+
+         <ul>
+            <li><a href="swing/api/org/assertj/swing/edt/GuiQuery.html" target="_blank">GuiQuery</a>, for performing
+                actions in the EDT that return a value</li>
+            <li><a href="swing/api/org/assertj/swing/edt/GuiTask.html" target="_blank">GuiTask</a>, for performing
+                actions in the EDT that do not return a value</li>
+            <li><a href="swing/api/org/assertj/swing/edt/GuiActionRunner.html" target="_blank">GuiActionRunner</a>,
+                executes a GuiQuery or GuiTask in the EDT, rethrowing any exceptions thrown when executing any GUI
+                action in the EDT.</li>
+         </ul>
+
+         <h4>Examples</h4>
+
+         <p>When you would like to <em>read</em> the text of a label, execute the following code:</p>
+
+         <pre><code class="language-java">final JLabel nameLabel = ... // get a reference to a JLabel
+String text = GuiActionRunner.execute(new GuiQuery&lt;String&gt;() {
+  public String executeInEDT() {
+    return nameLabel.getText();
+  }
+});</code></pre>
+
+         <p>When you would like to <em>set</em> the text of a label, instead use the <code>GuiTask</code>:</p>
+
+         <pre><code class="language-java">final JLabel nameLabel = ... // get a reference to a JLabel
+GuiActionRunner.execute(new GuiTask() {
+  public void executeInEDT() {
+    nameLabel.setText("Name:");
+  }
+});</code></pre>
+
+         <h3 class="page-header"><span id="testing-violations"></span>Testing that access to Swing components is done
+                                                                      in the EDT</h3>
+
+         <p>AssertJ Swing provides the class
+            <a href="swing/api/org/assertj/swing/edt/FailOnThreadViolationRepaintManager.html"
+               target="_blank">FailOnThreadViolationRepaintManager</a>
+            that forces a test failure if access to Swing components is not performed on the EDT. This repaint manager
+            is based on <code>ThreadCheckingRepaintManager</code> by Scott Delap and Alex Potochkin. For more details
+            about how to check if GUI component is done outside the EDT, please check Alex Potochkin's article
+            <a href="http://weblogs.java.net/blog/alexfromsun/archive/2006/02/debugging_swing.html"
+               target="_blank">Debugging Swing, the final summary</a>.</p>
+
+         <p>Installing <code>FailOnThreadViolationRepaintManager</code> is pretty simple. The following example shows
+            how to install it in the class-level setup method of a JUnit test:</p>
+
+         <pre><code class="language-java">@BeforeClass
+public static void setUpOnce() {
+  FailOnThreadViolationRepaintManager.install();
+}</code></pre>
+
+         <p>When using Sun's JVM, a new instance of <code>FailOnThreadViolationRepaintManager</code> will be set as the
+            default repaint manager in Swing once and only once, regardless of the number of times <code>install()</code>
+            is called. On other JVMs this optimization is not guaranteed.</p>
+
+         <p>Once a <code>FailOnThreadViolationRepaintManager</code> is installed, it will throw an
+            <code>EdtViolationException</code> if a GUI test is not accessing Swing components in the EDT.</p>
       </div>
    </div>
 </div>
