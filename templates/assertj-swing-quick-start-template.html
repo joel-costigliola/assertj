@@ -15,7 +15,7 @@ $assertj_swing_side_menu
       <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
          <h1 class="page-header">One minute starting guide</h1>
 
-         <p>Assuming you have only little time, here's the quickest introduction to AssertJ Swing. Depending on your
+         <p>Assuming you have only little time, here's the quickest introduction to $assertj_swing_name. Depending on your
             reading and coding skills, this should be done in about one minute. &#9786;</p>
 
 $assertj_swing_get_it
@@ -39,7 +39,7 @@ application(YourMainClass.class).start();
 // with arguments
 application(YourMainClass.class).withArgs(arguments).start();</code></pre>
 
-         <p>Then you just need to tell AssertJ Swing to find the main frame of your application and start testing:</p>
+         <p>Then you just need to tell $assertj_swing_name to find the main frame of your application and start testing:</p>
          <pre><code class="language-java">FrameFixture frame = findFrame(new GenericTypeMatcher&lt;Frame&gt;(Frame.class) {
   protected boolean isMatching(Frame frame) {
     return "Your application title".equals(frame.getTitle()) && frame.isShowing();
@@ -59,10 +59,10 @@ application(YourMainClass.class).withArgs(arguments).start();</code></pre>
          <p>See our more detailed <a href="assertj-swing-getting-started.html">getting started guide</a> to get
             the maximum out of it!</p>
 
-         <p>You can learn more by looking at <a href="swing/api/index.html" target="_blank">AssertJ Swing javadoc</a>.</p>
+         <p>You can learn more by looking at <a href="swing/api/index.html" target="_blank">$assertj_swing_name javadoc</a>.</p>
 
          <p>Another way is to go see <a href="https://github.com/joel-costigliola/assertj-examples/tree/master">assertj-examples</a>,
-            it covers what is possible with AssertJ and contains projects for AssertJ Swing, too. You can clone it
+            it covers what is possible with AssertJ and contains projects for $assertj_swing_name, too. You can clone it
             and run its tests!</p>
 
       </div>

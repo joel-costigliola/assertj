@@ -34,7 +34,7 @@ $assertj_swing_side_menu
             <li>Creation and any direct access to Swing components should be done via <code>GuiActionRunner</code>
                 using a <code>GuiQuery</code> or <code>GuiTask</code>, because JUnit and TestNG tests do not run on
                 the EDT. More details <a href="#accessing-on-edt">below on this page</a>.</li>
-            <li>Access of Swing components through AssertJ Swing APIs is already EDT-safe.</li>
+            <li>Access of Swing components through $assertj_swing_name APIs is already EDT-safe.</li>
             <li>It is strongly recommended to use <code>FailOnThreadViolationRepaintManager</code> to catch EDT-access
                 violations. More details <a href="#testing-violations">below on this page</a>.</li>
          </ul>
@@ -44,7 +44,7 @@ $assertj_swing_side_menu
 
          <h3 class="page-header"><span id="accessing-on-edt"></span>Accessing Swing Components in the EDT</h3>
 
-         <p>AssertJ Swing performs all access to Swing components in the EDT. AssertJ Swing also exposes a convenient
+         <p>$assertj_swing_name performs all access to Swing components in the EDT. $assertj_swing_name also exposes a convenient
             mechanism to access Swing components in the EDT from your test code. This mechanism involves three classes:</p>
 
          <ul>
@@ -80,7 +80,7 @@ GuiActionRunner.execute(new GuiTask() {
          <h3 class="page-header"><span id="testing-violations"></span>Testing that access to Swing components is done
                                                                       in the EDT</h3>
 
-         <p>AssertJ Swing provides the class
+         <p>$assertj_swing_name provides the class
             <a href="swing/api/org/assertj/swing/edt/FailOnThreadViolationRepaintManager.html"
                target="_blank">FailOnThreadViolationRepaintManager</a>
             that forces a test failure if access to Swing components is not performed on the EDT. This repaint manager

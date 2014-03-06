@@ -15,16 +15,16 @@ $assertj_swing_side_menu
       <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
          <h1 class="page-header">Getting started guide</h1>
 
-         <p>Assuming you have a bit time, here's a detailed introduction to AssertJ Swing. You may want to have a
+         <p>Assuming you have a bit time, here's a detailed introduction to $assertj_swing_name. You may want to have a
             look at <a href="assertj-swing-quick-start.html">the quick start guide</a> that allows you to create
-            and run an AssertJ Swing test case in the least possible time.</p>
+            and run an $assertj_swing_name test case in the least possible time.</p>
 
 $assertj_swing_get_it
 
          <h3 class="page-header">Write your first GUI test</h3>
          <p>As the <code>Assertions</code> class is the main entry point to use AssertJ Core, the package
             <a href="swing/api/org/assertj/swing/fixture/package-summary.html" target="_blank">org.assertj.swing.fixture</a>
-            is the main entry point to use AssertJ Swing. These fixtures provide specific methods to simulate
+            is the main entry point to use $assertj_swing_name. These fixtures provide specific methods to simulate
             user interaction with a GUI component and also provide assertion methods that verify the state of such
             a GUI component. Although you could work with the
             <a href="swing/api/org/assertj/swing/core/Robot.html" target="_blank">Robot</a> directly, the Robot is too
@@ -86,7 +86,7 @@ public void setUp() {
             <a href="assertj-swing-edt.html">here</a>.</p>
 
          <h4>3. Write methods to test your GUI's behavior</h4>
-         <p>Now you can start by using the fixtures to test the GUI. AssertJ Swing fixtures simulate a user interacting
+         <p>Now you can start by using the fixtures to test the GUI. $assertj_swing_name fixtures simulate a user interacting
             with the GUI in order to verify that such GUI behaves as we expect. For our example, we need to verify that
             the text in the text field is copied to the label when the button is clicked:</p>
 
@@ -101,11 +101,11 @@ public void shouldCopyTextInLabelWhenClickingButton() {
             probably the most stable way, more about finding the components can be found
             <a href="assertj-swing-lookup.html">here</a>.</p>
 
-         <h4>4. Cleaning up resources used by AssertJ Swing</h4>
-         <p>AssertJ Swing forces sequential test execution, regardless of the testing framework. To do so, it uses a
+         <h4>4. Cleaning up resources used by $assertj_swing_name</h4>
+         <p>$assertj_swing_name forces sequential test execution, regardless of the testing framework. To do so, it uses a
             semaphore to give access to the keyboard and mouse to a single test. Cleaning up resources after running
             each test method releases the lock on such semaphore. To clean up resources simply call the method
-            <code>cleanUp()</code> on the AssertJ Swing fixture inside:
+            <code>cleanUp()</code> on the $assertj_swing_name fixture inside:
             <ul>
                <li><code>tearDown()</code>, when using <em>JUnit 3.8.x</em></li>
                <li>the method marked with <code>@After</code>, when using <em>JUnit 4.x</em></li>
@@ -121,8 +121,8 @@ public void tearDown() {
          <h4>Putting everything together</h4>
 $assertj_swing_sample_without_base_test
 
-         <h3 class="page-header">Alternatively, extend a AssertJ Swing test case</h3>
-         <p>AssertJ Swing provides a base test class, to simplify creation of GUI tests. The following code listing
+         <h3 class="page-header">Alternatively, extend a $assertj_swing_name test case</h3>
+         <p>$assertj_swing_name provides a base test class, to simplify creation of GUI tests. The following code listing
             provides the same functionality as the code above, with less code, thanks to
             <code>AssertJSwingJUnitTestCase</code>. The source can be found <a
                   href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertj-swing-junit-examples/src/test/java/org/assertj/swing/junit/examples/getting_started/SimpleCopyApplication_UseBaseTest.java"
