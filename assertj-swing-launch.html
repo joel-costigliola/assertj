@@ -85,9 +85,122 @@
 
 
       <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
-         <h1 class="page-header">TODO</h1>
+         <h1 class="page-header">Launching</h1>
 
-         <p><em>Coming soon ...</em></p>
+         <h3 class="page-header"><span id="applications"></span>Applications from a <code>main()</code> method</h3>
+         <p>AssertJ Swing supports launching an application from its <code>main()</code> method. It is quite
+            easy, and requires only one line of code. You only need to use the
+            <a href="swing/api/org/assertj/swing/launcher/ApplicationLauncher.html" target="_blank"><code>ApplicationLauncher</code></a>.</p>
+
+         <p>Let's assume we have the following application</p>
+         <pre><code class="language-java">public class JavaApp {
+
+  public static void main(String[] args) {
+    SwingUtilities.invokeLater(new Runnable() {
+      public void run() {
+        JFrame frame = new JFrame("Java Application");
+        frame.setPreferredSize(new Dimension(200, 200));
+        frame.pack();
+        frame.setVisible(true);
+      }
+    });
+  }
+}</code></pre>
+
+         <p>We can launch this application programmatically either by the main class or its fully qualified name:</p>
+         <pre><code class="language-java">//import static org.assertj.swing.launcher.ApplicationLauncher.*;
+
+// 1. by class object without arguments
+application(JavaApp.class).start();
+// 2. by class object with arguments
+application(JavaApp.class).withArgs("arg1", "arg2").start();
+// 3. by qualified name without arguments
+application("com.mycompany.JavaApp").start();
+// 4. by qualified name with arguments
+application("com.mycompany.JavaApp").withArgs("arg1", "arg2").start();</code></pre>
+
+         <p>Once the application is started, we can get a reference of its <code>JFrame</code>. In this example we're
+            using a <code>WindowFinder</code>. For more information about <code>WindowFinder</code>, please visit
+            <a href="assertj-swing-lookup.html#long-duration">Testing Long-Duration Tasks</a>.
+         <pre><code class="language-java">// import static org.assertj.swing.finder.WindowFinder.findFrame;
+
+FrameFixture frame = findFrame(new GenericTypeMatcher&lt;Frame&gt;() {
+  protected boolean isMatching(Frame frame) {
+    return "Java Application".equals(frame.getTitle()) && frame.isShowing();
+  }
+}).using(robot);</code></pre>
+
+         <h3 class="page-header"><span id="applets"></span>Applets</h3>
+         <p>AssertJ Swing provides its own <em>applet viewer</em> to support GUI testing of Java applets. Testing an
+            applet involves three steps: start the applet, the actual test and resource cleanup.</p>
+
+         <h4>Start the applet</h4>
+         <p>There are two ways to start an applet:</p>
+
+         <h5>Using an <code>AppletLauncher</code> to start an <code>AppletViewer</code></h5>
+         <p>The class <code>AppletLauncher</code> provides a fluent interface for launching an applet:</p>
+
+         <pre><code class="language-java">AppletViewer viewer = AppletLauncher.applet("org.assertj.swing.applet.MyApplet").start();
+// or
+AppletViewer viewer = AppletLauncher.applet(MyApplet.class).start();
+// or
+AppletViewer viewer = AppletLauncher.applet(new MyApplet()).start();</code></pre>
+
+         <p>In addition, we can pass parameters to the applet. This works as if you'd specify them in the
+            <code>param</code> tag of the embedding <code>HTML</code>:</p>
+         <pre class="pre-scrollable"><code class="language-java">AppletViewer viewer = AppletLauncher.applet(new MyApplet())
+                                    .withParameters(
+                                       name("bgcolor").value("blue"),
+                                       name("color").value("red"),
+                                       name("pause").value("200")
+                                     )
+                                    .start();
+
+// or
+
+Map&lt;String, String&gt; parameters = new HashMap&lt;String, String&gt;();
+parameters.put("bgcolor", "blue");
+parameters.put("color", "red");
+parameters.put("pause", "200");
+
+AppletViewer viewer = AppletLauncher.applet(new MyApplet()).withParameters(parameters).start();</code></pre>
+
+         <h5>Starting an <code>AppletViewer</code> directly</h5>
+         <p>The <code>AppletLauncher</code> provides a simple and compact API to start applets in an
+            <code>AppletViewer</code>. The created <code>AppletViewer</code> uses basic implementations of
+            <code>AppletStub</code> and <code>AppletContext</code> though. If you need to test an applet with more
+            advanced implementations of <code>AppletStub</code> or <code>AppletContext</code>, you can use
+            <code>AppletViewer</code> directly, passing your own <code>AppletStub</code> (which will return your own
+            <code>AppletContext</code>).</p>
+
+         <pre><code class="language-java">AppletViewer viewer = AppletViewer.newViewer(new MyApplet(), new MyAppletStub());</code></pre>
+
+         <h4>Test the applet</h4>
+         <p>Once we have an <code>AppletViewer</code> up and running the applet to test, we simply can <em>wrap</em>
+            the <code>AppletViewer</code> with a <code>FrameFixture</code> and start testing.</p>
+
+         <pre class="pre-scrollable"><code class="language-java">private AppletViewer viewer;
+private FrameFixture applet;
+
+@BeforeMethod public void setUp() {
+  viewer = // get the viewer using AppletLauncher or create a new AppletViewer
+  applet = new FrameFixture(viewer);
+  applet.show();
+}
+
+@Test public void shouldChangeLabelOnButtonClick() {
+  applet.button("ok").click();
+  applet.label("text").requireText("Hello");
+}
+
+@AfterMethod public void tearDown() {
+  viewer.unloadApplet();
+  applet.cleanUp();
+}</code></pre>
+
+         <h4>Resource cleanup</h4>
+         <p>As our previous example showed, in addition to call <code>cleanUp()</code> we need to unload the applet by
+            calling <code>unloadApplet</code> in the <code>AppletViewer</code> used in our test.</p>
       </div>
    </div>
 </div>
