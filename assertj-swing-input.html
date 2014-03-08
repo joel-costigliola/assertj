@@ -85,9 +85,199 @@
 
 
       <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
-         <h1 class="page-header">TODO</h1>
+         <h1 class="page-header">Input Simulation</h1>
+         <p>AssertJ Swing uses an <a href="http://java.sun.com/javase/6/docs/api/java/awt/Robot.html"
+                                           target="_blank">AWT Robot</a> to generate user input. The AWT Robot is
+            capable of generating native events, providing the most accurate simulation of an actual user. The
+            <code>Robot</code> can move the mouse pointer and press keys just like a user would.</p>
 
-         <p><em>Coming soon ...</em></p>
+         <h2>Simulating keyboard input</h2>
+         <p>All AssertJ Swing fixtures can simulate user input using a keyboard. This simulation is not limited
+            to send events to <code>KeyListeners</code>. AssertJ Swing provides true keyboard input, at the
+            operating system level.</p>
+
+         <h3>Pressing and releasing one or more keys</h3>
+         <p>The method <code>pressAndReleaseKeys(int...)</code> can simulate a user pressing and releasing one or more
+            keys. If more than one key code is passed as parameter, this method will simulate pressing a key, releasing
+            it and then will process the next key code. Key codes are integers specified in
+            <code>java.awt.event.KeyEvent</code>.</p>
+
+         <p>The following example shows how to simulate a user pressing the keys <code>A</code>, <code>S</code>,
+            <code>D</code>, <code>F</code> while having focus on a text field with name <code>username</code> which is
+            similar to typing <code>asdf</code> on that text field.</p>
+         <pre><code class="language-java">// import static java.awt.event.KeyEvent.*;
+dialog.textBox("username").pressAndReleaseKeys(VK_A, VK_S, VK_D, VK_F);</code></pre>
+
+         <p>Simulating a user pressing the key <kbd>F1</kbd> while having focus on a button with name
+            <code>configure</code> would be</p>
+         <pre><code class="language-java">// import static java.awt.event.KeyEvent.*;
+dialog.button("configure").pressAndReleaseKeys(VK_F1);</code></pre>
+
+         <h3>Pressing a key, doing something else, and releasing the key</h3>
+         <p>The methods <code>pressKey(int)</code> and <code>releaseKey(int)</code> can simulate a user pressing and
+            releasing a key. Although it may sound similar to what the method <code>pressAndReleaseKeys(int...)</code>
+            does, it is a bit different. The <code>pressAndReleaseKeys(int...)</code> simulates a user pressing a key
+            and immediately releasing the same key. On the other hand, <code>pressKey(int)</code> and
+            <code>releaseKey(int)</code> are two separate actions. They can be helpful when you want to simulate a case
+            of <em>press a key, do something else, and then release the key</em>.</p>
+
+         <p>An example will illustrate this and give a better idea what these methods are good for. In the following
+            code we're simulating clicking the left mouse button while having the <kbd>Ctrl</kbd> key pressed:</p>
+         <pre><code class="language-java">// import static java.awt.event.KeyEvent.*;
+dialog.list("employees").pressKey(VK_CONTROL)
+                        .click()
+                        .releaseKey(VK_CONTROL);</code></pre>
+
+         <h3>Typing text</h3>
+         <p>Often we just want to enter some text into a text field. Using <code>pressAndReleaseKeys(int...)</code>
+            is unhandy for this purpose. The text component fixtures have a method <code>enterText(String)</code> to
+            simplify entering text. The example from above, typing <code>asdf</code> into a text field then looks
+            like</p>
+         <pre><code class="language-java">dialog.textBox("username").enterText("asdf");</code></pre>
+
+         <h2>Simulating mouse clicks</h2>
+         <p>All AssertJ Swing fixtures can simulate user input using a mouse. This simulation is not limited to
+            send events to implementations of <code>MouseListener</code>. AssertJ Swing provides true mouse
+            input, at the operating system level, too. For example, simulating a user moving the mouse will result in
+            the mouse pointer moving to a specified location.</p>
+
+         <h3>Simple click</h3>
+         <p>The method <code>click()</code> can simulate a user clicking a component once, using the left mouse
+            button. Let's see how to simulate a user clicking the button with name <code>connect</code>:</p>
+         <pre><code class="language-java">frame.button("connect").click();</code></pre>
+
+         <p>The following are alternative (and more verbose) ways to click a component once, using the left mouse
+            button:</p>
+         <pre><code class="language-java">// import static org.assertj.swing.core.MouseButton.LEFT_BUTTON;
+frame.button("connect").click(LEFT_BUTTON);
+
+// import static org.assertj.swing.core.MouseClickInfo.leftButton;
+frame.button("connect").click(leftButton().times(1));</code></pre>
+
+         <h3>Double click and right click</h3>
+         <p>In addition to <code>click()</code> there are the methods <code>doubleClick()</code> (for
+            double-clicking a component, using the left mouse button) and <code>rightClick()</code> (for clicking a
+            component once, using the right mouse button).</p>
+
+         <h3>Click using specific button, many times</h3>
+         <p>Since there aren't only left and right mouse buttons and you may want to click more than twice,
+            AssertJ Swing has the method <code>click(MouseClickInfo)</code> to allow such a functionality.
+            With <code>MouseClickInfo</code> you can specify the mouse button and the amount of clicks.</p>
+
+         <p>How does that look like? We already used this method above. But let's see how you would make
+            AssertJ Swing clicking three times the radio button with name <code>monthly</code> using the left
+            mouse button:</p>
+         <pre><code class="language-java">// import static org.fest.swing.core.MouseClickInfo.leftButton;
+frame.radioButton("monthly").click(leftButton().times(3));</code></pre>
+
+         <h2>Simulating Drag 'n Drop</h2>
+         <p>AssertJ Swing supports simulation of drag 'n drop via the class
+            <a href="swing/api/org/assertj/swing/core/ComponentDragAndDrop.html" target="_blank">ComponentDragAndDrop</a>.
+            This class supports drag 'n drop operations on screen coordinates and swing components. In addition, the
+            following fixtures provide component-specific implementations of drag 'n drop, to simulate a user dragging
+            'n dropping on <code>JList</code>, <code>JTable</code> and <code>JTree</code>, respectively:</p>
+         <ol>
+            <li><code>JListFixture</code></li>
+            <li><code>JTableFixture</code></li>
+            <li><code>JTreeFixture</code></li>
+         </ol>
+
+         <div class="panel panel-info">
+            <div class="panel-heading">Note</div>
+            <div class="panel-body">
+               AssertJ Swing's drag 'n drop will effectively simulate a user pressing the left mouse button,
+               moving the mouse to a particular location and releasing the mouse. However, it is up to you to
+               implement drag 'n drop in your Swing components. To learn more about drag 'n drop, please visit
+               <a href="http://java.sun.com/docs/books/tutorial/uiswing/dnd/intro.html" target="_blank">Sun's Swing
+                                                                                                        Tutorial</a>.
+            </div>
+         </div>
+
+         <h3>Examples</h3>
+         <h4>JList</h4>
+         <p>The following example shows dragging the element <em>Swing</em> from the list <code>source</code> and
+            dropping it in the list <code>destination</code> on the element <em>AWT</em>. Which might insert
+            <em>Swing</em> before or after <em>AWT</em>, depending on the implementation of the
+            <code>TransferHandler</code> used.</p>
+
+         <pre><code class="language-java">dialog.list("source").drag("Swing");
+dialog.list("destination").drop("AWT");</code></pre>
+
+         <h4>JTable</h4>
+         <p>The following example shows dragging the content of the cell at row&nbsp;3, column&nbsp;0 from the table
+            <code>source</code> and dropping it on the table <code>destination</code> at row&nbsp;1, column&nbsp;0.</p>
+
+         <pre><code class="language-java">// import static org.assertj.swing.fixture.TableCell.TableCellBuilder.row;
+dialog.table("source").drag(row(3).column(0));
+dialog.table("destination").drop(row(1).column(0));</code></pre>
+
+         <h4>JTree</h4>
+         <p>The following example shows dragging the node <em>branch1.1</em> (in the path <em>root/branch1</em>) from
+            the tree <code>source</code> and dropping it in the tree <code>destination</code> on the node <em>root</em>.
+         </p>
+
+         <pre><code class="language-java">dialog.tree("source").drag(path("root", "branch1", "branch1.1"));
+dialog.tree("destination").drop(path("root"));</code></pre>
+
+         <h2>Simulating editing table cells</h2>
+         <p>AssertJ Swing provides support for editing <code>JTable</code> cells as if a user was doing it. Out
+            of the box <code>JCheckBox</code>, <code>JComboBox</code> and <code>JTextField</code> are supported as
+            custom cell editors:</p>
+
+         <img src="images/swing-input-table.png" alt="Screenshot of the sample table to test" />
+
+         <p>There are many ways to simulate a user editing a <code>JTable</code> cell:</p>
+
+         <h3><code>JTableFixture</code></h3>
+         <p>A <code>JTableFixture</code> provides the method <code>enterValue(TableCell, String)</code> which simulates
+            a user entering the given value in the given cell, regardless of the underlying cell editor. Even though
+            the value to enter is always a String, <code>JTableFixture</code> can figure out how to use the underlying
+            cell editor.</p>
+
+         <p>The following code illustrates how to select the value <em>Pool</em> from the <code>JComboBox</code> in
+            row&nbsp;0, column&nbsp;2 (see picture above).</p>
+         <pre><code class="language-java">JTableFixture table = dialog.table("data");
+// import static org.assertj.swing.data.TableCell.row;
+table.enterValue(row(0).column(2), "Pool");</code></pre>
+
+         <p>Here we are selecting the <code>JCheckBox</code> in row&nbsp;1, column&nbsp;4:</p>
+         <pre><code class="language-java">JTableFixture table = dialog.table("data");
+// import static org.assertj.swing.data.TableCell.row;
+table.enterValue(row(1).column(4), "true");</code></pre>
+
+         <h3><code>JTableCellFixture</code></h3>
+         <p>A <code>JTableCellFixture</code> provides the method <code>enterValue(String)</code>, which can also
+            simulate a user editing a table cell, just like <code>JTableFixture</code>. The following code illustrates
+            how to select the value <em>Pool</em> from the <code>JComboBox</code> in row&nbsp;0, column&nbsp;2:</p>
+         <pre><code class="language-java">JTableFixture table = dialog.table("data");
+// import static org.assertj.swing.data.TableCell.row;
+JTableCellFixture cell = table.cell(row(0).column(2));
+cell.enterValue("Pool");</code></pre>
+
+         <p>Here we are selecting the <code>JCheckBox</code> in row&nbsp;1, column&nbsp;4:</p>
+         <pre><code class="language-java">JTableFixture table = dialog.table("data");
+// import static org.assertj.swing.data.TableCell.row;
+JTableCellFixture cell = table.cell(row(1).column(4));
+cell.enterValue("true");</code></pre>
+
+         <h3>Having more control of the cell editor</h3>
+         <p>To have more control of the underlying cell editor, it is possible to wrap it with an implementation of
+            <code>ComponentFixture</code>. The <code>JTableCellFixture</code> provides the method <code>editor()</code>,
+            which returns the <code>Component</code> used as editor of a cell. <code>JTableCellFixture</code> also
+            provides the methods <code>startEditing</code>, <code>stopEditing</code> and <code>cancelEditing</code>.
+            The following example illustrates how to use them:</p>
+         <pre><code class="language-java">// import static org.assertj.swing.data.TableCell.row;
+TableCellFixture cell = table.cell(row(6).column(8));
+Component editor = cell.editor();
+// assume editor is a JTextField
+JTextComponentFixture textBoxEditor = new JTextComponentFixture(robot, (JTextField)editor);
+cell.startEditing();
+textBoxEditor.enterText("Hello");
+cell.stopEditing();</code></pre>
+
+         <h3>Custom cell editors</h3>
+         <p>AssertJ Swing also supports custom cell editors. For more information, please read
+            <a href="assertj-swing-advanced.html#custom-editors">Custom Cell Editors</a>.</p>
       </div>
    </div>
 </div>
