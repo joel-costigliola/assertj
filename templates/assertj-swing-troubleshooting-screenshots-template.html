@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+$head
+
+<body>
+
+$menu
+
+<div class="container">
+   <div class="row" >
+
+$assertj_swing_side_menu
+
+      <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
+         <h1 class="page-header">Screenshots of test failures</h1>
+
+         <p>On some occasions a functional GUI test will run perfectly from within the IDE but will break when executed
+            in a batch with other tests (such as when you are using Ant). This is because functional GUI tests are
+            vulnerable to certain environment-related events, and $assertj_swing_name is no exception.</p>
+
+         <p>It occasionally may happen that anti-virus software runs a scheduled scan while a GUI is under test. If the
+            anti-virus software pops up a dialog in front of the GUI, the $assertj_swing_name robot will not be able to
+            access the GUI and will time out eventually, making the test fail. In this case, the failure is not related
+            to a programming error; it is just a case of bad timing.</p>
+
+         <p>$assertj_swing_name is capable of taking a screenshot of the desktop when a GUI test fails, regardless of
+            the test framework you use (TestNG or JUnit). You then can use this screenshot to analyse the cause of a
+            failed test and discover whether it is programmatic or environmental.</p>
+
+         <p>There are many ways to take a screenshot of the desktop when a GUI test fails. Regardless of how
+            $assertj_swing_name takes a screenshot, it needs to know which tests should be considered <em>GUI
+            tests</em>. In order to do so, we only need to add the annotation <code>@GUITest</code>. This annotation
+            can be placed at class or method level, and it is inherited by subclasses of annotated classes.</p>
+
+         <p>Once our GUI tests have the <code>@GUITest</code> annotation, we can take a screenshot of the desktop when
+            a GUI test fails. See the following sections for the how-to.</p>
+
+         <h2>How to take screenshots manually</h2>
+         <p>Taking a screenshot of the desktop is quite simple. The class <code>ScreenshotTaker</code> provides two
+            methods:</p>
+         <ul>
+            <li><code>takeDesktopScreenshot()</code> takes a screenshot of the desktop and returns it as a
+               <code>BufferedImage</code>.</li>
+            <li><code>saveDesktopAsPng(String)</code> takes a screenshot of the desktop and saves it as a PNG image
+                using the file path passed as argument.</li>
+         </ul>
+
+         <h3>Example</h3>
+         <p>This example takes a screenshot of the desktop when a test fails and saves the image as
+            <code>myTest.png</code>:</p>
+         <pre class="pre-scrollable"><code class="language-java">// import static org.assertj.util.Files.currentFolder;
+// import static java.io.File.separator
+
+ScreenshotTaker screenshotTaker = new ScreenshotTaker();
+
+String currentFolderPath = currentFolder().getCanonicalPath();
+
+File imageFolder = new File(currentFolderPath + separator + "failed-tests"))
+String imageFolderPath = imageFolder.getCanonicalPath() + separator;
+
+try {
+  // perform your test
+} catch (Exception e) {
+  // test failed
+  screenshotTaker.saveDesktopAsPng(imageFolderPath + "myTest.png");
+  throw e;
+}</code></pre>
+
+         <h2>How to take screenshots of test failures with JUnit</h2>
+         <p>$assertj_swing_name can take a screenshot of the desktop when a JUnit GUI test fails, either when running
+            tests using Ant or inside an IDE (e.g. Eclipse). To take screenshots of failed GUI tests you have to
+            add the <code>@GUITest</code> annotation and make sure that you've included the
+            <code>assertj-swing-junit</code> artifact.</p>
+
+         <h3>Running with the JUnit Runner</h3>
+         <p>For running GUI tests in an IDE, $assertj_swing_name provides a custom JUnit runner,
+            <code>GUITestRunner</code>, which takes screenshots of failed GUI tests. To use it, just annotate your test
+            class with <code>@RunWith(GUITestRunner.class)</code>. Screenshots of failed tests will be saved in the
+            directory <code>failed-gui-tests</code> (relative to the directory where tests are executed).</p>
+
+         <h3>Running with Ant</h3>
+         <p>In order to take screenshots of failed GUI tests with Ant please follow these steps</p>
+         <ul>
+            <li>Add a definition of the Ant task <code>festreport</code></li>
+            <li>Use the formatter <code>ScreenshotOnFailureResultFormatter</code> inside the junit Ant task</li>
+            <li>Use the Ant task <code>festreport</code> instead of <code>junitreport</code>, and specify in its
+                classpath where the <code>assertj-swing-junit</code> jar file is.</li>
+         </ul>
+
+         <h4>Example</h4>
+         <pre class="pre-scrollable"><code class="language-xml">&lt;target name="test" depends="compile"&gt;
+  &lt;taskdef resource="festjunittasks" classpathref="lib.classpath" /&gt;
+
+  &lt;junit forkmode="perBatch" printsummary="yes" haltonfailure="no" haltonerror="no"&gt;
+    &lt;classpath refid="lib.classpath" /&gt;
+    &lt;classpath location="${target.test.classes.dir}" /&gt;
+    &lt;classpath location="${target.classes.dir}" /&gt;
+    &lt;formatter classname="org.fest.swing.junit.ant.ScreenshotOnFailureResultFormatter" extension=".xml" /&gt;
+    &lt;batchtest fork="yes" todir="${target.junit.results.dir}"&gt;
+      &lt;fileset dir="${target.test.classes.dir}" includes="**/*Test*.class" /&gt;
+    &lt;/batchtest&gt;
+  &lt;/junit&gt;
+
+  &lt;festreport todir="${target.junit.report.dir}"&gt;
+    &lt;classpath refid="lib.classpath" /&gt;
+    &lt;fileset dir="${target.junit.results.dir}"&gt;
+      &lt;include name="TEST-*.xml" /&gt;
+    &lt;/fileset&gt;
+    &lt;report format="frames" todir="${target.junit.report.dir}/html" /&gt;
+  &lt;/festreport&gt;
+&lt;/target&gt;</code></pre>
+
+         <p><code>festreport</code> works exactly as <code>junitreport</code> but additionally produces a link as seen
+            in this screenshot:</p>
+         
+         <img src="images/swing-screenshot-junit-ant.jpg" alt="Screenshot of the test report" />
+
+         <h2>How to take screenshots of test failures with TestNG</h2>
+         <p>$assertj_swing_name can take a screenshot of the desktop when a TestNG GUI test fails. Because of TestNG's
+            excellent support for extensibility, it is quite easy to setup $assertj_swing_name with TestNG. Just make
+            sure that you've included the <code>assertj-swing-testng</code> artifact.</p>
+
+         <p>The provided listener, <code>ScreenshotOnFailureListener</code>, is capable of taking a screenshot of the
+            desktop when a test fails and saves it in TestNG's default output directory. Due to TestNG's flexible
+            architecture, this listener can be called either from Ant, TestNG plug-in for Eclipse, command line, etc.</p>
+
+         <p>To take screenshots of failed GUI tests, regardless of how they are executed, just add the
+            <code>@GUITest</code> annotation.</p>
+
+         <h3>Running with Ant</h3>
+         <p>This example shows how to register the <code>ScreenshotOnFailureListener</code> with TestNG's ant task.</p>
+         <pre><code class="language-xml">&lt;testng listeners="org.fest.swing.testng.ScreenshotOnFailureListener"
+        outputDir="${target.test.results.dir}" haltOnFailure="true"
+        verbose="2"&gt;
+  &lt;classfileset dir="${target.test.classes.dir}" includes="**/*Test.class" /&gt;
+  &lt;classpath location="${target.test.classes.dir}" /&gt;
+  &lt;classpath location="${target.classes.dir}" /&gt;
+  &lt;classpath refid="test.classpath" /&gt;
+&lt;/testng&gt;</code></pre>
+
+         <p>A screenshot of a failed TestNG GUI test</p>
+         <img src="images/swing-screenshot-testng-ant.png" alt="Screenshot of a failed TestNG GUI test" />
+      </div>
+   </div>
+</div>
+
+
+$footer
+
+$javascript
+
+</body>
+</html>
