@@ -84,9 +84,260 @@
 
 
       <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
-         <h1 class="page-header">TODO</h1>
+         <h1 class="page-header">Advanced Features</h1>
 
-         <p><em>Coming soon ...</em></p>
+         <h2>Assertions with Timeouts</h2>
+         <p>Sometimes it is necessary to have a timeout when verifying that a particular condition has been satisfied
+            or the application has reached a particular state. For example, some UI tests may involve asynchronous
+            operations or time-consuming tasks.</p>
+
+         <p>The following code listing shows how to perform assertions using timeouts. In our example, we are going to
+            assume that a <code>JButton</code> is enabled after calling a web service asynchronously. In our example,
+            if the <code>JButton</code> is not enabled after 10&nbsp;seconds, the test will fail. The exception thrown
+            will include the description of the <code>Condition</code>.</p>
+         <pre class="pre-scrollable"><code class="language-java">// import static org.assertj.swing.timing.Pause.pause;
+// import static org.assertj.swing.timing.Timeout.timeout;
+// import static org.assertj.swing.edt.GuiActionRunner.execute;
+
+final JButton okButton = //obtain a reference to the "OK" button
+pause(new Condition("OK button to be enabled") {
+
+  public boolean test() {
+    return execute(new GuiQuery&lt;Boolean&gt;() {
+      public Boolean executeInEDT() {
+        return okButton.isEnabled();
+      }
+    }
+  }
+
+}, timeout(10000));</code></pre>
+
+         <h2>Component Formatters</h2>
+         <p>A component formatter is an implementation of the interface <code>ComponentFormatter</code> that creates a
+            <code>String</code> representation of a GUI component. AssertJ Swing provides default component
+            formatters for all the Swing components in the JDK. Unlike the <code>toString()</code> method in Swing
+            components, the provided component formatters display only the information that can help developers solve
+            problems in functional tests, excluding any information related to the appearance of GUI components
+            (e.g. colors, layouts, sizes, etc.). Here are some examples:</p>
+
+         <pre><code>org.fest.swing.test.TestFrame[name='frame', title='FormattingTest', enabled=true, showing=true]
+javax.swing.JButton[name='button', text='A button', enabled=false]
+javax.swing.JList[name='list', selectedValues=['One', 2], contents=['One', 2, 'Three', 4], selectionMode=MULTIPLE_INTERVAL_SELECTION, enabled=true]
+javax.swing.JOptionPane[message='A message', messageType=ERROR_MESSAGE, optionType=DEFAULT_OPTION, enabled=true, showing=false]
+javax.swing.JTabbedPane[name='tabbedPane', selectedTabIndex=1, selectedTabTitle='Second', tabCount=2, tabTitles=['First', 'Second'], enabled=true]:</code></pre>
+
+         <h3>Custom Component Formatters</h3>
+         <p>There might be cases that you might want to create your own custom formatter to override an existing one or
+            to add support for custom GUI components.</p>
+
+         <h4>Implement the ComponentFormatter interface</h4>
+         <p>The interface <code>ComponentFormatter</code> provides two methods:</p>
+         <ul>
+            <li><code>Class&lt;? extends Component&gt; targetType()</code> returns the type of component this formatter
+                supports. For example, by returning <code>JButton.class</code> a formatter indicates that it supports
+                instances of <code>JButton</code> and its subclasses.</li>
+            <li><code>String format(Component c)</code> returns the <code>String</code> representation of the given GUI
+                component.</li>
+         </ul>
+
+         <h4>Configure an IntrospectionComponentFormatter</h4>
+         <p>The easiest way to create a component formatter is to configure an instance of
+            <code>IntrospectionComponentFormatter</code>, which, as the name suggests, uses introspection to display
+            property values of a GUI component. The following code listing shows how to configure a
+            <code>IntrospectionComponentFormatter</code> to support <code>JLabel</code> (and subclasses) and the
+            properties to show:</p>
+         <pre><code class="language-java">IntrospectionComponentFormatter formatter =
+  new IntrospectionComponentFormatter(JLabel.class, "name", "text", "enabled");</code></pre>
+
+         <h4>Register your custom formatter</h4>
+         <p>After creating a custom formatter, we need to register it with AssertJ Swing. It is very simple, we
+            only need to call the static method <code>register</code> in
+            <code>org.assertj.swing.format.Formatting</code>.</p>
+         <pre><code class="language-java">Formatting.register(new MyFormatter());</code></pre>
+
+         <div class="panel panel-info">
+            <div class="panel-heading">Note</div>
+            <div class="panel-body">
+               AssertJ Swing uses the formatter that supports the type that is the closest to the type of the given
+               GUI component. For example, if we have <code>formatter1</code>, a formatter registered to format instances of
+               <code>JButton</code>, and <code>formatter2</code>, a formatter registered to format instances of
+               <code>MyOwnButton</code> (a subclass of <code>JButton</code>), AssertJ Swing will use
+               <code>formatter2</code> to format instances of <code>MyOwnButton</code>.
+            </div>
+         </div>
+
+         <h2>Extending AssertJ Swing</h2>
+         <p>It is very likely that, in your application, you are using <em>custom</em> Swing components (e.g. Flamingo,
+            JIDE, or your own). Since AssertJ Swing currently supports only the <em>standard</em> Swing components
+            (the ones that come in the JDK), you might want to create your own AssertJ Swing fixtures to test
+            your application.</p>
+
+         <p>The following are some suggestions or recommendations you can follow when creating your own
+            AssertJ Swing fixture:</p>
+
+         <h3>Take a look at the code and Javadocs of existing AssertJ Swing fixtures</h3>
+         <p>By reading AssertJ Swing's code you can learn to use the <code>BasicRobot</code> to simulate a user
+            moving the mouse, clicking a mouse button or pressing keyboard keys. We have separated the structure of a
+            component fixture in several layers (from bottom to top):</p>
+         <ol>
+            <li><code>BasicRobot</code>. Simulates a user interacting with a mouse and keyboard. It uses the AWT Robot to
+                generate native input events.</li>
+            <li>Component driver. This layer does all the <em>heavy lifting</em>. All interaction with a GUI component is
+                done in this layer. It knows how to simulate events and check the state of a specific GUI component.
+                For example, <code>JComboBoxDriver</code> knows how to simulate a user using a <code>JComboBox</code>
+                (selecting a particular element) and how to verify the state of it (which element should be
+                selected).</li>
+            <li>Component fixture. This layer sits on top of the driver. It provides a fluent interface to that makes
+                the API easier to write and read. Users of AssertJ Swing write their GUI tests using fixtures,
+                not drivers. Fixtures can be considered the <em>user interface</em> of the AssertJ Swing
+                library.</li>
+         </ol>
+
+         <h3>Extend an existing AssertJ Swing fixture</h3>
+         <p>If the component you want to test is a subclass of a JDK Swing component (e.g. you have a custom button that
+            extends <code>JButton</code>), you can extend an existing concrete AssertJ Swing fixture
+            (<code>JButtonFixture</code> in our example).</p>
+
+         <p>If the custom GUI component does not extend any JDK Swig component, or if you prefer to create a
+            AssertJ Swing fixture from scratch, please read the following</p>
+         <ul>
+            <li>Extend ComponentFixture. This class provides all the necessary wiring of a GUI component to test and a
+                <code>Robot</code>. It also provides some very basic functionality and convenience methods.</li>
+            <li>If want to simulate a user right-clicking on your component and showing a <code>JPopupMenu</code>,
+                extend <code>JPopupMenuInvokerFixture</code>.</li>
+            <li>Implement any of the following interfaces if needed:
+               <ul>
+                  <li><code>CommonComponentFixture</code></li>
+                  <li><code>FocusableComponentFixture</code></li>
+                  <li><code>KeyboardInputSimulationFixture</code></li>
+                  <li><code>MouseInputSimulationFixture</code></li>
+                  <li><code>StateVerificationFixture</code></li>
+               </ul>
+            </li>
+            <li>You can also extend <code>GenericComponentFixture</code>, which extends <code>ComponentFixture</code>
+                and implements the interfaces mentioned in the previous point.</li>
+         </ul>
+
+         <div class="panel panel-danger">
+            <div class="panel-heading">Warning</div>
+            <div class="panel-body">
+               To avoid unexpected side effects in your tests, you must access Swing components in the event dispatch
+               thread.
+            </div>
+         </div>
+
+         <h3>Create an extension for ContainerFixture</h3>
+         <p>By default, implementations of <code>ContainerFixture</code> provide shortcut methods to access the standard
+            Swing components (the ones that come in the JDK) in a Container. For example, the following code listing
+            shows shortcuts methods to access a <code>JLabel</code> and a <code>JTree</code> from a <code>JFrame</code>
+            being managed by a <code>FrameFixture</code>:</p>
+         <pre><code class="language-java">FrameFixture frame = new FrameFixture(new MyFrame());
+frame.label("pathLabel").requireText("Path:");
+frame.tree("navigationTree").selectPath("c:/projects/fest");</code></pre>
+
+         <p>If you have created a fixture for your custom GUI component, it is not possible to add a shortcut to
+            <code>Container</code> due to the lack of extension methods in Java. For example, let's assume you have
+            created a custom GUI component called <code>MyCalendar</code> and a fixture to use this custom component in
+            your GUI tests called <code>MyCalendarFixture</code>. It is not possible to add the shortcut method calendar
+            to <code>ContainerFixture</code> and have all its implementations look like this:</p>
+         <pre><code class="language-java">frame.calendar("myCalendar").selectDate("10/18/08");</code></pre>
+
+         <p>To overcome this limitation, AssertJ Swing provides <code>ComponentFixtureExtension</code>. The following
+            code listing shows an extension to add a shortcut to a <code>MyCalendarFixture</code>. This extension looks up a
+            <code>MyCalendar</code> that has a matching name and is showing on the screen:</p>
+         <pre class="pre-scrollable"><code class="language-java">public class MyCalendarFixtureExtension extends ComponentFixtureExtension<MyCalendar, MyCalendarFixture> {
+
+  public static MyCalendarFixtureExtension calendarWithName(String name) {
+    return new MyCalendarFixtureExtension(name);
+  }
+
+  private final String name;
+
+  private MyCalendarFixtureExtension(String name) {
+    this.name = name;
+  }
+
+  public MyCalendarFixture createFixture(Robot robot, Container root) {
+    MyCalendar calendar = robot.finder().findByName(root, name, MyCalendar.class, true);
+    return new MyCalendarFixture(robot, calendar);
+  }
+}</code></pre>
+
+         <p>The only method that needs to be implemented is <code>createFixture(Robot, Container)</code>, which is
+            responsible for creating our custom fixture. The static method <code>calendarWithName(String)</code> is just
+            a convenience factory method, which we will use to connect our extension to any implementation of
+            <code>ContainerFixture</code>:</p>
+         <pre><code class="language-java">// import static org.assertj.swing.sample.MyCalendarFixtureExtension.calendarWithName;
+
+FrameFixture frame = new FrameFixture(new MyFrame());
+frame.with(calendarWithName("myCalendar")).selectDate("10/18/08");</code></pre>
+
+         <h2>Handling System.exit</h2>
+         <p>A common topic in the mailing list is how to handle <code>System.exit</code>. The typical example is
+            simulating a user selecting the menus <em>File</em>, <em>Exit</em> from a GUI test. By doing this, the
+            application will quit and any GUI test trying to use the application will fail.</p>
+
+         <p>To prevent this failure and to test that in fact <code>System.exit</code> is being handled correctly by the
+            application, AssertJ Swing provides a <code>NoExitSecurityManager</code> that will prevent the
+            application to end. To use it, simply add a call to <code>NoExitSecurityManagerInstaller</code> as
+            follows:</p>
+         <pre class="pre-scrollable"><code class="language-java">private static NoExitSecurityManagerInstaller noExitSecurityManagerInstaller;
+
+@BeforeClass
+public static void setUpOnce() {
+  noExitSecurityManagerInstaller = NoExitSecurityManagerInstaller.install();
+}
+
+@AfterClass
+public static void tearDown() {
+  noExitSecurityManagerInstaller.uninstall();
+}</code></pre>
+
+         <p>By default, <code>NoExitSecurityManager</code> will just prevent the application from quitting if
+            <code>System.exit</code> is called. If you want to do something when <code>System.exit</code> is called, do
+            the following:</p>
+         <ul>
+            <li>Implement a <code>ExitHook</code></li>
+            <li>Pass an instance of your <code>ExitHook</code> to
+               <code>NoExitSecurityManagerInstaller.install(ExitHook)</code></li>
+         </ul>
+
+         <h2>Support for Platform-Specific Features</h2>
+         <p>Sometimes, when testing our applications, we need to deal with platform-specific issues.
+            AssertJ Swing provides the utility class <code>Platform</code> to overcome this type of issues.</p>
+
+         <p>Currently <code>Platform</code> provides one method, <code>controlOrCommandKey()</code> that returns the
+            code of either the <em>Command</em> key (if MacOS) or the code of the <em>Control</em> key (if other than
+            MacOS, for example Windows). A good example of the utility of this method is simulation of a user copying
+            some text to the clipboard. In windows we need to simulate a user pressing the keys <kbd>Ctrl</kbd> and
+            <kbd>C</kbd>, while in MacOS we need to simulate a user pressing the keys <kbd>Cmd</kbd> and
+            <kbd>C</kbd>. With AssertJ Swing we can simply write:</p>
+         <pre><code class="language-java">// import static org.assertj.swing.util.Platform.controlOrCommandKey;
+// import static java.awt.event.KeyEvent.VK_C;
+
+int controlOrCommand = controlOrCommandKey();
+
+dialog.textBox("username").selectAll()
+                          .pressKey(controlOrCommand)
+                          .pressAndReleaseKeys(VK_C)
+                          .releaseKey(controlOrCommand);</code></pre>
+
+         <h2>Testing containers without a frame</h2>
+         <p>AssertJ Swing provides the utility class <code>Containers</code> to help test a <code>Container</code>
+            (e.g. a <code>JPanel</code>) without having a <code>Frame</code> (or <code>JFrame</code>). The following
+            code listing shows how to test our own <code>JPanel</code> of type <code>MyCoolJPanel</code>:</p>
+         <pre><code class="language-jave">// import static org.assertj.swing.fixture.Containers.showInFrame;
+
+private FrameFixture frameFixture;
+
+@Before
+public void setUp() {
+  MyCoolJPanel panel = createPanel() // create panel in EDT.
+  frameFixture = showInFrame(panel);
+}</code></pre>
+
+         <p>AssertJ Swing will show the panel in a <code>JFrame</code>, wrapped in a <code>FrameFixture</code>.</p>
+
       </div>
    </div>
 </div>
