@@ -84,9 +84,34 @@
 
 
       <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
-         <h1 class="page-header">TODO</h1>
+         <h1 class="page-header">Troubleshooting GUI Test Failures</h1>
+         <p>Although AssertJ Swing makes it easy to write GUI tests, troubleshooting GUI test failures can be a
+            challenging task. The following links explain the features that AssertJ Swing provides to help us
+            figure out why a GUI test failed.</p>
+         <ul>
+            <li><a href="assertj-swing-troubleshooting-screenshots.html">Screenshots of Test Failures</a></li>
+            <li><a href="assertj-swing-troubleshooting-lookups.html">Troubleshooting Component Lookups</a></li>
+         </ul>
 
-         <p><em>Coming soon ...</em></p>
+         <h2>AssertJ Swing tests Failing in a CI server</h2>
+         <p>Users have reported that some AssertJ Swing tests failed when executed in a continuous integration
+            server running on Windows.</p>
+         <div class="panel panel-info">
+            <div class="panel-heading">Cecil Williams</div>
+            <div class="panel-body">
+               <em>
+                  We are using Team City 4.0.2 with the agent running on a Windows XP machine. If the screen is
+                  locked (via screen saver or Ctrl-Alt-Del) when the FEST tests run any assertions involving
+                  "requires message" fail. If we unlock the screen the tests pass. Has anyone else encountered this
+                  and do you have a solution other than keeping the screen unlocked (security risk).
+               </em>
+            </div>
+         </div>
+
+         <p><strong>Possible solutions</strong> can be found in <a
+               href="http://groups.google.com/group/easytesting/browse_frm/thread/fa0a9077b0b7dc9c"
+               target="_blank">this mail thread</a>.</p>
+
       </div>
    </div>
 </div>
