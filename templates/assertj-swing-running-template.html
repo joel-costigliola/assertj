@@ -13,9 +13,143 @@ $menu
 $assertj_swing_side_menu
 
       <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
-         <h1 class="page-header">TODO</h1>
+         <h1 class="page-header">Running tests</h1>
 
-         <p><em>Coming soon ...</em></p>
+         <p>GUI tests, by nature, are slower and more intrusive than regular unit tests. This section provides
+            some practical advices.</p>
+
+         <h2>Interrupting running tests</h2>
+         <p>$assertj_swing_name provides support for killing an already running test suite.</p>
+
+         <div class="panel panel-info">
+            <div class="panel-heading"><a href="http://www.mseedsoft.com/" target="_blank">Simeon H. K. Fitch</a>
+            - inventor of this feature</div>
+            <div class="panel-body">
+               <em>
+               Let's say you're running a pretty big FEST-Swing test, one that takes a couple minutes to run. In the
+               middle of it, a Skype call comes in. You need to answer the call, but you currently don't own the mouse!
+               Eventually, some frantic combination of Alt, Ctrl, Cmd, Tab, Esc, F1-12, gets the window buried, and you
+               can accept the call, but you want something more "decisive" to kill the test run.
+               </em>
+            </div>
+         </div>
+
+         <p>The <code>EmergencyAbortListener</code> implements this feature. After registering this listener in your
+            test, you can terminate your test using the key combination <kbd>Ctrl</kbd> + <kbd>Shift</kbd> +
+            <kbd>A</kbd>.</p>
+         <pre><code class="language-java">private EmergencyAbortListener listener;
+
+@BeforeMethod public void setUp() {
+  listener = EmergencyAbortListener.registerInToolkit();
+  // set up your test fixture.
+}
+
+@AfterMethod public void tearDown() {
+  listener.unregister();
+  // clean up resources.
+}</code></pre>
+
+         <p>The key combination can be configured too:</p>
+         <pre><code class="language-java">listener = EmergencyAbortListener.registerInToolkit()
+                                 .keyCombination(key(VK_C).modifiers(SHIFT_MASK));
+</code></pre>
+
+         <h2>Running tests without (disrupting the) desktop</h2>
+         <p>$assertj_swing_name tests can be executed in a Continuous Integration (CI) server. The following are
+            tips to run and troubleshoot $assertj_swing_name tests in CI servers, in different environments.</p>
+
+         <h3>Running $assertj_swing_name under Xvfb</h3>
+         <p><em>By <a href="http://ineffable.us/" target="_blank">Jason Goodwin</a> (written for FEST)</em></p>
+
+         <p>In order to get the most value from an automated GUI testing tool like $assertj_swing_name, you'll want to
+            have the ability to run your full suite of tests frequently. Doing so on your personal desktop can be very
+            time consuming, as you must largely sit and watch while the tests run. If everything goes as planned, your
+            tests will all pass and you need not have been watching it at all. If you're already running a CI
+            (Continuous Integration) server like me (Hudson is my favorite), then the natural thing to do is run your
+            GUI tests as part of your CI process. Even if you're not running a CI server, you would stand to benefit
+            from not being forced to watch your tests run every time.</p>
+
+         <p>If you're running Linux, BSD, or any *NIX style operating system chances are that CI server probably doesn't
+            even have X running, so how are you to run your GUI tests?
+            <a href="http://en.wikipedia.org/wiki/Xvfb" target="_blank">Xvfb</a> is the answer. Xvfb is a virtual frame
+            buffer X server, meaning you don't need to have any video hardware, keyboard or mouse attached to the
+            machine in question. If you're running Ubuntu or Debian, simply <code>sudo apt-get (or aptitude) install
+            xvfb</code>. For other distributions (or OS) follow their normal process for installing packages.</p>
+
+         <p>Once installed, there are two ways to run Xvfb. The standard way is to run it as just a standalone server,
+            manually running Xvfb like the main page suggests (e.g. <code>Xvfb :1 -screen 0 1600x1200x24</code>). Then,
+            you set the <code>DISPLAY=:1</code> environment variable to point your applications to that X server. The
+            easier way, is to use xvfb-run. This wrapper makes it easy to start a new Xvfb server for each application
+            you need to run, which lets you run multiple tests at a time without the applications conflicting with each
+            other. If you currently run <code>mvn test</code> to launch your $assertj_swing_name tests, simply run:</p>
+         <pre><code class="language-bash">xvfb-run -s "-screen 0 1280x1024x24" mvn test</code></pre>
+
+         <p>The screen options in my example are optional, I set them to ensure a reasonable size of display based on
+            the application I was testing. If your application works fine in a smaller screen you can try omitting the
+            screen options entirely and just execute <code>xvfb-run mvn test</code></p>
+
+         <p>Hopefully this simple idea will help free your desktop (and you) from spending time watching
+            $assertj_swing_name work its magic.</p>
+
+         <h3>Hudson under Windows</h3>
+         <p><em>by Uli Schrempp (written for FEST)</em></p>
+
+         <p>As we develop software with the target platform Windows, we need to run the tests on Windows platform too.
+            So the X-Server approach does not fit. Here are two solutions:</p>
+
+         <h4>Running Hudson service in interactive mode</h4>
+         <p>Open the service properties dialog of the Hudson service. Select in the <em>Log On</em> tab <em>Run as
+            Local System account</em> and check the <em>Allow service to interact with desktop</em>.</p>
+
+         <p>This works fine, but when the Hudson system needs to access some shares in the network, then the Local
+            System account might not have the appropriate permissions.</p>
+
+         <h4>Running Hudson as application via JNLP</h4>
+         <p>Here is the challenge to automatically start the Hudson agent via command-line after a restart. Here's a
+            short recipe:</p>
+         <ol>
+            <li>Configure auto-logon in Windows registry. Set the following keys<ul>
+               <li><code>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\AutoAdminLogon=1</code></li>
+               <li><code>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\DefaultUserName=testuser</code></li>
+               <li><code>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\DefaultPassword=secret</code></li>
+            </ul></li>
+            <li>Start Hudson agent on start-up<ul>
+               <li>Create a batch file to start Hudson
+                  <pre><code class="language-bash">javaws http://HUDSON_MASTER/computer/COMPUTERNAME/slave-agent.jnlp</code></pre>
+               </li>
+               <li>Add this batch file to the start-up folder</li>
+            </ul></li>
+            <li>Add remote control support for this machine<ul>
+               <li>Create some scheduled tasks to start and stop Hudson and disable them</li>
+               <li>So the Hudson master node can call trigger the agent node remotely via command-line</li>
+            </ul></li>
+         </ol>
+
+         <h4>Remote Desktop Issue</h4>
+         <p>Sometimes when there was a remote-desktop connection to this machine running Hudson in application mode,
+            the Windows session seems to be closed and then the tests could not start the application. Solution for
+            that is using VNC.</p>
+
+         <h3>Troubleshooting TeamCity under Windows</h3>
+         <p>The following tips are the result of <a
+               href="http://groups.google.com/group/easytesting/browse_frm/thread/923077e05f4fec63" target="_blank">this
+               thread</a> in the mailing list. Many thanks to (in alphabetical order)</p>
+         <ul>
+            <li>Olivier DOREMIEUX</li>
+            <li>Eric Kolotyluk</li>
+            <li>Peter Murray</li>
+         </ul>
+
+         <p>During automated builds</p>
+         <ol>
+            <li>Make sure there is a desktop running for the build agent</li>
+            <li>On Windows, disable Remote Desktop because it can kill the desktop the build agent is using - use VNC
+                instead because it won't log you out (if you configure it that way)</li>
+            <li>On Windows, use a local user account for the build agent, not a service account</li>
+            <li>On Windows, if you launch the build agent with the <code>cmd</code> command use the <code>/k</code>
+                option not the <code>/c</code> option - this prevents the command window from closing and orphaning
+                the build agent</li>
+         </ol>
       </div>
    </div>
 </div>
