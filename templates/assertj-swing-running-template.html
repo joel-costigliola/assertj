@@ -14,6 +14,7 @@ $assertj_swing_side_menu
 
       <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
          <h1 class="page-header">Running tests</h1>
+         <a href="#dont-disrupt-desktop">test</a>
 
          <p>GUI tests, by nature, are slower and more intrusive than regular unit tests. This section provides
             some practical advices.</p>
@@ -54,41 +55,73 @@ $assertj_swing_side_menu
                                  .keyCombination(key(VK_C).modifiers(SHIFT_MASK));
 </code></pre>
 
-         <h2>Running tests without (disrupting the) desktop</h2>
+         <h2><span id="dont-disrupt-desktop"></span>Running tests without (disrupting the) desktop</h2>
          <p>$assertj_swing_name tests can be executed in a Continuous Integration (CI) server. The following are
             tips to run and troubleshoot $assertj_swing_name tests in CI servers, in different environments.</p>
 
-         <h3>Running $assertj_swing_name under Xvfb</h3>
-         <p><em>By <a href="http://ineffable.us/" target="_blank">Jason Goodwin</a> (written for FEST)</em></p>
+         <h3>Running $assertj_swing_name under a vnc server</h3>
+         <div class="panel panel-info">
+            <div class="panel-heading"><a href="http://ineffable.us/" target="_blank">Jason Goodwin</a></div>
+            <div class="panel-body">
+               <em>
+                  <p>
+                  In order to get the most value from an automated GUI testing tool like FEST-Swing [or
+                  $assertj_swing_name], you'll want to have the ability to run your full suite of tests frequently.
+                  Doing so on your personal desktop can be very time consuming, as you must largely sit and watch
+                  while the tests run. If everything goes as planned, your tests will all pass and you need not have
+                  been watching it at all. If you're already running a CI (Continuous Integration) server like me
+                  (Hudson is my favorite), then the natural thing to do is run your GUI tests as part of your CI
+                  process. Even if you're not running a CI server, you would stand to benefit from not being forced t
+                  o watch your tests run every time.
+                  </p><p>
+                  If you're running Linux, BSD, or any *NIX style operating system chances are that CI server probably
+                  doesn't even have X running, so how are you to run your GUI tests?
+                  </p>
+               </em>
+            </div>
+         </div>
 
-         <p>In order to get the most value from an automated GUI testing tool like $assertj_swing_name, you'll want to
-            have the ability to run your full suite of tests frequently. Doing so on your personal desktop can be very
-            time consuming, as you must largely sit and watch while the tests run. If everything goes as planned, your
-            tests will all pass and you need not have been watching it at all. If you're already running a CI
-            (Continuous Integration) server like me (Hudson is my favorite), then the natural thing to do is run your
-            GUI tests as part of your CI process. Even if you're not running a CI server, you would stand to benefit
-            from not being forced to watch your tests run every time.</p>
+         <p>
+            <a href="http://www.tightvnc.com/" target="_blank">TightVNC</a> is the answer (or any other vnc server
+            you could think of). It creates a desktop that you can access via a vnc viewer locally and even
+            remotely. We are using TightVNC for running the tests of $assertj_swing_name, too. If you're running Ubuntu
+            or Debian, simply <code>sudo apt-get (or aptitude) install tightvncserver</code>. For other distributions
+            (or OS) follow their normal process for installing packages.</p>
 
-         <p>If you're running Linux, BSD, or any *NIX style operating system chances are that CI server probably doesn't
-            even have X running, so how are you to run your GUI tests?
-            <a href="http://en.wikipedia.org/wiki/Xvfb" target="_blank">Xvfb</a> is the answer. Xvfb is a virtual frame
-            buffer X server, meaning you don't need to have any video hardware, keyboard or mouse attached to the
-            machine in question. If you're running Ubuntu or Debian, simply <code>sudo apt-get (or aptitude) install
-            xvfb</code>. For other distributions (or OS) follow their normal process for installing packages.</p>
+         <p>
+            Once installed, the process is to start the vnc server, run the tests and then kill the vnc server. Since
+            this could be done by an ape, we're using a
+            <a href="https://github.com/croesch/beefiles/blob/master/src/execute-on-vnc.sh" target="_blank">script</a>
+            to perform all these steps automatically:
+         </p>
+         <pre><code class="language-bash">execute-on-vnc.sh mvn test</code></pre>
 
-         <p>Once installed, there are two ways to run Xvfb. The standard way is to run it as just a standalone server,
-            manually running Xvfb like the main page suggests (e.g. <code>Xvfb :1 -screen 0 1600x1200x24</code>). Then,
-            you set the <code>DISPLAY=:1</code> environment variable to point your applications to that X server. The
-            easier way, is to use xvfb-run. This wrapper makes it easy to start a new Xvfb server for each application
-            you need to run, which lets you run multiple tests at a time without the applications conflicting with each
-            other. If you currently run <code>mvn test</code> to launch your $assertj_swing_name tests, simply run:</p>
-         <pre><code class="language-bash">xvfb-run -s "-screen 0 1280x1024x24" mvn test</code></pre>
+         <p>
+            This
+            <ol>
+               <li>starts a local vnc server at display 42</li>
+               <li>sets the <code>DISPLAY</code> variable</li>
+               <li>executes <code>mvn test</code></li>
+               <li>restores the previous <code>DISPLAY</code> value</li>
+               <li>stops the vnc server</li>
+            </ol>
+            The script makes it easy to start an application (e.g. tests) <em>in the background</em>, without
+            disrupting your desktop. If you need to access it remotely or to run multiple applications (e.g. tests),
+            you'll have to adapt the script to your needs.
+         </p>
 
-         <p>The screen options in my example are optional, I set them to ensure a reasonable size of display based on
-            the application I was testing. If your application works fine in a smaller screen you can try omitting the
-            screen options entirely and just execute <code>xvfb-run mvn test</code></p>
+         <div class="panel panel-info">
+            <div class="panel-heading"><strong>Important</strong></div>
+            <div class="panel-body">
+               Why don't we just use <code>xvfb-run</code>? Our tests maximize windows and do other stuff the default
+               window manager of <code>xvfb</code> doesn't support. TightVNC makes it easy to use another window
+               manager. Just add <code>gnome-wm &</code> (or the window manager of your choice) to
+               <code>~/.vnc/xstartup</code> and you're ready to run.
+            </div>
+         </div>
 
-         <p>Hopefully this simple idea will help free your desktop (and you) from spending time watching
+
+            <p>Hopefully this simple idea will help free your desktop (and you) from spending time watching
             $assertj_swing_name work its magic.</p>
 
          <h3>Hudson under Windows</h3>
