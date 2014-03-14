@@ -84,6 +84,7 @@
       <h1 class="page-header">AssertJ Core latest news</h1>
       <ul>
          <li><a href="#assertj-core-next">AssertJ core next release</a></li>
+         <li><a href="#assertj-core-1.6.0">AssertJ core 1.6.0 release</a></li>
          <li><a href="#assertj-core-1.5.0">AssertJ core 1.5.0 release</a></li>
          <li><a href="#assertj-core-1.4.0">AssertJ core 1.4.0 release</a></li>
          <li><a href="#assertj-core-1.3.0">AssertJ core 1.3.0 release</a></li>
@@ -93,7 +94,123 @@
       </ul>
 
 <h3 class="page-header" ><span id="assertj-core-next"></span>What's coming in AssertJ core next release</h3>
-<p>Thanks to <span class="contributor">Mariusz Smykula</span> for its contributions.</p>
+
+<p>XML assertions using XPath.</p>
+
+<h3 class="page-header"><span id="assertj-core-1.6.0"></span>AssertJ core 1.6.0 release : New and noteworthy</h3>
+
+<p>Release date : 2014-03-15<br>
+   Thanks to <span class="contributor">Mariusz Smykula</span>, <span class="contributor">Michal Lipski</span>,
+   <span class="contributor">Kamil Szymanski</span>, <span class="contributor">Fabien Meurisse</span>,
+   <span class="contributor">Clément Cunin</span>, <span class="contributor">Gregor Zeitlinger</span>,
+   <span class="contributor">William Delanoue</span>, <span class="contributor">Jean Christophe Gay</span>,
+   <span class="contributor">Tomasz Bartczak</span>, <span class="contributor">Michal Bareja</span> and
+   <span class="contributor">Michał Piotrkowski</span> for their contributions.</p>
+
+      <h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> Add new File assertions : hasExtension, hasName, hasParent and hasNoParent</h4>
+
+      <p>Example:</p>
+   <pre><code class="java">File xFileWithExtension = writeFile("xFile.secret", "The Truth Is Out There");
+assertThat(xFileWithExtension).hasParent("target")
+                              .hasParent(new File("target"))
+                              .hasExtension("secret")
+                              .hasName("xFile.secret");
+
+assertThat(new File("/")).hasNoParent();
+</code></pre>
+
+      <p>Thanks to <span class="contributor">Jean Christophe Gay</span> for this contribution.</p>
+
+      <h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> Allow several custom date formats for date assertions</h4>
+
+      <p>AssertJ allows now to register several custom date formats and their use is thread safe.</p>
+      <p>Example :</p>
+   <pre><code class="java">// You can use date String representation with various default format:
+// - yyyy-MM-dd
+// - yyyy-MM-dd'T'HH:mm:ss,
+// - yyyy-MM-dd'T'HH:mm:ss.SSS,
+assertThat(theTwoTowers.getReleaseDate()).isEqualTo("2002-12-18");
+assertThat(theTwoTowers.getReleaseDate()).isEqualTo("2002-12-18T00.00.00");
+
+// But you can register on or several custom date format (this is thread safe):
+Assertions.registerCustomDateFormat("dd/MM/yyyy");
+assertThat(theTwoTowers.getReleaseDate()).isEqualTo("18/12/2002");
+
+// default date formats can still be used
+assertThat(theTwoTowers.getReleaseDate()).isEqualTo("2002-12-18");</code></pre>
+
+      <h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> isCloseTo assertion for float, double and BigDecimal</h4>
+
+   <p>Example:</p>
+   <pre><code class="java">// within : static import of org.assertj.core.api.Assertions.within
+assertThat(8.1).isCloseTo(8.0, within(0.1));</code></pre>
+
+      <h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> Allow to extract private fields</h4>
+
+   <p>Extracting feature is now able to read private fields, for example:</p>
+   <pre><code class="java">// trilogy is collection of Movie which has a duration private field.
+assertThat(trilogy).extracting("duration").containsExactly("178 min", "179 min", "201 min");
+
+// you can disable private field extraction
+setAllowExtractingPrivateFields(false);
+
+// now assertion fails with an IntrospectionError.
+assertThat(trilogy).extracting("duration").containsExactly("178 min", "179 min", "201 min");
+</code></pre>
+
+      <p>Thanks to <span class="contributor">Michal Bareja</span> for this contribution.</p>
+
+<h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> Standard Java, Binary, Unicode and Hexadecimal representation of objects</h4>
+
+   <p>Sometimes it is difficult to find differences from standard message, for example:</p>
+   <pre><code class="java">assertThat("µµµ").contains("μμμ");</code></pre>
+      <p>But with hexadecimal representation the difference is clear:</p>
+   <pre><code class="java">assertThat("µµµ").inHexadecimal().contains("μμμ");</code></pre>
+      <p>Error:</p>
+  <pre><code class="diff">Expecting:
+ <"['0x00B5', '0x00B5', '0x00B5']">
+to contain:
+ <"['0x03BC', '0x03BC', '0x03BC']">
+</code></pre>
+
+      <p>Thanks to <span class="contributor">Mariusz Smykula</span> for this huge contribution.</p>
+
+<h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> Field by field comparison is now supported on Iterable assertions</h4>
+
+<p>When using Iterable assertions, you can now compare expected elements with actual ones using field by field comparison instead of equals method.</p>
+
+   <p>Example:</p>
+   <pre><code class="java">TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
+TolkienCharacter sam = new TolkienCharacter("Sam", 38, HOBBIT);
+
+// frodo and sam both are hobbits, so they are equals when comparing only race
+assertThat(newArrayList(frodo)).usingElementComparatorOnFields("race").contains(sam); // OK
+
+// ... but not when comparing both name and race
+assertThat(newArrayList(frodo)).usingElementComparatorOnFields("name", "race").contains(sam); // FAIL</code></pre>
+
+      <p>Thanks to <span class="contributor">Tomasz Bartczak</span> for this contribution.</p>
+
+<h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> Better error messages when comparing objects field by field</h4>
+
+<p>In case of error the actual field values are displayed (before only the expected values were), example:</p>
+
+   <p>This assertion ... </p>
+   <pre><code class="java">assertThat(frodo).isEqualToComparingOnlyGivenFields(sam, "name", "race", "age");</code></pre>
+   <p>... will fail with the following error:</p>
+  <pre><code class="diff">Expecting values:
+  &lt;["Sam", 38]&gt;
+in fields:
+  &lt;["name", "age"]&gt;
+but were:
+  &lt;["Frodo", 33]&gt;
+in &lt;Frodo 33 years old Hobbit&gt;.
+Comparison was performed on fields:
+  &lt;["name", "race", "age"]&gt;</code></pre>
+
+      <p>Thanks to <span class="contributor">Michal Lipski</span> for this contribution.</p>
+
+
 <h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> BDD assertions style</h4>
 
 <p>Instead of using <span class="small-code">assertThat</span> use <span class="small-code">then</span> to start assertions, example:</p>
@@ -115,6 +232,7 @@ public void host_dinner_party_where_nobody_dies() {
    then(mansion.professor()).isEqualTo("bloodied and disheveled");
 }  </code></pre>
 
+      <p>Thanks to <span class="contributor">Mariusz Smykula</span> for this contribution.</p>
 
       <h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> Soft assertions automatic global verification with JUnit rule</h4>
 
@@ -140,6 +258,8 @@ public void host_dinner_party_where_nobody_dies() {
 }</code></pre>
 
       <p>This works only for JUnit, in TestNG however it does not seem possible to make the glocal verification in an @AfterMethod method because if it throws an exception, TestNG skips all subsequent tests.</p>
+
+      <p>Thanks to <span class="contributor">Gregor Zeitlinger</span> for this contribution.</p>
 
 
 <h3 class="page-header"><span id="assertj-core-1.5.0"></span>AssertJ core 1.5.0 release : New and noteworthy</h3>
