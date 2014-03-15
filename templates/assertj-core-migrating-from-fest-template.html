@@ -28,8 +28,16 @@ $menu
          <p>For linux users, a quick way to do that is to use the following command:</p>
          <pre><code class="bash">find . -name "*.java" -exec sed -i "s/org.fest.assertions.api.Assertions/org.assertj.core.api.Assertions/g" '{}' \;</code></pre>
 
-         <p>For mac users, you have an almost indentical command (notice the "" after -i) :</p>
-         <pre><code class="bash">find . -name "*.java" -exec sed -i "" "s/org.fest.assertions.api.Assertions/org.assertj.core.api.Assertions/g" '{}' \;</code></pre>                                 
+         <p>For mac users, you have an almost identical command (notice the "" after -i) :</p>
+         <pre><code class="bash">find . -name "*.java" -exec sed -i "" "s/org.fest.assertions.api.Assertions/org.assertj.core.api.Assertions/g" '{}' \;</code></pre>
+
+         <p>To do even more in a single command and also replacing non static imports and several statements, linux users can use the following command instead:</p>
+         <pre><code class="bash">find . -name "*.java" -exec sed -i "s/import static org.fest.assertions.api./import static org.assertj.core.api./g;s/import org.fest.assertions.api./import org.assertj.core.api./g;s/import org.fest.assertions.core.Condition;/import org.assertj.core.api.Condition;/g;s/import org.fest.util./import org.assertj.core.util./g;s/import org.fest.assertions.data./import org.assertj.core.data./g" '{}' \;</code></pre>
+
+         <p>Again, the equivalent command for Mac users is:</p>
+         <pre><code class="bash">find . -name "*.java" -exec sed -i "" "s/import static org.fest.assertions.api./import static org.assertj.core.api./g;s/import org.fest.assertions.api./import org.assertj.core.api./g;s/import org.fest.assertions.core.Condition;/import org.assertj.core.api.Condition;/g;s/import org.fest.util./import org.assertj.core.util./g;s/import org.fest.assertions.data./import org.assertj.core.data./g" '{}' \;</code></pre>
+
+         <p><strong>Note:</strong> if your project uses both FestAssert Core assertions and Fest Joda-Time assertions, execute the above scripts for FestAssert Core Assertions <strong>after</strong> <a href="assertj-joda-time.html#migrating-from-fest">those for for Joda-Time</a>!</p>
 
          <h5>Renamed assertions since Fest fork :</h5>
          <ul>
@@ -38,6 +46,12 @@ $menu
             <li><span class="small-code">isLenientEqualsToByIgnoringNullFields</span> renamed to <span class="small-code">isEqualToIgnoringNullFields</span></li>
             <li><span class="small-code">isEqualsToByComparingFields</span> renamed to <span class="small-code">isEqualToComparingFieldByField</span></li>
          </ul>
+
+         <p>The linux commands to automatically rename the assertions:</p>
+         <pre><code class="bash">find . -name "*.java" -exec sed -i "s/isLenientEqualsToByIgnoringFields/isEqualToIgnoringGivenFields/g;s/isLenientEqualsToByAcceptingFields/isEqualToComparingOnlyGivenFields/g;s/isLenientEqualsToByIgnoringNullFields/isEqualToIgnoringNullFields/g;s/isEqualsToByComparingFields/isEqualToComparingFieldByField/g" '{}' \;</code></pre>
+
+         <p>And the commande for Mac users:</p>
+         <pre><code class="bash">find . -name "*.java" -exec sed -i "" "s/isLenientEqualsToByIgnoringFields/isEqualToIgnoringGivenFields/g;s/isLenientEqualsToByAcceptingFields/isEqualToComparingOnlyGivenFields/g;s/isLenientEqualsToByIgnoringNullFields/isEqualToIgnoringNullFields/g;s/isEqualsToByComparingFields/isEqualToComparingFieldByField/g" '{}' \;</code></pre>
 
          <h5>Removed assertions since Fest fork (we thought that they were very unclear) :</h5>
          <ul>
