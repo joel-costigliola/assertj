@@ -187,7 +187,7 @@ assertThat(dateTime1).isEqualToIgnoringSeconds(dateTime2);</code></pre>
          <pre><code class="bash">find . -name "*.java" -exec sed -i "s/import static org.fest.assertions.api.JODA_TIME/import static org.assertj.jodatime.api.Assertions/g;s/import org.fest.assertions.api.JODA_TIME;/import org.assertj.jodatime.api.Assertions;/g;s/JODA_TIME./Assertions./g" '{}' \;</code></pre>
 
          <p>For mac users, you have an almost identical command (notice the "" after -i) :</p>
-         <pre><code class="bash">find . -name "*.java" -exec sed -i "s/import static org.fest.assertions.api.JODA_TIME/import static org.assertj.jodatime.api.Assertions/g;s/import org.fest.assertions.api.JODA_TIME;/import org.assertj.jodatime.api.Assertions;/g;s/JODA_TIME./Assertions./g" '{}' \;</code></pre>
+         <pre><code class="bash">find . -name "*.java" -exec sed -i "" "s/import static org.fest.assertions.api.JODA_TIME/import static org.assertj.jodatime.api.Assertions/g;s/import org.fest.assertions.api.JODA_TIME;/import org.assertj.jodatime.api.Assertions;/g;s/JODA_TIME./Assertions./g" '{}' \;</code></pre>
 
          <p><strong>Note:</strong> if your project uses both FestAssert Core assertions and Fest Joda-Time assertions, execute the above scripts for Joda-Time <strong>before</strong> <a href="assertj-core-migrating-from-fest.html">those for FestAssert Core</a>!</p>
 
