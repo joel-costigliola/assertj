@@ -40,7 +40,7 @@ $menu
    <span class="contributor">Tomasz Bartczak</span>, <span class="contributor">Michal Bareja</span> and
    <span class="contributor">Michał Piotrkowski</span> for their contributions.</p>
 
-      <h4 class="page-header"><span id="assertj-core-1.6.0-file-assertions"></span><i class="fa fa-arrow-circle-right"></i> Add new File assertions : hasExtension, hasName, hasParent and hasNoParent</h4>
+      <h4 class="page-header"><span id="assertj-core-1.6.0-file-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add new File assertions : hasExtension, hasName, hasParent and hasNoParent</h4>
 
       <p>Example:</p>
    <pre><code class="java">File xFileWithExtension = writeFile("xFile.secret", "The Truth Is Out There");
@@ -54,7 +54,7 @@ assertThat(new File("/")).hasNoParent();
 
       <p>Thanks to <span class="contributor">Jean Christophe Gay</span> for this contribution.</p>
 
-      <h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> Allow several custom date formats for date assertions</h4>
+      <h4 class="page-header"><span id="assertj-core-1.6.0-custom-date-formats" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow several custom date formats for date assertions</h4>
 
       <p>AssertJ allows now to register several custom date formats and their use is thread safe.</p>
       <p>Example :</p>
@@ -72,13 +72,13 @@ assertThat(theTwoTowers.getReleaseDate()).isEqualTo("18/12/2002");
 // default date formats can still be used
 assertThat(theTwoTowers.getReleaseDate()).isEqualTo("2002-12-18");</code></pre>
 
-      <h4 class="page-header"><span id="assertj-core-1.6.0-isCloseTo-assertion"></span><i class="fa fa-arrow-circle-right"></i> isCloseTo assertion for float, double and BigDecimal</h4>
+      <h4 class="page-header"><span id="assertj-core-1.6.0-isCloseTo-assertion" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> isCloseTo assertion for float, double and BigDecimal</h4>
 
    <p>Example:</p>
    <pre><code class="java">// within : static import of org.assertj.core.api.Assertions.within
 assertThat(8.1).isCloseTo(8.0, within(0.1));</code></pre>
 
-      <h4 class="page-header"><span id="assertj-core-1.6.0-extract-private-fields"></span><i class="fa fa-arrow-circle-right"></i> Allow to extract private fields</h4>
+      <h4 class="page-header"><span id="assertj-core-1.6.0-extract-private-fields" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow to extract private fields</h4>
 
    <p>Extracting feature is now able to read private fields, for example:</p>
    <pre><code class="java">// trilogy is collection of Movie which has a duration private field.
@@ -93,7 +93,7 @@ assertThat(trilogy).extracting("duration").containsExactly("178 min", "179 min",
 
       <p>Thanks to <span class="contributor">Michal Bareja</span> and <span class="contributor">Paweł Barszcz</span> for this contribution.</p>
 
-<h4 class="page-header"><span id="assertj-core-1.6.0-representations"></span><i class="fa fa-arrow-circle-right"></i> Standard Java, Binary, Unicode and Hexadecimal representation of objects</h4>
+<h4 class="page-header"><span id="assertj-core-1.6.0-representations" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Standard Java, Binary, Unicode and Hexadecimal representation of objects</h4>
 
    <p>Sometimes it is difficult to find differences from standard message, for example:</p>
    <pre><code class="java">assertThat("µµµ").contains("μμμ");</code></pre>
@@ -108,7 +108,7 @@ to contain:
 
       <p>Thanks to <span class="contributor">Mariusz Smykula</span> for this huge contribution.</p>
 
-<h4 class="page-header"><span id="assertj-core-1.6.0-field-by-field-iterable"></span><i class="fa fa-arrow-circle-right"></i> Field by field comparison is now supported on Iterable assertions</h4>
+<h4 class="page-header"><span id="assertj-core-1.6.0-field-by-field-iterable" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Field by field comparison is now supported on Iterable assertions</h4>
 
 <p>When using Iterable assertions, you can now compare expected elements with actual ones using field by field comparison instead of equals method.</p>
 
@@ -124,7 +124,7 @@ assertThat(newArrayList(frodo)).usingElementComparatorOnFields("name", "race").c
 
       <p>Thanks to <span class="contributor">Tomasz Bartczak</span> and <span class="contributor">Adam Dąbrowski</span> for this contribution.</p>
 
-<h4 class="page-header"><span id="assertj-core-1.6.0-field-by-field-error-message"></span><i class="fa fa-arrow-circle-right"></i> Better error messages when comparing objects field by field</h4>
+<h4 class="page-header"><span id="assertj-core-1.6.0-field-by-field-error-message" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Better error messages when comparing objects field by field</h4>
 
 <p>In case of error the actual field values are displayed (before only the expected values were), example:</p>
 
@@ -144,7 +144,7 @@ Comparison was performed on fields:
       <p>Thanks to <span class="contributor">Michal Lipski</span> and <span class="contributor">Paweł Barszcz</span> for this contribution.</p>
 
 
-<h4 class="page-header"><span id="assertj-core-1.6.0-bdd-assertions-style"></span><i class="fa fa-arrow-circle-right"></i> BDD assertions style</h4>
+<h4 class="page-header"><span id="assertj-core-1.6.0-bdd-assertions-style" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> BDD assertions style</h4>
 
 <p>Instead of using <span class="small-code">assertThat</span> use <span class="small-code">then</span> to start assertions, example:</p>
 
@@ -167,7 +167,7 @@ public void host_dinner_party_where_nobody_dies() {
 
       <p>Thanks to <span class="contributor">Mariusz Smykula</span> for this contribution.</p>
 
-      <h4 class="page-header"><span id="assertj-core-1.6.0-soft-assertions-junit-rule"></span><i class="fa fa-arrow-circle-right"></i> Soft assertions automatic global verification with JUnit rule</h4>
+      <h4 class="page-header"><span id="assertj-core-1.6.0-soft-assertions-junit-rule" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Soft assertions automatic global verification with JUnit rule</h4>
 
       <p>To avoid having to call <span class="small-code">assertAll()</span> at the end of your test methods,
          let <span class="small-code">JUnitSoftAssertions</span> JUnit rule triggers automatically the assertions global verification :</p>
