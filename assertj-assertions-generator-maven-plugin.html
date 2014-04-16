@@ -116,6 +116,23 @@
     &lt;/configuration&gt;
 &lt;/plugin&gt;</code></pre>
 
+          <p>If your domain classes are not in the current project, you need to add the dependency to the plugin configuration, e.g. :</p>
+
+<pre><code class="xml">&lt;plugin&gt;
+    &lt;groupId&gt;org.assertj&lt;/groupId&gt;
+    &lt;artifactId&gt;assertj-assertions-generator-maven-plugin&lt;/artifactId&gt;
+    &lt;version&gt;1.2.0&lt;/version&gt;
+    ...
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;your.project.group&lt;/groupId&gt;
+            &lt;artifactId&gt;your-artifact&lt;/artifactId&gt;
+            &lt;version&gt;x.y.z&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+&lt;/plugin&gt;</code></pre>
+
+
          <h4 class="page-header">3 - launch the maven plugin</h4>
 
          <p>Execute the command :</p>
