@@ -88,7 +88,7 @@
 <pre><code class="xml">&lt;dependency&gt;
   &lt;groupId&gt;org.assertj&lt;/groupId&gt;
   &lt;artifactId&gt;assertj-guava&lt;/artifactId&gt;
-  &lt;version&gt;1.1.0&lt;/version&gt;
+  &lt;version&gt;1.2.0&lt;/version&gt;
   &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 
@@ -110,6 +110,30 @@ actual.putAll("Spurs", newArrayList("Tony Parker", "Tim Duncan", "Manu Ginobili"
 assertThat(actual).containsKeys("Lakers", "Spurs");
 assertThat(actual).contains(entry("Lakers", "Kobe Bryant"), entry("Spurs", "Tim Duncan"));
 
+// Range assertions
+Range&lt;Integer&gt; range = Range.closed(10, 12);
+
+assertThat(range).isNotEmpty()
+                 .contains(10, 11, 12)
+                 .hasClosedLowerBound()
+                 .hasUpperEndpointEqualTo(10);
+ 
+// Table assertions
+Table&lt;Integer, String, String&gt; bestMovies = HashBasedTable.create();
+
+bestMovies.put(1970, "Palme d'Or", "M.A.S.H");
+bestMovies.put(1994, "Palme d'Or", "Pulp Fiction");
+bestMovies.put(2008, "Palme d'Or", "Entre les murs");
+bestMovies.put(2000, "Best picture Oscar", "American Beauty");
+bestMovies.put(2011, "Goldene Bär", "A Separation");
+
+assertThat(bestMovies).hasRowCount(5).hasColumnCount(3).hasSize(5)
+                      .containsValues("American Beauty", "A Separation", "Pulp Fiction")
+                      .containsCell(1994, "Palme d'Or", "Pulp Fiction")
+                      .containsColumns("Palme d'Or", "Best picture Oscar", "Goldene Bär")
+                      .containsRows(1970, 1994, 2000, 2008, 2011);
+
+
 // Optional assertions
 Optional&lt;String&gt; optional = Optional.of("Test");
 assertThat(optional).isPresent().contains("Test");</code></pre>
@@ -118,7 +142,19 @@ assertThat(optional).isPresent().contains("Test");</code></pre>
 
          <p>Note that you can find more working examples in <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/guava">guava package</a> of <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project.</p>
 
-         <h3 class="page-header"><span id="latest-release"/></span><span id="1.1.0"/></span>Guava assertions 1.1.0 release</h3>
+         <h3 class="page-header"><span id="latest-release"/></span><span id="1.2.0"/></span>Guava assertions 1.2.0 release</h3>
+         <p>Release date : 2014-05-25</p>
+
+         <p>Thanks to <span class="contributor">David Harris</span> and <span class="contributor">Marcin Kwaczyński</span> for their contributions to this version.</p>
+
+         <div class="release-section-category">Release notes:</div>
+         <ul>
+            <li>Guava Range assertions <span class="contributor">(Marcin Kwaczyński)</span></li>
+            <li>New Table assertions <span class="contributor">(David Harris)</span></li>
+            <li>Javadoc improvements.</li>
+         </ul>
+         
+         <h3 class="page-header"><span id="1.1.0"/></span>Guava assertions 1.1.0 release</h3>
          <p>Release date : 2013-12-27</p>
 
          <p>Thanks to <span class="contributor">Andrew Gaul</span> for its contributions to this version.</p>
@@ -191,7 +227,9 @@ assertThat("hello world").startsWith("hello");</code></pre>
 
          <p>Special thanks to AssertJ Guava contributors:</p>
          <ul>
-            <li>Andrew Gaul</span></li>
+            <li>Marcin Kwaczyński</li>
+            <li>David Harris</li>
+            <li>Andrew Gaul</li>
             <li>Jan Gorman</li>
          </ul>
 
