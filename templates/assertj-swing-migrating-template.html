@@ -13,9 +13,101 @@ $menu
 $assertj_swing_side_menu
 
       <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
-         <h1 class="page-header">TODO</h1>
+         <h1 class="page-header">Migrating from Fest Swing</h1>
+         <p>Migrating from Fest is easy! Since $assertj_swing_name is a fork of Fest, there are very few breaking
+            changes. But we forked a not-published version (1.4-SNAPSHOT). So you may have to migrate more than this few
+            easy changes from your Fest version to $assertj_swing_name. Below are all steps regarding to your Fest
+            version.</p>
+         
+         <h2 class="page-header">Scriptable (aka Migrating from Fest 1.4-SNAPSHOT)</h2>
+         <p>The easiest part of the migration might be the part we changed: the naming from Fest to
+            $assertj_swing_name.</p>
+         
+         <h4 class="page-header">Migrate to AssertJ Core</h4>
+         <p>First you should have a look at the <a href="assertj-core-migrating-from-fest.html">FEST to AssertJ
+            migration guide</a>! All steps of migrating the core assertions are not described here but
+            <a href="assertj-core-migrating-from-fest.html">there</a>.</p>
 
-         <p><em>Coming soon ...</em></p>
+         
+         <h4 class="page-header">Imports</h4>
+         <p>You should change your imports. Both, normal and static imports.</p>
+
+         <pre><code class="java">import static org.fest.swing.*</code></pre>
+         <p>to</p>
+         <pre><code class="java">import static org.assertj.swing.*</code></pre>
+         
+         <p>For linux users, a quick way to do that is to use this command (see also
+            <a href="#all-in-one-command">all-in-one command</a>)</p>
+         <pre><code class="bash">find . -name "*.java" -exec sed -i "s/import static org.fest.swing./import static org.assertj.swing./g;s/import org.fest.swing./import org.assertj.swing./g" '{}' \;</code></pre>
+
+         
+         <h4 class="page-header">Base test classes</h4>
+         <p>Another simple (in terms of automatable) task is to rename the base test classes from</p>
+         <pre><code class="java">FestSwingTestCaseTemplate
+FestSwingJUnitTestCase
+FestSwingTestNGTestCase</code></pre>
+         <p>to</p>
+         <pre><code class="java">AssertJSwingTestCaseTemplate
+AssertJSwingJUnitTestCase
+AssertJSwingTestNGTestCase</code></pre>
+         
+         <p>Linux users use this command (see also <a href="#all-in-one-command">all-in-one command</a>)</p>
+         <pre><code class="bash">find . -name "*.java" -exec sed -i "s/FestSwingTestCaseTemplate/AssertJSwingTestCaseTemplate/g;s/FestSwingJUnitTestCase/AssertJSwingJUnitTestCase/g;s/FestSwingTestNGTestCase/AssertJSwingTestNGTestCase/g" '{}' \;</code></pre>
+
+
+         <h4 class="page-header"><span id="all-in-one-command"></span>All-in-one command</h3>
+         <p>To perform all steps above at once use this script.</p>
+         <pre><code class="bash">find . -name "*.java" -exec sed -i "s/import static org.fest.swing./import static org.assertj.swing./g;s/import org.fest.swing./import org.assertj.swing./g;s/FestSwingTestCaseTemplate/AssertJSwingTestCaseTemplate/g;s/FestSwingJUnitTestCase/AssertJSwingJUnitTestCase/g;s/FestSwingTestNGTestCase/AssertJSwingTestNGTestCase/g" '{}' \;</code></pre>
+
+
+         <h2 class="page-header">Hardly scriptable (aka Migrating from Fest 1.2.x)</h2>
+         <p>Above we described the steps that should help you to migrate most parts of your code. Unfortunately there
+            are some things to do which we were not able to script so that it would be 100% fail-safe (<em>but of course
+            we would love to see your solution if you made it!</em>). So you have to do them manually. These migrations
+            are the result of the refactorings made after publishing Fest 1.2.x.</p>
+            
+         <p>Surely we missed some migration steps since we don't make use of the full API in our sample projects. So
+            <strong>please don't hesitate to notify us about further migration steps you encounter!</strong></p>
+
+
+         <h4 class="page-header">Direct field access</h4>
+         <p>Fest 1.2.x allowed to access some fields directly, Fest 1.4-SNAPSHOT and therefore $assertj_swing_name does
+            not. Basically this comes down to replacing</p>
+
+         <pre><code class="java">&lt;AbstractComponentFixture&gt;.robot
+&lt;AbstractComponentFixture&gt;.target</code></pre>
+         <p>by</p>
+         <pre><code class="java">&lt;AbstractComponentFixture&gt;.robot()
+&lt;AbstractComponentFixture&gt;.target()</code></pre>
+         
+         <p>Although scriptable <strong>this is not fail-safe</strong>, use this command only if you have a sufficient
+            VCS or backups.</p>
+         <pre><code class="bash">find . -name "*.java" -exec sed -i "s/robot\([^(]\)/robot()\1/g;s/target\([^(]\)/target()\1/g" '{}' \;</code></pre>
+
+
+         <h4 class="page-header">component()</h4>
+         <p>Fest 1.2.x has the method <span class="small-code">component()</span>, Fest 1.4-SNAPSHOT not. Replace it by
+            <span class="small-code">target()</span>.</p>
+         
+         <p>Although scriptable <strong>this is not fail-safe</strong>, use this command only if you have a sufficient
+            VCS or backups.</p>
+         <pre><code class="bash">find . -name "*.java" -exec sed -i "s/component()/target()/g" '{}' \;</code></pre>
+
+
+         <h4 class="page-header">Replacing a driver</h4>
+         <p>With Fest 1.2.x you could replace a driver of a fixture with
+            <span class="small-code">driver(ComponentDriver)</span>. This method has been renamed to
+            <span class="small-code">replaceDriverWith(ComponentDriver)</span>.</p>
+         
+         <p>Although scriptable <strong>this is not fail-safe</strong>, use this command only if you have a sufficient
+            VCS or backups.</p>
+         <pre><code class="bash">find . -name "*.java" -exec sed -i "s/driver(\([^)]\)/replaceDriverWith(\1/g" '{}' \;</code></pre>
+
+
+         <h4 class="page-header">Fields of Pair</h4>
+         <p>The class <span class="small-code">Pair</span> had two fields: <span class="small-code">i</span> and
+            <span class="small-code">ii</span>. These are now called <span class="small-code">first</span> and
+            <span class="small-code">second</span>.</p>
       </div>
    </div>
 </div>
