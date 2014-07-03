@@ -37,17 +37,17 @@ frame.button("ok").click();</code></pre>
          <p>When we run our test, it will obviously fail, because the frame does not have any button with name
             <code>ok</code>. To help us diagnose the problem, the thrown <code>ComponentLookupException</code> displays
             a nicely formatted component hierarchy:</p>
-         <pre><code>  org.fest.swing.exception.ComponentLookupException: Unable to find component using matcher org.fest.swing.core.NameMatcher[name='ok', requireShowing=false].
+         <pre><code>  org.assertj.swing.exception.ComponentLookupException: Unable to find component using matcher org.assertj.swing.core.NameMatcher[name='ok', requireShowing=false].
 
   Component hierarchy:
-  org.fest.swing.test.TestFrame[name='testFrame', title='Test', enabled=true, showing=true]
+  org.assertj.swing.test.TestFrame[name='testFrame', title='Test', enabled=true, showing=true]
     javax.swing.JRootPane[]
       javax.swing.JPanel[name='null.glassPane']
       javax.swing.JLayeredPane[]
         javax.swing.JPanel[name='null.contentPane']
           javax.swing.JButton[name='click', text='Click Me', enabled=true]
 
-    at org.fest.swing.core.BasicComponentFinder.componentNotFound(BasicComponentFinder.java:81)</code></pre>
+    at org.assertj.swing.core.BasicComponentFinder.componentNotFound(BasicComponentFinder.java:81)</code></pre>
 
          <p>The displayed component hierarchy, unlike the default <code>toString()</code> method in Swing components,
             does not contain any information related to how the components look (e.g. component sizes, colors,
@@ -69,13 +69,13 @@ frame.button().click();</code></pre>
 
          <p>This test will fail, because the frame has two components of type <code>JButton</code>. To help us diagnose
             the problem, the thrown <code>ComponentLookupException</code> displays all the matching components found:</p>
-         <pre><code>  org.fest.swing.exception.ComponentLookupException: Found more than one component using matcher org.fest.swing.core.TypeMatcher[type=javax.swing.JButton, requireShowing=false].
+         <pre><code>  org.assertj.swing.exception.ComponentLookupException: Found more than one component using matcher org.assertj.swing.core.TypeMatcher[type=javax.swing.JButton, requireShowing=false].
 
   Found:
   javax.swing.JButton[name='first', text='First Button', enabled=true]
   javax.swing.JButton[name='second', text='Second Button', enabled=true]
 
-    at org.fest.swing.core.BasicComponentFinder.multipleComponentsFound(BasicComponentFinder.java:102)
+    at org.assertj.swing.core.BasicComponentFinder.multipleComponentsFound(BasicComponentFinder.java:102)
 </code></pre>
 
          <p>The thrown <code>ComponentLookupException</code> uses component formatters to display information that can
