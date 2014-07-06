@@ -49,7 +49,7 @@ $assertj_swing_get_it
                target="_blank">here</a>.</p>
 
          <h4>1. Enable checks for EDT access violation</h4>
-         <p>AssertJ provides the class <code>FailOnThreadViolationRepaintManager</code> that forces a test to fail if
+         <p>$assertj_swing_name provides the class <code>FailOnThreadViolationRepaintManager</code> that forces a test to fail if
             access to GUI components is not performed on the EDT. You can find more details
             <a href="assertj-swing-edt.html#testing-violations">here</a>.</p>
 
@@ -87,7 +87,7 @@ public void setUp() {
 
          <h4>3. Write methods to test your GUI's behavior</h4>
          <p>Now you can start by using the fixtures to test the GUI. $assertj_swing_name fixtures simulate a user interacting
-            with the GUI in order to verify that such GUI behaves as we expect. For our example, we need to verify that
+            with the GUI in order to verify that such GUI behave as we expect. For our example, we need to verify that
             the text in the text field is copied to the label when the button is clicked:</p>
 
          <pre><code class="language-java">@Test

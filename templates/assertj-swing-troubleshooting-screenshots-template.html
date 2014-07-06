@@ -82,15 +82,15 @@ try {
          <h3>Running with Ant</h3>
          <p>In order to take screenshots of failed GUI tests with Ant please follow these steps</p>
          <ul>
-            <li>Add a definition of the Ant task <code>festreport</code></li>
+            <li>Add a definition of the Ant task <code>assertjreport</code></li>
             <li>Use the formatter <code>ScreenshotOnFailureResultFormatter</code> inside the junit Ant task</li>
-            <li>Use the Ant task <code>festreport</code> instead of <code>junitreport</code>, and specify in its
+            <li>Use the Ant task <code>assertjreport</code> instead of <code>junitreport</code>, and specify in its
                 classpath where the <code>assertj-swing-junit</code> jar file is.</li>
          </ul>
 
          <h4>Example</h4>
          <pre class="pre-scrollable"><code class="language-xml">&lt;target name="test" depends="compile"&gt;
-  &lt;taskdef resource="festjunittasks" classpathref="lib.classpath" /&gt;
+  &lt;taskdef resource="assertjjunittasks" classpathref="lib.classpath" /&gt;
 
   &lt;junit forkmode="perBatch" printsummary="yes" haltonfailure="no" haltonerror="no"&gt;
     &lt;classpath refid="lib.classpath" /&gt;
@@ -111,7 +111,7 @@ try {
   &lt;/festreport&gt;
 &lt;/target&gt;</code></pre>
 
-         <p><code>festreport</code> works exactly as <code>junitreport</code> but additionally produces a link as seen
+         <p><code>assertjreport</code> works exactly as <code>junitreport</code> but additionally produces a link as seen
             in this screenshot:</p>
          
          <img src="images/swing-screenshot-junit-ant.jpg" alt="Screenshot of the test report" />
@@ -130,7 +130,7 @@ try {
 
          <h3>Running with Ant</h3>
          <p>This example shows how to register the <code>ScreenshotOnFailureListener</code> with TestNG's ant task.</p>
-         <pre><code class="language-xml">&lt;testng listeners="org.fest.swing.testng.ScreenshotOnFailureListener"
+         <pre><code class="language-xml">&lt;testng listeners="org.assertj.swing.testng.ScreenshotOnFailureListener"
         outputDir="${target.test.results.dir}" haltOnFailure="true"
         verbose="2"&gt;
   &lt;classfileset dir="${target.test.classes.dir}" includes="**/*Test.class" /&gt;

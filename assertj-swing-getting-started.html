@@ -132,8 +132,9 @@
 
          <p>If you use another dependency tool, please check
             <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-swing|1.0.0|bundle">this page</a>
-            to find the relevant assertj dependency declaration for your tool.
+            to find the relevant AssertJ Swing dependency declaration for your tool.
          </p>
+
 
          <h3 class="page-header">Write your first GUI test</h3>
          <p>As the <code>Assertions</code> class is the main entry point to use AssertJ Core, the package
@@ -163,7 +164,7 @@
                target="_blank">here</a>.</p>
 
          <h4>1. Enable checks for EDT access violation</h4>
-         <p>AssertJ provides the class <code>FailOnThreadViolationRepaintManager</code> that forces a test to fail if
+         <p>AssertJ Swing provides the class <code>FailOnThreadViolationRepaintManager</code> that forces a test to fail if
             access to GUI components is not performed on the EDT. You can find more details
             <a href="assertj-swing-edt.html#testing-violations">here</a>.</p>
 
@@ -201,7 +202,7 @@ public void setUp() {
 
          <h4>3. Write methods to test your GUI's behavior</h4>
          <p>Now you can start by using the fixtures to test the GUI. AssertJ Swing fixtures simulate a user interacting
-            with the GUI in order to verify that such GUI behaves as we expect. For our example, we need to verify that
+            with the GUI in order to verify that such GUI behave as we expect. For our example, we need to verify that
             the text in the text field is copied to the label when the button is clicked:</p>
 
          <pre><code class="language-java">@Test
