@@ -105,7 +105,7 @@
 <pre><code class="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.assertj&lt;/groupId&gt;
     &lt;artifactId&gt;assertj-assertions-generator-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.2.0&lt;/version&gt;
+    &lt;version&gt;1.3.0&lt;/version&gt;
     &lt;configuration&gt;
         &lt;packages&gt;
             &lt;param&gt;your.first.package&lt;/param&gt;
@@ -122,7 +122,7 @@
 <pre><code class="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.assertj&lt;/groupId&gt;
     &lt;artifactId&gt;assertj-assertions-generator-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.2.0&lt;/version&gt;
+    &lt;version&gt;1.3.0&lt;/version&gt;
     ...
     &lt;dependencies&gt;
         &lt;dependency&gt;
@@ -151,30 +151,43 @@ AssertJ assertions generation report
 Generating AssertJ assertions for classes in following packages and subpackages:
 - org.assertj.examples.data
 
+Input classes excluded from assertions generation:
+- org.assertj.examples.data.MyAssert
+
 --- Generator results ---
 
 Directory where custom assertions files have been generated :
-- /home/joe/assertj/assertj-examples/target/generated-test-sources/assertj-assertions
+- /assertj/assertj-examples/assertions-examples/target/generated-test-sources/assertj-assertions
 
+# full path truncated for to improve clarity in the website.
 Custom assertions files generated :
-- TeamAssert.java
-- BasketBallPlayerAssert.java
-- EmployeeAssert.java
-- NameAssert.java
-- MagicalAssert.java
-- PersonAssert.java
-- RaceAssert.java
-- GameServiceAssert.java
-- MansionAssert.java
-- TitleAssert.java
-- AlignmentAssert.java
-- TolkienCharacterAssert.java
-- RingAssert.java
-- MovieAssert.java
-- TeamManagerAssert.java
+- .../generated-test-sources/assertj-assertions/org/assertj/examples/data/AlignmentAssert.java
+- .../generated-test-sources/assertj-assertions/org/assertj/examples/data/BasketBallPlayerAssert.java
+- .../generated-test-sources/assertj-assertions/org/assertj/examples/data/BookAssert.java
+- .../generated-test-sources/assertj-assertions/org/assertj/examples/data/BookTitleAssert.java
+- .../generated-test-sources/assertj-assertions/org/assertj/examples/data/EmployeeAssert.java
+- .../generated-test-sources/assertj-assertions/org/assertj/examples/data/EmployeeTitleAssert.java
+- .../generated-test-sources/assertj-assertions/org/assertj/examples/data/MagicalAssert.java
+- .../generated-test-sources/assertj-assertions/org/assertj/examples/data/MansionAssert.java
+- .../generated-test-sources/assertj-assertions/org/assertj/examples/data/NameAssert.java
+- .../generated-test-sources/assertj-assertions/org/assertj/examples/data/PersonAssert.java
+- .../generated-test-sources/assertj-assertions/org/assertj/examples/data/RaceAssert.java
+- .../generated-test-sources/assertj-assertions/org/assertj/examples/data/RingAssert.java
+- .../generated-test-sources/assertj-assertions/org/assertj/examples/data/TeamAssert.java
+- .../generated-test-sources/assertj-assertions/org/assertj/examples/data/TolkienCharacterAssert.java
+- .../generated-test-sources/assertj-assertions/org/assertj/examples/data/movie/MovieAssert.java
+- .../generated-test-sources/assertj-assertions/org/assertj/examples/data/neo4j/DragonBallGraphAssert.java
+- .../generated-test-sources/assertj-assertions/org/assertj/examples/data/service/GameServiceAssert.java
+- .../generated-test-sources/assertj-assertions/org/assertj/examples/data/service/TeamManagerAssert.java
 
 Assertions entry point class has been generated in file:
-- /home/joe/assertj/assertj-examples/target/generated-test-sources/assertj-assertions/org/assertj/examples/data/Assertions.java</code></pre>
+- .../generated-test-sources/assertj-assertions/org/assertj/examples/data/Assertions.java
+
+Soft Assertions entry point class has been generated in file:
+- .../generated-test-sources/assertj-assertions/org/assertj/examples/data/SoftAssertions.java
+
+BDD Assertions entry point class has been generated in file:
+- .../generated-test-sources/assertj-assertions/org/assertj/examples/data/BddAssertions.java</code></pre>
 
          <h3 class="page-header"><span id="configuration"></span>Plugin configuration</h3>
 
@@ -199,7 +212,7 @@ Assertions entry point class has been generated in file:
 <pre><code class="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.assertj&lt;/groupId&gt;
     &lt;artifactId&gt;assertj-assertions-generator-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.2.0&lt;/version&gt;
+    &lt;version&gt;1.3.0&lt;/version&gt;
     &lt;executions&gt;
         &lt;execution&gt;
             &lt;goals&gt;
@@ -214,8 +227,26 @@ Assertions entry point class has been generated in file:
         &lt;/packages&gt;
     &lt;/configuration&gt;
 &lt;/plugin&gt;</code></pre>
+        <p></p>
 
-         <h3 class="page-header"><span id="news"></span>Assertions generator maven plugin 1.2.0 release</h3>
+         <h3 class="page-header"><span id="news"></span><span id="1.3.0"></span>Assertions generator maven plugin 1.3.0 release</h3>
+         <p>Release date : 2014-08-04</p>
+
+         <div class="release-section-category">Release notes:</div>
+         <ul>
+            <li>Uses <a href="assertj-assertions-generator.html#1.3.0">assertj-assertions-generator 1.3.0</a> with :
+                <ul><li>Better generated assertions for double and float types using offset.</li></ul>
+                <ul><li>Generate assertions for public fields.</li></ul>
+                <ul><li>Avoid potential inner class assertion name clash when several inner classes have the same name.</li></ul>
+            </li>            
+            <li>Allow to generate assertion classes that don't hide subclasses assertions after using an assertion from a super class. <span class="contributor">(Fr Jeremy Krieg)</span></li>
+            <li>Allow to specify where to generate Assertions entry point classes.</li>
+            <li>Generate a BDD style entry point class <a href="assertj-core-news.html#assertj-core-1.6.0-bdd-assertions-style"><span class="small-code">BddAssertions</span></a> replacing <span class="small-code">assertThat</span> methods by <span class="small-code">then</span>.</li>
+            <li>Generate a <a href="http://joel-costigliola.github.io/assertj/assertj-core-features-highlight.html#soft-assertions">SoftAssertions</a> entry point class to collect all assertion errors instead of stopping at the first one.</li>
+            <li>Better generation report.</li>
+         </ul>
+
+         <h3 class="page-header"><span id="1.2.0"></span>Assertions generator maven plugin 1.2.0 release</h3>
          <p>Release date : 2013-12-08</p>
 
          <p>Special thanks to <span class="contributor">Jean Christophe Gay</span> for its contributions to this version.</p>
