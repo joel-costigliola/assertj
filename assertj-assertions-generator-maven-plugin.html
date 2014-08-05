@@ -207,6 +207,16 @@ BDD Assertions entry point class has been generated in file:
     &lt;targetDir&gt;src/test/java&lt;/targetDir&gt;
 &lt;/configuration&gt;</code></pre>
 
+         <p>Assertions entry point classes are generated in a package determined automatically, you can change this package with <span class="small-code">entryPointClassPackage</span> configuration property like this 
+<pre><code class="xml">&lt;configuration&gt;
+    &lt;entryPointClassPackage&gt;my.entry.point.pakkage&lt;/entryPointClassPackage&gt;
+&lt;/configuration&gt;</code></pre></p>
+
+         <p>You can generate assertion classes that don't hide subclasses assertions after using an assertion from a super class. To do that, we need to generate two classes per domain class, e.g. for <span class="small-code">Book</span> domain class, <span class="small-code">AbstractBookAssert.java</span> and <span class="small-code">BookAssert.java</span> will be generated. Set <span class="small-code">hierarchical</span> property to true to enable this :   
+<pre><code class="xml">&lt;configuration&gt;
+    &lt;hierarchical&gt;true&lt;/hierarchical&gt;
+&lt;/configuration&gt;</code></pre></p>
+
          <p>To generate assertions classes at every build, add an <span class="small-code">&lt;executions&gt;</span> section as shown below :</p>
 
 <pre><code class="xml">&lt;plugin&gt;
