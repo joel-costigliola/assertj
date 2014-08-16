@@ -204,12 +204,12 @@ finder.findByName("pw", true); // will work finding label of main frame</code></
 
          <h4>Lookup by name</h4>
          <pre><code class="language-java">// import static org.assertj.swing.finder.WindowFinder.findFrame;
-loginDialog.textBox("username").enterText("yvonne");
-loginDialog.textBox("password").enterText("welcome");
-loginDialog.button("login").click();
+window.textBox("username").enterText("yvonne");
+window.textBox("password").enterText("welcome");
+window.button("login").click();
 
 // now the interesting part, we need to wait till the main window is shown.
-FrameFixture mainFrame = findFrame("main").using(loginDialog.robot);
+FrameFixture mainFrame = findFrame("main").using(robot());
 
 // we can continue testing the main window.</code></pre>
 
@@ -220,26 +220,28 @@ FrameFixture mainFrame = findFrame("main").using(loginDialog.robot);
          <p>We can also specify a custom value for the timeout. For example, we can set the timeout to 10&nbsp;seconds
             in two ways:</p>
          <pre><code class="language-java">// import static org.assertj.swing.finder.WindowFinder.findFrame;
-FrameFixture mainFrame = findFrame("main").withTimeout(10000).using(loginDialog.robot);
+// import static java.util.concurrent.TimeUnit.SECONDS;
+FrameFixture mainFrame = findFrame("main").withTimeout(10000).using(robot());
 
 // or
-FrameFixture mainFrame = findFrame("main").withTimeout(10, SECONDS).using(loginDialog.robot);</code></pre>
+FrameFixture mainFrame = findFrame("main").withTimeout(10, SECONDS).using(robot());</code></pre>
 
          <h4>Lookup by type</h4>
          <p>We can also find components by type. In this example, we look up a showing a <code>Frame</code> of type
             <code>MainFrame</code>, using the default timeout of 5&nbsp;seconds.</p>
          <pre><code class="language-java">// import static org.assertj.swing.finder.WindowFinder.findFrame;
-FrameFixture mainFrame = findFrame(MainFrame.class).using(loginDialog.robot);</code></pre>
+FrameFixture mainFrame = findFrame(MainFrame.class).using(robot());</code></pre>
 
          <h4>Lookup using a GenericTypeMatcher</h4>
          <p>All finders accept a <code>GenericTypeMatcher</code> to find components using custom search criteria. In
-            the following example, we look up a showing frame with title <code>News</code>:</p>
-         <pre><code class="language-java">GenericTypeMatcher&lt;JFrame&gt; matcher = new GenericTypeMatcher&lt;JFrame&gt;() {
+            the following example, we look up a showing frame whose title starts with <code>News</code>:</p>
+         <pre><code class="language-java">// import static org.assertj.swing.finder.WindowFinder.findFrame;
+GenericTypeMatcher&lt;JFrame&gt; matcher = new GenericTypeMatcher&lt;JFrame&gt;(JFrame.class) {
   protected boolean isMatching(JFrame frame) {
-    return "News".equals(frame.getTitle()) && frame.isShowing();
+    return frame.getTitle() != null &amp;&amp; frame.getTitle().startsWith("News") &amp;&amp; frame.isShowing();
   }
 };
-FrameFixture frame = WindowFinder.findFrame(matcher).using(loginDialog.robot);</code></pre>
+FrameFixture frame = findFrame(matcher).using(robot());</code></pre>
 
          <h4>Reusing Robots</h4>
          <p>In the example above, we used the method call <code>using(loginDialog.robot)</code>. Although strange,
