@@ -103,13 +103,13 @@ window.button(withName("ok").andText("OK")).click();</code></pre>
             search criteria:</p>
 
          <pre><code class="language-java">// by name
-JButtonFixture button = frame.button("login");
+JButtonFixture button = window.button("login");
 
 // by type
-JButtonFixture button = frame.button();
+JButtonFixture button = window.button();
 
 // custom search criteria (the button's text)
-JButtonFixture button = frame.button(new GenericTypeMatcher&lt;JButton&gt;() {
+JButtonFixture button = window.button(new GenericTypeMatcher&lt;JButton&gt;(JButton.class) {
   @Override
   protected boolean isMatching(JButton button) {
     return "Login".equals(button.getText());
