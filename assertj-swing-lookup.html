@@ -234,15 +234,17 @@ robot.settings().componentLookupScope(ComponentLookupScope.ALL);</code></pre>
 <pre><code class="language-java">ComponentFinder finder = BasicComponentFinder.finderWithCurrentAwtHierarchy();</code></pre>
             </li>
             <li>By creating a new <code>ComponentFinder</code> that only has access to the GUI components created after
-                it. In the following example, finder has access to <code>login</code> but not to <code>main</code>.
-                <pre><code class="language-java">MainFrame main = new MainFrame();
+                it. In the following example, finder has access to <code>MainFrame</code> but not to <code>LoginFrame</code>.
+                <pre><code class="language-java">// new LoginFrame();
 ComponentFinder finder = BasicComponentFinder.finderWithNewAwtHierarchy();
-LoginDialog login = new LoginDialog();</code></pre>
+finder.findByName("login", true); // will fail finding component of login frame
+// new MainFrame();
+finder.findByName("pw", true); // will work finding label of main frame</code></pre>
             </li>
             <li>By reusing an existing <code>ComponentFinder</code> from a <code>Robot</code>. In the following
-                example we're going to use the <code>Robot</code> from the <code>FrameFixture frame</code>:
-<pre><code class="lanuage-java">FrameFixture frame = new FrameFixture(new MyFrame());
-ComponentFinder finder = frame.robot.finder();</code></pre>
+            example we're going to use the <code>Robot</code> from the
+            <a href="assertj-swing-basics.html#base-test-case">base test class</a>:
+<pre><code class="lanuage-java">ComponentFinder finder = robot().finder();</code></pre>
             </li>
          </ol>
 
