@@ -157,8 +157,9 @@ okButton.setName("ok");</code></pre>
 
          <pre><code class="language-java">// import static org.assertj.swing.core.matcher.JButtonMatcher.withText;
 
-FrameFixture frame = new FrameFixture(new MyFrame());
-frame.button(withName("cancel").andText("Cancel")).click();</code></pre>
+FrameFixture window = new FrameFixture(robot(), frame);
+window.show();
+window.button(withName("ok").andText("OK")).click();</code></pre>
 
          <h3 class="page-header"><span id="performing"></span>Performing GUI Component Lookup</h3>
          <p>Regardless of the lookup type, AssertJ Swing provides two ways to perform GUI component lookup</p>
