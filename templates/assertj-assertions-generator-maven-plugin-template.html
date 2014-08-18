@@ -114,9 +114,35 @@ BDD Assertions entry point class has been generated in file:
          <p>One who don't want to declare packages / classes in its <span class="small-code">pom.xml</span> can use properties <span class="small-code">assertj.packages</span> and <span class="small-code">assertj.classes</span>:
          <pre><code class="bash">mvn assertj:generate-assertions -Dassertj.packages=your.first.package,your.second.package</code></pre></p>
 
+         <h4><i class="fa fa-caret-right">&nbsp;</i>Including and excluding classes from assertion generation</h4>
+
+         <p>Sometimes - not to say often - you won't want to generate assertions for all the classes of the specified packages. To avoid that, exclude classes using regular expressions. In the example below, we generate assertions for all classes in <span class="small-code">com.google.common.net</span> package except for classes finishing with <span class="small-code">HostSpecifier</span>, <span class="small-code">Headers</span> or containing <span class="small-code">Escaper</span> :</p>
+
+<pre><code class="xml">&lt;configuration&gt;
+    &lt;packages&gt;
+        &lt;param&gt;com.google.common.net&lt;/param&gt;
+        &lt;excludes&gt;
+            &lt;param&gt;.*google.*HostSpecifier&lt;/param&gt;
+            &lt;param&gt;.*google.*Headers&lt;/param&gt;
+            &lt;param&gt;.*google.*Escaper.*&lt;/param&gt;
+        &lt;/excludes&gt;
+    &lt;/packages&gt;
+&lt;/configuration&gt;</code></pre>
+
+         <p>It might be easier to filter the classes you want to generate assertions for within the specified packages, you can include them using regular expression. Only classes matching at least one of a the given regular expressions will have assertions generated for. In the example below we will only generate assertions for DTO or Model classes :</p>
+
+<pre><code class="xml">&lt;configuration&gt;
+    &lt;packages&gt;
+        &lt;param&gt;com.my.project&lt;/param&gt;
+        &lt;includes&gt;
+            &lt;param&gt;.*DTO&lt;/param&gt;
+            &lt;param&gt;.*Model&lt;/param&gt;
+        &lt;/includes&gt;
+    &lt;/packages&gt;
+&lt;/configuration&gt;</code></pre>
+
          <h4><i class="fa fa-caret-right">&nbsp;</i>Generated classes destination directory</h4>
          <p>You can specify the destination directory for generated assertion files using <span class="small-code">targetDir</span> configuration element, e.g. :</p>
-
 <pre><code class="xml">&lt;configuration&gt;
     &lt;packages&gt;
         &lt;param&gt;your.first.package&lt;/param&gt;
@@ -176,8 +202,8 @@ BDD Assertions entry point class has been generated in file:
             <li>Uses <a href="assertj-assertions-generator.html#1.3.1">assertj-assertions-generator 1.3.1</a></li>            
             <li>Allow to generate assertion for classes located in src/test/java</span></li>
             <li>Allow to generate assertion for classes located in project dependencies</span></li>
-            <li>Allow selecting classes to generate assertions for with regexp.</li>
-            <li>Add skip option.</li>
+            <li>Allow selecting classes to generate assertions for with regexp (see <a href="assertj-assertions-generator-maven-plugin.html#configuration">Configuration</a>).</li>
+            <li>Add skip option (see <a href="assertj-assertions-generator-maven-plugin.html#configuration">Configuration</a>).</li>
          </ul>
 
          <h3 class="page-header"></span><span id="1.3.0"></span>Assertions generator maven plugin 1.3.0 release</h3>
