@@ -85,6 +85,7 @@
       <h1 class="page-header">AssertJ Core latest news</h1>
       <ul>
          <li><a href="#assertj-core-next">AssertJ core next release</a></li>
+         <li><a href="#assertj-core-1.7.0">AssertJ core 1.7.0 release</a></li>
          <li><a href="#assertj-core-1.6.1">AssertJ core 1.6.1 release</a></li>
          <li><a href="#assertj-core-1.6.0">AssertJ core 1.6.0 release</a></li>
          <li><a href="#assertj-core-1.5.0">AssertJ core 1.5.0 release</a></li>
@@ -95,15 +96,266 @@
          <li><a href="#assertj-core-1.0.0">AssertJ core 1.0.0 release</a></li>
       </ul>
 
-<h3 class="page-header" ><span id="assertj-core-next"></span>What's coming in AssertJ core next release</h3>
+<h3 class="page-header" ><span id="assertj-core-next"></span>What's coming in AssertJ core next release : 2.0</h3>
 
-<p>XML assertions using XPath.</p>
+<p>
+   <ul>
+      <li>Java 7 migration</li>
+      <li>XML assertions using XPath.</li>
+      <li>Recursive field by field comparison</li>
+   </ul>
+</p>
+
+<h3 class="page-header"><span id="assertj-core-1.7.0"></span>AssertJ core 1.7.0 release : New and noteworthy</h3>
+
+<p>Release date : 2014-10-04<br>
+   <p>Thanks to <span class="contributor">Mateusz Haligowski</span>, <span class="contributor">Chris Arnott</span>, <span class="contributor">Andrew Gaul</span>, <span class="contributor">dmwvr</span>, <span class="contributor">Alexandre Balhier</span>, <span class="contributor">Adam Ruka</span>, <span class="contributor">Mariusz Smykula</span> and
+   <span class="contributor">Marcin Mikosik</span> for their contributions.</p>
+
+      <h4 class="page-header"> Release notes</h4>
+      <div class="release-section-category">New features:</div>
+      <ul>
+         <li><a href="assertj-core-news.html#assertj-core-1.7.0-type-safe-extracting">Type-safe extracting methods</a> for <span class="small-code">IterableAssert</span> and <span class="small-code">ObjectArrayAssert</span>. <span class="contributor">(Mateusz Haligowski)</span></li>
+         <li>New Map assertion : <a href="assertj-core-news.html#assertj-core-1.7.0-containsOnlyKeys"><span class="small-code">containsOnlyKeys</span></a>. <span class="contributor">(Chris Arnott)</span></li>
+         <li>New Map assertion : <a href="assertj-core-news.html#assertj-core-1.7.0-hasSameSizeAs"><span class="small-code">hasSameSizeAs(Map)</span></a>. <span class="contributor">(Adam Ruka)</span></li>
+         <li>New <a href="assertj-core-news.html#assertj-core-1.7.0-testng">shell script</a> to convert TestNG assertions to AssertJ ones. <span class="contributor">(Alexandre Balhier)</span></li>
+         <li>New String assertion : <span class="small-code"><a href="assertj-core-news.html#assertj-core-1.7.0-lineCount">hasLineCount</a></span> to verify the number of lines in a String. <span class="contributor">(Mariusz Smykula)</span></li>
+         <li>New Iterable assertion : <a href="assertj-core-news.html#assertj-core-1.7.0-containsOnlyElementsOf"><span class="small-code">containsOnlyElementsOf(Iterable)</span></a>. <span class="contributor">(Chris Arnott)</span></li>
+         <li>New Iterable assertion : <a href="assertj-core-news.html#assertj-core-1.7.0-hasSameElementsAs"><span class="small-code">hasSameElementsAs(Iterable)</span></a>.</li>
+         <li>New Iterable/Array assertions : <a href="assertj-core-news.html#assertj-core-1.7.0-atLeastOne"><span class="small-code">(are/have)AtLeastOne(Condition)</span></a>. <span class="contributor">(Adam Ruka)</span></li>
+         <li>New Iterable/Array assertions : <a href="assertj-core-news.html#assertj-core-1.7.0-elementOfType"><span class="small-code">hasAtLeastOneElementOfType(Class)/hasOnlyElementsOfType(Class)</span></a>.</li>
+         <li>Assertions for <a href="assertj-core-news.html#assertj-core-1.7.0-comparable"><span class="small-code">Comparable</span></a>. <span class="contributor">(dmwvr)</span></li>
+      </ul>
+      <div class="release-section-category">Improvements:</div>
+      <ul>
+         <li><span class="small-code">assertThat(Iterator)</span> does not consume iterator when it is not needed. <span class="contributor">(Marcin Mikosik)</span></li>
+         <li>Text content comparison differences report starts counting line count at 1 instead of 0. <span class="contributor">(Alexandre Balhier)</span></li>
+         <li>Better <span class="small-code">assertEqualContent</span> error message when failing to compare <span class="small-code">InputStreams</span>. <span class="contributor">(Andrew Gaul)</span></li>
+         <li><span class="small-code">assertThat</span> and <span class="small-code">then</span> now return abstract assertion types to ease extending AssertJ core assertions. <span class="contributor">(Adam Ruka)</span></li>
+         <li>Various Javadoc API improvements.</li>
+      </ul>
+      <div class="release-section-category">Bugs:</div>
+      <ul>
+         <li>Extracting now returns null value in extracted tuple if nested field/property is null.</li>
+         <li>Fix nested field value extraction in FieldSupport.</li>
+         <li>Field by field element comparison semantics were not honoured in <a href="assertj-core-news.html#assertj-core-1.7.0-field-by-field-element-comparison-fix">basic assertions</a>.</li>
+         <li>Fixes misleading error message in <span class="small-code">isAfterYear</span> and <span class="small-code">isBeforeYear</span> assertions.</li>
+         <li><span class="small-code">BigDecimal</span> assertions relies on <span class="small-code">compareTo</span> semantics consistently (except for <span class="small-code">isEqualTo</span>).</li>
+         <li><span class="small-code">propertyValueOf(String propertyName, Object target, Class&lt;T&gt; clazz)</span> was not supporting nested property value extraction.</li>
+      </ul>
+
+      <h4 class="page-header"><span id="assertj-core-1.7.0-type-safe-extracting" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Type-safe extracting methods for <span class="small-code">IterableAssert</span> and <span class="small-code">ObjectArrayAssert</span></h4>
+
+      <p>Thanks to  <span class="contributor">Mateusz Haligowski</span>, you can now use a type safe extracting feature, you only have to implement the <span class="small-code">Extractor</span> interface to define what you are extracting.<br/>
+         Example:</p>
+   <pre><code class="java">// extract 'age' field values
+assertThat(fellowshipOfTheRing).extracting(age()).contains(33, 38, 36);
+
+// extracting works also with user's types (here Race)
+assertThat(fellowshipOfTheRing).extracting(race()).contains(HOBBIT, ELF)
+                                                  .doesNotContain(ORC);
+// extract 'name' and 'age' values.
+assertThat(fellowshipOfTheRing).extracting(ageAndRace()).contains(tuple(33, HOBBIT), 
+                                                                  tuple(38, HOBBIT),
+                                                                  tuple(1000, ELF));
+</code></pre>
+
+      <p>Here's what <span class="small-code">ageAndRace()</span> extractor looks like:</p>
+      <pre><code class="java">public class TolkienCharacterAgeAndRaceExtractor implements Extractor&lt;TolkienCharacter, Tuple&gt; {
+
+   @Override
+   public Tuple extract(TolkienCharacter input) {
+      return new Tuple(input.age, input.getRace());
+   }
+
+   public static Extractor<TolkienCharacter, Tuple> ageAndRace() {
+      return new TolkienCharacterAgeAndRaceExtractor();
+   }   
+}
+</code></pre>
+
+      <p>We can do more than extracting values, we can also <b>flatten</b> them, much like a functional <span class="small-code">flatMap</span>:<br/>
+         Example:</p>
+   <pre><code class="java">// BasketBallPlayer.getTeamMates returns a List&lt;BasketBallPlayer&gt;
+BasketBallPlayer noah =  ... // initialized with Derrick Rose and Pau Gasol as teamates
+BasketBallPlayer james =  ... // initialized with Kevin Love and Kyrie Irving as teamates
+
+// extract team mates and "flatten" them to a single BasketBallPlayer collection 
+assertThat(asList(noah, james)).flatExtracting(teammates()).contains(gasol, love, irving, rose);
+
+// teammates() extractor
+public class BasketBallTeammatesExtractor 
+       implements Extractor&lt;BasketBallPlayer, List&lt;BasketBallPlayer&gt;&gt; {
+
+   @Override
+   public List&lt;BasketBallPlayer&gt; extract(BasketBallPlayer player) {
+      return player.getTeamMates();
+   }
+
+   public static Extractor&lt;BasketBallPlayer, List&lt;BasketBallPlayer&gt;&gt; teammates() {
+      return new BasketBallTeammatesExtractor();  
+   }
+}
+</code></pre>
+
+      <p>Mateusz has published a <a href="http://java.dzone.com/articles/new-way-extracting-values">nice article</a> on this new feature.</p>
+
+      <h4 class="page-header"><span id="assertj-core-1.7.0-containsOnlyKeys" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> New Map assertion : <span class="small-code">containsOnlyKeys</span></h4>
+
+      <p>This assertion verifies that the actual map contains only the given keys and nothing else, in any order.<br/>
+         Example:</p>
+   <pre><code class="java">Map&lt;Ring, TolkienCharacter&gt; ringBearers = ... // init with elves rings and the one ring
+
+// assertion will pass
+assertThat(ringBearers).containsOnlyKeys(nenya, narya, vilya, oneRing);
+
+// assertion will fail because of two missing keys and an unexpected one (dwarfRing) 
+assertThat(ringBearers).containsOnlyKeys(oneRing, nenya, dwarfRing);
+</code></pre>
+
+      <p>Thanks to <span class="contributor">Chris Arnott</span> for this contribution.</p>
+
+      <h4 class="page-header"><span id="assertj-core-1.7.0-hasSameSizeAs" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> New Map assertion : <span class="small-code">hasSameSizeAs(Map)</span></h4>
+
+      <p>This assertion verifies that the actual map has the same size as the given Map.<br/>
+         Example:</p>
+   <pre><code class="java">Map&lt;Ring, TolkienCharacter&gt; ringBearers = ... // init with elves rings and the one ring
+
+// assertion will pass
+assertThat(ringBearers).hasSameSizeAs(mapOf(entry(oneRing, frodo),
+                                            entry(narya, gandalf),
+                                            entry(nenya, galadriel),
+                                            entry(vilya, elrond)));
+</code></pre>
+
+      <p>Thanks to <span class="contributor">Adam Ruka</span> for this contribution.</p>
+
+      <h4 class="page-header"><span id="assertj-core-1.7.0-testng" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Migrate TestNG assertions to AssertJ</h4>
+
+      <p>The <a href="https://github.com/joel-costigliola/assertj-core/blob/master/src/main/scripts/convert-testng-assertions-to-assertj.sh">shell script</a> will convert mots of your TestNG assertions to AssertJ ones.<br/>
+         Usage:</p>
+   <pre><code class="bash"># default to *Test.java if you don't provide a pattern
+./convert-testng-assertions-to-assertj.sh "*IT.java"</code></pre>
+
+      <p>Thanks to <span class="contributor">Alexandre Balhier</span> for this contribution.</p>
+
+      <h4 class="page-header"><span id="assertj-core-1.7.0-lineCount" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> New String/CharSequence assertion : <span class="small-code">hasLineCount</span></h4>
+
+      <p>This assertion verifies that the actual String/CharSequence has the expected number of lines.<br/>
+         Example:</p>
+   <pre><code class="java">String multiLine = &quot;First line\n&quot; +
+                   &quot;Last line&quot;;
+assertThat(multiLine).hasLineCount(2);
+</code></pre>
+
+      <p>Thanks to <span class="contributor">Mariusz Smykula</span> for this contribution.</p>
+
+      <h4 class="page-header"><span id="assertj-core-1.7.0-containsOnlyElementsOf" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> New Iterable assertion : <span class="small-code">containsOnlyElementsOf</span></h4>
+
+      <p>This assertion verifies that the actual iterable contains only the elements of the given iterable and nothing else, in any order.<br/>
+         Example:</p>
+   <pre><code class="java">Iterable&lt;Ring&gt; rings = newArrayList(nenya, vilya);
+
+// assertion will pass
+assertThat(rings).containsOnlyElementsOf(newLinkedList(nenya, vilya));
+assertThat(rings).containsOnlyElementsOf(newLinkedList(nenya, nenya, vilya, vilya));
+
+// assertion will fail as actual does not contain narya.
+assertThat(rings).containsOnlyElementsOf(newLinkedList(nenya, vilya, narya));
+
+// assertion will fail as actual contain nenya.
+assertThat(rings).containsOnlyElementsOf(newLinkedList(vilya));</code></pre>
+
+      <p>Thanks to <span class="contributor">Chris Arnott</span> for this contribution.</p>
+
+      <h4 class="page-header"><span id="assertj-core-1.7.0-hasSameElementsAs" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> New Iterable assertion : <span class="small-code">hasSameElementsAs(Iterable)</span></h4>
+
+      <p>This assertion verifies that the actual iterable contains only the elements of the given iterable and nothing else, in any order.<br/>
+         Example:</p>
+   <pre><code class="java">Iterable&lt;Ring&gt; elvesRings = newArrayList(vilya, nenya, narya);
+
+// assertions will pass
+assertThat(elvesRings).hasSameElementsAs(newArrayList(nenya, narya, vilya));
+assertThat(elvesRings).hasSameElementsAs(newArrayList(nenya, narya, vilya, nenya));
+
+// assertions will fail
+assertThat(elvesRings).hasSameElementsAs(newArrayList(nenya, narya));
+assertThat(elvesRings).hasSameElementsAs(newArrayList(nenya, narya, vilya, oneRing));</code></pre>
+
+      <h4 class="page-header"><span id="assertj-core-1.7.0-atLeastOne" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> New Iterable/Array assertions : <span class="small-code">haveAtLeastOne(Condition)/areAtLeastOne(Condition)</span></h4>
+
+      <p>This assertion verifies that there is <b>at least one</b> element in the actual iterable or array satisfying the given condition.<br/>
+         Example:</p>
+   <pre><code class="java">List&lt;BasketBallPlayer&gt; bullsPlayers = newArrayList(noah, rose);
+
+// potentialMvp is a Condition&lt;BasketBallPlayer&gt;
+assertThat(bullsPlayers).haveAtLeastOne(potentialMvp);</code></pre>
+
+      <p>Thanks to <span class="contributor">Adam Ruka</span> for this contribution.</p>
+
+      <h4 class="page-header"><span id="assertj-core-1.7.0-elementOfType" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> New Iterable/Array assertions : <span class="small-code">hasAtLeastOneElementOfType/hasOnlyElementsOfType</span></h4>
+
+      <p>These assertions verifies the type of the <span class="small-code">Iterable/Array</span> elements.<br/>
+         Example:</p>
+   <pre><code class="java">// hasOnlyElementsOfType check
+List&lt;Long&gt; numbers = newArrayList(1L, 2L);
+assertThat(numbers).hasOnlyElementsOfType(Number.class)
+                   .hasOnlyElementsOfType(Long.class);
+
+// hasAtLeastOneElementOfType check
+assertThat(newArrayList("string", 1L)).hasAtLeastOneElementOfType(String.class);
+</code></pre>
+
+      <h4 class="page-header"><span id="assertj-core-1.7.0-comparable" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Assertions for <span class="small-code">Comparable</span> types</h4>
+
+      <p>AssertJ now provides basic assertions for <span class="small-code">Comparable</span> types.<br/>
+         Example:</p>
+   <pre><code class="java">Rating goodRating = new Rating(8);
+Rating badRating = new Rating(4);
+
+// basic assertions available for all Comparable types.
+assertThat(goodRating).isGreaterThan(badRating);
+assertThat(goodRating).isGreaterThanOrEqualTo(badRating);
+assertThat(badRating).isLessThan(goodRating);
+assertThat(badRating).isLessThanOrEqualTo(goodRating);
+
+public class Rating implements Comparable<Rating> {
+
+  private int note;
+
+  public Rating(int note) {
+    this.note = note;
+  }
+
+  @Override
+  public int compareTo(Rating r) {
+    return this.note - r.note;
+  }
+}
+</code></pre>
+
+      <p>Thanks to <span class="contributor">dmwvr</span> for this contribution.</p>
+
+      <h4 class="page-header"><span id="assertj-core-1.7.0-field-by-field-element-comparison-fix" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Field by field element comparison semantics were not honoured in basic assertions</h4>
+
+      <p>You can use field by field element comparison for array/iterable assertions but before 1.7.0 it only worked for array/iterable specific assertions and not basic ones <span class="small-code">isEqualTo()</span>, now the seamntics are aslo applied for basic assertions.<br/>
+         Example:</p>
+   <pre><code class="java">TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
+TolkienCharacter sam = new TolkienCharacter("Sam", 38, HOBBIT);
+
+// frodo and sam both are hobbits -> they are equals when comparing only race (worked before 1.7.0)
+assertThat(newArrayList(frodo)).usingElementComparatorOnFields("race").contains(sam);
+
+// Before 1.7.0, this basic assertion would not work as element comparison semantics 
+// were only honoured in IterableAssert/Array specifc assertions, but now it works !
+assertThat(newArrayList(frodo)).usingElementComparatorOnFields("race").isEqualTo(newArrayList(sam));
+</code></pre>
+
 
 <h3 class="page-header"><span id="assertj-core-1.6.1"></span>AssertJ core 1.6.1 release : New and noteworthy</h3>
 
 <p>Release date : 2014-06-01<br>
       <p>This is a minor release to fix an OSGI incompatibility discovered by <span class="contributor">Giuseppe Guarnieri</span> (thanks !), we also expose <span class="small-code">List&lt;String&gt; linesOf(File file)</span> directly in <span class="small-code">Assertions</span> entry point class.</p>
-
 
 <h3 class="page-header"><span id="assertj-core-1.6.0"></span>AssertJ core 1.6.0 release : New and noteworthy</h3>
 
