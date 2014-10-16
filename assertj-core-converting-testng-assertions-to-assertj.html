@@ -83,9 +83,9 @@
 
 
       <div class="col-lg-10 col-md-10 col-sm-10 text-left">
-      <h1 class="page-header">Converting your JUnit assertions to AssertJ</h1>
+      <h1 class="page-header">Converting your TestNG assertions to AssertJ</h1>
 
-         <p>This page will help you converting your existing JUnit assertions to AssertJ ones, note though that both assertions can coexist together, you don't have to migrate all in one time.</p>
+         <p>This page will help you converting your existing TestNG assertions to AssertJ ones, note though that both assertions can coexist together, you don't have to migrate all in one time.</p>
          <p>The idea here is to convert code like :<pre><code class="java">assertEquals(expected, actual);</code></pre> to :</p><p><pre><code class="java">assertThat(actual).isEqualTo(expected);</code></pre> </p>
          <p>You have several ways to perform the conversion :</p>
          <ul>
@@ -94,29 +94,18 @@
             <li>With IntelliJ IDEA, using the Structured Search and Replace (SSR) feature.</li>
          </ul>
 
-         <h3 class="page-header"><span id="automatic-conversion"></span>Automatically converting your JUnit assertions to AssertJ</h3>
+         <h3 class="page-header"><span id="automatic-conversion"></span>Automatically converting your TestNG assertions to AssertJ</h3>
 
-         <p>It is simple : use the proper script depending on your OS :</p>
-         <ul>
-            <li>unix and windows : <a href="https://github.com/joel-costigliola/assertj-core/blob/master/src/main/scripts/convert-junit-assertions-to-assertj.sh">convert-junit-assertions-to-assertj.sh</a></span></li>
-            <li>osx : <a href="https://github.com/joel-costigliola/assertj-core/blob/master/src/main/scripts/convert-junit-assertions-to-assertj-on-osx.sh">convert-junit-assertions-to-assertj-on-osx.sh</a></span></li>
-         </ul>
+         <p>It is simple : use the following script (unix and windows only, osx to be done) : <a href="https://github.com/joel-costigliola/assertj-core/blob/master/src/main/scripts/convert-testng-assertions-to-assertj.sh">convert-testng-assertions-to-assertj.sh</a></span></p>
 
-         <p>Each shell scripts is based on <span class="small-code">sed</span> stream editor and regexps. It looks recursively at all <span class="small-code">*Test.java</span> files and performs search and replace to convert JUnit assertions to AssertJ ones (if <span class="small-code">*Test.java</span> file pattern does not suit you, just change it according to your needs in the script).</p>
+         <p>The script is based on <span class="small-code">sed</span> stream editor and regexps. It looks recursively at all <span class="small-code">*Test.java</span> files and performs search and replace to convert TestNG assertions to AssertJ ones (if <span class="small-code">*Test.java</span> file pattern does not suit you, just change it according to your needs in the script).</p>
 
-         <p>The script works on windows within a bash console like git bash (tested) or cygwin (but not tested). I haven't tested the OSX script yet since I don't have a mac.</p>
-
-         <p>Usage : On windows or unix execute the script in the base directory containing the test files :</p>
+         <p>Usage : execute the script in the base directory containing the test files</p>
 
 <pre><code class="bash"># in the directory containing the test files
-convert-junit-assertions-to-assertj.sh</code></pre>
+convert-testng-assertions-to-assertj.sh</code></pre>
 
-         <p>Usage : On OSX execute the script in the base directory containing the test files :</p>
-
-<pre><code class="bash"># in the directory containing the test files
-convert-junit-assertions-to-assertj-on-osx.sh</code></pre>
-
-         <p>It is not perfect but should do most of the job. After executing it, you will need to  and </p>
+         <p>It is not perfect (multiline are not converted ) but should do most of the job. After executing it, you will need to: </p>
          <ul>
             <li>optimize imports with your IDE to remove unused imports.</span></li>
             <li>if you were using <span class="small-code">assertEquals</span> with delta to compare numbers, you will probably need to import statically <span class="small-code">org.assertj.core.api.Assertions.offset</span> which is how you express delta in AssertJ (see <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/NumberAssertionsExamples.java">number_assertions_with_offset_examples()</a> test at the end of NumberAssertionsExamples).</li>
@@ -126,7 +115,7 @@ convert-junit-assertions-to-assertj-on-osx.sh</code></pre>
 
          <p>See below the output of the script execution :</p>
 
-<pre><code class="diff" style="font-size:83%;">Converting JUnit assertions to AssertJ assertions on files matching pattern : *Test.java
+<pre><code class="diff" style="font-size:83%;">Converting TestNG assertions to AssertJ assertions on files matching pattern : *Test.java
 
  1 - Replacing : assertEquals(0, myList.size()) ................. by : assertThat(myList).isEmpty()
  2 - Replacing : assertEquals(expectedSize, myList.size()) ...... by : assertThat(myList).hasSize(expectedSize)
@@ -140,22 +129,22 @@ convert-junit-assertions-to-assertj-on-osx.sh</code></pre>
 10 - Replacing : assertSame(expected, actual) ................... by : assertThat(actual).isSameAs(expected)
 11 - Replacing : assertNotSame(expected, actual) ................ by : assertThat(actual).isNotSameAs(expected)
 
-12 - Replacing JUnit static import by AssertJ ones, at this point you will probably need to :
+12 - Replacing TestNG static import by AssertJ ones, at this point you will probably need to :
 12 --- optimize imports with your IDE to remove unused imports
-12 --- add "import static org.assertj.core.api.Assertions.offset;" if you were using JUnit number assertions with delta</code></pre>
+12 --- add "import static org.assertj.core.api.Assertions.offset;" if you were using TestNG number assertions with delta</code></pre>
 
          <p>On windows you might have permission problems as sed creates temp files, if you got the following error, you just have to grant write permissions to current user for the folder where your test files live.</p>
 
-<pre><code class="diff" style="font-size:83%;">Converting JUnit assertions to AssertJ assertions on files matching pattern : *Test.java
+<pre><code class="diff" style="font-size:83%;">Converting TestNG assertions to AssertJ assertions on files matching pattern : *Test.java
 
  1 - Replacing : assertEquals(0, myList.size()) ................. by : assertThat(myList).isEmpty()
 sed: preserving permissions for `./sed005904': Permission denied
 sed: preserving permissions for `./sed004220': Permission denied</code></pre>
 
 
-         <h3 class="page-header"><span id="manual-conversion"></span>Converting your JUnit assertions to AssertJ with regexp</h3>
+         <h3 class="page-header"><span id="manual-conversion"></span>Converting your TestNG assertions to AssertJ with regexp</h3>
 
-         <p>Here's a list of find/replace based on regexp that allow to change JUnit assertion into AssertJ assertion (don't forget to check regexp mode in your editor replace window).</p>
+         <p>Here's a list of find/replace based on regexp that allow to change TestNG assertion into AssertJ assertion (don't forget to check regexp mode in your editor replace window).</p>
          <p>The order of find/replace is important, so that you can benefit of the most relevant AssertJ assertions. For example you should convert <span class="small-code">assertEquals(0, myList.size())</span> to <span class="small-code">assertThat(myList).isEmpty()</span> instead of
             <span class="small-code">assertThat(myList.size()).isEqualTo(0)</span>
          </p>
