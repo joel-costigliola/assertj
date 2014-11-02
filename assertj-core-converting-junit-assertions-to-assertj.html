@@ -128,21 +128,21 @@ convert-junit-assertions-to-assertj-on-osx.sh</code></pre>
 
 <pre><code class="diff" style="font-size:83%;">Converting JUnit assertions to AssertJ assertions on files matching pattern : *Test.java
 
- 1 - Replacing : assertEquals(0, myList.size()) ................. by : assertThat(myList).isEmpty()
- 2 - Replacing : assertEquals(expectedSize, myList.size()) ...... by : assertThat(myList).hasSize(expectedSize)
- 3 - Replacing : assertEquals(expectedDouble, actual, delta) .... by : assertThat(actual).isEqualTo(expectedDouble, offset(delta))
- 4 - Replacing : assertEquals(expected, actual) ................. by : assertThat(actual).isEqualTo(expected)
- 5 - Replacing : assertArrayEquals(expectedArray, actual) ....... by : assertThat(actual).isEqualTo(expectedArray)
- 6 - Replacing : assertNull(actual) ............................. by : assertThat(actual).isNull()
- 7 - Replacing : assertNotNull(actual) .......................... by : assertThat(actual).isNotNull()
- 8 - Replacing : assertTrue(logicalCondition) ................... by : assertThat(logicalCondition).isTrue()
- 9 - Replacing : assertFalse(logicalCondition) .................. by : assertThat(logicalCondition).isFalse()
-10 - Replacing : assertSame(expected, actual) ................... by : assertThat(actual).isSameAs(expected)
-11 - Replacing : assertNotSame(expected, actual) ................ by : assertThat(actual).isNotSameAs(expected)
+ 1 - Replacing : assertEquals(0, myList.size()) ............... by : assertThat(myList).isEmpty()
+ 2 - Replacing : assertEquals(expectedSize, myList.size()) .... by : assertThat(myList).hasSize(expectedSize)
+ 3 - Replacing : assertEquals(expectedDouble, actual, delta) .. by : assertThat(actual).isCloseTo(expectedDouble, within(delta))
+ 4 - Replacing : assertEquals(expected, actual) ............... by : assertThat(actual).isEqualTo(expected)
+ 5 - Replacing : assertArrayEquals(expectedArray, actual) ..... by : assertThat(actual).isEqualTo(expectedArray)
+ 6 - Replacing : assertNull(actual) ........................... by : assertThat(actual).isNull()
+ 7 - Replacing : assertNotNull(actual) ........................ by : assertThat(actual).isNotNull()
+ 8 - Replacing : assertTrue(logicalCondition) ................. by : assertThat(logicalCondition).isTrue()
+ 9 - Replacing : assertFalse(logicalCondition) ................ by : assertThat(logicalCondition).isFalse()
+10 - Replacing : assertSame(expected, actual) ................. by : assertThat(actual).isSameAs(expected)
+11 - Replacing : assertNotSame(expected, actual) .............. by : assertThat(actual).isNotSameAs(expected)
 
 12 - Replacing JUnit static import by AssertJ ones, at this point you will probably need to :
 12 --- optimize imports with your IDE to remove unused imports
-12 --- add "import static org.assertj.core.api.Assertions.offset;" if you were using JUnit number assertions with delta</code></pre>
+12 --- add "import static org.assertj.core.api.Assertions.within;" if you were using JUnit number assertions with delta</code></pre>
 
          <p>On windows you might have permission problems as sed creates temp files, if you got the following error, you just have to grant write permissions to current user for the folder where your test files live.</p>
 
