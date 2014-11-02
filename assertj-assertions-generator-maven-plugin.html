@@ -105,7 +105,7 @@
 <pre><code class="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.assertj&lt;/groupId&gt;
     &lt;artifactId&gt;assertj-assertions-generator-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.4.1&lt;/version&gt;
+    &lt;version&gt;1.5.0&lt;/version&gt;
     &lt;configuration&gt;
         &lt;packages&gt;
             &lt;param&gt;your.first.package&lt;/param&gt;
@@ -122,9 +122,9 @@
          <p>Execute the command :</p>
          <pre><code class="bash">mvn assertj:generate-assertions</code></pre>
 
-         <p>The assertions are generated in : <span class="small-code">target/generated-test-sources/assertj-assertions/</span></p>
+         <p>By default, assertions are generated in : <span class="small-code">target/generated-test-sources/assertj-assertions/</span></p>
 
-         <p>Example of plugin execution when executing <span class="small-code">maven install</span> command on <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project :</p>
+         <p>Execution example in <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project :</p>
 <pre><code class="bash">====================================
 AssertJ assertions generation report
 ====================================
@@ -163,16 +163,75 @@ Custom assertions files generated :
 - .../generated-test-sources/assertj-assertions/org/assertj/examples/data/service/GameServiceAssert.java
 - .../generated-test-sources/assertj-assertions/org/assertj/examples/data/service/TeamManagerAssert.java
 
+No custom assertions files generated for the following input classes as they were not found:
+- com.fake.UnknownClass1
+- com.fake.UnknownClass2
+
 Assertions entry point class has been generated in file:
 - .../generated-test-sources/assertj-assertions/org/assertj/examples/data/Assertions.java
 
 Soft Assertions entry point class has been generated in file:
 - .../generated-test-sources/assertj-assertions/org/assertj/examples/data/SoftAssertions.java
 
+JUnitSoftAssertions entry point class has been generated in file:
+- .../generated-test-sources/assertj-assertions/org/assertj/JUnitSoftAssertions.java
+
 BDD Assertions entry point class has been generated in file:
 - .../generated-test-sources/assertj-assertions/org/assertj/examples/data/BddAssertions.java</code></pre>
 
          <h3 class="page-header"><span id="configuration"></span>Plugin configuration</h3>
+
+         <p>Let's start with an example, the description of each configuration element is done afterwards :</p>
+
+<pre><code class="xml">&lt;plugin&gt;
+  &lt;groupId&gt;org.assertj&lt;/groupId&gt;
+  &lt;artifactId&gt;assertj-assertions-generator-maven-plugin&lt;/artifactId&gt;
+  &lt;version&gt;1.5.0&lt;/version&gt;
+  &lt;!-- generate assertions at every build --&gt;
+  &lt;executions&gt;
+    &lt;execution&gt;
+      &lt;goals&gt;
+        &lt;goal&gt;generate-assertions&lt;/goal&gt;
+      &lt;/goals&gt;
+    &lt;/execution&gt;
+  &lt;/executions&gt;
+  &lt;configuration&gt;
+    &lt;!-- list the package whose classes you want to generate assertions for --&gt;
+    &lt;packages&gt;
+      &lt;param&gt;org.assertj.examples.rpg&lt;/param&gt;
+      &lt;param&gt;org.assertj.examples.data&lt;/param&gt;
+      &lt;param&gt;com.google.common.net&lt;/param&gt;
+    &lt;/packages&gt;
+    &lt;!-- list the classes you want to generate assertions for --&gt;
+    &lt;classes&gt;
+      &lt;param&gt;java.nio.file.Path&lt;/param&gt;
+      &lt;param&gt;com.fake.UnknownClass&lt;/param&gt;
+    &lt;/classes&gt;
+    &lt;!-- wether generated assertions classes can be inherited with consistent assertion chaining --&gt;
+    &lt;hierarchical&gt;true&lt;/hierarchical&gt;
+    &lt;!-- where to generate assertions entry point classes --&gt;
+    &lt;entryPointClassPackage&gt;org.assertj&lt;/entryPointClassPackage&gt;
+    &lt;!-- restrict classes to generate assertions for with regex --&gt;
+    &lt;includes&gt; 
+      &lt;param&gt;org\.assertj\.examples\.rpg.*&lt;/param&gt; 
+    &lt;/includes&gt;
+    &lt;!-- excludes with regex classes from generation --&gt;
+    &lt;excludes&gt;
+      &lt;param&gt;.*google.*HostSpecifier&lt;/param&gt;
+      &lt;param&gt;.*google.*Headers&lt;/param&gt;
+      &lt;param&gt;.*google.*MediaType&lt;/param&gt;
+      &lt;param&gt;.*google.*Escaper.*&lt;/param&gt;
+      &lt;param&gt;.*Examples.*&lt;/param&gt;
+    &lt;/excludes&gt;
+    &lt;!-- base directory where to generate assertions --&gt;
+    &lt;targetDir&gt;src/test/generated-assertions&lt;/targetDir&gt;
+    &lt;!-- select which assertions entry point classes to generate --&gt;
+    &lt;generateAssertions&gt;true&lt;/generateAssertions&gt;
+    &lt;generateBddAssertions&gt;true&lt;/generateBddAssertions&gt;
+    &lt;generateSoftAssertions&gt;true&lt;/generateSoftAssertions&gt;
+    &lt;generateJUnitSoftAssertions&gt;true&lt;/generateJUnitSoftAssertions&gt;
+  &lt;/configuration&gt;
+&lt;/plugin&gt;</code></pre>          
 
          <h4><i class="fa fa-caret-right">&nbsp;</i>Specify packages and classes</h4>
 
@@ -183,7 +242,7 @@ BDD Assertions entry point class has been generated in file:
 
          <h4><i class="fa fa-caret-right">&nbsp;</i>Including and excluding classes from assertion generation</h4>
 
-         <p>Sometimes - not to say often - you won't want to generate assertions for all the classes of the specified packages. To avoid that, exclude classes using regular expressions. In the example below, we generate assertions for all classes in <span class="small-code">com.google.common.net</span> package except for classes finishing with <span class="small-code">HostSpecifier</span>, <span class="small-code">Headers</span> or containing <span class="small-code">Escaper</span> :</p>
+         <p>Sometimes - not to say often - you don't want to generate assertions for all the classes of the specified packages. To avoid that, exclude classes using regular expressions. In the example below, we generate assertions for all classes in <span class="small-code">com.google.common.net</span> <b>except</b> for classes finishing with <span class="small-code">HostSpecifier</span>, <span class="small-code">Headers</span> or containing <span class="small-code">Escaper</span> :</p>
 
 <pre><code class="xml">&lt;configuration&gt;
     &lt;packages&gt;
@@ -196,7 +255,7 @@ BDD Assertions entry point class has been generated in file:
     &lt;/packages&gt;
 &lt;/configuration&gt;</code></pre>
 
-         <p>It might be easier to filter the classes you want to generate assertions for within the specified packages, you can include them using regular expression. Only classes matching at least one of a the given regular expressions will have assertions generated for. In the example below we will only generate assertions for DTO or Model classes :</p>
+         <p>From the specified packages, it might be easier to <b>restrict</b> the classes you want to generate assertions for, you can by including them using regular expression. Only classes from the specified packages matching at least one of the given regular expressions will have assertions generated for. In the example below, assertions we will only be generated for DTO and Model classes :</p>
 
 <pre><code class="xml">&lt;configuration&gt;
     &lt;packages&gt;
@@ -209,7 +268,7 @@ BDD Assertions entry point class has been generated in file:
 &lt;/configuration&gt;</code></pre>
 
          <h4><i class="fa fa-caret-right">&nbsp;</i>Generated classes destination directory</h4>
-         <p>You can specify the destination directory for generated assertion files using <span class="small-code">targetDir</span> configuration element, e.g. :</p>
+         <p>You can specify the directory where assertion files are generated using <span class="small-code">targetDir</span> configuration element, e.g. :</p>
 <pre><code class="xml">&lt;configuration&gt;
     &lt;packages&gt;
         &lt;param&gt;your.first.package&lt;/param&gt;
@@ -218,9 +277,27 @@ BDD Assertions entry point class has been generated in file:
     &lt;targetDir&gt;src/test/java&lt;/targetDir&gt;
 &lt;/configuration&gt;</code></pre>
 
+         <h4><i class="fa fa-caret-right">&nbsp;</i>Selecting which assertion entry point classes to generate</h4>
+
+         <p>By defaul all assertions entry point classes are generated (unless <span class="small-code">JUnitSoftAssertions</span> if JUnit can not be found), you can select which entry point class to generate as shown below :</p>
+
+<pre><code class="xml">&lt;configuration&gt;
+        &lt;packages&gt;
+            &lt;param&gt;your.first.package&lt;/param&gt;
+            &lt;param&gt;your.second.package&lt;/param&gt;
+        &lt;/packages&gt;
+        &lt;!-- select entry point classes to generate --&gt;
+        &lt;generateAssertions&gt;false&lt;/generateAssertions&gt;
+        &lt;generateBddAssertions&gt;true&lt;/generateBddAssertions&gt;
+        &lt;generateSoftAssertions&gt;true&lt;/generateSoftAssertions&gt;
+        &lt;generateJUnitSoftAssertions&gt;true&lt;/generateJUnitSoftAssertions&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;</code></pre>
+        <p></p>
+
          <h4><i class="fa fa-caret-right">&nbsp;</i>Assertions entry point classes directory</h4>
 
-         <p>Assertions entry point classes are generated in a package determined automatically, you can change this package with <span class="small-code">entryPointClassPackage</span> configuration property : 
+         <p>Assertions entry point classes are generated in a package determined programatically, you can change it with <span class="small-code">entryPointClassPackage</span> configuration property : 
 <pre><code class="xml">&lt;configuration&gt;
     &lt;entryPointClassPackage&gt;my.entry.point.pakkage&lt;/entryPointClassPackage&gt;
 &lt;/configuration&gt;</code></pre></p>
@@ -239,7 +316,7 @@ BDD Assertions entry point class has been generated in file:
 <pre><code class="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.assertj&lt;/groupId&gt;
     &lt;artifactId&gt;assertj-assertions-generator-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.4.1&lt;/version&gt;
+    &lt;version&gt;1.5.0&lt;/version&gt;
     &lt;executions&gt;
         &lt;execution&gt;
             &lt;goals&gt;
@@ -260,6 +337,16 @@ BDD Assertions entry point class has been generated in file:
 
          <p>To disable assertions generation, set <span class="small-code">assertj.skip</span> to <span class="small-code">true</span>:
          <pre><code class="bash">mvn assertj:generate-assertions -Dassertj.skip=true</code></pre></p>
+
+         <h3 class="page-header"><span id="news"></span><span id="1.5.0"></span>Assertions generator maven plugin 1.5.0 release</h3>
+         <p>Release date : 2014-11-02</p>
+
+         <div class="release-section-category">Release notes:</div>
+         <ul>
+            <li>Uses <a href="assertj-assertions-generator.html#1.5.0">assertj-assertions-generator 1.5.0</a> which add <span class="small-code">JUnitSoftAssertions</span> generation.</li>            
+            <li>Allow to select which assertions entry point classes are generated among <span class="small-code">Assertions</span>, <span class="small-code">BddAssertions</span>,<span class="small-code">SoftAssertions</span> and <span class="small-code">JUnitSoftAssertions</span>.</li>            
+            <li>Assertions generation report list the input classes that were not found.</li>            
+         </ul>
 
          <h3 class="page-header"><span id="news"></span><span id="1.4.1"></span>Assertions generator maven plugin 1.4.1 release</h3>
          <p>Release date : 2014-08-31</p>
