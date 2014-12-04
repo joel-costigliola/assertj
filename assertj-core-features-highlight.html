@@ -152,7 +152,7 @@ assertThat(extractProperty("id", Long.class).from(fellowshipOfTheRing)).contains
          It allows you to test the results of method call on elements instead of testing the elements themselves, it's especially usefull for classes that does not conform to Java Bean's getter specification (e.g <span class="small-code">toString()</span> or <span class="small-code">String status()</span> instead of <span class="small-code">String getStatus()</span>).
       </p>
       <p>Let's take an example to make things clearer :</p>
-<pre><code class="java">// Build a array of WesterosHouse, a WesterosHouse has a method: public String sayTheWords()
+<pre><code class="java">// WesterosHouse class has a method: public String sayTheWords()
 List&lt;WesterosHouse&gt; greatHouses = new ArrayList&lt;WesterosHouse&gt;();
 greatHouses.add(new WesterosHouse("Stark", "Winter is Comming"));
 greatHouses.add(new WesterosHouse("Lannister", "Hear Me Roar!"));
@@ -214,7 +214,7 @@ public void host_dinner_party_where_nobody_dies() {
      3) [Candlestick] expected:<'[pristine]'> but was:<'[bent]'>
      4) [Professor] expected:<'[well kempt]'> but was:<'[bloodied and disheveled]'></code></pre>
 
-      <p>In assertj-core 1.6.0, a JUnit rule will provided to take care of triggering automatically the assertions global verification :</p>
+      <p>AssertJ also provides a JUnit rule that take care of calling automatically soft assertions global verification :</p>
 
   <pre><code class="java">@Rule
 public final JUnitSoftAssertions softly = new JUnitSoftAssertions();
@@ -231,7 +231,7 @@ public void host_dinner_party_where_nobody_dies() {
    softly.assertThat(mansion.candlestick()).as("Candlestick").isEqualTo("pristine");
    softly.assertThat(mansion.colonel()).as("Colonel").isEqualTo("well kempt");
    softly.assertThat(mansion.professor()).as("Professor").isEqualTo("well kempt");
-   // No call to softly.assertAll(), assertions global verification is done by JUnitSoftAssertions rule
+   // No need to call softly.assertAll(), it is automatically done by JUnitSoftAssertions rule
 }</code></pre>
 
       <p>This works only for JUnit, in TestNG however it does not seem possible to make the glocal verification in an @AfterMethod method because if it throws an exception, TestNG skips all subsequent tests.</p>
