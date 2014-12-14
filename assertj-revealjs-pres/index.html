@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>AssertJ - Fluent assertions for Java</title>
+
+		<meta name="description" content="A framework for easily writing assertion in Java">
+		<meta name="author" content="Joel Costigliola">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting 
+		<link rel="stylesheet" href="lib/css/railscasts.css">
+		-->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>AssertJ</h1>
+					<h3>Fluent assertions for Java</h3>
+					<p>
+						<a href="http://assertj.org">http://assertj.org</a>
+					</p>
+				</section>
+
+				<section>
+					<h2>Easy to use</h2>
+					<ul>
+						<li>Unique entry point for all assertions : <i>assertThat</i></li>
+						<li>IDE friendly : discover assertions using IDE code completion</li>
+						<li>Look at javadoc for code examples</li>
+						<li>Useful error message </li>
+						<li>Possibility to chain assertions </li>
+					</ul>
+				</section>
+				
+				<section>
+					<h2>assertj-core</h2>
+					<h3>Lot of assertions for JDK types:</h3>
+					<ul>
+						<li>string</li>
+						<li>collection / array / map</li>
+						<li>date</li>
+						<li>file</li>
+						<li>numbers</li>
+						<li>exceptions</li>
+						<li>...</li>
+					</ul>
+
+				</section>
+
+				<section>
+					<h2>Example : code to test</h2>
+					<pre><code>
+ public class TolkienCharacter {
+   // boilerplate getter omitted
+   public int age;
+   private String name;
+   // Race is an Enum with a name property
+   private Race race;
+ }
+
+ // Mr Frodo ! 
+ TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
+
+ // ... and his friends from the Fellowship of the Ring
+ List&lt;TolkienCharacter&gt; fellowshipOfTheRing = newArrayList(
+   frodo, sam, merry, pippin, gandalf, legolas, gimli, aragorn, boromir);
+					</code></pre>
+				</section>
+
+
+				<section>
+					<h2>Basic assertions example</h2>
+					<pre><code class="java">
+ // unique entry point to get all assertThat methods
+ import static org.assertj.core.api.Assertions.*;
+
+ // common assertions
+ assertThat(frodo.getName()).isEqualTo("Frodo");
+
+ // you can chain assertions
+ assertThat(frodo).isNotEqualTo(sauron)
+                  .isIn(fellowshipOfTheRing);
+
+ // String specific assertions
+ assertThat(frodo.getName()).startsWith("Fro")
+                            .endsWith("do")
+                            .isEqualToIgnoringCase("frodo");
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Collection and map assertions</h2>
+					<pre><code class="java"> // collection assertions
+ assertThat(fellowshipOfTheRing).hasSize(9)
+                                .contains(frodo, sam)
+                                .doesNotContain(sauron);
+
+ // extract fellowshipOfTheRing characters name and check them
+ assertThat(fellowshipOfTheRing).extracting("name")
+                                .contains("Boromir", "Gandalf", "Frodo")
+                                .doesNotContain("Sauron", "Elrond");
+
+ // ringBearers : Map&lt;Ring, TolkienCharacter&gt;
+ // initialized with the elves rings and the one ring bearers.
+ assertThat(ringBearers).hasSize(4)
+                        .contains(entry(valya, elrond), entry(narya, gandalf))
+                        .doesNotContainEntry(oneRing, aragorn)
+                        .containsKeys(nenya, narya, vilya, oneRing);
+					</code></pre>
+					<p>More examples available in <a href="https://github.com/joel-costigliola/assertj-examples/tree/master/assertions-examples/src/test/java/org/assertj/examples">assertj-examples</a> project.</p>
+				</section>
+
+				<section>
+					<h2>Custom assertions</h2>
+					<p>Write assertions specific to YOUR classes</p>
+					<pre><code class="java"> // instead of :
+ assertThat(frodo.getName()).isEqualto("Frodo");
+ assertThat(frodo.age).isEqualto(33);
+ assertThat(frodo.getRace()).isEqualto(Race.HOBBIT);
+
+ // you write :
+ assertThat(frodo).hasName("Frodo")
+                  .hasAge(33)
+                  .hasRace(Race.HOBBIT);
+  </code></pre>
+					<p>Lazy ? Just generate your custom assertions !</p>
+					<p>(using the assertions generator maven plugin)</p>
+				</section>
+
+				<section>
+					<section id="fragments">
+						<h2>But there is more ! </h2>
+						<ul>
+							<li>Compare objects with different comparison strategy</li>
+							<li>BDD assertions : use <i>then</i> instead of <i>assertThat</i></li>
+							<li>Soft assertions : record all assertion errors instead of stopping at the first one</li>
+							<li>Condition : Hamcrest matcher like</li>
+							<li>assertj-joda-time : assertions for <i>DateTime</i> and <i>LocalDateTime</i></li>
+							<li>assertj-guava : assertions for <i>Multimap</i>, <i>Range</i>, <i>Optional</i> ...</li>
+							<li>And soon a version of <b>assertj-core</b> with Java 8 love</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<h1>THE END</h1>
+					<h3>(Contact me for a live demo)</h3>
+					<p>
+						<img src="dancing-star-wars.gif">
+					</p>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: 'linear' ||  Reveal.getQueryHash().transition , // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
