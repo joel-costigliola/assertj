@@ -43,10 +43,9 @@
 			<div class="slides">
 				<section>
 					<h1>AssertJ</h1>
-					<h3>Fluent assertions for Java</h3>
-					<p>
-						<a href="http://assertj.org">http://assertj.org</a>
-					</p>
+					<h2>Fluent assertions for Java</h2>
+					<p>website : <a href="http://assertj.org">http://assertj.org</a></p>
+					<p>github : <a href="https://github.com/joel-costigliola/assertj-core">https://github.com/joel-costigliola/assertj-core</a></p>
 				</section>
 
 				<section>
@@ -54,16 +53,16 @@
 					<ul>
 						<li>Unique entry point for all assertions : <i>assertThat</i></li>
 						<li>IDE friendly : discover assertions using IDE code completion</li>
+						<li><a href="http://joel-costigliola.github.io/assertj/core/api/org/assertj/core/api/AbstractIterableAssert.html#containsExactly%28T...%29">Javadoc</a> with code examples.</li>
+						<li>Useful error messages</li>
 						<li>Possibility to chain assertions </li>
-						<li>Code examples in <a href="http://joel-costigliola.github.io/assertj/core/api/org/assertj/core/api/AbstractIterableAssert.html#containsExactly%28T...%29">javadoc</a> and <a href="https://github.com/joel-costigliola/assertj-examples/tree/master/assertions-examples/src/test/java/org/assertj/examples">assertj-examples</a> project.</li>
-						<li>Useful error message </li>
-						<li>One minute <a href="http://joel-costigliola.github.io/assertj/assertj-core-quick-start.html">starting guide</a></li>
+						<li><a href="http://joel-costigliola.github.io/assertj/assertj-core-quick-start.html">Quick start guide</a></li>
 					</ul>
 				</section>
 				
 				<section>
 					<h2>assertj-core</h2>
-					<h3>Lot of assertions for JDK types:</h3>
+					<h3>Assertions for JDK types:</h3>
 					<ul>
 						<li>string</li>
 						<li>collection / array / map</li>
@@ -77,14 +76,13 @@
 				</section>
 
 				<section>
-					<h2>Example : code to test</h2>
-					<pre><code>
+					<h2>Let's test this code :</h2>
+					<pre><code class="java" contenteditable>
  public class TolkienCharacter {
    // boilerplate getter omitted
-   public int age;
+   private int age;
    private String name;
-   // Race is an Enum with a name property
-   private Race race;
+   private Race race; // Enum
  }
 
  // Mr Frodo ! 
@@ -92,25 +90,22 @@
 
  // ... and his friends from the Fellowship of the Ring
  List&lt;TolkienCharacter&gt; fellowshipOfTheRing = newArrayList(
-   frodo, sam, merry, pippin, gandalf, legolas, gimli, aragorn, boromir);
+                                frodo, sam, merry, pippin, gandalf, 
+                                legolas, gimli, aragorn, boromir);
 					</code></pre>
 				</section>
 
 
 				<section>
 					<h2>Basic assertions example</h2>
-					<pre><code class="java">
+					<pre><code class="java" contenteditable>
  // unique entry point to get all assertThat methods
- import static org.assertj.core.api.Assertions.*;
-
- // common assertions
- assertThat(frodo.getName()).isEqualTo("Frodo");
+ import static org.assertj.core.api.Assertions.assertThat;
 
  // you can chain assertions
- assertThat(frodo).isNotEqualTo(sauron)
-                  .isIn(fellowshipOfTheRing);
+ assertThat(frodo).isNotEqualTo(sauron);
 
- // String specific assertions
+ // Chained assertions (String specific) 
  assertThat(frodo.getName()).startsWith("Fro")
                             .endsWith("do")
                             .isEqualToIgnoringCase("frodo");
@@ -118,65 +113,62 @@
 				</section>
 
 				<section>
-					<h2>Collection and map assertions</h2>
-					<pre><code class="java"> // collection assertions
- assertThat(fellowshipOfTheRing).hasSize(9)
+					<h2>Collection assertions</h2>
+					<pre><code class="java" contenteditable> 
+ // collection assertions
+ assertThat(fellowshipOfTheRing).isNotEmpty()
+                                .hasSize(9)
                                 .contains(frodo, sam)
                                 .doesNotContain(sauron);
 
  // extract fellowshipOfTheRing characters name and check them
  assertThat(fellowshipOfTheRing).extracting("name")
-                                .contains("Boromir", "Gandalf", "Frodo")
+                                .contains("Gandalf", "Frodo")
                                 .doesNotContain("Sauron", "Elrond");
-
- // ringBearers : Map&lt;Ring, TolkienCharacter&gt;
- // initialized with the elves rings and the one ring bearers.
- assertThat(ringBearers).hasSize(4)
-                        .contains(entry(valya, elrond), entry(narya, gandalf))
-                        .doesNotContainEntry(oneRing, aragorn)
-                        .containsKeys(nenya, narya, vilya, oneRing);
-					</code></pre>
-					<p>More examples available in <a href="https://github.com/joel-costigliola/assertj-examples/tree/master/assertions-examples/src/test/java/org/assertj/examples">assertj-examples</a> project.</p>
+ 					</code></pre>
+					<p>Full assertions showcase in <a href="https://github.com/joel-costigliola/assertj-examples/tree/master/assertions-examples/src/test/java/org/assertj/examples">assertj-examples</a> project.</p>
 				</section>
 
 				<section>
 					<h2>Custom assertions</h2>
-					<p>Write assertions specific to YOUR classes</p>
-					<pre><code class="java"> // instead of :
+					<p>Write assertions specific to YOUR classes !</p>
+					<pre><code class="java" contenteditable> 
+ // instead of ...
  assertThat(frodo.getName()).isEqualto("Frodo");
- assertThat(frodo.age).isEqualto(33);
+ assertThat(frodo.getAge()).isEqualto(33);
  assertThat(frodo.getRace()).isEqualto(Race.HOBBIT);
 
- // you write :
+ // ... you write :
  assertThat(frodo).hasName("Frodo")
                   .hasAge(33)
                   .hasRace(Race.HOBBIT);
   </code></pre>
-					<p>Lazy ? Just generate your custom assertions !</p>
-					<p>(using the <a href="http://joel-costigliola.github.io/assertj/assertj-assertions-generator.html">assertions generator maven plugin</a>)</p>
+					<p>Lazy ? Just generate your custom assertions with the</p>
+					<p><a href="http://joel-costigliola.github.io/assertj/assertj-assertions-generator.html">assertions generator maven plugin</a></p>
 				</section>
 
 				<section>
 					<section id="fragments">
 						<h2>But there is more ! </h2>
 						<ul>
-							<li>Compare objects with different comparison strategy</li>
-							<li>BDD assertions : use <i>then</i> instead of <i>assertThat</i></li>
+							<li>BDD assertions : use <i>then</i> as an alias of <i>assertThat</i></li>
 							<li>Soft assertions : record all assertion errors instead of stopping at the first one</li>
+							<li>Compare objects using a given comparison strategy</li>
 							<li>Condition : Hamcrest matcher like</li>
+							<li>assertj-core with Java 8 love version planned soon</li>
 							<li>assertj-joda-time : assertions for <i>DateTime</i> and <i>LocalDateTime</i></li>
 							<li>assertj-guava : assertions for <i>Multimap</i>, <i>Range</i>, <i>Optional</i> ...</li>
-							<li>And soon a version of assertj-core with Java 8 love</li>
+							<li>Lot of minor features ...</li>
 						</ul>
 					</section>
 				</section>
 
 				<section>
 					<h1>THE END</h1>
-					<h3>(Contact me for a live demo)</h3>
 					<p>
 						<img src="dancing-star-wars.gif">
 					</p>
+					<h3>(Contact me for a live demo)</h3>
 				</section>
 
 			</div>
@@ -195,6 +187,9 @@
 				progress: true,
 				history: true,
 				center: true,
+
+				width: 1160,
+                height: 750,
 
 				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
 				transition: 'linear' ||  Reveal.getQueryHash().transition , // default/cube/page/concave/zoom/linear/fade/none
