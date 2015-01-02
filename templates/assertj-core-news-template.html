@@ -16,6 +16,7 @@ $menu
       <h1 class="page-header">AssertJ Core latest news</h1>
       <ul>
          <li><a href="#assertj-core-next">AssertJ core next release</a></li>
+         <li><a href="#assertj-core-1.7.1">AssertJ core 1.7.1 release</a></li>
          <li><a href="#assertj-core-1.7.0">AssertJ core 1.7.0 release</a></li>
          <li><a href="#assertj-core-1.6.1">AssertJ core 1.6.1 release</a></li>
          <li><a href="#assertj-core-1.6.0">AssertJ core 1.6.0 release</a></li>
@@ -37,6 +38,17 @@ $menu
    </ul>
 </p>
 
+<h3 class="page-header"><span id="assertj-core-1.7.1"></span>AssertJ core 1.7.1 release : New and noteworthy</h3>
+
+  <p>Release date : 2015-01-02<br>
+  <p>This is a minor release to support assertions for <span class="small-code">Iterable</span> using bounded wildcard thanks to <span class="contributor">Johannes Schneider</span>.</p>
+  <p>Example :</p>
+   <pre><code class="java">// note we use a bounded wildcard list
+List&lt;? extends BasketBallPlayer&gt; bulls = newArrayList(rose, noah);
+  
+// did not compile in 1.7.0 but works in 1.7.1+
+assertThat(bulls).contains(rose, noah);</code></pre>
+
 <h3 class="page-header"><span id="assertj-core-1.7.0"></span>AssertJ core 1.7.0 release : New and noteworthy</h3>
 
 <p>Release date : 2014-10-04<br>
@@ -44,7 +56,7 @@ $menu
    <span class="contributor">Marcin Mikosik</span> for their contributions.</p>
 
       <h4 class="page-header"> Release notes</h4>
-      <div class="release-section-category">New features:</div>
+      <div class="release-section-category">New features :</div>
       <ul>
          <li><a href="assertj-core-news.html#assertj-core-1.7.0-type-safe-extracting">Type-safe extracting methods</a> for <span class="small-code">IterableAssert</span> and <span class="small-code">ObjectArrayAssert</span>. <span class="contributor">(Mateusz Haligowski)</span></li>
          <li>New Map assertion : <a href="assertj-core-news.html#assertj-core-1.7.0-containsOnlyKeys"><span class="small-code">containsOnlyKeys</span></a>. <span class="contributor">(Chris Arnott)</span></li>
@@ -57,7 +69,7 @@ $menu
          <li>New Iterable/Array assertions : <a href="assertj-core-news.html#assertj-core-1.7.0-elementOfType"><span class="small-code">hasAtLeastOneElementOfType(Class)/hasOnlyElementsOfType(Class)</span></a>.</li>
          <li>Assertions for <a href="assertj-core-news.html#assertj-core-1.7.0-comparable"><span class="small-code">Comparable</span></a>. <span class="contributor">(dmwvr)</span></li>
       </ul>
-      <div class="release-section-category">Improvements:</div>
+      <div class="release-section-category">Improvements :</div>
       <ul>
          <li><span class="small-code">assertThat(Iterator)</span> does not consume iterator when it is not needed. <span class="contributor">(Marcin Mikosik)</span></li>
          <li>Text content comparison differences report starts counting line count at 1 instead of 0. <span class="contributor">(Alexandre Balhier)</span></li>
@@ -65,7 +77,7 @@ $menu
          <li><span class="small-code">assertThat</span> and <span class="small-code">then</span> now return abstract assertion types to ease extending AssertJ core assertions. <span class="contributor">(Adam Ruka)</span></li>
          <li>Various Javadoc API improvements.</li>
       </ul>
-      <div class="release-section-category">Bugs:</div>
+      <div class="release-section-category">Bugs :</div>
       <ul>
          <li>Extracting now returns null value in extracted tuple if nested field/property is null.</li>
          <li>Fix nested field value extraction in FieldSupport.</li>
@@ -99,7 +111,7 @@ assertThat(fellowshipOfTheRing).extracting(ageAndRace()).contains(tuple(33, HOBB
       return new Tuple(input.age, input.getRace());
    }
 
-   public static Extractor<TolkienCharacter, Tuple> ageAndRace() {
+   public static Extractor&lt;TolkienCharacter, Tuple&gt; ageAndRace() {
       return new TolkienCharacterAgeAndRaceExtractor();
    }   
 }
