@@ -33,8 +33,8 @@ $menu
 <p>
    <ul>
       <li>Java 7 migration</li>
-      <li>XML assertions using XPath.</li>
-      <li>Recursive field by field comparison</li>
+      <li>Path assertions.</li>
+      <li>...</li>
    </ul>
 </p>
 
@@ -54,6 +54,9 @@ assertThat(bulls).contains(rose, noah);</code></pre>
 <p>Release date : 2014-10-04<br>
    <p>Thanks to <span class="contributor">Mateusz Haligowski</span>, <span class="contributor">Chris Arnott</span>, <span class="contributor">Andrew Gaul</span>, <span class="contributor">dmwvr</span>, <span class="contributor">Alexandre Balhier</span>, <span class="contributor">Adam Ruka</span>, <span class="contributor">Mariusz Smykula</span> and
    <span class="contributor">Marcin Mikosik</span> for their contributions.</p>
+
+      <h4 class="page-header"> Breaking change</h4>
+      <p>An unexpected breaking change has been discovered after 1.7.1 release, <a href="http://joel-costigliola.github.io/assertj/core/api/org/assertj/core/api/AbstractComparableAssert.html#method_summary">Comparable assertions</a> prevent access to <a href="http://joel-costigliola.github.io/assertj/core/api/org/assertj/core/api/AbstractObjectAssert.html#method_summary">Object assertions</a> like <span class="small-code">isEqualToComparingFieldByField</span>, this <a href="https://github.com/joel-costigliola/assertj-core/issues/322">issue</a> will be fixed in 2.0.</p>
 
       <h4 class="page-header"> Release notes</h4>
       <div class="release-section-category">New features :</div>
