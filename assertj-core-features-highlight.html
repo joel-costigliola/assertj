@@ -381,6 +381,17 @@ public FluentExpectedException thrown = FluentExpectedException.none();
 assertThat(fellowshipOfTheRing).hasSize(9);
 thrown.exception(IndexOutOfBoundsException.class).hasMessage("Index: 9, Size: 9")</code></pre>
 
+      <p>Testing assertions could be easily done with Java 8 Lambdas. There is a small library named <a href="https://github.com/stefanbirkner/fishbowl">Fishbowl</a> that helps you to expose the exception so that it can be checked with <span class="small-code">assertThat</span>:</p>
+
+<pre><code class="java">import static org.assertj.core.api.Assertions.assertThat;
+import static com.github.stefanbirkner.fishbowl.Fishbowl.exceptionThrownBy;
+// ... code omitted for brevety
+
+assertThat(fellowshipOfTheRing).hasSize(9);
+
+Throwable exception = exceptionThrownBy(() -> fellowshipOfTheRing.get(9));
+assertThat(exception).hasMessage("Index: 9, Size: 9");</code></pre>
+
       <h3 class="page-header"><span id="custom-comparison-strategy"></span><i class="fa fa-star"></i> Using a custom comparison strategy in assertions</h3>
 
       <p>Sometime you want to compare objects with strategy not relying on <span class="small-code">equals</span> method, this is possible in AssertJ thanks to two methods :
