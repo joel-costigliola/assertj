@@ -56,7 +56,8 @@ Range&lt;Integer&gt; range = Range.closed(10, 12);
 assertThat(range).isNotEmpty()
                  .contains(10, 11, 12)
                  .hasClosedLowerBound()
-                 .hasUpperEndpointEqualTo(10);
+                 .hasLowerEndpointEqualTo(10)
+                 .hasUpperEndpointEqualTo(12);
  
 // Table assertions
 Table&lt;Integer, String, String&gt; bestMovies = HashBasedTable.create();
