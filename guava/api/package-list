@@ -1,3 +1,4 @@
 org.assertj.guava.api
+org.assertj.guava.data
 org.assertj.guava.error
 org.assertj.guava.util

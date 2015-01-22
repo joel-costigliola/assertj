@@ -76,7 +76,7 @@
       <div class="col-lg-10 col-md-10 col-sm-10 text-left">
          <h1 class="page-header">AssertJ Guava assertions</h1>
 
-         <p>AssertJ assertions for <a href="http://code.google.com/p/guava-libraries/">Guava</a> provides assertions for Guava types like <span class="small-code">Multimap</span>, <span class="small-code">Table</span>, <span class="small-code">Optional</span> or <span class="small-code">ByteSource</span>.<br>
+         <p>AssertJ assertions for <a href="http://code.google.com/p/guava-libraries/">Guava</a> provides assertions for Guava types like <span class="small-code">Multimap</span>, <span class="small-code">Table</span>, <span class="small-code">Optional</span>, <span class="small-code">Range</span> or <span class="small-code">ByteSource</span>.<br>
             If you need additional assertions, just fill a ticket in <a href="https://github.com/joel-costigliola/assertj-guava/issues?labels=&milestone=&page=1&state=open">AssertJ Guava issue tracker</a>.</p>
          <p>AssertJ Guava is hosted on github : <a href="https://github.com/joel-costigliola/assertj-guava">https://github.com/joel-costigliola/assertj-guava</a>.</p>
 
@@ -89,11 +89,11 @@
 <pre><code class="xml">&lt;dependency&gt;
   &lt;groupId&gt;org.assertj&lt;/groupId&gt;
   &lt;artifactId&gt;assertj-guava&lt;/artifactId&gt;
-  &lt;version&gt;1.3.0&lt;/version&gt;
+  &lt;version&gt;1.3.1&lt;/version&gt;
   &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 
-         <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-guava|1.3.0|bundle">assertj dependency declaration</a> for your tool.</p>
+         <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-guava|1.3.1|bundle">assertj dependency declaration</a> for your tool.</p>
 
          <h4 class="page-header">2 - Statically import <span class="small-code">org.assertj.guava.api.Assertions.assertThat</span> ...</h4>
          <p>... and use your preferred IDE code completion after <span class="small-code">assertThat.</span></p>
@@ -144,7 +144,12 @@ assertThat(optional).isPresent().contains("Test");</code></pre>
 
          <p>Note that you can find more working examples in <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/guava">guava package</a> of <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project.</p>
 
-         <h3 class="page-header"><span id="1.3.0"/></span><span id="latest-release"/></span><span id="1.3.0"/></span>Guava assertions 1.3.0 release</h3>
+         <h3 class="page-header"><span id="1.3.1"/></span><span id="latest-release"/></span>Guava assertions 1.3.1 release</h3>
+         <p>Release date : 2015-01-21</p>
+
+         <p>Bugfix release fixing <span class="small-code">hasUpperEndpointEqual</span> assertion error message (thanks <span class="contributor">László Balázs-Csíki</span> for reporting it).</p>
+         
+         <h3 class="page-header"><span id="1.3.0"/></span>Guava assertions 1.3.0 release</h3>
          <p>Release date : 2014-10-27</p>
 
          <p>Thanks to <span class="contributor">Simon Barbey</span> and <span class="contributor">Jochen Kupperschmidt</span> for their contributions to this version.</p>
