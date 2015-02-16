@@ -111,7 +111,7 @@
 
          <div class="row">
             <div class="col-md-6 portfolio-item">
-               <h3 class="quickstart">TestNG</h3>
+               <h4 class="quickstart">TestNG</h4>
                   <pre><code class="xml">&lt;dependency&gt;
   &lt;groupId&gt;org.assertj&lt;/groupId&gt;
   &lt;artifactId&gt;assertj-swing-testng&lt;/artifactId&gt;
@@ -121,7 +121,7 @@
             </div>
 
             <div class="col-md-6 portfolio-item">
-               <h3 class="quickstart">JUnit</h3>
+               <h4 class="quickstart">JUnit</h4>
                   <pre><code class="xml">&lt;dependency&gt;
   &lt;groupId&gt;org.assertj&lt;/groupId&gt;
   &lt;artifactId&gt;assertj-swing-junit-4.5&lt;/artifactId&gt;
@@ -135,6 +135,20 @@
             <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-swing|1.0.0|bundle">this page</a>
             to find the relevant AssertJ Swing dependency declaration for your tool.
          </p>
+
+         <h4>JIDE support (optional)</h4>
+
+         <p>For adding the JIDE dependent features you have to add <code>assertj-swing-jide</code> additionally to the
+            libraries for your test framework. Note that this step is only required for users of JIDE, else
+            <strong>it is optional</strong>!
+         </p>
+
+         <pre><code class="xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.assertj&lt;/groupId&gt;
+  &lt;artifactId&gt;assertj-swing-jide&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+  &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
 
 
          <h3 class="page-header">Write your first GUI test</h3>
