@@ -182,26 +182,21 @@ assertThat(contentOf(xFile)).startsWith("The Truth").contains("Is Out").endsWith
       <p>Note that it is meant to be used with small files since the whole content is loaded in memory.</p>
 
 
-      <h3 class="page-header"><span id="ide-automatic-static-import"></span><i class="fa fa-star"></i> IDE configuration to directly get assertThat with code completion</h3>
+      <h3 class="page-header"><span id="ide-automatic-static-import"></span><i class="fa fa-star"></i> IDE configuration to get assertThat in code completion</h3>
 
       <p>We want here to start typing <span class="small-code">asser</span> and let code completion suggest you <span class="small-code">assertThat</span> from AssertJ (and not the one from Hamcrest !).</p>
 
       <p class="list-section">Eclipse configuration</p>
       <ol>
          <li>Go to : preferences > Java > Editor > Content assist > Favorites > New Type</li>
-         <li>Enter : org.assertj.core.api.Assertions</li>
-         <li>You should see : org.assertj.core.api.Assertions.* in a the list.</li>
+         <li>Enter : <span class="small-code">org.assertj.core.api.Assertions</span></li>
+         <li>You should see : <span class="small-code">org.assertj.core.api.Assertions.*</span> in a the list.</li>
       </ol>
 
-      <p class="list-section">IntelliJ Idea, I don't know how to get Eclise like behavior but these steps helps :</p>
+      <p class="list-section">IntelliJ Idea</p>
       <ol>
-         <li>Go to : File > Settings > Editor > Auto Import</li>
-         <li>In Java, enable 'Add unambiguous imports on the fly'</li>
-         <li>In excludes, add 'org.junit.Assert.assertThat'</li>
-         <li>Go to : File -> Settings -> Code Style -> Imports. table.</li>
-         <li>Under Packages to Use Import with '*', add org.assertj.core.api.Assertions</li>
+         <li>No special configuration, just start typing <span class="small-code">assertThat</span> and then invoke completion (Ctrl-Space) twice.</li>
       </ol>
-      <p>If someones know how to configure IntelliJ Idea to get Eclipse behavior for static import, please let me know.</p>
 
       <h3 class="page-header"><span id="filters"></span><i class="fa fa-star"></i> Filtering a group of objects before making assertions</h3>
 
