@@ -61,7 +61,6 @@
                <h1>AssertJ</h1>
                <p>Fluent assertions for java</p>
             </div>
-            <h3>AssertJ assertions sample :</h3>
          </div>
       </div>
       <div class="col-lg-12">
@@ -72,7 +71,6 @@ import static org.assertj.core.api.Assertions.*;
 assertThat(frodo.getName()).isEqualTo("Frodo");
 assertThat(frodo).isNotEqualTo(sauron)
                  .isIn(fellowshipOfTheRing);
-assertThat(sauron).isNotIn(fellowshipOfTheRing);
 
 // String specific assertions
 assertThat(frodo.getName()).startsWith("Fro")
@@ -91,10 +89,12 @@ assertThat(fellowshipOfTheRing).extracting("name").contains("Boromir", "Gandalf"
 // map specific assertions, ringBearers initialized with the elves rings and the one ring bearers.
 assertThat(ringBearers).hasSize(4)
                        .contains(entry(oneRing, frodo), entry(nenya, galadriel))
-                       .containsEntry(narya, gandalf)
                        .doesNotContainEntry(oneRing, aragorn);
 
 // and many more assertions : dates, file, numbers, exceptions ...</code></pre>
+      </div>
+      <div class="col-lg-12 text-center">
+        <h3>Want to see more features ? Jump to the <a href="assertj-core-features-highlight.html">highlights section</a>.</h3>
       </div>
    </div>
 </div>
