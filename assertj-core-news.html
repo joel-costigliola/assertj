@@ -66,7 +66,8 @@
                <li><a href="assertj-core-features-highlight.html">Features highlight</a></li>
                <li><a href="assertj-core-conditions.html">Using conditions</a></li>
                <li><a href="assertj-core-custom-assertions.html">Custom assertions</a></li>
-               <li><a href="http://joel-costigliola.github.io/assertj/core/api/index.html" target="_blank">Javadoc</a></li>
+               <li><a href="http://joel-costigliola.github.io/assertj/core/api/index.html" target="_blank">Javadoc (2.x)</a></li>
+               <li><a href="http://joel-costigliola.github.io/assertj/core-8/api/index.html" target="_blank">Javadoc (3.x)</a></li>
                <li><a href="assertj-core.html#mailing-list">Mailing list</a></li>
                <li><a href="assertj-core.html#code">Code & issues <i class="fa fa-github"></i></a></li>
                <li><a href="assertj-core.html#contributing">Contributing</a></li>
@@ -86,6 +87,7 @@
       <h1 class="page-header">AssertJ Core latest news</h1>
       <ul>
          <li><a href="#assertj-core-next">AssertJ core next release</a></li>
+         <li><a href="#assertj-core-3.0.0">AssertJ core 3.0.0 for Java 8 release</a></li>
          <li><a href="#assertj-core-2.0.0">AssertJ core 2.0.0 release</a></li>
          <li><a href="#assertj-core-1.7.1">AssertJ core 1.7.1 release</a></li>
          <li><a href="#assertj-core-1.7.0">AssertJ core 1.7.0 release</a></li>
@@ -108,6 +110,214 @@
       <li>...</li>
    </ul>
 </p>
+
+<h3 class="page-header"><span id="assertj-core-3.0.0"></span>AssertJ core 3.0.0 for Java 8 release : New and noteworthy</h3>
+
+   <p>Release date : 2015-04-06<br>
+   <p>This is the first release that provides assertions for Java 8.</p>
+
+   <p>Thanks to <span class="contributor">Brice Dutheil</span>, <span class="contributor">Jean-Christophe Gay</span>, <span class="contributor">zdanek</span> and <span class="contributor">Marcin Zajączkowski</span> for their contributions.</p>
+
+   <h4 class="page-header"> Release notes</h4>
+   <div class="release-section-category"> Breaking changes</div>
+   <ul>
+      <li>AssertJ Core 3.0 relies on Java 8.</li>
+   </ul>
+   <div class="release-section-category">New features :</div>
+   <ul>
+      <li><a href="assertj-core-news.html#assertj-core-3.0.0-new-date-assertions">Java 8 <span class="small-code">Date/Time</span></a> assertions. <span class="contributor">(Jean-Christophe Gay, Marcin Zajączkowski)</span></li>
+      <li>Java 8 friendly <a href="assertj-core-news.html#assertj-core-3.0.0-thrown-by">exceptions/throwables testing</a> <span class="small-code">assertThatThrownBy</span> and <span class="small-code">catchThrowable</span>. <span class="contributor">(bric3)</span></li>
+      <li><a href="assertj-core-news.html#assertj-core-3.0.0-optional-assertions"><span class="small-code">Optional</span></a> assertions. <span class="contributor">(Jean-Christophe Gay)</span></li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-3.0.0-matches-assertions"><span class="small-code">matches</span></a> assertion taking a <span class="small-code">Predicate</span> parameter. </li>
+
+      <li>Extends <a href="assertj-core-news.html#assertj-core-3.0.0-primitive-approximation-assertions">primitive approximation</a> assertions to <span class="small-code">int</span>, <span class="small-code">long</span>, <span class="small-code">short</span> and <span class="small-code">byte</span>. </li>
+   </ul>
+   <div class="release-section-category">Improvements :</div>
+   <ul>
+      <li><span class="small-code">Condition</span> can be <a href="assertj-core-news.html#assertj-core-3.0.0-condition-predicate-support"> defined with <span class="small-code">Predicate</span></a>.</li>
+      <li>Add <span class="small-code">WithAssertions</span> interface as an alternative to Assertions entry point.</li>
+      <li>Add more code examples in Javadoc API.</li>
+   </ul>
+
+   <!-- detailed notes -->
+
+   <h4 class="page-header"><span id="assertj-core-3.0.0-new-date-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Java 8 <span class="small-code">Date/Time</span></a> assertions.</h4>
+
+   <p>AssertJ provides assertions for <span class="small-code">ZonedDateTime</span>, <span class="small-code">LocalDateTime</span>, <span class="small-code">LocalDate</span> and <span class="small-code">LocalTime</span>. Most of the assertions come with a <span class="small-code">String</span> based parameter equivalent that will be parsed into the expected date/time type, the examples shown below use this possiblity for brevity sake's.</p>
+   <p>Note that for <span class="small-code">ZonedDateTime</span> assertions, comparison is perfomed in actual's time zone.</p>
+   <p>Comparing date/time ignoring some fields only checks that the non-ignored fields are equal. The ignored fields are those below (or equal) to the given precision, for example ignoring minutes means that minutes, seconds and nanoseconds will be ignored. It is also important to understand that the time difference does not count, it turns out that, as in the example below, two date/time can have only 1 ns difference with different minutes, seconds and nanoseconds fields.</p>
+
+   <pre><code class="java">LocalDateTime localDateTimeA = LocalDateTime.of(2000, 1, 1, 23, 50, 00, 000);
+LocalDateTime localDateTimeB = LocalDateTime.of(2000, 1, 1, 23, 49, 59, 999999999);
+// assertion fails as minute fields differ even if time difference is only 1ns 
+assertThat(localDateTimeA).isEqualToIgnoringSeconds(localDateTimeB);</code></pre>
+
+   <p><span class="small-code">LocalDate</span> examples :</p>
+   <pre><code class="java">LocalDate firstOfJanuary2000 = LocalDate.parse("2000-01-01");
+
+// AssertJ converts String parameters to LocalDate to ease writing expected LocalDate
+assertThat(firstOfJanuary2000).isEqualTo("2000-01-01");
+
+assertThat(firstOfJanuary2000).isAfter("1999-12-31")
+                              .isAfterOrEqualTo("1999-12-31")
+                              .isAfterOrEqualTo("2000-01-01");
+
+assertThat(firstOfJanuary2000).isBefore("2000-01-02")
+                              .isBeforeOrEqualTo("2000-01-02")
+                              .isBeforeOrEqualTo("2000-01-01");
+</code></pre>
+  
+   <p><span class="small-code">LocalTime</span> examples :</p>
+   <pre><code class="java">LocalTime oneAm = LocalTime.parse("01:00:00");
+
+// AssertJ converts String parameters to LocalTime to ease writing expected LocalTime
+assertThat(oneAm).isEqualTo("01:00:00");
+
+assertThat(oneAm).isAfter("00:00:00")
+                 .isAfterOrEqualTo("00:00:00")
+                 .isAfterOrEqualTo("01:00:00");
+
+assertThat(oneAm).isBefore("02:00:00")
+                 .isBeforeOrEqualTo("02:00:00")
+                 .isBeforeOrEqualTo("01:00:00");
+</code></pre>
+  
+   <p><span class="small-code">LocalDateTime</span> examples :</p>
+   <pre><code class="java">LocalDateTime firstOfJanuary2000 = LocalDateTime.parse("2000-01-01T00:00:00");
+
+// AssertJ converts String parameters to LocalDateTime to ease writing expected LocalDateTime
+assertThat(firstOfJanuary2000).isEqualTo("2000-01-01T00:00:00");
+
+assertThat(firstOfJanuary2000).isAfter("1999-12-31T23:59:59")
+                              .isAfterOrEqualTo("1999-12-31T23:59:59")
+                              .isAfterOrEqualTo("2000-01-01T00:00:00");
+
+assertThat(firstOfJanuary2000).isBefore("2000-01-01T00:00:01")
+                              .isBeforeOrEqualTo("2000-01-01T00:00:01")
+                              .isBeforeOrEqualTo("2000-01-01T00:00:00");
+
+// successful assertions ignoring ...
+// ... nanoseconds
+LocalDateTime localDateTime1 = LocalDateTime.of(2000, 1, 1, 0, 0, 1, 0);
+LocalDateTime localDateTime2 = LocalDateTime.of(2000, 1, 1, 0, 0, 1, 456);
+assertThat(localDateTime1).isEqualToIgnoringNanos(localDateTime2);
+// ... seconds
+localDateTime1 = LocalDateTime.of(2000, 1, 1, 23, 50, 0, 0);
+localDateTime2 = LocalDateTime.of(2000, 1, 1, 23, 50, 10, 456);
+assertThat(localDateTime1).isEqualToIgnoringSeconds(localDateTime2);
+// ... minutes
+localDateTime1 = LocalDateTime.of(2000, 1, 1, 23, 50, 0, 0);
+localDateTime2 = LocalDateTime.of(2000, 1, 1, 23, 00, 2, 7);
+assertThat(localDateTime1).isEqualToIgnoringMinutes(localDateTime2);
+// ... hours
+localDateTime1 = LocalDateTime.of(2000, 1, 1, 23, 59, 59, 999);
+localDateTime2 = LocalDateTime.of(2000, 1, 1, 00, 00, 00, 000);
+assertThat(localDateTime1).isEqualToIgnoringHours(localDateTime2);
+</code></pre>
+  
+   <p><span class="small-code">ZonedDateTime</span> examples :</p>
+   <pre><code class="java">ZonedDateTime firstOfJanuary2000InUTC = ZonedDateTime.parse("2000-01-01T00:00:00Z");
+
+assertThat(firstOfJanuary2000InUTC).isEqualTo(ZonedDateTime.parse("2000-01-01T00:00:00Z"));
+// same assertion but AssertJ takes care of expected String to ZonedDateTime conversion
+assertThat(firstOfJanuary2000InUTC).isEqualTo("2000-01-01T00:00:00Z");
+// example showing that ZonedDateTime are compared in actual's time zone
+assertThat(firstOfJanuary2000InUTC).isEqualTo("2000-01-01T01:00:00+01:00");
+
+assertThat(firstOfJanuary2000InUTC).isAfter("1999-12-31T23:59:59Z");
+assertThat(firstOfJanuary2000InUTC).isAfter("2000-01-01T00:30:00+01:00"); // 1999-12-31T23:30:00Z
+assertThat(firstOfJanuary2000InUTC).isAfterOrEqualTo("1999-12-31T23:59:59Z")
+                                   .isAfterOrEqualTo("2000-01-01T00:00:00Z");
+
+assertThat(firstOfJanuary2000InUTC).isBefore("2000-01-01T00:00:01Z")
+                                   .isBeforeOrEqualTo("2000-01-01T00:00:01Z")
+                                   .isBeforeOrEqualTo("2000-01-01T00:00:00Z");
+
+// comparison with specific precision
+ZonedDateTime zonedDateTime1 = ZonedDateTime.of(2000, 1, 1, 0,  0,  0,  0,   ZoneOffset.UTC);
+ZonedDateTime zonedDateTime2 = ZonedDateTime.of(2000, 1, 1, 23, 59, 59, 999, ZoneOffset.UTC);
+ZonedDateTime zonedDateTime3 = ZonedDateTime.of(2000, 1, 1, 0,  59, 59, 999, ZoneOffset.UTC);
+ZonedDateTime zonedDateTime4 = ZonedDateTime.of(2000, 1, 1, 0,  0,  59, 999, ZoneOffset.UTC);
+ZonedDateTime zonedDateTime5 = ZonedDateTime.of(2000, 1, 1, 0,  0,  0,  999, ZoneOffset.UTC);
+assertThat(zonedDateTime1).isEqualToIgnoringHours(zonedDateTime2);
+assertThat(zonedDateTime1).isEqualToIgnoringMinutes(zonedDateTime3);
+assertThat(zonedDateTime1).isEqualToIgnoringSeconds(zonedDateTime4);
+assertThat(zonedDateTime1).isEqualToIgnoringNanos(zonedDateTime5);
+</code></pre>
+
+
+   <h4 class="page-header"><span id="assertj-core-3.0.0-thrown-by" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Java 8 friendly exceptions/throwables testing</h4>
+
+   <p>Use <span class="small-code">assertThatThrownBy(ThrowingCallable)</span> to capture and then assert on a <span class="small-code">Throwable</span>, <span class="small-code">ThrowingCallable</span> being a functinonal interface it can be expressed by a lambda.</p>
+   <p>Example :</p>
+
+   <pre><code class="java">@Test
+public void testException() {
+   assertThatThrownBy(() -> { throw new Exception("boom!") }).isInstanceOf(Exception.class)
+                                                             .hasMessageContaining("boom");
+}</code></pre>
+
+   <p>BDD aficionados can separate <i>when</i> and <i>then</i> steps by using <span class="small-code">catchThrowable(ThrowingCallable)</span> to capture the throwable and then perform assertions.</p>
+   <p>Example :</p>
+
+   <pre><code class="java">@Test
+public void testException() {
+   // given some preconditions
+
+   // when
+   Throwable thrown = catchThrowable(() -> { throw new Exception("boom!") });
+
+   // then
+   assertThat(thrown).isInstanceOf(Exception.class)
+                     .hasMessageContaining("boom");
+}</code></pre>
+
+  <h4 class="page-header"><span id="assertj-core-3.0.0-optional-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> <span class="small-code">Optional</span></a> assertions</h4>
+
+   <p>Assertions for <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html"><span class="small-code">Optional</span></a> have been added.</p>
+   <p>Examples :</p>
+
+   <pre><code class="java">// optional with value
+Optional&lt;String&gt; optional = Optional.of("Test");
+assertThat(optional).isPresent()
+                    .contains("Test");
+// empty optional
+Optional&lt;Object&gt; emptyOptional = Optional.empty();
+assertThat(emptyOptional).isEmpty();</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-3.0.0-matches-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">matches</span> assertion with <span class="small-code">Predicate</span> parameter</h4>
+
+   <p><span class="small-code">matches</span> assertion will succeed if the given <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html"><span class="small-code">Predicate</span></a> passes. It is available for all objects.</p>
+   <p>Example :</p>
+
+   <pre><code class="java">TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
+// actual refers to frodo 
+assertThat(frodo).matches(actual -> actual.age > 30 && actual.getRace() == HOBBIT);</code></pre>
+
+   
+   <h4 class="page-header"><span id="assertj-core-3.0.0-primitive-approximation-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Extends primitive approximation assertions to <span class="small-code">int</span>, <span class="small-code">long</span>, <span class="small-code">short</span> and <span class="small-code">byte</span></h4>
+
+   <p>It was already possible to compare <span class="small-code">float</span>, <span class="small-code">double</span> and  <span class="small-code">BigDecimal</span> with a margin error, it's now possible to do the same thing with <span class="small-code">int</span>, <span class="small-code">long</span>, <span class="small-code">short</span> and <span class="small-code">byte</span>.</p>
+   <p>Examples :</p>
+
+   <pre><code class="java">// import static org.assertj.core.api.Assertions.within;
+assertThat(30).isCloseTo(40, within(10));
+assertThat(10l).isCloseTo(8l, within(2l));
+assertThat((short)5).isCloseTo((short)7, within((short)3));
+assertThat((byte)5).isCloseTo((byte)7, within((byte)3));</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-3.0.0-condition-predicate-support" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> <span class="small-code">Condition</span> can be defined with <span class="small-code">Predicate</span></h4>
+
+   <p>It is now easier to build a <span class="small-code">Condition</span>, one just has to provide a predicate and a description (instead of having to extends <span class="small-code">Condition</span>). You can specify the description using <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#format-java.lang.String-java.lang.Object...-"><span class="small-code">String.format</span></a> syntax.</p>
+   <p>Example :</p>
+
+   <pre><code class="java">// build Condition with a Predicate
+Condition&lt;String&gt; fairyTale = new Condition&lt;String&gt;(s -> s.startsWith("Once upon a time"), 
+                                                    "a %s tale", "fairy");
+String littleRedCap = "Once upon a time there was a dear little girl ...";
+assertThat(littleRedCap).is(fairyTale);
+</code></pre>
+
 
 <h3 class="page-header"><span id="assertj-core-2.0.0"></span>AssertJ core 2.0.0 release : New and noteworthy</h3>
 
@@ -256,7 +466,7 @@ public void path_assertions() throws Exception {
 
    <h4 class="page-header"><span id="assertj-core-2.0.0-thrown-by" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Ease testing code raising exceptions/throwables</h4>
 
-   <p>Use <span class="small-code">assertThatThrownBy(ThrowingCallable)</span> to capture and then assert on a Throwable.</p>
+   <p>Use <span class="small-code">assertThatThrownBy(ThrowingCallable)</span> to capture and then assert on a <span class="small-code">Throwable</span>.</p>
    <p>Java 7 example :</p>
 
    <pre><code class="java">assertThatThrownBy(new ThrowingCallable()

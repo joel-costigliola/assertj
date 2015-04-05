@@ -66,7 +66,8 @@
                <li><a href="assertj-core-features-highlight.html">Features highlight</a></li>
                <li><a href="assertj-core-conditions.html">Using conditions</a></li>
                <li><a href="assertj-core-custom-assertions.html">Custom assertions</a></li>
-               <li><a href="http://joel-costigliola.github.io/assertj/core/api/index.html" target="_blank">Javadoc</a></li>
+               <li><a href="http://joel-costigliola.github.io/assertj/core/api/index.html" target="_blank">Javadoc (2.x)</a></li>
+               <li><a href="http://joel-costigliola.github.io/assertj/core-8/api/index.html" target="_blank">Javadoc (3.x)</a></li>
                <li><a href="assertj-core.html#mailing-list">Mailing list</a></li>
                <li><a href="assertj-core.html#code">Code & issues <i class="fa fa-github"></i></a></li>
                <li><a href="assertj-core.html#contributing">Contributing</a></li>
@@ -100,6 +101,7 @@
                   <pre><code class="xml">&lt;dependency&gt;
   &lt;groupId&gt;org.assertj&lt;/groupId&gt;
   &lt;artifactId&gt;assertj-core&lt;/artifactId&gt;
+  &lt;!-- use 3.0.0 for Java 8 projects --&gt;
   &lt;version&gt;2.0.0&lt;/version&gt;
   &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
@@ -109,6 +111,8 @@
                <h3 class="quickstart">Gradle</h3>
                <p>For Gradle users (using Maven Central Repository)</p>
                <pre><code class="java">testCompile 'org.assertj:assertj-core:2.0.0'</code></pre>
+               <p>Or version 3.0.0 for Java 8 projects</p>
+               <pre><code class="java">testCompile 'org.assertj:assertj-core:3.0.0'</code></pre>
             </div>
             <div class="col-md-12">
                <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-core|2.0.0|bundle">assertj dependency declaration</a> for your tool.</p>
