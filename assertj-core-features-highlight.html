@@ -355,7 +355,9 @@ assertThat(filter(players).being(potentialMvp).get()).containsOnly(rose, james);
 
       <h3 class="page-header"><span id="exception-assertion"></span><i class="fa fa-star"></i> Exception assertions best practices</h3>
 
-      <p>The goal here is to assert that an exception has been thrown and that exception is the one expected..</p>
+      <p>How to assert that an exception has been thrown and that exception is the one expected ?</p>
+
+      <p class="list-section">With Java 7:</p>
       <ol>
          <li>Put the code to should throw in a try-catch.</li>
          <li>Call <span class="small-code">fail</span> method immediately after the code that should throw the exception, so that if it is not thrown, the test fails.</li>
@@ -395,13 +397,31 @@ try {
   assertThat(e).hasMessage("Index: 9, Size: 9");
 }</code></pre>
 
-      <p>Testing assertions could be much more elegant, we are thinking of another approach based on JUnit rule, that woud be like :</p>
+   <p class="list-section">With Java 8:</p>
 
-<pre><code class="java">@Rule
-public FluentExpectedException thrown = FluentExpectedException.none();
-...
-assertThat(fellowshipOfTheRing).hasSize(9);
-thrown.exception(IndexOutOfBoundsException.class).hasMessage("Index: 9, Size: 9")</code></pre>
+   <p>Testing assertions are much more elegant with Java 8. Use <span class="small-code">assertThatThrownBy(ThrowingCallable)</span> to capture and then assert on a <span class="small-code">Throwable</span>, <span class="small-code">ThrowingCallable</span> being a functinonal interface it can be expressed by a lambda.</p>
+   <p>Example :</p>
+
+   <pre><code class="java">@Test
+public void testException() {
+   assertThatThrownBy(() -> { throw new Exception("boom!") }).isInstanceOf(Exception.class)
+                                                             .hasMessageContaining("boom");
+}</code></pre>
+
+   <p>BDD aficionados can separate <i>when</i> and <i>then</i> steps by using <span class="small-code">catchThrowable(ThrowingCallable)</span> to capture the throwable and then perform assertions.</p>
+   <p>Example :</p>
+
+   <pre><code class="java">@Test
+public void testException() {
+   // given some preconditions
+
+   // when
+   Throwable thrown = catchThrowable(() -> { throw new Exception("boom!") });
+
+   // then
+   assertThat(thrown).isInstanceOf(Exception.class)
+                     .hasMessageContaining("boom");
+}</code></pre>
 
       <h3 class="page-header"><span id="custom-comparison-strategy"></span><i class="fa fa-star"></i> Using a custom comparison strategy in assertions</h3>
 
