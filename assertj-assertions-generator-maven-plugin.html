@@ -94,6 +94,7 @@
 <pre><code class="xml">&lt;dependency&gt;
     &lt;groupId&gt;org.assertj&lt;/groupId&gt;
     &lt;artifactId&gt;assertj-core&lt;/artifactId&gt;
+    &lt;!-- use version 1.7.0 or higher --&gt;
     &lt;version&gt;1.7.0&lt;/version&gt;
     &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
@@ -105,7 +106,7 @@
 <pre><code class="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.assertj&lt;/groupId&gt;
     &lt;artifactId&gt;assertj-assertions-generator-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.5.0&lt;/version&gt;
+    &lt;version&gt;1.6.0&lt;/version&gt;
     &lt;configuration&gt;
         &lt;packages&gt;
             &lt;param&gt;your.first.package&lt;/param&gt;
@@ -186,7 +187,7 @@ BDD Assertions entry point class has been generated in file:
 <pre><code class="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.assertj&lt;/groupId&gt;
   &lt;artifactId&gt;assertj-assertions-generator-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.5.0&lt;/version&gt;
+  &lt;version&gt;1.6.0&lt;/version&gt;
   &lt;!-- generate assertions at every build --&gt;
   &lt;executions&gt;
     &lt;execution&gt;
@@ -316,7 +317,7 @@ BDD Assertions entry point class has been generated in file:
 <pre><code class="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.assertj&lt;/groupId&gt;
     &lt;artifactId&gt;assertj-assertions-generator-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.5.0&lt;/version&gt;
+    &lt;version&gt;1.6.0&lt;/version&gt;
     &lt;executions&gt;
         &lt;execution&gt;
             &lt;goals&gt;
@@ -338,12 +339,20 @@ BDD Assertions entry point class has been generated in file:
          <p>To disable assertions generation, set <span class="small-code">assertj.skip</span> to <span class="small-code">true</span>:
          <pre><code class="bash">mvn assertj:generate-assertions -Dassertj.skip=true</code></pre></p>
 
+         <h3 class="page-header"><span id="news"></span><span id="1.6.0"></span>Assertions generator maven plugin 1.6.0 release</h3>
+         <p>Release date : 2015-04-11</p>
+
+         <div class="release-section-category">Release notes:</div>
+         <ul>
+            <li>Uses <a href="assertj-assertions-generator.html#1.6.0">assertj-assertions-generator 1.6.0</a>.</li>            
+         </ul>
+
          <h3 class="page-header"><span id="news"></span><span id="1.5.0"></span>Assertions generator maven plugin 1.5.0 release</h3>
          <p>Release date : 2014-11-02</p>
 
          <div class="release-section-category">Release notes:</div>
          <ul>
-            <li>Uses <a href="assertj-assertions-generator.html#1.5.0">assertj-assertions-generator 1.5.0</a> which add <span class="small-code">JUnitSoftAssertions</span> generation.</li>            
+            <li>Uses <a href="assertj-assertions-generator.html#1.5.0">assertj-assertions-generator 1.5.0</a> which adds <span class="small-code">JUnitSoftAssertions</span> generation.</li>            
             <li>Allow to select which assertions entry point classes are generated among <span class="small-code">Assertions</span>, <span class="small-code">BddAssertions</span>,<span class="small-code">SoftAssertions</span> and <span class="small-code">JUnitSoftAssertions</span>.</li>            
             <li>Assertions generation report list the input classes that were not found.</li>            
          </ul>
