@@ -496,7 +496,7 @@ public void testException() {
    Throwable thrown = catchThrowable(new ThrowingCallable()
    
       @Override
-      public Void call() throws Exception {
+      public void call() throws Exception {
          throw new Exception("boom!");
       }
      
