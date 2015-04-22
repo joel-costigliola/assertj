@@ -120,7 +120,6 @@
                                 .hasSize(9)
                                 .contains(frodo, sam)
                                 .doesNotContain(sauron);
-
  					</code></pre>
 					<p>Full assertions showcase in <a href="https://github.com/joel-costigliola/assertj-examples/tree/master/assertions-examples/src/test/java/org/assertj/examples">assertj-examples</a> project.</p>
 				</section>
@@ -129,7 +128,7 @@
 					<h2>Collection assertions : extracting feature</h2>
 					<p>Useful to check properties/fields of collection elements</p>
 					<pre><code class="java" contenteditable> 
- // extract fellowshipOfTheRing characters name property and check them
+ // extract the names of fellowshipOfTheRing characters and check them
  assertThat(fellowshipOfTheRing).extracting("name")
                                 .contains("Gandalf", "Frodo")
                                 .doesNotContain("Sauron", "Elrond");
@@ -138,7 +137,9 @@
  assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name")
                                 .contains(tuple("Boromir", 37, "Man"),
                                           tuple("Sam", 38, "Hobbit"),
-                                          tuple("Legolas", 1000, "Elf")); 					</code></pre>
+                                          tuple("Legolas", 1000, "Elf")); 
+
+</code></pre>
 					<p>Full assertions showcase in <a href="https://github.com/joel-costigliola/assertj-examples/tree/master/assertions-examples/src/test/java/org/assertj/examples">assertj-examples</a> project.</p>
 				</section>
 
@@ -232,7 +233,7 @@ assertThat(fellowshipOfTheRing).usingElementComparator(raceComparator)
 				<section>
 					<h2>Using Condition</h2>
 					<p>Conditions are similar to Hamcrest matchers</p>
-					<pre><code class="java" contenteditable> // implements matches method 
+					<pre><code class="java" contenteditable> 
  Condition&lt;String&gt; jedi = new Condition&lt;String&gt;("jedi") {
     Set&lt;String&gt; jedis = newLinkedHashSet("Luke", "Yoda", "Obiwan");
     @Override
@@ -250,6 +251,7 @@ assertThat(fellowshipOfTheRing).usingElementComparator(raceComparator)
  // sith is another Condition
  assertThat("Solo").is(allOf(not(jedi), not(sith)));
  assertThat("Solo").isNot(anyOf(jedi, sith));
+
 </code></pre>
 
 				</section>
