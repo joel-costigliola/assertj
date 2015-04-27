@@ -88,8 +88,14 @@
 
          <p>AssertJ core is a Java library that provides a fluent interface for writing assertions. Its main goal is to
             improve test code readability and make maintenance of tests easier.<br>
-            AssertJ core provides assertions for JDK standard types, it requires Java SE 7.0 since 2.0 version (java 6 for previous versions) or later and can be used with either
-            JUnit or TestNG.
+            AssertJ core provides assertions for JDK standard types can be used with either JUnit or TestNG.
+            <p>AssertJ major versions depend on different Java versions :</p>
+            <ul>
+               <li>AssertJ 1.x requires Java 6 or higher</li>
+               <li>AssertJ 2.x requires Java 7 or higher</li>
+               <li>AssertJ 3.x requires Java 8 or higher</li>
+            </ul>
+
          </p>
 
          <p>AssertJ core <a href="https://github.com/joel-costigliola/assertj-core">code</a> and
@@ -106,7 +112,7 @@
             convert JUnit assertions to AssertJ, we plan to write a maven plugin to do automate this conversion task.
          </p>
 
-         <p>Migrating from Fest ? check our migration guide and don't worry, migration is not hard:
+         <p>Migrating from Fest ? check our migration guide and don't worry, migration is not hard:</p>
          <ul>
             <li><a href="assertj-core-migrating-from-fest.html">Migrating from Fest 2.x</a></li>
             <li><a href="assertj-core-migrating-from-fest.html#fest-1.4">Migrating from Fest 1.4</a></li>
