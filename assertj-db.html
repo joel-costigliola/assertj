@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="description" content="AssertJ site">
+   <meta name="author" content="Joel Costigliola">
+
+   <title>AssertJ / Fluent assertions for java</title>
+
+   <!-- CSS -->
+   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata|Source+Code+Pro|Open+Sans|Ubuntu|Varela+Round|Karla">
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+   <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+   <script src="highlight/highlight.pack.js"></script>
+   <link rel="stylesheet" href="highlight/styles/railscasts.css">
+   <script>hljs.initHighlightingOnLoad();</script>
+   <link href="css/assertj.min.css" rel="stylesheet">
+   <link rel="shortcut icon" href="favicon.png" />
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+   <div class="container">
+      <div class="navbar-header">
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+         </button>
+         <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
+         <a class="navbar-brand" href="index.html">AssertJ</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+         <ul class="nav navbar-nav navbar-right">
+            <li><a href="assertj-core-quick-start.html">Quick start</a></li>
+            <li><a href="assertj-news.html">News</a></li>
+            <li><a href="assertj-core.html">Core</a></li>
+            <li><a href="assertj-assertions-generator.html">Assertions generator</a></li>
+            <li><a href="assertj-guava.html">Guava</a></li>
+            <li><a href="assertj-joda-time.html">Joda-Time</a></li>
+            <li><a href="assertj-neo4j.html">Neo4j</a></li>
+            <li><a href="assertj-swing.html">Swing</a></li>
+            <li><a href="assertj-db.html">DataBase</a></li>
+            <li><a href="assertj-help.html">Help</a></li>
+         </ul>
+      </div>
+   </div>
+</nav>
+
+
+<div class="container">
+   <div class="row">
+
+            <div class="col-md-2 assertj-sidebar-menu">
+         <div class="bs-sidebar hidden-print affix-top" role="complementary">
+            <ul class="bs-sidenav nav ">
+               <li class="sidenav-header"></li>
+               <li><a href="assertj-db.html">Overview</a></li>
+               <li><a href="assertj-db.html#quickstart">Quick start</a></li>
+               <li><a href="assertj-db.html#latest-release">Releases</a></li>
+               <li><a href="assertj-db-concepts.html">Concepts</a></li>
+               <li><a href="assertj-db-features-highlight.html">Features highlight</a></li>
+               <li><a href="db/api/index.html" target="_blank">Javadoc</a></li>
+               <li><a href="assertj-db.html#mailing-list">Mailing list</a></li>
+               <li><a href="assertj-db.html#code">Code & issues <i class="fa fa-github"></i></a></li>
+               <li><a href="assertj-db.html#contributing">Contributing</a></li>
+            </ul>
+         </div>
+      </div>
+
+
+      <div class="col-lg-10 col-md-10 col-sm-10 text-left">
+         <h1 class="page-header">AssertJ-DB assertions</h1>
+<img src="images/assertj-db_icon.png" height="60%" width="60%" />
+         <p>AssertJ-DB provides assertions to test data in a database.
+         It requires Java SE 7.0 or later and can be used with either JUnit or TestNG.
+         </p>
+
+         <p>If you need additional assertions, just fill a ticket in <a href="https://github.com/joel-costigliola/assertj-db/issues?labels=&milestone=&page=1&state=open">AssertJ-DB issue tracker</a>.</p>
+
+         <p>AssertJ-DB is hosted on github : <a href="https://github.com/joel-costigliola/assertj-db">https://github.com/joel-costigliola/assertj-db</a>.<br/>
+         </p>
+         <p>
+Big thanks to &nbsp;<span class="contributor">Joel Costigliola</span>&nbsp; 
+for his welcome, for his help and to have accepted to associate this project with a great project like AssertJ.
+         </p>
+
+         <i>R&eacute;gis Pouiller (AssertJ-DB creator)</i>
+
+         <h3 class="page-header"><span id="quickstart"></span>DataBase assertions quickstart guide</h3>
+
+         <p>To quickly start using DataBase assertions, follow the steps below.</p>
+
+         <h4 class="page-header">1 - Add assertj-db dependency to your project pom.xml</h4>
+
+<pre><code class="xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.assertj&lt;/groupId&gt;
+  &lt;artifactId&gt;assertj-db&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+  &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+
+         <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-db|1.0.0|bundle">assertj dependency declaration</a> for your tool.</p>
+
+         <h4 class="page-header">2 - Statically import <span class="small-code">org.assertj.db.api.Assertions.assertThat</span></h4>
+         <p>... and use your preferred IDE code completion after <span class="small-code">assertThat.</span></p>
+
+         <p>Example from <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/db/TableAssertionExamples.java">TableAssertionExamples.java</a> :</p>
+
+<pre><code class="java">import static org.assertj.db.api.Assertions.assertThat;
+
+import org.assertj.db.type.DateValue;
+import org.assertj.db.type.Table;
+
+Table table = new Table(dataSource, "members");
+
+// On the values of a column by using the name of the column
+assertThat(table).column("name")
+    .value().isEqualTo("Hewson")
+    .value().isEqualTo("Evans")
+    .value().isEqualTo("Clayton")
+    .value().isEqualTo("Mullen");
+
+// On the values of a row by using the index of the row
+assertThat(table).row(1)
+    .value().isEqualTo(2)
+    .value().isEqualTo("Evans")
+    .value().isEqualTo("David Howell")
+    .value().isEqualTo("The Edge")
+    .value().isEqualTo(DateValue.of(1961, 8, 8))
+    .value().isEqualTo(1.77);</code></pre>
+
+
+         <h3 class="page-header">3 - Want to see more ?</h3>
+         <p>
+         See some of <a href="assertj-db-features-highlight.html">AssertJ-DB noteworthy features</a> to get the maximum of it !
+         </p>
+         <p>
+         You can learn more by looking at <a href="db/api/index.html">AssertJ-DB javadoc</a>.
+         </p>
+         <p>
+         Another way is to go see <a href="https://github.com/joel-costigliola/assertj-examples/tree/master/assertions-examples/src/test/java/org/assertj/examples/db">assertj-db-examples tests</a>, it covers what is possible with AssertJ Assertions with running code, you can clone it and run its tests !
+         </p>
+
+         <h3 class="page-header"><span id="latest-release"/></span>Database assertions 1.0.0 release</h3>
+         <p>Release date : 2015-xx-xx</p>
+
+         <div class="release-section-category">Available assertions:</div>
+         <ul>
+            <li>xxx</li>
+         </ul>
+
+         <h3 class="page-header"><span id="mailing-list"/></span>Mailing list</h3>
+
+         <p>If you have any questions, please use
+            <a href="https://groups.google.com/forum/?fromgroups=#!forum/assertj">AssertJ google group</a>.</p>
+
+         <h3 class="page-header"><span id="code"/></span>Code and issue tracker</h3>
+
+         <p>AssertJ-DB is hosted on github : <a href="https://github.com/joel-costigliola/assertj-db">https://github.com/joel-costigliola/assertj-db</a>.</p>
+
+         <p>Please report bugs or missing features in <a href="https://github.com/joel-costigliola/assertj-db/issues?labels=&milestone=&page=1&state=open">AssertJ-DB issue tracker</a>.</p>
+
+         <h3 class="page-header"><span id="contributing"/></span>Contributing</h3>
+
+         <p>Thanks for your interest ! Please check our <a href="https://github.com/joel-costigliola/assertj-db/blob/master/CONTRIBUTING.md#contributing">contributor's guidelines</a>.</p>
+
+      </div>
+   </div>
+</div>
+
+
+<br>
+<!--
+<div class="container">
+   <footer>
+      <div class="row">
+         <div class="col-lg-12">
+            <p>AssertJ - Licensed under the Apache License, Version 2.0.</p>
+         </div>
+      </div>
+   </footer>
+</div>
+-->
+
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/modern-business.js"></script>
+<script src="js/assertj.js"></script>
+
+</body>
+</html>
