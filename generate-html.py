@@ -26,6 +26,7 @@ template_data_map = {
     'assertj_news_side_menu': content_of('assertj-news-side-menu.html'),
     'assertj_guava_side_menu': content_of('assertj-guava-side-menu.html'),
     'assertj_neo4j_side_menu': content_of('assertj-neo4j-side-menu.html'),
+    'assertj_db_side_menu': content_of('assertj-db-side-menu.html'),
     'assertj_jodatime_side_menu': content_of('assertj-joda-time-side-menu.html'),
     'assertj_assertions_generator_side_menu': content_of('assertj-assertions-generator-side-menu.html')
 }

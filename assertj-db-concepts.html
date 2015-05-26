@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="description" content="AssertJ site">
+   <meta name="author" content="Joel Costigliola">
+
+   <title>AssertJ / Fluent assertions for java</title>
+
+   <!-- CSS -->
+   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata|Source+Code+Pro|Open+Sans|Ubuntu|Varela+Round|Karla">
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+   <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+   <script src="highlight/highlight.pack.js"></script>
+   <link rel="stylesheet" href="highlight/styles/railscasts.css">
+   <script>hljs.initHighlightingOnLoad();</script>
+   <link href="css/assertj.min.css" rel="stylesheet">
+   <link rel="shortcut icon" href="favicon.png" />
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+   <div class="container">
+      <div class="navbar-header">
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+         </button>
+         <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
+         <a class="navbar-brand" href="index.html">AssertJ</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+         <ul class="nav navbar-nav navbar-right">
+            <li><a href="assertj-core-quick-start.html">Quick start</a></li>
+            <li><a href="assertj-news.html">News</a></li>
+            <li><a href="assertj-core.html">Core</a></li>
+            <li><a href="assertj-assertions-generator.html">Assertions generator</a></li>
+            <li><a href="assertj-guava.html">Guava</a></li>
+            <li><a href="assertj-joda-time.html">Joda-Time</a></li>
+            <li><a href="assertj-neo4j.html">Neo4j</a></li>
+            <li><a href="assertj-swing.html">Swing</a></li>
+            <li><a href="assertj-db.html">DataBase</a></li>
+            <li><a href="assertj-help.html">Help</a></li>
+         </ul>
+      </div>
+   </div>
+</nav>
+
+
+<div class="container">
+
+<div class="row">
+      <div class="col-md-2 assertj-sidebar-menu">
+         <div class="bs-sidebar hidden-print affix-top" role="complementary">
+            <ul class="bs-sidenav nav ">
+               <li class="sidenav-header"></li>
+               <li><a href="assertj-db.html">Overview</a></li>
+               <li><a href="assertj-db.html#quickstart">Quick start</a></li>
+               <li><a href="assertj-db.html#latest-release">Releases</a></li>
+               <li><a href="assertj-db-concepts.html">Concepts</a></li>
+               <li><a href="assertj-db-features-highlight.html">Features highlight</a></li>
+               <li><a href="db/api/index.html" target="_blank">Javadoc</a></li>
+               <li><a href="assertj-db.html#mailing-list">Mailing list</a></li>
+               <li><a href="assertj-db.html#code">Code &amp; issues <i class="fa fa-github"></i></a></li>
+               <li><a href="assertj-db.html#contributing">Contributing</a></li>
+            </ul>
+         </div>
+      </div>
+
+
+   <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
+      <h1 class="page-header">AssertJ-DB concepts</h1>
+
+      <p>The purpose of this page is to show the different concepts specific to AssertJ-DB.</p>
+
+      <ul>
+         <li><a href="#connection">Connection to the database</a>
+            <ul>
+              <li><a href="#datasource">DataSource</a></li>
+              <li><a href="#source">Source</a></li>
+            </ul>
+         </li>
+         <li><a href="#elements">Elements of the database</a>
+            <ul>
+              <li><a href="#table">Table</a></li>
+              <li><a href="#request">Request</a></li>
+              <li><a href="#changes">Changes</a></li>
+              <li><a href="#change">Change</a></li>
+              <li><a href="#row">Row</a></li>
+              <li><a href="#column">Column</a></li>
+              <li><a href="#value">Value</a></li>
+            </ul>
+         </li>
+         <li><a href="#type">Type</a>
+            <ul>
+              <li><a href="#datatype">DataType</a></li>
+              <li><a href="#changetype">ChangeType</a></li>
+              <li><a href="#valuetype">ValueType</a></li>
+            </ul>
+         </li>
+         <li><a href="#navigation">Navigation</a>
+            <ul>
+              <li><a href="#tableorrequestasroot">With a Table or a Request as root</a></li>
+              <li><a href="#changesasroot">With Changes as root</a></li>
+            </ul>
+         </li>
+         <li><a href="#datevalue-timevalue-datetimevalue">DateValue, TimeValue and DateTimeValue</a></li>
+         <li><a href="#default-description">Default description</a></li>
+      </ul>
+      <p>For the examples below, suppose that in the database there are these two tables :</p>
+<table width="100%">
+<tr>
+<td align="left">
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">MEMBERS</caption>
+        <tr>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SURNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">BIRTHDATE</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SIZE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">05-10-60</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.75</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">2</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Evans'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'David Howell'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'The Edge'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">08-08-61</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.77</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">3</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Clayton'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Adam'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">03-13-60</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.78</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">4</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Mullen'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Larry'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">10-31-61</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.70</td>
+        </tr>
+      </table>
+</td>
+</tr>
+<tr>
+<td align="left">
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">ALBUMS</caption>
+        <tr>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">RELEASE</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">TITLE</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">NUMBEROFSONGS</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">DURATION</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">LIVE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">10-20-80</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Boy'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">12</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">42:17</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">2</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">10-12-81</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'October'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">11</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">41:08</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">3</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">02-28-83</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'War'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">10</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">42:07</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">4</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">11-07-83</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Under a Blood Red Sky'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">8</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">33:25</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">true</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">5</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">10-01-84</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'The Unforgettable Fire'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">10</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">42:42</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">6</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">06-10-85</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Wide Awake in America'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">4</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">20:30</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">true</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">7</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">03-09-87</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'The Joshua Tree'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">11</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">50:11</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">8</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">10-10-88</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Rattle and Hum'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">17</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">72:27</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">9</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">11-18-91</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Achtung Baby'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">12</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">55:23</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">10</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">07-06-93</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Zooropa'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">10</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">51:15</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">11</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">03-03-97</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Pop'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">12</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">60:08</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">12</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">10-30-00</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'All That You Can't Leave Behind'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">11</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">49:23</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">13</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">11-22-04</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'How to Dismantle an Atomic Bomb'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">11</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">49:08</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">14</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">03-02-09</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'No Line on the Horizon'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">11</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">53:44</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">15</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">09-09-14</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Songs of Innocence'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">11</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">48:11</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+      </table>
+</td>
+</tr>
+</table>
+
+      <h3 class="page-header" ><span id="connection"></span>Connection to the database</h3>
+      <p>To make assertions on a database, it is necessary to connect. For that, it is possible to use a <code class="java">DataSource</code>
+      or a <code class="java">Source</code>.</p>
+      <h4 class="page-header" ><span id="datasource"></span>DataSource</h4>
+      <p>A <a href="http://docs.oracle.com/javase/6/docs/api/javax/sql/DataSource.html">DataSource</a> is the classical way from Java 
+      to get a <a href="http://docs.oracle.com/javase/6/docs/api/java/sql/Connection.html">Connection</a> to a database.</p>
+      <h4 class="page-header" ><span id="source"></span>Source</h4>
+      <p>A <a href="db/api/org/assertj/db/type/Source.html">Source</a> allows
+      to indicate the different informations to connect to a database. A
+      <a href="db/api/org/assertj/db/type/Source.html">Source</a> is a way
+      to do if you have not access to a DataSource or if you do not want to use it. Below an example of Source
+      to connect to H2 database in memory :
+      </p>
+      <pre><code class="java">Source source = new Source("jdbc:h2:mem:test", "sa", "");</code></pre>
+
+      <h3 class="page-header" ><span id="elements"></span>Elements of the database</h3>
+      <p>Here the elements on which it is possible to make assertions.
+      </p>
+      <p>Note that, there are only 3 root elements : <a href="db/api/org/assertj/db/type/Table.html">Table</a>,
+      <a href="db/api/org/assertj/db/type/Request.html">Request</a>
+      and <a href="db/api/org/assertj/db/type/Changes.html">Changes</a>.<br/>
+      That means that the other elements are components or sub components of a root element.<br/>
+      A root element is a element on which the assertion start (in practical, the parameter of <code class="java">assertThat(...)</code> method).
+      </p>
+      <h4 class="page-header" ><span id="table"></span>Table</h4>
+      <p>A <a href="db/api/org/assertj/db/type/Table.html">Table</a> represents
+      a table in the database.<br/>
+      <p>A <a href="db/api/org/assertj/db/type/Table.html">Table</a> 
+      needs a way to connect to the database (either a <a href="http://docs.oracle.com/javase/6/docs/api/javax/sql/DataSource.html">DataSource</a>
+      or a <a href="db/api/org/assertj/db/type/Source.html">Source</a>) and a name.<br/>
+      That is the two mandatory parameters.</p>
+      <pre><code class="java">// Get a DataSource
+DataSource dataSource = ...
+// Declare the "members" table
+// by using the DataSource
+Table table1 = new Table(dateSource, "members");
+// Declare the "members" table
+// by using a Source
+Table table2 = new Table(source, "members");</code></pre>
+<p>The two <a href="db/api/org/assertj/db/type/Table.html">Table</a>s above 
+(<code class="java">table1</code> and <code class="java">table2</code>) are equivalent.</p>
+
+<table width="100%">
+<tr><td align="left">
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">Representation of "table1" or "table2"</caption>
+        <tr>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SURNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">BIRTHDATE</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SIZE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">05-10-60</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.75</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">2</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Evans'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'David Howell'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'The Edge'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">08-08-61</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.77</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">3</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Clayton'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Adam'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">03-13-60</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.78</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">4</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Mullen'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Larry'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">10-31-61</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.70</td>
+        </tr>
+      </table>
+</td></tr>
+</table>
+
+      <p>For a <a href="db/api/org/assertj/db/type/Table.html">Table</a>,
+      it is possible to chose the columns to include and to exclude in the assertions.</p>
+      <pre><code class="java">// Get the data from "id" and "name" columns from "members" table
+Table table3 = new Table(source, &quot;members&quot;, new String[] { &quot;id&quot;, &quot;name&quot; }, null);
+// Get the data from "members" table but not from "birthdate" column
+Table table4 = new Table(source, &quot;members&quot;, null, new String[] { &quot;birthdate&quot; });
+// Get the data from "name" column from "members" table (because "id" is included and excluded)
+Table table5 = new Table(source, &quot;members&quot;, new String[] { &quot;id&quot;, &quot;name&quot; }, new String[] { &quot;id&quot; });</code></pre>
+<table width="100%">
+<tr>
+<td align="left" width="150px">
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">Representation of "table3"</caption>
+        <tr>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">NAME</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">2</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Evans'</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">3</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Clayton'</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">4</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Mullen'</td>
+        </tr>
+      </table>
+</td>
+<td align="left" width="400px">
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">Representation of "table4"</caption>
+        <tr>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SURNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SIZE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.75</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">2</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Evans'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'David Howell'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'The Edge'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.77</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">3</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Clayton'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Adam'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.78</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">4</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Mullen'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Larry'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.70</td>
+        </tr>
+      </table>
+</td>
+<td align="left">
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">Representation of "table5"</caption>
+        <tr>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">NAME</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Evans'</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Clayton'</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Mullen'</td>
+        </tr>
+      </table>
+</td>
+</tr>
+</table>
+      <h4 class="page-header" ><span id="request"></span>Request</h4>
+      <p>A <a href="db/api/org/assertj/db/type/Request.html">Request</a> represents
+      a SQL request on the database.</p>
+      <p>Like for a <a href="db/api/org/assertj/db/type/Table.html">Table</a>,
+      a <a href="db/api/org/assertj/db/type/Request.html">Request</a> 
+      needs a way to connect to the database (either a <a href="http://docs.oracle.com/javase/6/docs/api/javax/sql/DataSource.html">DataSource</a>
+      or a <a href="db/api/org/assertj/db/type/Source.html">Source</a>).<br/>
+      </p>
+      <pre><code class="java">// Get a DataSource
+DataSource dataSource = ...
+// Declare a request which get the name and firstname of the corresponding members
+// by using a Source
+Request request1 = new Request(source, 
+                               "select name, firstname from members where id = 2 or id = 3");
+// Declare a request which get the name and firstname of the corresponding members
+// by using the DataSource
+Request request2 = new Request(dataSource, 
+                               "select name, firstname from members where id = 2 or id = 3");</code></pre>
+<p>The two <a href="db/api/org/assertj/db/type/Request.html">Requet</a>s above 
+(<code class="java">request1</code> and <code class="java">request2</code>) are equivalent.</p>
+
+<table width="100%">
+<tr><td align="left">
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">Representation of "request1" or "request2"</caption>
+        <tr>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SURNAME</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Evans'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'David Howell'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'The Edge'</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Clayton'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Adam'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+      </table>
+</td></tr>
+</table>
+
+      <p>For a <a href="db/api/org/assertj/db/type/Request.html">Request</a>,
+      it is possible to use a simple SQL request or a SQL request with one or many parameters.
+      </p>
+      <pre><code class="java">// Declare a request which get the name and firstname of the members
+// and have "%e%" like parameter
+Request request3 = new Request(dataSource, 
+                               "select name, firstname from members " +
+                               "where name like ?;",
+                               "%e%");
+// Declare a request which get the name and firstname of the members
+// and have "%e%" and "%Paul%" like parameters
+Request request4 = new Request(dataSource, 
+                               "select name, firstname from members " +
+                               "where name like ? and firstname like ?;",
+                               "%e%",
+                               "%Paul%");</code></pre>
+<table width="100%">
+<tr>
+<td align="left" width="300px">
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">Representation of "request3"</caption>
+        <tr>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SURNAME</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono'</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Evans'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'David Howell'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'The Edge'</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Mullen'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Larry'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+      </table>
+</td>
+<td align="left">
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">Representation of "request4"</caption>
+        <tr>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SURNAME</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono'</td>
+        </tr>
+      </table>
+</td>
+</tr>
+</table>
+      <h4 class="page-header" ><span id="changes"></span>Changes</h4>
+      <p>The <a href="db/api/org/assertj/db/type/Changes.html">Changes</a>
+      are the differences of states in database between a <code class="java">start point</code> and a <code class="java">end point</code>. 
+      </p>
+      <p align="center">
+      <img src="images/db-changes-1.png" />
+      </p>
+      <p>Assume that there are these SQL statements between the start point and the end point.</p>
+      <pre><code class="sql">DELETE FROM ALBUMS WHERE ID = 15;
+INSERT INTO MEMBERS(ID, NAME, FIRSTNAME) VALUES(5, 'McGuiness', 'Paul');
+UPDATE MEMBERS SET SURNAME = 'Bono Vox' WHERE ID = 1;
+UPDATE ALBUMS SET NAME = 'Rattle & Hum', LIVE = true WHERE ID = 8;
+</code></pre>
+
+      <pre><code class="java">// Get a DataSource
+DataSource dataSource = ...
+// The changes can be on a DataSource or on a Source
+Changes changes1 = new Changes(dataSource);
+Changes changes2 = new Changes(source);
+// The changes can also be on a Table or on a Request
+Changes changes3 = new Changes(table4);
+Changes changes4 = new Changes(request3);
+Changes changes5 = new Changes(request4);
+// The names of the columns in primary key are found with the metadata for a table 
+// but for a request it could be important to indicate
+Changes changes6 = new Changes(request4).setPksName("name");</code></pre>
+<p>The two <a href="db/api/org/assertj/db/type/Changes.html">Changes</a> above 
+(<code class="java">changes1</code> and <code class="java">changes2</code>) are equivalent.</p>
+<p>The two <a href="db/api/org/assertj/db/type/Changes.html">Changes</a> above 
+(<code class="java">changes4</code> and <code class="java">changes5</code>) are also equivalent.</p>
+
+<p>The changes are ordered :</p>
+<ul>
+  <li>First by type of change : creation, modification and after deletion</li>
+  <li>After if it a change on a table by the name of the table</li>
+  <li>To finish by the values of the primary key and if there are no primary key by the values of the row (for a modification)</li>
+</ul>
+
+<p>As indicated just above, the primary key is used to order the changes.
+But more important, the primary is used to determinate which rows at the same with modifications.<br/>
+In <i>Representation of "changes4" or "changes5"</i> the modification of first row of the table become a creation and deletion.
+</p>
+
+<table width="100%">
+<tr>
+<td align="left">
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">Representation of "changes1" or "changes2"</caption>
+
+        <tr>
+        <td style="text-align:center;font-size:70%;width: 80px;background-color:white;">Creation</td>
+        <td style="text-align:center;font-size:70%;width: 90px;background-color:white;">"MEMBERS" table</td>
+        <td style="text-align:center;font-size:70%;width: 120px;background-color:white;"><code class="java" style="font-family:courier;font-size:120%;">5</code> as PK</td>
+          <td>
+      <table border="1" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+        <th style="width: 90px;background-color:white;"></th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 30px;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 100px;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 180px;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 140px;">SURNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 100px;">BIRTHDATE</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SIZE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white;">At start point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;" colspan="6">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white;">At end point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">5</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'McGuiness'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+      </table>
+          </td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white;">Modification</td>
+        <td style="text-align:center;font-size:70%;background-color:white;">"ALBUMS" table</td>
+        <td style="text-align:center;font-size:70%;width: 120px;background-color:white;"><code class="java" style="font-family:courier;font-size:120%;">8</code> as PK</td>
+          <td>
+      <table border="1" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+        <th style="width: 90px;background-color:white;"></th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 30px;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 100px;">RELEASE</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 180px;">TITLE</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 140px;">NUMBEROFSONGS</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 100px;">DURATION</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">LIVE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white;">At start point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">8</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">10-10-88</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Rattle and Hum'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">17</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">72:27</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white;">At end point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">8</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">10-10-88</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Rattle & Hum'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">17</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">72:27</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">true</td>
+        </tr>
+      </table>
+          </td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white;">Modification</td>
+        <td style="text-align:center;font-size:70%;background-color:white;">"MEMBERS" table</td>
+        <td style="text-align:center;font-size:70%;width: 120px;background-color:white;"><code class="java" style="font-family:courier;font-size:120%;">1</code> as PK</td>
+          <td>
+      <table border="1" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+        <th style="width: 90px;background-color:white;"></th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 30px;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 100px;%">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 180px;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 140px;">SURNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 100px;">BIRTHDATE</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 50px;">SIZE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white;">At start point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">05-10-60</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.75</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white;">At end point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono Vox'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">05-10-60</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.75</td>
+        </tr>
+      </table>
+          </td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">Deletion</td>
+        <td style="text-align:center;font-size:70%;background-color:white">"ALBUMS" table</td>
+        <td style="text-align:center;font-size:70%;width: 120px;background-color:white"><code class="java" style="font-family:courier;font-size:120%;">15</code> as PK</td>
+          <td>
+      <table border="1" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+        <th style="width: 90px;background-color:white"></th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 30px;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 100px;">RELEASE</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 180px;">TITLE</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 140px;">NUMBEROFSONGS</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 100px;">DURATION</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 50px;">LIVE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At start point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">15</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">09-09-14  </td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Songs of Innocence'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">11</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">48:11</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At end point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;" colspan="6">&nbsp;</td>
+        </tr>
+      </table>
+          </td>
+        </tr>
+
+      </table>
+</td>
+</tr>
+<tr>
+<td align="left">
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">Representation of "changes3"</caption>
+
+        <tr>
+        <td style="text-align:center;font-size:70%;width: 80px;background-color:white">Creation</td>
+        <td style="text-align:center;font-size:70%;width: 90px;background-color:white">"MEMBERS" table</td>
+        <td style="text-align:center;font-size:70%;width: 120px;background-color:white"><code class="java" style="font-family:courier;font-size:120%;">5</code> as PK</td>
+          <td>
+      <table border="1" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+        <th style="width: 90px;background-color:white"></th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 30px;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 100px;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 180px;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 140px;">SURNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 50px;">SIZE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At start point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;" colspan="5">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At end point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">5</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'McGuiness'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+      </table>
+          </td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">Modification</td>
+        <td style="text-align:center;font-size:70%;background-color:white">"MEMBERS" table</td>
+        <td style="text-align:center;font-size:70%;width: 120px;background-color:white"><code class="java" style="font-family:courier;font-size:120%;">1</code> as PK</td>
+          <td>
+      <table border="1" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+        <th style="width: 90px;background-color:white"></th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 30px;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 100px;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 180px;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 140px;">SURNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 50px;">SIZE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At start point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.75</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At end point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono Vox'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.75</td>
+        </tr>
+      </table>
+          </td>
+        </tr>
+
+      </table>
+</td>
+</tr>
+<tr>
+<td align="left">
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%;background-color:white">Representation of "changes4" or "changes5"</caption>
+
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">Creation</td>
+        <td style="text-align:center;font-size:70%;background-color:white">&nbsp;</td>
+        <td style="text-align:center;font-size:70%;width: 120px;background-color:white">No PK</td>
+          <td>
+      <table border="1" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+        <th style="width: 90px;background-color:white"></th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 100px;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 180px;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 140px;">SURNAME</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At start point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;" colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At end point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono Vox'</td>
+        </tr>
+      </table>
+          </td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;width: 80px;background-color:white">Creation</td>
+        <td style="text-align:center;font-size:70%;width: 90px;background-color:white">&nbsp;</td>
+        <td style="text-align:center;font-size:70%;width: 120px;background-color:white">No PK</td>
+          <td>
+      <table border="1" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+        <th style="width: 90px;background-color:white"></th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 100px;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 180px;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 140px;">SURNAME</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At start point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;" colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At end point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'McGuiness'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+      </table>
+          </td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">Deletion</td>
+        <td style="text-align:center;font-size:70%;background-color:white">&nbsp;</td>
+        <td style="text-align:center;font-size:70%;background-color:white">No PK</td>
+          <td>
+      <table border="1" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+        <th style="width: 90px;background-color:white"></th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 100px;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 180px;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 140px;">SURNAME</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At start point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;" colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At end point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono Vox'</td>
+        </tr>
+      </table>
+          </td>
+        </tr>
+
+      </table>
+</td>
+</tr>
+<tr>
+<td align="left">
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">Representation of "changes6"</caption>
+
+        <tr>
+        <td style="text-align:center;font-size:70%;width: 80px;background-color:white">Creation</td>
+        <td style="text-align:center;font-size:70%;width: 90px;background-color:white">&nbsp;</td>
+        <td style="text-align:center;font-size:70%;width: 120px;background-color:white"><code class="java" style="font-family:courier;font-size:120%;">'McGuiness'</code> as PK</td>
+          <td>
+      <table border="1" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+        <th style="width: 90px;background-color:white"></th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 100px;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 180px;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 140px;">SURNAME</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At start point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;" colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At end point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'McGuiness'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+      </table>
+          </td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">Modification</td>
+        <td style="text-align:center;font-size:70%;background-color:white">&nbsp;</td>
+        <td style="text-align:center;font-size:70%;background-color:white"><code class="java" style="font-family:courier;font-size:120%;">'Hewson'</code> as PK</td>
+          <td>
+      <table border="1" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+        <th style="width: 90px;background-color:white"></th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 100px;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 180px;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 140px;">SURNAME</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At start point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono'</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At end point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono Vox'</td>
+        </tr>
+      </table>
+          </td>
+        </tr>
+
+      </table>
+</td>
+</tr>
+</table>
+      <h4 class="page-header" ><span id="change"></span>Change</h4>
+
+<p>A <a href="db/api/org/assertj/db/type/Change.html">Change</a>
+is a element of the <a href="db/api/org/assertj/db/type/Changes.html">Changes</a>.
+</p>
+<p>Below framed in red the first <a href="db/api/org/assertj/db/type/Change.html">Change</a>
+of "changes3".
+</p>
+
+<table width="100%">
+<tr>
+<td align="left">
+
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">Representation of "changes3"</caption>
+
+        <tr style="border-width:3px;border-style:solid;border-color:red;">
+        <td style="text-align:center;font-size:70%;width: 80px;background-color:white">Creation</td>
+        <td style="text-align:center;font-size:70%;width: 90px;background-color:white">"MEMBERS" table</td>
+        <td style="text-align:center;font-size:70%;width: 120px;background-color:white"><code class="java" style="font-family:courier;font-size:120%;">5</code> as PK</td>
+          <td>
+      <table border="1" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+        <th style="width: 90px;background-color:white;"></th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 30px;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 100px;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 180px;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 140px;">SURNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 50px;">SIZE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At start point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;" colspan="5">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At end point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">5</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'McGuiness'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+      </table>
+          </td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">Modification</td>
+        <td style="text-align:center;font-size:70%;background-color:white">"MEMBERS" table</td>
+        <td style="text-align:center;font-size:70%;width: 120px;background-color:white;"><code class="java" style="font-family:courier;font-size:120%;">1</code> as PK</td>
+          <td>
+      <table border="1" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+        <th style="width: 90px;background-color:white;"></th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 30px;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 100px;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 180px;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 140px;">SURNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 50px;">SIZE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At start point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.75</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At end point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono Vox'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.75</td>
+        </tr>
+      </table>
+          </td>
+        </tr>
+
+      </table>
+
+
+</td>
+</tr>
+</table>
+
+      <h4 class="page-header" ><span id="row"></span>Row</h4>
+
+<p>A <a href="db/api/org/assertj/db/type/Row.html">Row</a>
+can represent a row of a <a href="db/api/org/assertj/db/type/Table.html">Table</a>
+, of a <a href="db/api/org/assertj/db/type/Request.html">request</a> or 
+of a <a href="db/api/org/assertj/db/type/Change.html">Change</a>.
+</p>
+
+<p>Below framed in red the third <a href="db/api/org/assertj/db/type/Row.html">Row</a> of "table4".
+</p>
+
+<table width="100%">
+<tr>
+<td align="left">
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">Representation of "table4"</caption>
+        <tr>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SURNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SIZE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.75</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">2</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Evans'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'David Howell'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'The Edge'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.77</td>
+        </tr>
+        <tr style="border-width:3px;border-style:solid;border-color:red;">
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">3</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Clayton'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Adam'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.78</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">4</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Mullen'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Larry'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.70</td>
+        </tr>
+      </table>
+</td>
+</tr>
+</table>
+
+<p>Below framed in red the second <a href="db/api/org/assertj/db/type/Row.html">Row</a> of "request3".
+</p>
+<table width="100%">
+<tr>
+<td align="left">
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">Representation of "request3"</caption>
+        <tr>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SURNAME</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono'</td>
+        </tr>
+        <tr style="border-width:3px;border-style:solid;border-color:red;">
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Evans'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'David Howell'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'The Edge'</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Mullen'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Larry'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+      </table>
+</td>
+</tr>
+</table>
+<p>Below framed in red the <a href="db/api/org/assertj/db/type/Row.html">Row</a> at end point of 
+the second <a href="db/api/org/assertj/db/type/Change.html">Change</a>
+of "changes3".
+</p>
+
+<table width="100%">
+<tr>
+<td align="left">
+
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">Representation of "changes3"</caption>
+
+        <tr>
+        <td style="text-align:center;font-size:70%;width: 80px;background-color:white;">Creation</td>
+        <td style="text-align:center;font-size:70%;width: 90px;background-color:white;">"MEMBERS" table</td>
+        <td style="text-align:center;font-size:70%;width: 120px;background-color:white;"><code class="java" style="font-family:courier;font-size:120%;">5</code> as PK</td>
+          <td>
+      <table border="1" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+        <th style="width: 90px;background-color:white;"></th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 30px;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 100px;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 180px;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 140px;">SURNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 50px;">SIZE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At start point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;" colspan="5">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At end point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">5</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'McGuiness'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+      </table>
+          </td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">Modification</td>
+        <td style="text-align:center;font-size:70%;background-color:white">"MEMBERS" table</td>
+        <td style="text-align:center;font-size:70%;width: 120px;background-color:white;"><code class="java" style="font-family:courier;font-size:120%;">1</code> as PK</td>
+          <td>
+      <table border="1" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+        <th style="width: 90px;background-color:white;"></th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 30px;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 100px;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 180px;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 140px;">SURNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 50px;">SIZE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At start point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.75</td>
+        </tr>
+        <tr style="border-width:3px;border-style:solid;border-color:red;">
+        <td style="text-align:center;font-size:70%;background-color:white">At end point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono Vox'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.75</td>
+        </tr>
+      </table>
+          </td>
+        </tr>
+
+      </table>
+
+
+</td>
+</tr>
+</table>
+
+
+      <h4 class="page-header" ><span id="column"></span>Column</h4>
+
+<p>A <a href="db/api/org/assertj/db/type/Column.html">Column</a>
+can represent a column of a <a href="db/api/org/assertj/db/type/Table.html">Table</a>
+, of a <a href="db/api/org/assertj/db/type/Request.html">request</a> or 
+of a <a href="db/api/org/assertj/db/type/Change.html">Change</a>.
+</p>
+
+<p>Below framed in red the second <a href="db/api/org/assertj/db/type/Column.html">Column</a> of "table4".
+</p>
+
+<table width="100%">
+<tr>
+<td align="left">
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">Representation of "table4"</caption>
+        <tr>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;border-top-width:3px;border-top-style:solid;border-top-color:red;border-left-width:3px;border-left-style:solid;border-left-color:red;border-right-width:3px;border-right-style:solid;border-right-color:red;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SURNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SIZE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;border-left-width:3px;border-left-style:solid;border-left-color:red;border-right-width:3px;border-right-style:solid;border-right-color:red;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.75</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">2</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;border-left-width:3px;border-left-style:solid;border-left-color:red;border-right-width:3px;border-right-style:solid;border-right-color:red;">'Evans'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'David Howell'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'The Edge'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.77</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">3</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;border-left-width:3px;border-left-style:solid;border-left-color:red;border-right-width:3px;border-right-style:solid;border-right-color:red;">'Clayton'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Adam'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.78</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">4</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;border-left-width:3px;border-left-style:solid;border-left-color:red;border-right-width:3px;border-right-style:solid;border-right-color:red;border-bottom-width:3px;border-bottom-style:solid;border-bottom-color:red;">'Mullen'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Larry'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.70</td>
+        </tr>
+      </table>
+</td>
+</tr>
+</table>
+
+<p>Below framed in red the second <a href="db/api/org/assertj/db/type/Column.html">Column</a> of "request3".
+</p>
+<table width="100%">
+<tr>
+<td align="left">
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">Representation of "request3"</caption>
+        <tr>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;border-top-width:3px;border-top-style:solid;border-top-color:red;border-left-width:3px;border-left-style:solid;border-left-color:red;border-right-width:3px;border-right-style:solid;border-right-color:red;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SURNAME</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;border-left-width:3px;border-left-style:solid;border-left-color:red;border-right-width:3px;border-right-style:solid;border-right-color:red;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono'</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Evans'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;border-left-width:3px;border-left-style:solid;border-left-color:red;border-right-width:3px;border-right-style:solid;border-right-color:red;">'David Howell'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'The Edge'</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Mullen'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;border-left-width:3px;border-left-style:solid;border-left-color:red;border-right-width:3px;border-right-style:solid;border-right-color:red;border-bottom-width:3px;border-bottom-style:solid;border-bottom-color:red;">'Larry'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+      </table>
+</td>
+</tr>
+</table>
+<p>Below framed in red the fourth <a href="db/api/org/assertj/db/type/Column.html">Column</a> of 
+the second <a href="db/api/org/assertj/db/type/Change.html">Change</a>
+of "changes3".
+</p>
+
+<table width="100%">
+<tr>
+<td align="left">
+
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">Representation of "changes3"</caption>
+
+        <tr>
+        <td style="text-align:center;font-size:70%;width: 80px;background-color:white;">Creation</td>
+        <td style="text-align:center;font-size:70%;width: 90px;background-color:white;">"MEMBERS" table</td>
+        <td style="text-align:center;font-size:70%;width: 120px;background-color:white;"><code class="java" style="font-family:courier;font-size:120%;">5</code> as PK</td>
+          <td>
+      <table border="1" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+        <th style="width: 90px;background-color:white;"></th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 30px;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 100px;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 180px;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 140px;">SURNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;width: 50px;">SIZE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At start point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;" colspan="5">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At end point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">5</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'McGuiness'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+      </table>
+          </td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">Modification</td>
+        <td style="text-align:center;font-size:70%;background-color:white">"MEMBERS" table</td>
+        <td style="text-align:center;font-size:70%;width: 120px;background-color:white;"><code class="java" style="font-family:courier;font-size:120%;">1</code> as PK</td>
+          <td>
+      <table border="1" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+        <th style="width: 90px;background-color:white;"></th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 30px;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 100px;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 180px;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 140px;border-top-width:3px;border-top-style:solid;border-top-color:red;border-left-width:3px;border-left-style:solid;border-left-color:red;border-right-width:3px;border-right-style:solid;border-right-color:red;">SURNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 50px;">SIZE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At start point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;border-left-width:3px;border-left-style:solid;border-left-color:red;border-right-width:3px;border-right-style:solid;border-right-color:red;">'Bono'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.75</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At end point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;border-left-width:3px;border-left-style:solid;border-left-color:red;border-right-width:3px;border-right-style:solid;border-right-color:red;border-bottom-width:3px;border-bottom-style:solid;border-bottom-color:red;">'Bono Vox'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.75</td>
+        </tr>
+      </table>
+          </td>
+        </tr>
+
+      </table>
+
+
+</td>
+</tr>
+</table>
+
+
+      <h4 class="page-header" ><span id="value"></span>Value</h4>
+
+<p>A value can be in a <a href="db/api/org/assertj/db/type/Row.html">Row</a>
+or in a <a href="db/api/org/assertj/db/type/Column.html">Column</a>.
+</p>
+
+<p>Below framed in red (depending of the path) :
+</p>
+<ul>
+<li>the second value of the third <a href="db/api/org/assertj/db/type/Row.html">Row</a> of "table4"
+</li>
+<li>the third value of the second <a href="db/api/org/assertj/db/type/Column.html">Column</a> of "table4"
+</li>
+</ul>
+
+<table width="100%">
+<tr>
+<td align="left">
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">Representation of "table4"</caption>
+        <tr>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SURNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SIZE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.75</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">2</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Evans'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'David Howell'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'The Edge'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.77</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">3</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;border-width:3px;border-style:solid;border-color:red;">'Clayton'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Adam'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.78</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">4</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Mullen'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Larry'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.70</td>
+        </tr>
+      </table>
+</td>
+</tr>
+</table>
+
+<p>Below framed in red (depending of the path) :
+</p>
+<ul>
+<li>the second value of the second <a href="db/api/org/assertj/db/type/Row.html">Row</a> of "request3"
+</li>
+<li>the second value of the second <a href="db/api/org/assertj/db/type/Column.html">Column</a> of "request3"
+</li>
+</ul>
+
+<table width="100%">
+<tr>
+<td align="left">
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">Representation of "request3"</caption>
+        <tr>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SURNAME</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono'</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Evans'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;border-width:3px;border-style:solid;border-color:red;">'David Howell'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'The Edge'</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Mullen'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Larry'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+      </table>
+</td>
+</tr>
+</table>
+
+<p>Below framed in red (depending of the path) :
+</p>
+<ul>
+<li>the fourth value of the <a href="db/api/org/assertj/db/type/Row.html">Row</a> at end point of 
+the second <a href="db/api/org/assertj/db/type/Change.html">Change</a>
+of "changes3"
+</li>
+<li>the value at end point of the fourth <a href="db/api/org/assertj/db/type/Column.html">Column</a> of 
+the second <a href="db/api/org/assertj/db/type/Change.html">Change</a>
+of "changes3"
+</li>
+</ul>
+
+<table width="100%">
+<tr>
+<td align="left">
+
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">Representation of "changes3"</caption>
+
+        <tr>
+        <td style="text-align:center;font-size:70%;width: 80px;background-color:white;">Creation</td>
+        <td style="text-align:center;font-size:70%;width: 90px;background-color:white;">"MEMBERS" table</td>
+        <td style="text-align:center;font-size:70%;width: 120px;background-color:white;"><code class="java" style="font-family:courier;font-size:120%;">5</code> as PK</td>
+          <td>
+      <table border="1" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+        <th style="width: 90px;background-color:white;"></th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 30px;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 100px;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 180px;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 140px;">SURNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 50px;">SIZE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At start point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;" colspan="5">&nbsp;</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At end point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">5</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'McGuiness'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        </tr>
+      </table>
+          </td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">Modification</td>
+        <td style="text-align:center;font-size:70%;background-color:white">"MEMBERS" table</td>
+        <td style="text-align:center;font-size:70%;width: 120px;background-color:white;"><code class="java" style="font-family:courier;font-size:120%;">1</code> as PK</td>
+          <td>
+      <table border="1" cellspacing="0" cellpadding="2" width="100%">
+        <tr>
+        <th style="width: 90px;background-color:white;"></th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 30px;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 100px;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 180px;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 140px;">SURNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;;width: 50px;">SIZE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At start point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.75</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-size:70%;background-color:white">At end point</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;border-width:3px;border-style:solid;border-color:red;">'Bono Vox'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.75</td>
+        </tr>
+      </table>
+          </td>
+        </tr>
+
+      </table>
+
+
+</td>
+</tr>
+</table>
+
+      <h3 class="page-header" ><span id="type"></span>Type</h3>
+      <h4 class="page-header" ><span id="datatype"></span>DataType</h4>
+      <p>As see above there are three root elements of database, but only <a href="db/api/org/assertj/db/type/Table.html">Table</a>
+      and <a href="db/api/org/assertj/db/type/Request.html">Request</a> are data elements.<br/> 
+      All the possible types of data are contained in 
+      the <a href="db/api/org/assertj/db/type/DataType.html">DataType</a> enumeration.<br/>
+      The type of the data can be :
+      </p>
+      <ul>
+        <li><code class="java">TABLE</code></li>
+        <li><code class="java">REQUEST</code></li>
+      </ul>
+      <h4 class="page-header" ><span id="changetype"></span>ChangeType</h4>
+      <p>The change can be a creation, a modification or a deletion.<br/> 
+      All the possible types of change are contained in 
+      the <a href="db/api/org/assertj/db/type/ChangeType.html">ChangeType</a> enumeration.<br/>
+      The type of the change depends of operation on database :
+      </p>
+      <ul>
+        <li><code class="java">CREATION</code> for a <code class="sql">insert</code> sql request</li>
+        <li><code class="java">MODIFICATION</code> for a <code class="sql">update</code> sql request</li>
+        <li><code class="java">DELETION</code> for a <code class="sql">delete</code> sql request</li>
+      </ul>
+      <h4 class="page-header" ><span id="valuetype"></span>ValueType</h4>
+      <p>The value can be a date, a boolean or a text for example.<br/> 
+      All the possible types of value are contained in 
+      the <a href="db/api/org/assertj/db/type/ValueType.html">ValueType</a> enumeration.<br/>
+      The type of the value depends of class of the object given by <code class="java">java.sql</code> when the data are got from database :
+      </p>
+      <ul>
+        <li><code class="java">BYTES</code> for a array of bytes (<code class="java">byte[]</code>)</li>
+        <li><code class="java">BOOLEAN</code> for a <code class="java">java.lang.Boolean</code></li>
+        <li><code class="java">TEXT</code> for a <code class="java">java.lang.String</code></li>
+        <li><code class="java">DATE</code> for a <code class="java">java.sql.Date</code></li>
+        <li><code class="java">TIME</code> for a <code class="java">java.sql.Time</code></li>
+        <li><code class="java">DATE_TIME</code> for a <code class="java">java.sql.Timestamp</code></li>
+        <li><code class="java">NUMBER</code> for a <code class="java">java.lang.Byte</code>, 
+        <code class="java">java.lang.Short</code>, 
+        <code class="java">java.lang.Integer</code>, 
+        <code class="java">java.lang.Long</code>, 
+        <code class="java">java.lang.Float</code> or 
+        <code class="java">java.math.BigDecimal</code></li>
+        <li><code class="java">NOT_IDENTIFIED</code> for other cases (for example when the value is <code class="java">null</code>)</li>
+      </ul>
+
+
+      <h3 class="page-header" ><span id="navigation"></span>Navigation</h3>
+      <p>The navigation offers the ability to chain assertions at different levels and instructions to go inside the sub-elements and return to root element.
+      There are examples of the navigation in 
+      <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/db/NavigationExamples.java">NavigationExamples.java</a></p>
+      </p>
+
+      <h4 class="page-header" ><span id="tableorrequestasroot"></span>With a Table or a Request as root</h4>
+
+      <p>The <code class="java">assertThat(...)</code> static method of <code class="java">org.assertj.db.api.Assertions</code>
+      allows to create a root assertion on a <a href="db/api/org/assertj/db/type/Table.html">Table</a>.
+      </p>
+      <pre><code class="java">import static org.assertj.db.api.Assertions.assertThat;
+
+assertThat(table)...</code></pre>
+      <p>or on a <a href="db/api/org/assertj/db/type/Request.html">Request</a>.
+      </p>
+      <pre><code class="java">import static org.assertj.db.api.Assertions.assertThat;
+
+assertThat(request)...</code></pre>
+      <p>From these root assertions, it is possible to navigate to the sub elements and return to the root element as in the picture below.
+      </p>
+
+      <p align="center">
+      <img src="images/db-navigation-with-table-or-request.png" />
+      </p>
+
+      <p>More details on this concept in <a href="assertj-db-features-highlight.html#tableorrequestasroot">feature highlight</a>.
+
+      <h4 class="page-header" ><span id="changesasroot"></span>With Changes as root</h4>
+
+      <p>The <code class="java">assertThat(...)</code> static method of <code class="java">org.assertj.db.api.Assertions</code>
+      allows to create a root assertion on <a href="db/api/org/assertj/db/type/Changes.html">Changes</a>.
+      </p>
+      <pre><code class="java">import static org.assertj.db.api.Assertions.assertThat;
+
+assertThat(changes)...</code></pre>
+      <p>From this root assertion, it is possible to navigate to the sub elements and return to the root element as in the picture below.
+      </p>
+
+      <p align="center">
+      <img src="images/db-navigation-with-changes.png" />
+      </p>
+
+      <p>More details on this concept in <a href="assertj-db-features-highlight.html#changesasroot">feature highlight</a>.
+
+      <h3 class="page-header" ><span id="datevalue-timevalue-datetimevalue"></span>DateValue, TimeValue and DateTimeValue</h3>
+      <p>AssertJ-DB is compatible with Java 7, but we need system to simply compare 
+      data in a database with date, time and date/time like LocalDate, LocalTime and LocalDateTime of Java 8.</p>
+      <p>So The <a href="db/api/org/assertj/db/type/DateValue.html">DateValue</a>,
+      <a href="db/api/org/assertj/db/type/TimeValue.html">TimeValue</a> and
+      <a href="db/api/org/assertj/db/type/DateTimeValue.html">DateTimeValue</a> classes
+      are simpler but contains this kind of informations.
+      </p>
+      <p>There is 3 kind of static methods to instantiate these values :
+      </p>
+      <ul>
+      <li><code class="java">of</code> which receive the informations by <code class="java">int</code> parameters
+      <pre><code class="java">DateValue dateValue = DateValue.of(2007, 12, 23);
+
+// With hours and minutes only
+TimeValue timeValue1 = TimeValue.of(9, 1);
+// With seconds additional
+TimeValue timeValue2 = TimeValue.of(9, 1, 6);
+// With nanoseconds additional
+TimeValue timeValue3 = TimeValue.of(9, 1, 6, 3);
+
+// With date only (so hour is midnight)
+DateTimeValue dateTimeValue1 = DateTimeValue.of(dateValue);
+// With date and time
+DateTimeValue dateTimeValue2 = DateTimeValue.of(dateValue, timeValue1);</code></pre>
+      </li>
+      <li><code class="java">from</code> which receive the equivalent from <code class="java">java.sql</code> package
+      (<code class="java">java.sql.Date</code>, 
+      <code class="java">java.sql.Time</code> and 
+      <code class="java">java.sql.Timestamp</code>)
+      <pre><code class="java">Date date = Date.valueOf("2007-12-23");
+DateValue dateValue = DateValue.from(date);
+
+Time time = Time.valueOf("09:01:06");
+TimeValue timeValue = TimeValue.from(time);
+
+Timestamp timestamp = Timestamp.valueOf("2007-12-23 09:01:06.000000003");
+DateTimeValue dateTimeValue = DateTimeValue.from(timestamp);</code></pre>
+      </li>
+      <li><code class="java">parse</code> which receive a <code class="java">String</code> to represent the value (this method can throw a 
+      <code class="java">ParseException</code>)
+      <pre><code class="java">DateValue dateValue = DateValue.parse("2007-12-23");
+
+// With hours and minutes only
+TimeValue timeValue1 = TimeValue.parse("09:01");
+// With seconds additional
+TimeValue timeValue2 = TimeValue.parse("09:01:06");
+// With nanoseconds additional
+TimeValue timeValue3 = TimeValue.parse("09:01:06.000000003");
+
+// With date only (so hour is midnight)
+DateTimeValue dateTimeValue1 = DateTimeValue.parse("2007-12-23");
+// With date and time (hours and minutes only)
+DateTimeValue dateTimeValue2 = DateTimeValue.parse("2007-12-23T09:01");
+// With date and time (seconds additional)
+DateTimeValue dateTimeValue2 = DateTimeValue.parse("2007-12-23T09:01:06");
+// With date and time (nanoseconds additional)
+DateTimeValue dateTimeValue2 = DateTimeValue.parse("2007-12-23T09:01:06.000000003");</code></pre>
+      </li>
+      </ul>
+      <p>All these static methods have equivalent constructors.
+      </p>
+      <h3 class="page-header" ><span id="default-description"></span>Default description</h3>
+      <p>In assertj, it is possible to add description with the methods of <a href="core/api/org/assertj/core/api/Descriptable.html">Descriptable</a><br/>
+      This description is used in the error message if the assertion fails.
+      </p>
+      <p>Due to the navigation, it is more complicated is asserj-db to well know on wich element an error can be thrown.
+      So to help the tester, there are default description.<br/>
+      For examples :
+      </p>
+      <ul>
+      <li><code>"members table"</code> for an assertion on a table
+      </li>
+      <li><code>"'select * from actor' request"</code> for an assertion on a request
+      </li>
+      <li><code>"'select id, name, firstname, bi...' request"</code> for an assertion on a request with more text
+      </li>
+      <li><code>"Row at index 0 of members table"</code> for an assertion on a row of a table
+      </li>
+      <li><code>"Column at index 0 (column name : ID) of 'select * from members' request"</code> for an assertion on a column of a request
+      </li>
+      <li><code>"Value at index 0 of Column at index 0 (column name : ID) of 'select * from members' request"</code> for an assertion on a value of a column of a request
+      </li>
+      <li><code>"Value at index 0 (column name : ID) of Row at index 0 of 'select * from members' request"</code> for an assertion on a value of a row of a request
+      </li>
+      <li><code>"Value at index 0 (column name : ID) of Row at end point of Change at index 0 (on table : MEMBERS and with primary key : [4]) of Changes on tables of 'sa/jdbc:h2:mem:test' source"</code> 
+      for an assertion on a value of the row at end point of a change on a table
+      </li>
+      </ul>
+      <p>This default description can be replace by the choice of the tester by using the methods of <a href="core/api/org/assertj/core/api/Descriptable.html">Descriptable</a>.
+      </p>
+
+</div>
+
+<br>
+<!--
+<div class="container">
+   <footer>
+      <div class="row">
+         <div class="col-lg-12">
+            <p>AssertJ - Licensed under the Apache License, Version 2.0.</p>
+         </div>
+      </div>
+   </footer>
+</div>
+-->
+
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/modern-business.js"></script>
+<script src="js/assertj.js"></script>
+
+</body>
+</html>
