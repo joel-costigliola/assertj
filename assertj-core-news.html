@@ -87,6 +87,7 @@
       <h1 class="page-header">AssertJ Core latest news</h1>
       <ul>
          <li><a href="#assertj-core-next">AssertJ core next release</a></li>
+         <li><a href="#assertj-core-2.1.0">AssertJ core 2.1.0 release</a></li>
          <li><a href="#assertj-core-3.0.0">AssertJ core 3.0.0 for Java 8 release</a></li>
          <li><a href="#assertj-core-2.0.0">AssertJ core 2.0.0 release</a></li>
          <li><a href="#assertj-core-1.7.1">AssertJ core 1.7.1 release</a></li>
@@ -110,6 +111,363 @@
       <li>...</li>
    </ul>
 </p>
+
+<h3 class="page-header"><span id="assertj-core-2.1.0"></span>AssertJ core 2.1.0 release : New and noteworthy</h3>
+
+   <p>Release date : 2015-05-0?<br>
+
+   <p>Thanks to <span class="contributor">Michal Kordas</span>, <span class="contributor">Kamil Szymanski</span>, <span class="contributor">Paul Dorzey</span>, <span class="contributor">Lukasz Kryger</span>, <span class="contributor">Tim Perry</span>, <span class="contributor">Jean-Christophe Gay</span>, <span class="contributor">Lovro Pandzic</span> and <span class="contributor">Alexander Bischof</span> for their contributions.</p>
+
+   <h4 class="page-header"> Release notes</h4>
+   <div class="release-section-category"> Breaking changes</div>
+   <ul>
+      <li>Use strict instead of lenient date parsing by default, this might break few tests, if you really wan to use lenient parsing just call <span class="small-code">Assertions.setLenientDateParsing(true)</span>.</li>
+   </ul>
+   <div class="release-section-category">New features :</div>
+   <ul>
+      <li>Allow <a href="assertj-core-news.html#assertj-core-2.1.0-fiteredOn">fluent filtering</a> of iterable/array elements in iterable/array assertion flow.</li>
+      <li>New: <a href="assertj-core-news.html#assertj-core-2.1.0-uri-url-assertions"><span class="small-code">URI</span>/<span class="small-code">URL</span> assertions</a>.</li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-2.1.0-isCloseToPercentage"><span class="small-code">isCloseToPercentage</span></a> to numbers assertions. <span class="contributor">(Alexander Bischof)</span></li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-2.1.0-comparable-assertions"><span class="small-code">isEqualByComparingTo</span></a> and <a href="assertj-core-news.html#assertj-core-2.1.0-comparable-assertions"><span class="small-code">isNotEqualByComparingTo</span></a> to <span class="small-code">Comparable</span> assertions. <span class="contributor">(Paul Dorzey)</span></li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-2.1.0-hasToString"><span class="small-code">hasToString</span></a> to <span class="small-code">Object</span> assertions. <span class="contributor">(Alexander Bischof)</span></li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-2.1.0-hasSameTimeAs"><span class="small-code">hasSameTimeAs</span></a> to <span class="small-code">Date</span> assertions. <span class="contributor">(Michal Kordas)</span></li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-2.1.0-doesNotStartEndWith"><span class="small-code">doesNotStartWith</span></a> and <a href="assertj-core-news.html#assertj-core-2.1.0-doesNotStartEndWith"><span class="small-code">doesNotEndWith</span></a> to <span class="small-code">String</span> assertions. <span class="contributor">(Michal Kordas)</span></li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-2.1.0-stringContains"><span class="small-code">contains(Iterable)</span></a> and <a href="assertj-core-news.html#assertj-core-2.1.0-stringContains"><span class="small-code">containsSequence(Iterable) </span></a> to <span class="small-code">String</span> assertions. <span class="contributor">(Michal Kordas)</span></li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-2.1.0-isEqualToIgnoringWhitespace"><span class="small-code">isEqualToIgnoringWhitespace</span></a> to <span class="small-code">String</span> assertions. <span class="contributor">(Alexander Bischof)</span></li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-2.1.0-isNotEqualToIgnoringCase"><span class="small-code">isNotEqualToIgnoringCase</span></a> to <span class="small-code">String</span> assertions. <span class="contributor">(Alexander Bischof)</span></li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-2.1.0-containsOnlyDigits"><span class="small-code">containsOnlyDigits</span></a> to <span class="small-code">String</span> assertions. <span class="contributor">(Kamil Szymanski)</span></li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-2.1.0-primitive-approximation-assertion"><span class="small-code">isCloseTo</span></a> primitive approximation assertion for <span class="small-code">long</span>, <span class="small-code">int</span>, <span class="small-code">short</span> and <span class="small-code">byte</span>.</li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-2.1.0-class-assertions"><span class="small-code">isFinal</span></a> and <a href="assertj-core-news.html#assertj-core-2.1.0-class-assertions"><span class="small-code">isNotFinal</span></a> to <span class="small-code">Class</span> assertions.</li>
+   </ul>
+   <div class="release-section-category">Improvements :</div>
+   <ul>
+      <li><a href="assertj-core-news.html#assertj-core-2.1.0-smart-formatting">Smart iterable/array formatting</a>: display one element per line if overall description is too big (> 80 chars).</li>
+      <li>Deprecate <del><span class="small-code">hasContentEqualTo</span></del> in favor of <span class="small-code">hasSameContentAs</span>. <span class="contributor">(Alexander Bischof)</span></li>
+      <li><a href="assertj-core-news.html#assertj-core-2.1.0-flatExtracting"><span class="small-code">flatExtracting</span></a> now accepts a <span class="small-code">String</span> parameter to specify the (iterable/array) property to extract.  <span class="contributor">(Alexander Bischof)</span></li>
+      <li>Add <span class="small-code">yyyy-MM-dd HH:mm:ss.SSS</span> to default supported date formats in <span class="small-code">Date</span> assertion using <span class="small-code">String</span> parameter.</li>
+      <li>Field by field element comparators now support heterogeneous iterables (see this <a href="https://github.com/joel-costigliola/assertj-core/issues/399">issue</a>). (<span class="contributor">Paul Dorzey</span>)</li>
+      <li><span class="small-code">containsExactly</span> assertion was not showing actual and expected if the error was that they had different sizes.</li>
+      <li>Display date with milliseconds to make error message understandable when two dates only differ by milliseconds.</li>
+      <li>Add <span class="small-code">usingFieldByFieldElementComparator</span>, <span class="small-code">usingElementComparatorIgnoringFields</span> and <span class="small-code">usingElementComparatorOnFields</span> to <span class="small-code">ObjectArrayAssert</span></li>
+      <li>Additional code examples in Javadoc API.</li>
+   </ul>
+   <div class="release-section-category">Fixed Bugs :</div>
+   <ul>
+      <li>Extraction of nested field/property failed when both field and property were combined.</li>
+      <li>containsOnly and containsExactly did not honor properly element comparison strategy.</li>
+      <li>OSGI Metadata did not include "core.data" in Export-Package.</li>
+   </ul>
+
+   <!-- detailed notes -->
+
+   <h4 class="page-header"><span id="assertj-core-2.1.0-fiteredOn" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow fluent filtering of iterable/array elements in iterable/array assertion flow</h4>
+
+   <p>It was already possible to filter iterable/array but not in current assertion flow, it is now possible to combine iterable/array assertion and filtering in a fluent way.</p>
+   <p>You can filter on a property/field or using a <a href="assertj-core-conditions.html"><span class="small-code">Condition</span></a>.</p> 
+
+   <p class="list-section">Filtering on a property or a field</p> 
+   <p>You specify first the property/field name to filter on and its expected value.  The filter first tries to get the value from a property, then from a field. Reading private fields is supported by default, this can be globally disabled by calling <span class="small-code">Assertions.setAllowExtractingPrivateFields(false)</span>.</p>
+   <p>Filters supports reading nested property/field, not that if an intermediate value is null the whole nested property/field is considered to be null, thus reading <span class="small-code">"address.street.name"</span> value will return null if <span class="small-code">"address.street"</span> value is null.</p>
+   <p>Filters support basic operation : <span class="small-code">not</span>, <span class="small-code">in</span>, <span class="small-code">notIn</span></p>
+   <p>As an example, let's check all employees 800 years old :</p>
+
+   <pre><code class="java">Employee yoda   = new Employee(1L, new Name("Yoda"), 800);
+Employee obiwan = new Employee(2L, new Name("Obiwan"), 800);
+Employee luke   = new Employee(3L, new Name("Luke", "Skywalker"), 26);
+ 
+List&lt;Employee&gt; employees = newArrayList(yoda, luke, obiwan);
+
+// filter employees before performing an assertion
+assertThat(employees).filteredOn("age", 800)
+                     .containsOnly(yoda, obiwan);
+
+// it supports nested property/field
+assertThat(employees).filteredOn("name.first", "Luke")
+                     .containsOnly(luke);
+
+// to filter on null value just use filterOnNull
+assertThat(employees).filteredOnNull("name.last")
+                     .containsOnly(yoda, obiwan, noname);</code></pre>
+
+   <p>Filters support basic operation : <span class="small-code">not</span>, <span class="small-code">in</span>, <span class="small-code">notIn</span></p>
+
+   <pre><code class="java">import static org.assertj.core.api.Assertions.in;
+import static org.assertj.core.api.Assertions.not;
+import static org.assertj.core.api.Assertions.notIn;
+...
+
+assertThat(employees).filteredOn("age", not(800))
+                     .containsOnly(luke);
+ 
+// Name is bean class with 'first' and 'last' String properties 
+assertThat(employees).filteredOn("name.first", in("Yoda", "Luke"))
+                     .containsOnly(yoda, luke);
+ 
+assertThat(employees).filteredOn("name.first", notIn("Yoda", "Luke"))
+                     .containsOnly(obiwan);</code></pre>
+
+   <p>You can chain filters :</p>
+
+   <pre><code class="java">// fellowshipOfTheRing is a list of TolkienCharacter having race and name fields
+// 'not' filter is statically imported from Assertions.not  
+assertThat(fellowshipOfTheRing).filteredOn("race.name", "Man")
+                               .filteredOn("name", not("Boromir"))
+                               .containsOnly(aragorn);</code></pre>
+
+   <p class="list-section">Filtering with a <span class="small-code">Condition</span></p> 
+   <p>Filter the iterable/array under test keeping only elements matching the given <a href="assertj-core-conditions.html"><span class="small-code">Condition</span></a>. </p>
+   <p>As an example, let's check all employees whose age > 100 :</p>
+
+   <pre><code class="java">// old employee condition, "old employees" describes the condition in error message
+// you just have to implement 'matches' method 
+Condition&lt;Employee&gt; oldEmployees = new Condition&lt;Employee&gt;("old employees") {
+      @Override
+      public boolean matches(Employee employee) {
+        return employee.getAge() > 100;
+      }
+  };
+
+// use oldEmployees Condition to express filter predicate
+assertThat(employees).filteredOn(oldEmployees)
+                     .containsOnly(yoda, obiwan);
+
+// You can combine Condition with condition operator like Not:
+assertThat(employees).filteredOn(not(oldEmployees))
+                     .containsOnly(luke);</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-2.1.0-uri-url-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> <span class="small-code">URI</span>/<span class="small-code">URL</span> assertions</h4>
+
+   <p>New assertions for <span class="small-code">URI</span> and <span class="small-code">URL</span>.</p>
+   <p>URI assertions examples :</p>
+
+   <pre><code class="java">assertThat(new URI("http://assertj.org:8080/news.html#print")).hasHost("assertj.org")
+                                                              .hasPort(8080)
+                                                              .hasPath("/news.html")
+                                                              .hasFragment("print");
+assertThat(new URI("http://assertj.org")).hasNoFragment()
+                                         .hasNoPort()
+                                         .hasPath("")
+                                         .hasNoQuery()
+                                         .hasNoUserInfo();
+
+assertThat(new URI("mailto:java-net@java.sun.com")).hasNoPath();
+
+assertThat(new URI("http://test:pass@www.helloworld.org/index.html")).hasUserInfo("test:pass");
+assertThat(new URI("http://test@www.helloworld.org/index.html")).hasUserInfo("test");
+assertThat(new URI("http://:pass@www.helloworld.org/index.html")).hasUserInfo(":pass");</code></pre>
+
+   <p>URL assertions examples :</p>
+
+   <pre><code class="java">assertThat(new URL("http://assertj.org:8080/news.html#print")).hasHost("assertj.org")
+                                                              .hasPort(8080)
+                                                              .hasPath("/news.html")
+                                                              .hasAnchor("print");
+assertThat(new URL("http://assertj.org")).hasNoAnchor()
+                                         .hasNoPath()
+                                         .hasNoPort()
+                                         .hasNoQuery()
+                                         .hasNoUserInfo();
+
+assertThat(new URL("http://helloworld.org")).hasAuthority("helloworld.org");</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-2.1.0-isCloseToPercentage" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">isCloseToPercentage</span> to number assertions</h4>
+
+   <p>Verifies that the actual number is close to the given one within the given percentage.</br>
+If difference is equal to the percentage value, assertion is considered valid. </p>
+
+   <p>You can express percentage with <span class="small-code">Assertions.withinPercentage</span></p>
+   <p>Example :</p>
+   <pre><code class="java">import static org.assertj.core.api.Assertions.withinPercentage;
+...
+
+// assertions will pass:
+assertThat(5.0).isCloseTo(6.0, withinPercentage(20.0));
+assertThat(5).isCloseTo(6, withinPercentage(20));
+
+// assertion will fail
+assertThat(11).isCloseTo(10, withinPercentage(5));</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-2.1.0-comparable-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">isEqualByComparingTo</span> and <span class="small-code">isNotEqualByComparingTo</span> to <span class="small-code">Comparable</span> assertions</h4>
+
+  <p>Verifies that the actual value is equal to the given one by invoking Comparable.compareTo(Object). </p>
+
+   <p><span class="small-code">isEqualByComparingTo</span> verifies that the actual value is equal to the given one by invoking <span class="small-code">Comparable.compareTo(Object)</span>, <span class="small-code">isNotEqualByComparingTo</span> does the opposite.</p>
+   <p>Example :</p>
+
+   <pre><code class="java">// assertion will pass because 8.0 is equal to 8.00 using BigDecimal.compareTo(BigDecimal)
+assertThat(new BigDecimal("8.0")).isEqualByComparingTo(new BigDecimal("8.00"));
+
+assertThat(new BigDecimal(1.0)).isNotEqualByComparingTo(new BigDecimal(2.0));</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-2.1.0-hasToString" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">hasToString</span> to <span class="small-code">Object</span> assertions</h4>
+
+   <p>Verifies that the actual <span class="small-code">actual.toString()</span> is equal to the given <span class="small-code">String</span>.</p>
+   <p>Example :</p>
+
+   <pre><code class="java">CartoonCaracter homer = new CartoonCaracter("Homer");
+
+// Instead of writing ...  
+assertThat(homer.toString()).isEqualTo("Homer");
+// ... you can simply write: 
+assertThat(homer).hasToString("Homer");</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-2.1.0-hasSameTimeAs" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">hasSameTimeAs</span> to <span class="small-code">Date</span> assertions</h4>
+
+   <p>Verifies that the actual Date represents the same time as the given date in <span class="small-code">String</span> format.<br/>
+   It is the same assertion as <span class="small-code">hasSameTimeAs(Date)</span> but given date is represented as <span class="small-code">String</span></p>
+   <p>Example :</p>
+
+   <pre><code class="java">Date date = parseDatetime("2003-04-26T12:00:00");
+
+// assertion will pass
+assertThat(date).hasSameTimeAs("2003-04-26T12:00:00");
+
+// assertion will fail
+assertThat(date).hasSameTimeAs("2003-04-26T12:00:01");
+assertThat(date).hasSameTimeAs("2003-04-27T12:00:00");</code></pre>
+   <p>Default date formats (expressed in the local time zone) are:
+      <ol>
+      <li>yyyy-MM-dd'T'HH:mm:ss.SSS</li>
+      <li>yyyy-MM-dd HH:mm:ss.SSS</li>
+      <li>yyyy-MM-dd'T'HH:mm:ss</li>
+      <li>yyyy-MM-dd</li>
+   </ol>
+</p>
+
+   <h4 class="page-header"><span id="assertj-core-2.1.0-doesNotStartEndWith" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">doesNotStartWith</span> and <span class="small-code">doesNotEndWith</span> to <span class="small-code">String</span> assertions</h4>
+
+   <p>Verifies that the actual <span class="small-code">String</span> does not start/end with the given <span class="small-code">String</span>.</p>
+   <p>Example :</p>
+
+   <pre><code class="java">// assertions will pass
+assertThat("Gandalf the grey").doesNotStartWith("grey");
+                              .doesNotEndWith("Gan");</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-2.1.0-stringContains" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">contains(Iterable)</span> and <span class="small-code">containsSequence(Iterable)</span> to <span class="small-code">String</span> assertions</h4>
+
+   <p class="list-section"><span class="small-code">contains(Iterable)</span></p>
+   <p>Verifies that the actual <span class="small-code">String</span> contains all the strings of the given <span class="small-code">Iterable</span>.</p>
+   <p>Example :</p>
+
+   <pre><code class="java">assertThat("Gandalf the grey").contains(Arrays.asList("alf"));
+assertThat("Gandalf the grey").contains(Arrays.asList("alf", "grey"));</code></pre>
+
+   <p class="list-section"><span class="small-code">containsSequence(Iterable)</span></p>
+   <p>Verifies that the actual <span class="small-code">String</span> contains all the strings of the given <span class="small-code">Iterable</span> in the <strong>Iterable iteration order</strong>.</p>
+   <p>Example :</p>
+
+   <pre><code class="java">assertThat("Gandalf the grey").contains(Arrays.asList("alf"));
+assertThat("Gandalf the grey").contains(Arrays.asList("alf", "grey"));</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-2.1.0-isEqualToIgnoringWhitespace" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">isEqualToIgnoringWhitespace</span> to <span class="small-code">String</span> assertions</h4>
+
+   Verifies that the actual <span class="small-code">String</span> is equal to the given one, ignoring whitespace differences (mostly).<br/>
+To be exact, the following whitespace rules are applied:
+   <ul>
+      <li>all leading and trailing whitespace of both actual and expected strings are ignored</li>
+      <li>any remaining whitespace, appearing within either string, is collapsed to a single space before comparison</li>
+   </ul>
+   <p>Example :</p>
+
+   <pre><code class="java">// assertion will pass
+assertThat("  my foo bar  ").isEqualToIgnoringWhitespace("my foo bar");
+assertThat("my      foo bar").isEqualToIgnoringWhitespace("my foo bar");
+assertThat(" my     foo bar ").isEqualToIgnoringWhitespace("my foo bar");
+assertThat(" my\tfoo bar ").isEqualToIgnoringWhitespace(" my foo bar");
+assertThat("my foo bar").isEqualToIgnoringWhitespace("   my foo bar   ");
+
+// assertion will fail due to the space between foo and bar
+assertThat(" my\tfoo bar ").isEqualToIgnoringWhitespace(" my foobar");</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-2.1.0-isNotEqualToIgnoringCase" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">isNotEqualToIgnoringCase</span> to <span class="small-code">String</span> assertions</h4>
+
+   <p>Verifies that the actual <span class="small-code">String</span> is not equal to the given one, ignoring case considerations.</p>
+   <p>Example :</p>
+
+   <pre><code class="java">// assertion will pass
+ assertThat("Gandalf").isNotEqualToIgnoringCase("Hobbit");
+
+ // assertions will fail
+ assertThat("Gandalf").isNotEqualToIgnoringCase("Gandalf");
+ assertThat("Gandalf").isNotEqualToIgnoringCase("GaNDalf");</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-2.1.0-smart-formatting" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Smart iterable/array formatting: display one element per line if overall description is too big.</h4>
+
+   <p>Iterable/array in error messages will be formatted on a single lines if the overall description is < 80 characters, otherwise it will formatted on multiple lines with one element per line.</p>
+   <p>You can set the line maxlength threshold with <span class="small-code">Assertions.setMaxLengthForSingleLineDescription</span></p>
+   <p>Example :</p>
+
+   <pre><code class="java">// this array ... 
+String[] greatBooks = array("A Game of Thrones", "The Lord of the Rings", "Assassin's Apprentice");
+// ... is formatted on one line:
+["A Game of Thrones", "The Lord of the Rings", "Assassin's Apprentice"]
+
+// whereas this one ...
+String[] greatBooks = array("A Game of Thrones", "The Lord of the Rings", "Assassin's Apprentice", "Guards! Guards! (Discworld)");
+// ... is formatted on multiple lines (one element per line):
+["A Game of Thrones",
+ "The Lord of the Rings",
+ "Assassin's Apprentice",
+ "Guards! Guards! (Discworld)"]</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-2.1.0-flatExtracting" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> <span class="small-code">flatExtracting</span></a> now accepts a <span class="small-code">String</span> parameter to specify the property to extract</h4>
+
+   <p>Instead of having to implement an <span class="small-code">Extractor</span>, you can use a <span class="small-code">String</span> to specify the <span class="small-code">Iterable</span> or <span class="small-code">array</span> to extract and then flatten.</p>
+
+   <p>Example :</p>
+
+   <pre><code class="java">// the Simpsons
+CartoonCharacter bart = new CartoonCharacter("Bart Simpson");
+CartoonCharacter lisa = new CartoonCharacter("Lisa Simpson");
+CartoonCharacter maggie = new CartoonCharacter("Maggie Simpson");
+CartoonCharacter homer = new CartoonCharacter("Homer Simpson");
+homer.addChildren(bart, lisa, maggie);
+// the Flintstones
+CartoonCharacter pebbles = new CartoonCharacter("Pebbles Flintstone");
+CartoonCharacter fred = new CartoonCharacter("Fred Flintstone");
+fred.getChildren().add(pebbles);
+
+// extract children list and flatten them in one list
+List&lt;CartoonCharacter&gt; parents = newArrayList(homer, fred);
+assertThat(parents).flatExtracting("children")
+                   .containsOnly(bart, lisa, maggie, pebbles);</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-2.1.0-containsOnlyDigits" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">containsOnlyDigits</span> to <span class="small-code">String</span> assertions</h4>
+
+   <p>Allow to check that a <span class="small-code">String</span> contains only digit (but not that string is a valid number representation !).</p>
+
+   <p>Example :</p>
+
+   <pre><code class="java">// assertions will pass:
+assertThat("321").containsOnlyDigits();
+
+// assertion will fail:
+assertThat("321.0").containsOnlyDigits();</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-2.1.0-primitive-approximation-assertion" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Primitive approximation assertion</h4>
+
+   <p>Add <span class="small-code">isCloseTo</span> primitive approximation assertion for <span class="small-code">long</span>, <span class="small-code">int</span>, <span class="small-code">short</span> and <span class="small-code">byte</span>, it relies on <span class="small-code">within</span> method to express the allowed approximation which can be statically imported from <span class="small-code">org.assertj.core.api.Assertions</span>.</p>
+   <p>Example :</p>
+
+   <pre><code class="java">import static org.assertj.core.api.Assertions.within;
+...
+
+// assertions will pass:
+assertThat(5).isCloseTo(7, within(3));
+
+// if difference is exactly equals to the offset, it's ok
+assertThat(5).isCloseTo(7, within(2));
+
+// assertion will fail:
+assertThat(5).isCloseTo(7, within(1));</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-2.1.0-class-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">isFinal</span> and <span class="small-code">isNotFinal</span> to <span class="small-code">Class</span> assertions</h4>
+   <p>Verifies that the actual <span class="small-code">Class</span> is <span class="small-code">final</span> (has <span class="small-code">final</span> modifier) or not.</p>
+   <p>Example :</p>
+
+   <pre><code class="java">assertThat(String.class).isFinal();
+assertThat(Throwable.class).isNotFinal();</code></pre>
+
 
 <h3 class="page-header"><span id="assertj-core-3.0.0"></span>AssertJ core 3.0.0 for Java 8 release : New and noteworthy</h3>
 
