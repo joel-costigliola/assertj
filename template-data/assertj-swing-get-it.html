@@ -1,18 +1,10 @@
          <h3 class="page-header">Get AssertJ Swing</h3>
 
          <p>AssertJ Swing artifacts are in Maven central repository. There are two main artifacts:
-            <code>assertj-swing-testng</code> and <code>assertj-swing-junit-4.5</code>.</p>
+            <code>assertj-swing-testng</code> and <code>assertj-swing-junit</code>.</p>
 
-         <p>While the dependency for TestNG is obvious, JUnit users need to know that there are three artifacts
-            for JUnit:
-            <ul>
-               <li><code>assertj-swing-junit-4.3.1</code> should be used if your JUnit version is less than
-                  <code>4.5</code></li>
-               <li><code>assertj-swing-junit-4.5</code> should be used if your JUnit version is greater than or equal to
-                  <code>4.5</code></li>
-               <li><code>assertj-swing-junit</code> contains the basic JUnit dependencies - you should
-                  <strong>not</strong> reference this artifact directly!</li>
-            </ul>
+         <p>It should be obvious that JUnit users should depend on <code>assertj-swing-junit</code>
+            while TestNG users should depend on <code>assertj-swing-testng</code> ;-)
          </p>
 
          <div class="row">
@@ -21,7 +13,7 @@
                   <pre><code class="xml">&lt;dependency&gt;
   &lt;groupId&gt;org.assertj&lt;/groupId&gt;
   &lt;artifactId&gt;assertj-swing-testng&lt;/artifactId&gt;
-  &lt;version&gt;1.2.0&lt;/version&gt;
+  &lt;version&gt;2.0.1&lt;/version&gt;
   &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
             </div>
@@ -30,15 +22,15 @@
                <h4 class="quickstart">JUnit</h4>
                   <pre><code class="xml">&lt;dependency&gt;
   &lt;groupId&gt;org.assertj&lt;/groupId&gt;
-  &lt;artifactId&gt;assertj-swing-junit-4.5&lt;/artifactId&gt;
-  &lt;version&gt;1.2.0&lt;/version&gt;
+  &lt;artifactId&gt;assertj-swing-junit&lt;/artifactId&gt;
+  &lt;version&gt;2.0.1&lt;/version&gt;
   &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
             </div>
          </div>
 
          <p>If you use another dependency tool, please check
-            <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-swing|1.2.0|bundle">this page</a>
+            <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-swing|2.0.1|bundle">this page</a>
             to find the relevant AssertJ Swing dependency declaration for your tool.
          </p>
 
@@ -52,6 +44,6 @@
          <pre><code class="xml">&lt;dependency&gt;
   &lt;groupId&gt;org.assertj&lt;/groupId&gt;
   &lt;artifactId&gt;assertj-swing-jide&lt;/artifactId&gt;
-  &lt;version&gt;1.2.0&lt;/version&gt;
+  &lt;version&gt;2.0.1&lt;/version&gt;
   &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
