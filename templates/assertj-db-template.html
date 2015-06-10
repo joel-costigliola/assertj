@@ -32,6 +32,57 @@ for his welcome, for his help and to have accepted to associate this project wit
 
          <h3 class="page-header"><span id="quickstart"></span>DataBase assertions quickstart guide</h3>
 
+      <p>Suppose that in the database there is this table :</p>
+
+<table width="100%">
+<tr>
+<td align="left">
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">MEMBERS</caption>
+        <tr>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SURNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">BIRTHDATE</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SIZE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">05-10-60</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.75</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">2</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Evans'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'David Howell'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'The Edge'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">08-08-61</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.77</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">3</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Clayton'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Adam'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">03-13-60</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.78</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">4</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Mullen'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Larry'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">10-31-61</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.70</td>
+        </tr>
+      </table>
+</td>
+</tr>
+</table>
          <p>To quickly start using DataBase assertions, follow the steps below.</p>
 
          <h4 class="page-header">1 - Add assertj-db dependency to your project pom.xml</h4>
@@ -57,14 +108,14 @@ import org.assertj.db.type.Table;
 
 Table table = new Table(dataSource, "members");
 
-// On the values of a column by using the name of the column
+// Check column "name" values
 assertThat(table).column("name")
     .value().isEqualTo("Hewson")
     .value().isEqualTo("Evans")
     .value().isEqualTo("Clayton")
     .value().isEqualTo("Mullen");
 
-// On the values of a row by using the index of the row
+// Check row at index 1 (the second row) values
 assertThat(table).row(1)
     .value().isEqualTo(2)
     .value().isEqualTo("Evans")
@@ -73,6 +124,35 @@ assertThat(table).row(1)
     .value().isEqualTo(DateValue.of(1961, 8, 8))
     .value().isEqualTo(1.77);</code></pre>
 
+<p>On this simple example you can see many <a href="assertj-db-concepts.html">concepts of AssertJ-DB</a> (the concepts are simple but i advice to take time to well know them) :</p>
+<ul>
+  <li><a href="assertj-db-concepts.html#elements">the elements</a> :
+    <ul>
+      <li><a href="assertj-db-concepts.html#table">Table</a> which represents a table in the database</li>
+      <li><a href="assertj-db-concepts.html#column">Column</a> which represents a column of the table</li>
+      <li><a href="assertj-db-concepts.html#row">Table</a> which represents a row of the table</li>
+      <li><a href="assertj-db-concepts.html#value">Table</a> which represents a value in a column or in a row</li>
+    </ul 
+  </li>
+  <li><a href="assertj-db-concepts.html#tableorrequestasroot">the navigation</a> :
+    <ul>
+      <li>on the first check, navigation from the table to the column called "name" 
+      (<code>column("name")</code> move the assertion on the column), 
+      from this column to the first value (<code>value()</code> first call move to the first value)
+      and after to each value (<code>value()</code> next calls move the next value)
+      </li>
+      <li>
+        on the second check, navigation from the table to the row with index 1
+        (<code>row(1)</code> move the assertion on the row),
+        from this column to the first value
+        and after to each value (<code>value()</code> have a similar behavior from a row and from a column)
+      </li>
+    </ul> 
+  </li>
+  <li><a href="assertj-db-concepts.html#datevalue-timevalue-datetimevalue">DateValue</a> :
+    AssertJ-DB works with Java7. So AssertJ-DB provides way to easily compare values with date, time and date/time.
+  </li>
+</ul>
 
          <h3 class="page-header">3 - Want to see more ?</h3>
          <p>
