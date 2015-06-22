@@ -16,6 +16,7 @@ $menu
       <h1 class="page-header">AssertJ Core latest news</h1>
       <ul>
          <li><a href="#assertj-core-next">AssertJ core next release</a></li>
+         <li><a href="#assertj-core-3.1.0">AssertJ core 3.1.0 for Java 8 release</a></li>
          <li><a href="#assertj-core-2.1.0">AssertJ core 2.1.0 release</a></li>
          <li><a href="#assertj-core-3.0.0">AssertJ core 3.0.0 for Java 8 release</a></li>
          <li><a href="#assertj-core-2.0.0">AssertJ core 2.0.0 release</a></li>
@@ -35,11 +36,110 @@ $menu
 
 <p>
    <ul>
-      <li>XML assertions.</li>
       <li>recursive field by field comparison</li>
       <li>...</li>
    </ul>
 </p>
+
+<h3 class="page-header"><span id="assertj-core-3.1.0"></span>AssertJ Core 3.1.0 for Java 8 release : New and noteworthy</h3>
+
+   <p>Release date : 2015-06-25<br>
+   <p>This release include all changes from <a href="#assertj-core-2.1.0">AssertJ core 2.1.0</a> and provides new ones specific to Java 8.</p>
+
+   <p>Thanks to <span class="contributor">Alexander Bischof</span> and <span class="contributor">Alban Dericbourg</span> for their contributions.</p>
+
+   <h4 class="page-header"> Release notes</h4>
+   <div class="release-section-category">New features :</div>
+   <ul>
+      <li><a href="assertj-core-news.html#assertj-core-3.1.0-filteredOn-with-predicate"><span class="small-code">filteredOn</span> accepts <span class="small-code">Predicate</span></a> parameter.</li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-3.1.0-offset-date-time-assertions"><span class="small-code">OffsetDateTime</span></a> assertions. <span class="contributor">(Alexander Bischof)</span></li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-3.1.0-offset-time-assertions"><span class="small-code">OffsetTime</span></a> assertions. <span class="contributor">(Alexander Bischof)</span></li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-3.1.0-primitive-optional-assertions"><span class="small-code">Primitives Optional</span></a> assertions. <span class="contributor">(Alexander Bischof)</span></li>
+      <li>Add assertion to check the <a href="assertj-core-news.html#assertj-core-3.1.0-optional-type">type of <span class="small-code">Optional</span> value</a>. <span class="contributor">(Alban Dericbourg)</span></li>
+   </ul>
+   <div class="release-section-category">Improvements :</div>
+   <ul>
+      <li>Better looking Javadoc.</li>
+      <li>More Javadoc code examples.</li>
+   </ul>
+
+   <!-- detailed notes -->
+
+   <h4 class="page-header"><span id="assertj-core-3.1.0-filteredOn-with-predicate" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> <span class="small-code">filteredOn</span> accepts <span class="small-code">Predicate</span></a> parameter.</h4>
+
+   <p>AssertJ fluent filtering for collection/arrays has been improved to express the filter condition with a <span class="small-code">Predicate</span>.</p>
+   <p>Example :</p>
+   <pre><code class="java">assertThat(fellowshipOfTheRing).filteredOn( character -> character.getName().contains("o") )
+                               .containsOnly(aragorn, frodo, legolas, boromir);</code></pre>
+  
+   <h4 class="page-header"><span id="assertj-core-3.1.0-offset-date-time-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> New <span class="small-code">OffsetDateTime</span> assertions.</h4>
+
+   <p>Provides assertions for <span class="small-code">OffsetDateTime</span>. Most of the assertions come with a String based parameter equivalent that will be parsed into a <span class="small-code">OffsetDateTime</span>, the examples shown below use this possiblity for brevity sake's.</p>
+   <p>Examples :</p>
+   <pre><code class="java">OffsetDateTime firstOfJanuary2000InUTC = OffsetDateTime.parse("2000-01-01T00:00:00Z");
+      
+assertThat(firstOfJanuary2000InUTC).isEqualTo(OffsetDateTime.parse("2000-01-01T00:00:00Z"));
+// same assertion but AssertJ takes care of expected String to OffsetDateTime conversion
+assertThat(firstOfJanuary2000InUTC).isEqualTo("2000-01-01T00:00:00Z");
+
+assertThat(firstOfJanuary2000InUTC).isAfter("1999-12-31T23:59:59Z");
+// assertion succeeds as OffsetDateTime are compared in actual's time zone
+// 2000-01-01T00:30:00+01:00 = 1999-12-31T23:30:00Z
+assertThat(firstOfJanuary2000InUTC).isAfter("2000-01-01T00:30:00+01:00")
+                                   .isAfterOrEqualTo("1999-12-31T23:59:59Z")
+                                   .isAfterOrEqualTo("2000-01-01T00:00:00Z");
+
+assertThat(firstOfJanuary2000InUTC).isBefore("2000-01-01T00:00:01Z")
+                                   .isBeforeOrEqualTo("2000-01-01T00:00:01Z")
+                                   .isBeforeOrEqualTo("2000-01-01T00:00:00Z");
+
+OffsetDateTime offsetDateTime1 = OffsetDateTime.of(2000, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+OffsetDateTime offsetDateTime2 = OffsetDateTime.of(2000, 1, 1, 23, 59, 59, 999, ZoneOffset.UTC);
+OffsetDateTime offsetDateTime3 = OffsetDateTime.of(2000, 1, 1, 0, 59, 59, 999, ZoneOffset.UTC);
+OffsetDateTime offsetDateTime4 = OffsetDateTime.of(2000, 1, 1, 0, 0, 59, 999, ZoneOffset.UTC);
+OffsetDateTime offsetDateTime5 = OffsetDateTime.of(2000, 1, 1, 0, 0, 0, 999, ZoneOffset.UTC);
+// comparison with a precision level
+assertThat(offsetDateTime1).isEqualToIgnoringHours(offsetDateTime2);
+assertThat(offsetDateTime1).isEqualToIgnoringMinutes(offsetDateTime3);
+assertThat(offsetDateTime1).isEqualToIgnoringSeconds(offsetDateTime4);
+assertThat(offsetDateTime1).isEqualToIgnoringNanos(offsetDateTime5);</code></pre>
+  
+   <h4 class="page-header"><span id="assertj-core-3.1.0-offset-time-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> New <span class="small-code">OffsetTime</span> assertions.</h4>
+
+   <p>Provides assertions for <span class="small-code">OffsetTime</span>. Most of the assertions come with a String based parameter equivalent that will be parsed into a <span class="small-code">OffsetTime</span>, the examples shown below use this possiblity for brevity sake's.</p>
+   <p>Examples :</p>
+   <pre><code class="java">OffsetTime oneAm = OffsetTime.parse("01:00:00+02:00");
+
+assertThat(oneAm).isEqualTo("01:00:00+02:00");
+
+assertThat(oneAm).isAfter("00:00:00+02:00")
+                 .isAfterOrEqualTo("00:00:00+02:00")
+                 .isAfterOrEqualTo("01:00:00+02:00");
+
+assertThat(oneAm).isBefore("02:00:00+02:00")
+                 .isBeforeOrEqualTo("02:00:00+02:00")
+                 .isBeforeOrEqualTo("01:00:00+02:00");
+</code></pre>
+  
+   <h4 class="page-header"><span id="assertj-core-3.1.0-primitive-optional-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Primitives <span class="small-code">Optional</span> assertions</h4>
+
+   <p>Add assertions for <span class="small-code">OptionalInt</span>, <span class="small-code">OptionalLong</span> and <span class="small-code">OptionalDouble</span>.</p>
+   <p>Examples :</p>
+   <pre><code class="java">OptionalInt optional = OptionalInt.of(12);
+assertThat(optional).isPresent()
+                    .hasValue(12);
+
+OptionalDouble emptyOptional = OptionalDouble.empty();
+assertThat(emptyOptional).isEmpty();</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-3.1.0-optional-type" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add assertion to check the type of <span class="small-code">Optional</span> value</h4>
+
+   <p>Allow to check the of type <span class="small-code">Optional</span> value.</p>
+   <p>Example :</p>
+   <pre><code class="java">Optional<String> optional = Optional.of("Test");
+assertThat(optional).containsInstanceOf(String.class);</code></pre>
+
+<!-- -->
 
 <h3 class="page-header"><span id="assertj-core-2.1.0"></span>AssertJ core 2.1.0 release : New and noteworthy</h3>
 

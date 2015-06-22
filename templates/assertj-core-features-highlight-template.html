@@ -19,7 +19,7 @@ $assertj_core_side_menu
 
       <ul>
          <li><a href="assertj-core-news.html#assertj-core-3.0.0">Java 8 assertions in AssertJ Core 3.x</a></li>
-         <li><a href="#filters">Combining filtering and assertions on a group of objects</a></li>
+         <li><a href="#filters">Combining filtering and assertions on iterables or arrays</a></li>
          <li><a href="#extracted-properties-assertion">Assertions on extracted properties/fields of iterable/array elements</a></li>
          <li><a href="#flat-extracted-properties-assertion">Flat(map) extracting</a></li>
          <li><a href="#extracted-method-result-assertion">Assertions on results of method call on iterable/array elements</a></li>
@@ -30,11 +30,12 @@ $assertj_core_side_menu
          <li><a href="#custom-comparison-strategy">Using a custom comparison strategy in assertions</a></li>
       </ul>
 
-      <h3 class="page-header"><span id="filters"></span><i class="fa fa-star"></i> Combining filtering and assertions on a group of objects</h3>
+      <h3 class="page-header"><span id="filters"></span><i class="fa fa-star"></i> Combining filtering and assertions on iterables or arrays</h3>
 
       <p>
          Filtering can be done on arrays or iterables, filters criteria are expressed by :
       <ul>
+         <li>a Java 8 <span class="small-code">Predicate</span></li>
          <li>a condition (<span class="small-code">org.assertj.core.api.Condition</span>)</li>
          <li>some operation on property/field of array/iterable elements</li>
       </ul>
@@ -42,6 +43,12 @@ $assertj_core_side_menu
 
       <p>Let's see both options on some examples taken from <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/FilterExamples.java">FilterExamples.java</a> from <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project.</p>
 
+   <p class="list-section">Filtering with a <span class="small-code">Predicate</span></p> 
+   <p>You specify the filter condition using simple predicate, best expressed with a lambda.</p>
+   <p>Example :</p>
+   <pre><code class="java">assertThat(fellowshipOfTheRing).filteredOn( character -> character.getName().contains("o") )
+                               .containsOnly(aragorn, frodo, legolas, boromir);</code></pre>
+                               
    <p class="list-section">Filtering on a property or a field</p> 
    <p>You specify first the property/field name to filter on and its expected value.  The filter first tries to get the value from a property, then from a field. Reading private fields is supported by default, this can be globally disabled by calling <span class="small-code">Assertions.setAllowExtractingPrivateFields(false)</span>.</p>
    <p>Filters supports reading nested property/field, not that if an intermediate value is null the whole nested property/field is considered to be null, thus reading <span class="small-code">"address.street.name"</span> value will return null if <span class="small-code">"address.street"</span> value is null.</p>
