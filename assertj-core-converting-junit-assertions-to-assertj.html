@@ -163,34 +163,34 @@ sed: preserving permissions for `./sed004220': Permission denied</code></pre>
 
          <h5 class="page-header">1 - Converting <span class="small-code">assertEquals(0, myList.size())</span> to <span class="small-code">assertThat(myList).isEmpty()</span></h5>
          <p>Find/replace Regexp :</p>
-         <pre><code class="java">assertEquals(0,(.*).size()); -> assertThat(\1).isEmpty();</code></pre>
+         <pre><code class="java">assertEquals&#92;(0,(.*).size&#92;(&#92;)&#92;); -> assertThat(&#92;1).isEmpty();</code></pre>
 
          <p>It's important to run this one before the <span class="small-code">assertEquals</span> -> <span class="small-code">isEqualTo</span> conversion to avoid ending with :  <span class="small-code">assertThat(myList.size()).isEqualTo(0)</span></p>
 
          <h5 class="page-header">2 - Converting <span class="small-code">assertEquals(expectedSize, myList.size())</span> to <span class="small-code">assertThat(myList).hasSize(expectedSize)</h5>
          <p>Find/replace Regexp :</p>
-         <pre><code class="java">assertEquals((.*),(*.).size()); -> assertThat(\2).hasSize(\1);</code></pre>
+         <pre><code class="java">assertEquals&#92;((.*),(*.).size&#92;(&#92;)&#92;); -> assertThat(&#92;2).hasSize(&#92;1);</code></pre>
          <p>It's important to run this one before the <span class="small-code">assertEquals</span> -> <span class="small-code">isEqualTo</span> conversion to avoid ending with : <span class="small-code">assertThat(myList.size()).isEqualTo(expectedSize)</span></p>
 
          <h5 class="page-header">3 - Converting <span class="small-code">assertEquals(value, valueUnderTest)</span> to <span class="small-code">assertThat(valueUnderTest).isEqualTo(value)</h5>
          <p>Find/replace Regexp :</p>
-         <pre><code class="java">assertEquals((.*),(.*)); -> assertThat(\2).isEqualTo(\1);</code></pre>
+         <pre><code class="java">assertEquals&#92;((.*),(.*)&#92;); -> assertThat(&#92;2).isEqualTo(&#92;1);</code></pre>
 
          <h5 class="page-header">4 - Converting <span class="small-code">assertNull(objectUnderTest)</span> to <span class="small-code">assertThat(objectUnderTest).isNull()</h5>
-         <p>Find/replace Regexp :</p><pre><code class="java">assertNull((.*)); -> assertThat(\1).isNull();</code></pre>
+         <p>Find/replace Regexp :</p><pre><code class="java">assertNull&#92;((.*)&#92;); -> assertThat(&#92;1).isNull();</code></pre>
 
          <h5 class="page-header">5 - Converting <span class="small-code">assertNotNull(objectUnderTest)</span> to <span class="small-code">assertThat(objectUnderTest).isNotNull()</h5>
          <p>Find/replace Regexp :</p>
-         <pre><code class="java">assertNotNull((.*)); -> assertThat(\1).isNotNull();</code></pre>
+         <pre><code class="java">assertNotNull&#92;((.*)&#92;); -> assertThat(&#92;1).isNotNull();</code></pre>
 
          <h5 class="page-header">6 - Converting <span class="small-code">assertTrue(logicalCondition)</span> to <span class="small-code">assertThat(logicalCondition).isTrue()</h5>
 
          <p>Find/replace Regexp :</p>
-         <pre><code class="java">assertTrue((.*)); -> assertThat(\1).isTrue();</code></pre>
+         <pre><code class="java">assertTrue&#92;((.*)&#92;); -> assertThat(&#92;1).isTrue();</code></pre>
 
          <h5 class="page-header">7 - Converting <span class="small-code">assertFalse(logicalCondition)</span> to <span class="small-code">assertThat(logicalCondition).isFalse()</h5>
          <p>Find/replace Regexp :</p>
-         <pre><code class="java">assertFalse((.*)); -> assertThat(\1).isFalse();</code></pre>
+         <pre><code class="java">assertFalse&#92;((.*)&#92;); -> assertThat(&#92;1).isFalse();</code></pre>
 
       </div>
    </div>
