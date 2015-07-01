@@ -42,7 +42,7 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h2>Improve your assertions with AssertJ</h2>
+					<h2>Improve your tests assertions with AssertJ</h2>
 					<p>&nbsp;</p>
 					<p>website : <a href="http://assertj.org">http://assertj.org</a></p>
 					<p>github : <a href="https://github.com/joel-costigliola/assertj-core">https://github.com/joel-costigliola/assertj-core</a></p>
@@ -57,7 +57,8 @@
 						<li>Useful error messages</li>
 						<li>Possibility to chain assertions </li>
 						<li><a href="http://joel-costigliola.github.io/assertj/assertj-core-quick-start.html">Quick start guide</a></li>
-						<li>Available in ivy repo (version 1.7.1) and maven central (all versions)</li>
+						<li>Available in ivy and maven</li>
+						<li>Use version 2.1.0 for Java 7 and 3.1.0 for Java 8</li>
 					</ul>
 				</section>
 				
@@ -105,7 +106,7 @@
  // use code completion to discover assertions
  assertThat(frodo).isNotEqualTo(sauron);
 
- // Chained assertions (String specific) 
+ // chain assertions
  assertThat(frodo.getName()).startsWith("Fro")
                             .endsWith("do")
                             .isEqualToIgnoringCase("frodo");
@@ -138,6 +139,25 @@
                                 .contains(tuple("Boromir", 37, "Man"),
                                           tuple("Sam", 38, "Hobbit"),
                                           tuple("Legolas", 1000, "Elf")); 
+
+</code></pre>
+					<p>Full assertions showcase in <a href="https://github.com/joel-costigliola/assertj-examples/tree/master/assertions-examples/src/test/java/org/assertj/examples">assertj-examples</a> project.</p>
+				</section>
+
+				<section>
+					<h2>Filter collection under test</h2>
+					<pre><code class="java" contenteditable> 
+ // let's check who are the Hobbit in fellowshipOfTheRing
+ assertThat(fellowshipOfTheRing).filteredOn("race", HOBBIT)
+                                .containsOnly(sam, frodo, pippin, merry);
+
+ // filter supports basic operators like : in, notIn, not
+ assertThat(fellowshipOfTheRing).filteredOn("race", in(MAIA, MAN))
+                                .containsOnly(gandalf, boromir, aragorn);
+
+ // Java 8 love : specify your filter condition with a Predicate
+ assertThat(fellowshipOfTheRing).filteredOn(hero -> hero.getName().contains("o"))
+                                .containsOnly(aragorn, frodo, legolas, boromir);
 
 </code></pre>
 					<p>Full assertions showcase in <a href="https://github.com/joel-costigliola/assertj-examples/tree/master/assertions-examples/src/test/java/org/assertj/examples">assertj-examples</a> project.</p>
@@ -178,15 +198,14 @@
  assertThat(frodo).usingComparator(raceNameComparator)
                   .isEqualTo(sam);
 
-// works also on collection elements
-// the fellowshipOfTheRing includes Gandalf but not Sauron ...
-assertThat(fellowshipOfTheRing).contains(gandalf)
-                               .doesNotContain(sauron);
+ // the fellowshipOfTheRing includes Gandalf but not Sauron ...
+ assertThat(fellowshipOfTheRing).contains(gandalf)
+                                .doesNotContain(sauron);
 
-// ... but if we compare by race, Sauron is in fellowshipOfTheRing 
-// because he's a Maia like Gandalf.
-assertThat(fellowshipOfTheRing).usingElementComparator(raceComparator)
-                               .contains(sauron);
+ // ... but if we compare by race, Sauron is in fellowshipOfTheRing 
+ // because he's a Maia like Gandalf.
+ assertThat(fellowshipOfTheRing).usingElementComparator(raceComparator)
+                                .contains(sauron);
 
 </code></pre>
 				</section>
