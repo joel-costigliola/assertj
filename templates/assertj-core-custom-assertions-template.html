@@ -184,8 +184,6 @@ public void ambiguous_assertThat_resolution() {
 
       <p>The solution is simple, don't make your classes inherit from <span class="small-code">org.assertj.core.api.Assertions</span> and use <span class="small-code">import static  org.assertj.core.api.Assertions.assertThat</span> to access core assertions.</p>
 
-      <!-- Start work here... -->
-
       <h3 class="page-header" id="custom-soft-assertions">Enabling soft assertions on your custom assertion classes.</h3>
 
       <p>You may want to perform <a href="assertj-core-features-highlight.html#soft-assertions">soft assertions</a> using your custom assertions. However, the provided <span class="small-code">SoftAssertions</span> class does not know about your custom classes. For example:</p>
