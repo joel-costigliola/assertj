@@ -173,19 +173,19 @@ Table table = new Table(dataSource, "members");
 
 // Check column "name" values
 assertThat(table).column("name")
-    .value().isEqualTo("Hewson")
-    .value().isEqualTo("Evans")
-    .value().isEqualTo("Clayton")
-    .value().isEqualTo("Mullen");
+                 .value().isEqualTo("Hewson")
+                 .value().isEqualTo("Evans")
+                 .value().isEqualTo("Clayton")
+                 .value().isEqualTo("Mullen");
 
 // Check row at index 1 (the second row) values
 assertThat(table).row(1)
-    .value().isEqualTo(2)
-    .value().isEqualTo("Evans")
-    .value().isEqualTo("David Howell")
-    .value().isEqualTo("The Edge")
-    .value().isEqualTo(DateValue.of(1961, 8, 8))
-    .value().isEqualTo(1.77);</code></pre>
+                 .value().isEqualTo(2)
+                 .value().isEqualTo("Evans")
+                 .value().isEqualTo("David Howell")
+                 .value().isEqualTo("The Edge")
+                 .value().isEqualTo(DateValue.of(1961, 8, 8))
+                 .value().isEqualTo(1.77);</code></pre>
 
 <p>On this simple example you can see many <a href="assertj-db-concepts.html">concepts of AssertJ-DB</a> (the concepts are simple but i advice to take time to well know them) :</p>
 <ul>
@@ -229,12 +229,13 @@ assertThat(table).row(1)
          </p>
 
          <h3 class="page-header"><span id="latest-release"/></span>Database assertions 1.0.0 release</h3>
-         <p>Release date : 2015-xx-xx</p>
-
+         <p>Release date : 2015-07-12</p>
+        <!--
          <div class="release-section-category">Available assertions:</div>
          <ul>
             <li>xxx</li>
          </ul>
+       -->
 
          <h3 class="page-header"><span id="mailing-list"/></span>Mailing list</h3>
 
