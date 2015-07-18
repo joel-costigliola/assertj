@@ -28,11 +28,11 @@ $menu
 <pre><code class="xml">&lt;dependency&gt;
   &lt;groupId&gt;org.assertj&lt;/groupId&gt;
   &lt;artifactId&gt;assertj-guava&lt;/artifactId&gt;
-  &lt;version&gt;1.3.1&lt;/version&gt;
+  &lt;version&gt;2.0.0&lt;/version&gt;
   &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 
-         <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-guava|1.3.1|bundle">assertj dependency declaration</a> for your tool.</p>
+         <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-guava|2.0.0|bundle">assertj dependency declaration</a> for your tool.</p>
 
          <h4 class="page-header">2 - Statically import <span class="small-code">org.assertj.guava.api.Assertions.assertThat</span> ...</h4>
          <p>... and use your preferred IDE code completion after <span class="small-code">assertThat.</span></p>
@@ -83,7 +83,78 @@ assertThat(optional).isPresent().contains("Test");</code></pre>
 
          <p>Note that you can find more working examples in <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/guava">guava package</a> of <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project.</p>
 
-         <h3 class="page-header"><span id="1.3.1"/></span><span id="latest-release"/></span>Guava assertions 1.3.1 release</h3>
+         <h3 class="page-header"><span id="2.0.0"/></span><span id="latest-release"/></span>Guava assertions 2.0.0 release</h3>
+         <p>Release date : 2015-07-21</p>
+
+         <p>Thanks to <span class="contributor">William Delanoue</span> and <span class="contributor">Pascal Schumacher</span> for their contributions to this version.</p>
+
+         <div class="release-section-category">Release notes:</div>
+         <ul>
+            <li><b>Breaking change</b> : AssertJ Guava 2.0.0 relies on Java 7 and Assertj Core 2.x (but not 3.x).</li>
+            <li>New Multimap assertions : <a href="assertj-guava.html#2.0.0-hasSameEntriesAs"><span class="small-code">hasSameEntriesAs(Multimap other)</span></a>.</li>
+            <li>New Multimap assertions : <a href="assertj-guava.html#2.0.0-containsAllEntriesOf"><span class="small-code">containsAllEntriesOf(Multimap other)</span></a>.</li>
+            <li>Allow to run assertions on Optional value with <a href="assertj-guava.html#2.0.0-extractingValue"><span class="small-code">extractingValue()</span></a>. <span class="contributor">(William Delanoue)</span></li>
+            <li>Make <span class="small-code">MapEntry</span> generic i.e : <span class="small-code">MapEntry&lt;K, V&gt;</span>.</li>
+            <li>Make assertj-guava OSGI compatible.</li>
+            <li>Javadoc improvements <span class="contributor">(Pascal Schumacher)</span></li>
+         </ul>
+
+<h4 class="page-header"><span id="2.0.0-hasSameEntriesAs" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> New Multimap assertions : <span class="small-code">hasSameEntriesAs(Multimap other)</span>.</h4>
+
+   <p>Allow to compare the content of two multimaps who would not be equal because being of different types like <span class="small-code">SetMultimap</span> and <span class="small-code">ListMultimap</span>.</p>
+   <p>Example :</p>
+   <pre><code class="java">Multimap&lt;String, String&gt; actual = ArrayListMultimap.create();
+listMultimap.putAll("Spurs", newArrayList("Tony Parker", "Tim Duncan", "Manu Ginobili"));
+listMultimap.putAll("Bulls", newArrayList("Michael Jordan", "Scottie Pippen", "Derrick Rose"));
+
+Multimap&lt;String, String&gt; setMultimap = TreeMultimap.create();
+setMultimap.putAll("Spurs", newHashSet("Tony Parker", "Tim Duncan", "Manu Ginobili"));
+setMultimap.putAll("Bulls", newHashSet("Michael Jordan", "Scottie Pippen", "Derrick Rose"));
+
+// assertion will pass as listMultimap and setMultimap have the same content
+assertThat(listMultimap).hasSameEntriesAs(setMultimap);
+
+// this assertion FAILS even though both multimaps have the same content
+assertThat(listMultimap).isEqualTo(setMultimap);
+</code></pre>         
+
+<h4 class="page-header"><span id="2.0.0-containsAllEntriesOf" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> New Multimap assertions : <span class="small-code">containsAllEntriesOf(Multimap other)</span>.</h4>
+
+   <p>Verifies that the actual <span class="small-code">Multimap</span> contains all entries of the given one (it might contain more entries).</p>
+   <p>Example :</p>
+   <pre><code class="java">Multimap&lt;String, String&gt; actual = ArrayListMultimap.create();
+actual.putAll("Spurs", newArrayList("Tony Parker", "Tim Duncan", "Manu Ginobili"));
+actual.putAll("Bulls", newArrayList("Michael Jordan", "Scottie Pippen", "Derrick Rose"));
+
+Multimap&lt;String, String&gt; other = TreeMultimap.create();
+other.putAll("Spurs", newHashSet("Tony Parker", "Tim Duncan"));
+other.putAll("Bulls", newHashSet("Michael Jordan", "Scottie Pippen"));
+
+// assertion will pass as other is a subset of actual.
+assertThat(actual).containsAllEntriesOf(other);
+
+// this assertion FAILS as other does not contain "Spurs -> "Manu Ginobili" and "Bulls" -> "Derrick Rose"
+assertThat(other).containsAllEntriesOf(actual);
+</code></pre>   
+
+<h4 class="page-header"><span id="2.0.0-extractingValue" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow to run assertions on Optional value with .</h4>
+
+   <p>Allow to chain assertion on the content of the <span class="small-code">Optional</span> using <span class="small-code">extractingValue()</span>.</p>
+   <p>Example :</p>
+   <pre><code class="java">Optional&lt;Number&gt; optional = Optional.of(12L);
+assertThat(optional).extractingValue()
+                    .isInstanceOf(Long.class)
+                    .isEqualTo(12L);
+</code></pre>         
+   <p>There is a special support for  <span class="small-code">String</span> value with <span class="small-code">extractingCharSequence()</span>.</p>
+   <p>Example :</p>
+   <pre><code class="java">Optional&lt;String&gt; optional = Optional.of("Bill");
+// extractingCharSequence allows to chain String specific assertion
+assertThat(optional).extractingCharSequence()
+                    .startsWith("Bi");
+</code></pre>         
+
+         <h3 class="page-header"><span id="1.3.1"/></span></span>Guava assertions 1.3.1 release</h3>
          <p>Release date : 2015-01-21</p>
 
          <p>Bugfix release fixing <span class="small-code">hasUpperEndpointEqual</span> assertion error message (thanks <span class="contributor">László Balázs-Csíki</span> for reporting it).</p>
