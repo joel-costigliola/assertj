@@ -141,7 +141,7 @@ public class TolkienCharacterAssert extends AbstractAssert&lt;TolkienCharacterAs
     isNotNull();
 
     // check condition
-    if (!actual.getName().equals(name)) {
+    if (!Objects.equals(actual.getName(), name)) {
       failWithMessage("Expected character's name to be <%s> but was <%s>", name, actual.getName());
     }
 
