@@ -62,6 +62,9 @@
             <ul class="bs-sidenav nav ">
                <li class="sidenav-header">Assertions generator</li>
                <li><a href="assertj-assertions-generator.html">Overview</a></li>
+               <li><a href="assertj-assertions-generator.html#generated-assertions">Created assertions</a></li>
+               <li><a href="assertj-assertions-generator.html#generated-entry-points">Created entry points</a></li>
+               <li><a href="assertj-assertions-generator.html#generated-assertions-templates">Assertion templates</a></li>
                <li><a href="assertj-assertions-generator.html#quickstart">Quick start</a></li>
                <li><a href="assertj-assertions-generator.html#news">News & releases</a></li>
                <li><a href="assertj-assertions-generator.html#mailing-list">Mailing list</a></li>
@@ -71,6 +74,7 @@
                <li><a href="assertj-assertions-generator-maven-plugin.html">Overview</a></li>
                <li><a href="assertj-assertions-generator-maven-plugin.html#quickstart">Quick start</a></li>
                <li><a href="assertj-assertions-generator-maven-plugin.html#configuration">Configuration</a></li>
+               <li><a href="assertj-assertions-generator-maven-plugin.html#custom-templates">Custom templates</a></li>
                <li><a href="assertj-assertions-generator-maven-plugin.html#news">News & releases</a></li>
                <li><a href="assertj-assertions-generator-maven-plugin.html#mailing-list">Mailing list</a></li>
                <li><a href="assertj-assertions-generator-maven-plugin.html#code">Code & issues <i class="fa fa-github"></i></a></li>
@@ -83,21 +87,146 @@
       <div class="col-lg-10 col-md-10 col-sm-10 text-left">
          <h1 class="page-header">AssertJ assertions generator</h1>
 
-         <p>The Assertion Generator is able to create assertions specific to your own classes, it comes with a simple <a href="#quickstart">command line tool</a> and a <a href="assertj-assertions-generator-maven-plugin.html">maven plugin</a>.</p>
+         <p>Use the Assertion Generator to create assertions specific to your own classes, either through a simple <a href="#quickstart">command line tool</a> or a <a href="assertj-assertions-generator-maven-plugin.html">maven plugin</a>.</p>
 
-         <p>Having the possibility to create assertions specific to your own classes is important because it makes your test assertions reflect the domain model. It's a way to use Domain Driven Design ubiquitous language in your tests. Custom assertions can be seen as a DSL of domain assertions.</p>
+         <p>Having assertions specific to your own classes allows you to use the domain model vocabulary in your test assertions, making them easier to read and closer to the problem you are trying to solve. It's a way to apply Domain Driven Design ubiquitous language in tests.</p>
 
-         <p>Let's say that you have a <span class="small-code">Player</span> class with <span class="small-code">name</span>, <span class="small-code">team</span> and <span class="small-code">teamMates</span> properties,
-            the generator is able to create a <span class="small-code">PlayerAssert</span> assertions class with
-            <span class="small-code">hasName</span> and <span class="small-code">hasTeam</span> assertions. Use it to write code like :</p>
+         <p>Let's say that you have a <span class="small-code">Player</span> class with <span class="small-code">name</span>, <span class="small-code">team</span> and <span class="small-code">teamMates</span> properties (works also with public fields).</p>
+<pre><code class="java">public class Player {
+
+  private String name;
+  private String team;
+  private List&lt;String&gt; teamMates;
+
+  // constructor and setters omitted
+  public String getName() {
+    return name;
+  }
+  public String getTeam() {
+    return team;
+  }
+  public List&lt;String&gt; getTeamMates() {
+    return teamMates;
+  }
+
+  @Override
+  public String toString() {
+    return "Player[name="+name+"]";
+  }  
+}</code></pre>
+
+          <p>The generator is able to create a <span class="small-code">PlayerAssert</span> assertions class with
+            <span class="small-code">hasName</span> and <span class="small-code">hasTeam</span> assertions which can be used like :</p>
 <pre><code class="java">assertThat(mj).hasName("Michael Jordan")
               .hasTeam("Chicago Bulls")
               .hasTeamMates("Scottie Pippen", "Tony Kukoc");</code></pre>
+          <p>The error messages used when an assertion fails also reflects the property checked, for example if hasName fails you will an error message like.</p>
+<pre><code class="java">Expecting name of:
+  &lt;Player[name=Air Jordan]&gt;
+to be:
+  &lt;Michael Jordan&gt;
+but was:
+  &lt;Air Jordan&gt;</code></pre>          
 
-         <p>The generator will also create entry point classes like <span class="small-code">Assertions</span>, <a href="assertj-core-news.html#assertj-core-1.6.0-bdd-assertions-style"><span class="small-code">BddAssertions</span></a> and <a href="http://joel-costigliola.github.io/assertj/assertj-core-features-highlight.html#soft-assertions">SoftAssertions/JUnitSoftAssertions</a> to ease accessing each generated <span class="small-code">*Assert</span> classes.
-            In the case where <span class="small-code">PlayerAssert</span> and <span class="small-code">GameAssert</span> have been generated, the generated <span class="small-code">Assertions</span> class will look like:
-         </p>
-<pre><code class="java">public class Assertions {
+          <h3 class="page-header"><span id="generated-assertions"></span>Created assertions</h3>
+          <p>The generator creates assertions for each properties or public fields, the assertions created are specific to the property/field type. The following list shows which assertions are created for a given type :</p>
+          <ul>
+            <li><span class="small-code">boolean</span> :
+              <ul>
+                <li><span class="small-code">isX()</span></li>
+                <li><span class="small-code">isNotX()</span></li>
+              </ul>
+            </li>
+            <li><span class="small-code">int</span>, <span class="small-code">long</span>, <span class="small-code">short</span>, <span class="small-code">byte</span>, <span class="small-code">char</span> :
+              <ul>
+                <li><span class="small-code">hasX(value)</span> - values compared with <span class="small-code">==</span></li>
+              </ul>
+            </li>
+            <li><span class="small-code">float</span> and <span class="small-code">double</span> :
+              <ul>
+                <li><span class="small-code">hasX(value)</span> - values compared with <span class="small-code">==</span></li>
+                <li><span class="small-code">hasXCloseTo(value, delta)</span>, diff &lt; delta check</li>
+              </ul>
+            </li>
+            <li><span class="small-code">Iterable&lt;T&gt;</span> and <span class="small-code">T[]</span> : 
+              <ul>
+                <li><span class="small-code">hasX(T... values)</span></li>
+                <li><span class="small-code">hasOnlyX(T... values)</span></li>
+                <li><span class="small-code">doesNotHaveX(T... values)</span></li>
+                <li><span class="small-code">hasNoX()</span></li>
+              </ul>
+              Element comparison is based on <span class="small-code">T::equals</span> method.
+            </li>
+            <li><span class="small-code">Object</span> :
+              <ul>
+                <li><span class="small-code">hasX(value)</span> - <span class="small-code">equals</span> based comparison</li>
+              </ul>
+            </li>
+          </ul>
+          <h5>Notes</h5>
+          <p>The generator introspects properties and public fields, the most specific type is chosen when generating assertions, <span class="small-code">Object</span> assertion being the default choice.</p>
+          <p>The same assertions are generated for primitive types and their wrapper versions (ex: <span class="small-code">double</span> and <span class="small-code">Double</span>), the only difference being the performed check : null safe <span class="small-code">equals</span> comparison for wrappers and <span class="small-code">==</span> for primitives.</p>
+          <p>You can change what is generated by modifying the <a href="#generated-assertions-templates">templates</a> used to generate assertions, templates are located in the templates directory.</p>
+
+
+          <h4 class="page-header">Example</h4>
+          <p>Let's enrich our <span class="small-code">Player</span> with different properties/public fields to see what assertions are generated.</p>
+<pre><code class="java">public class Player {
+  // no getter needed to generate assertion for public fields
+  // private fields getters and setters omitted for brevity
+
+  public String name; // Object assertion generated
+  private int age; // whole number assertion generated
+  private double height; // real number assertion generated
+  private boolean retired; // boolean assertion generated
+  private List&lt;String&gt; teamMates;  // Iterable assertion generated
+}</code></pre>    
+
+<p>Created assertions :</p> 
+
+<pre><code class="java">public class PlayerAssert extends AbstractAssert&lt;PlayerAssert, Player&gt; {
+
+  // javadoc and implementation omitted for brevity !
+
+  public PlayerAssert hasAge(int age) { ... }
+
+  public PlayerAssert hasHeight(double height) { ... }
+
+  public PlayerAssert hasHeightCloseTo(double height, double offset) { ... }
+
+  public PlayerAssert hasTeamMates(String... teamMates) { ... }
+
+  public PlayerAssert hasOnlyTeamMates(String... teamMates) { ... }
+
+  public PlayerAssert doesNotHaveTeamMates(String... teamMates) { ... }
+
+  public PlayerAssert hasNoTeamMates() { ... }
+
+  public PlayerAssert isRetired() { ... }
+
+  public PlayerAssert isNotRetired() { ... }
+
+  public PlayerAssert hasName(String name) { ... }
+
+  public PlayerAssert(Player actual) {
+    super(actual, PlayerAssert.class);
+  }
+
+  public static PlayerAssert assertThat(Player actual) {
+    return new PlayerAssert(actual);
+  }
+}
+</code></pre>          
+
+        <h3 class="page-header"><span id="generated-entry-points"></span>Generated entry point classes</h3>
+
+
+        <p>The generator will also create entry point classes like <span class="small-code">Assertions</span>, <a href="assertj-core-news.html#assertj-core-1.6.0-bdd-assertions-style"><span class="small-code">BddAssertions</span></a> and <a href="http://joel-costigliola.github.io/assertj/assertj-core-features-highlight.html#soft-assertions">SoftAssertions/JUnitSoftAssertions</a> to ease accessing each generated <span class="small-code">*Assert</span> classes.</p>
+        <p>Let's say for example that the generator has been applied on <span class="small-code">Player</span> and <span class="small-code">Game</span> classes, it has then created <span class="small-code">PlayerAssert</span> and <span class="small-code">GameAssert</span> classes and an <span class="small-code">Assertions</span> class looking like:</p>
+<pre><code class="java">// the generator selects the base package of classes it generates assertions for 
+package org.player;
+
+public class Assertions {
 
   /**
    * Creates a new instance of &lt;code&gt;{@link GameAssert}&lt;/code&gt;.
@@ -127,13 +256,373 @@
   }
 }</code></pre>
 
-         <h3 class="page-header"><span id="quickstart"></span>Quickstart for NON Maven users</h3>
+         <p>You now just have to statically import <span class="small-code">com.myproject.Assertions.assertThat</span> to use custom assertions for <span class="small-code">Player</span> and <span class="small-code">Game</span> in your tests.</p>
 
-         <p>This quickstart guide is for non maven users, if you are a maven user, you should use the <a href="assertj-assertions-generator-maven-plugin.html">assertions generator maven plugin</a>.</p>
+<pre><code class="java">import static org.player.Assertions.assertThat;
+...
+assertThat(mj).hasName("Michael Jordan")
+              .hasTeam("Chicago Bulls")
+              .hasTeamMates("Scottie Pippen", "Tony Kukoc");</code></pre>
 
-         <h4 class="page-header">1 - Get AssertJ assertions generator</h4>
+        <h3 class="page-header"><span id="generated-assertions-templates"></span>Assertions templates</h3>
+        <p>The assertion generator uses templates to create assertions, templates are located in the <a href="#quickstart">templates directory</a>. There is a template for each type and templates for assert class and entry points. </p>
+        <p>You can (and are encouraged to) modify the templates to generate additional or different assertions, but be sure to generate code that compiles ! :) </p>
+        <p>The templates contain <a href="#template-variables">variables</a> describing the properties, fields and classes for which assertions are generated, these variables are replaced by the actual values read for each class we generate assertions for.</p>
 
-         <p>Get the AssertJ Assertions Generator <a href="http://search.maven.org/#search|ga|1|a%3A%22assertj-assertions-generator%22">archive</a> (either for unix or windows) and extract it, its structure is :</p>
+        <h4 class="page-header">Example</h4>
+
+        <p>Let's see how it works with the template used to generate <span class="small-code">hasName(String name)</span> assertion for <span class="small-code">Player</span>.</p>
+        <p>has_assertion_template.txt :</p>
+
+<pre><code class="java">/**
+ * Verifies that the actual ${class_to_assert}'s ${property} is equal to the given one.
+ * @param ${property_safe} the ${property} to compare the actual ${class_to_assert}'s ${property} to.
+ * @return this assertion object.
+ * @throws AssertionError - if actual ${class_to_assert}'s ${property} is not equal to the given one.${throws_javadoc}
+ */
+public ${self_type} has${Property}(${propertyType} ${property_safe}) ${throws}{
+  // check that actual ${class_to_assert} we want to make assertions on is not null.
+  isNotNull();
+
+  // overrides the default error message with a more explicit one
+  String assertjErrorMessage = "\nExpecting ${property} of:\n  &lt;%s&gt;\nto be:\n  &lt;%s&gt;\nbut was:\n  &lt;%s&gt;";
+  
+  // null safe check
+  ${propertyType} actual${Property} = actual.get${Property}();
+  if (!Objects.areEqual(actual${Property}, ${property_safe})) {
+    failWithMessage(assertjErrorMessage, actual, ${property_safe}, actual${Property});
+  }
+
+  // return the current assertion for method chaining
+  return ${myself};
+}</code></pre>
+
+        <p>Variables used to generate <span class="small-code">hasName(String name)</span> assertion :</p>
+
+        <table>
+          <tr>
+            <th>Variable</th>
+            <th>Usage</th>
+            <th>Example</th>
+          </tr>
+          <tr>
+            <td>${property}</td>
+            <td>property/field we generate an assertion for</td>
+            <td>name</td>
+          </tr>
+          <tr>
+            <td>${propertyType}</td>
+            <td>The type of the property/field we generate an assertion for</td>
+            <td>String</td>
+          </tr>
+          <tr>
+            <td>${Property}</td>
+            <td>property/field we generate an assertion for, with a capital letter</td>
+            <td>Name</td>
+          </tr>
+          <tr>
+            <td>${property_safe}</td>
+            <td>${property} if not equal to a reserved java keyword, expected${Property} otherwise</td>
+            <td>name</td>
+          </tr>
+          <tr>
+            <td>${throws}</td>
+            <td>the exceptions thrown by the property getter (if any)</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>${throws_javadoc}</td>
+            <td>javadoc of the exceptions thrown by the property getter (if any)</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>${class_to_assert}</td>
+            <td>Class we are generating assertion for</td>
+            <td>Player</td>
+          </tr>
+          <tr>
+            <td>${self_type}</td>
+            <td>the assertion class name</td>
+            <td>PlayerAssert</td>
+          </tr>
+          <tr>
+            <td>${myself}</td>
+            <td>represents the assertion class instance used to perform assertions</td>
+            <td>this</td>
+          </tr>
+        </table>
+
+        <p><br/>And finally here's the generated assertion :</p>
+
+<pre><code class="java">/**
+ * Verifies that the actual Player's name is equal to the given one.
+ * @param name the name to compare the actual Player's name to.
+ * @return this assertion object.
+ * @throws AssertionError - if the actual Player's name is not equal to the given one.
+ */
+public PlayerAssert hasName(String name) {
+  // check that actual Player we want to make assertions on is not null.
+  isNotNull();
+
+  // overrides the default error message with a more explicit one
+  String assertjErrorMessage = "\nExpecting name of:\n  &lt;%s&gt;\nto be:\n  &lt;%s&gt;\nbut was:\n  &lt;%s&gt;";
+  
+  // null safe check
+  String actualName = actual.getName();
+  if (!Objects.areEqual(actualName, name)) {
+    failWithMessage(assertjErrorMessage, actual, name, actualName);
+  }
+
+  // return the current assertion for method chaining
+  return this;
+}</code></pre>
+
+        <h4 class="page-header"><span id="templates-list" class="adjustAnchor"></span>Templates list</h4>
+
+        <p>Here's the list of template files and what they are used for.</p>
+
+        <h5>Assertions method templates</h5>
+        <table>
+          <tr>
+            <th>Assertion method template file</th>
+            <th>Usage</th>
+            <th>Example</th>
+          </tr>
+          <tr>
+            <td>has_assertion_template.txt</td>
+            <td>assertion for <span class="small-code">Object</span> (used unless a more specific template is found)</td>
+            <td><span class="small-code">hasName("Joe")</span></td>
+          </tr>
+          <tr>
+            <td>is_assertion_template.txt</td>
+            <td>assertion for <span class="small-code">boolean</span></td>
+            <td><span class="small-code">isRookie()</span></td>
+          </tr>
+          <tr>
+            <td>is_wrapper_assertion_template.txt</td>
+            <td>assertion for <span class="small-code">Boolean</span></td>
+            <td><span class="small-code">isRookie()</span></td>
+          </tr>
+          <tr>
+            <td>has_assertion_template_for_char.txt</td>
+            <td>assertion for <span class="small-code">char</span> primitive type</td>
+            <td><span class="small-code">hasGender('F')</span></td>
+          </tr>
+          <tr>
+            <td>has_assertion_template_for_character.txt</td>
+            <td>assertion for <span class="small-code">Character</span></td>
+            <td><span class="small-code">hasGender('F')</span></td>
+          </tr>
+          <tr>
+            <td>has_assertion_template_for_whole_number.txt</td>
+            <td>assertion for <span class="small-code">int</span>, <span class="small-code">long</span>, <span class="small-code">short</span> and <span class="small-code">byte</span></td>
+            <td><span class="small-code">hasAge(23)</span></td>
+          </tr>
+          <tr>
+            <td>has_assertion_template_for_whole_number_wrapper.txt</td>
+            <td>assertion for <span class="small-code">Integer</span>, <span class="small-code">Long</span>, <span class="small-code">Short</span> and <span class="small-code">Byte</span></td>
+            <td><span class="small-code">hasAge(23)</span></td>
+          </tr>
+          <tr>
+            <td>has_assertion_template_for_real_number.txt</td>
+            <td>assertion for <span class="small-code">float</span> and <span class="small-code">double</span></td>
+            <td><span class="small-code">hasHeight(1.87)</span></td>
+          </tr>
+          <tr>
+            <td>has_assertion_template_for_real_number_wrapper.txt</td>
+            <td>assertion for <span class="small-code">Float</span> and <span class="small-code">Double</span></td>
+            <td><span class="small-code">hasHeight(1.87)</span></td>
+          </tr>
+          <tr>
+            <td>has_elements_assertion_template_for_array.txt</td>
+            <td>assertion for array.</td>
+            <td><span class="small-code">hasTeamMates("mj")</span></td>
+          </tr>
+          <tr>
+            <td>has_elements_assertion_template_for_iterable.txt</td>
+            <td>assertion for <span class="small-code">Iterable</span>.</td>
+            <td><span class="small-code">hasTeamMates("mj")</span></td>
+          </tr>
+        </table>
+
+        <h5>Assertions class templates</h5>
+        <table width="100%">          
+          <tr>
+            <th>Assertion class template file</th>
+            <th>Usage</th>
+          </tr>
+          <tr>
+            <td>custom_assertion_class_template.txt</td>
+            <td>assert class skeleton</td>
+          </tr>
+          <tr>
+            <td>custom_abstract_assertion_class_template.txt</td>
+            <td>base assertion class in in hierarchical assertion</td>
+          </tr>
+          <tr>
+            <td>custom_hierarchical_assertion_class_template.txt</td>
+            <td>concrete assertion class in in hierarchical assertion</td>
+          </tr>
+        </table>
+
+        <h5>Assertions entry point templates</h5>
+        <table>          
+          <tr>
+            <th>Entry point class/methods template file</th>
+            <th>Usage</th>
+          </tr>
+          <tr>
+            <td>standard_assertions_entry_point_class_template.txt</td>
+            <td><span class="small-code">Assertions</span> class skeleton</td>
+          </tr>
+          <tr>
+            <td>standard_assertion_entry_point_method_template.txt</td>
+            <td>template for <span class="small-code">assertThat</span> method in entry point class like <span class="small-code">Assertions</span></td>
+          </tr>
+          <tr>
+            <td>bdd_assertions_entry_point_class_template.txt</td>
+            <td><span class="small-code">BddAssertions</span> class skeleton</td>
+          </tr>
+          <tr>
+            <td>bdd_assertion_entry_point_method_template.txt</td>
+            <td>template for <span class="small-code">then</span> method in <span class="small-code">BddAssertions</span> entry point class</td>
+          </tr>
+          <tr>
+            <td>soft_assertions_entry_point_class_template.txt</td>
+            <td><span class="small-code">SoftAssertions</span> class skeleton</td>
+          </tr>
+          <tr>
+            <td>soft_assertion_entry_point_method_template.txt</td>
+            <td>template for "soft" <span class="small-code">assertThat</span> method in <span class="small-code">SoftAssertions</span> entry point class</td>
+          </tr>
+          <tr>
+            <td>junit_soft_assertions_entry_point_class_template.txt</td>
+            <td><span class="small-code">JUnitSoftAssertions</span> class skeleton</td>
+          </tr>
+        </table>
+
+        <h4 class="page-header"><span id="template-variables" class="adjustAnchor"></span>Variables used in templates</h4>
+
+        <p>Variables used in the assertions templates:</p>
+
+        <table>
+          <tr>
+            <th colspan=3>Common variables (assertion level)</th>
+          </tr>
+          <tr>
+            <td>${property}</td>
+            <td>property/field we generate an assertion for</td>
+          </tr>
+          <tr>
+            <td>${propertyType}</td>
+            <td>The type of the property/field we generate an assertion for</td>
+          </tr>
+          <tr>
+            <td>${Property}</td>
+            <td>property/field we generate an assertion for, with a capital letter</td>
+          </tr>
+          <tr>
+            <td>${property_safe}</td>
+            <td>${property} if not equal to a reserved java keyword, expected${Property} otherwise</td>
+          </tr>
+          <tr>
+            <td>${throws}</td>
+            <td>the exceptions thrown by the property getter (if any)</td>
+          </tr>
+          <tr>
+            <td>${throws_javadoc}</td>
+            <td>javadoc of the exceptions thrown by the property getter (if any)</td>
+          </tr>
+          <tr>
+            <td>${class_to_assert}</td>
+            <td>Class we are generating assertion for</td>
+          </tr>
+          <tr>
+            <td>${self_type}</td>
+            <td>the assertion class name</td>
+          </tr>
+          <tr>
+            <td>${myself}</td>
+            <td>represents the assertion class instance used to perform assertions</td>
+          </tr>
+          <tr>
+            <th colspan=2>Variables specific to boolean/predicate assertions</th>
+          </tr>
+          <tr>
+            <td>${predicate}</td>
+            <td>predicate assertion method name. ex: <span class="small-code">isRookie()</span></td>
+          </tr>
+          <tr>
+            <td>${neg_predicate}</td>
+            <td>negative predicate assertion method name. ex: <span class="small-code">isNotRookie()</span></td>
+          </tr>
+          <tr>
+            <td>${predicate_for_error_message_part1}</td>
+            <td>used to build the first part of a predicate error message.</td>
+          </tr>
+          <tr>
+            <td>${predicate_for_error_message_part2}</td>
+            <td>used to build the second part of a predicate error message.</td>
+          </tr>
+          <tr>
+            <td>${negative_predicate_for_error_message_part1}</td>
+            <td>used to build the first part of a negative predicate error message.</td>
+          </tr>
+          <tr>
+            <td>${negative_predicate_for_error_message_part2}</td>
+            <td>used to build the second part of a negative predicate error message.</td>
+          </tr>
+          <tr>
+            <td>${predicate_for_javadoc}</td>
+            <td>predicate assertion method javadoc</span></td>
+          </tr>
+          <tr>
+            <td>${negative_predicate_for_javadoc}</td>
+            <td>negative predicate assertion method javadoc</span></td>
+          </tr>
+          <tr>
+            <th colspan=2>Variables specific to array assertions</th>
+          </tr>
+          <tr>
+            <td>${elementType}</td>
+            <td>the element type of the array property. ex: <span class="small-code">String</span> for a <span class="small-code">String[]</span> property</td>
+          </tr>
+          <tr>
+            <th colspan=2>Variables specific to assertion class</th>
+          </tr>
+          <tr>
+            <td>${custom_assertion_class}</td>
+            <td>the assertion class name. ex: <span class="small-code">PlayerAssert</span></td>
+          </tr>
+          <tr>
+            <td>${super_assertion_class}</td>
+            <td>used for the super class in hierarchical assertions.</td>
+          </tr>
+          <tr>
+            <td>${imports}</td>
+            <td>imports off the current generated assertion class.</td>
+          </tr>
+          <tr>
+            <td>${package}</td>
+            <td>assertion class package (same as the class we generate assertion for).</td>
+          </tr>
+          <tr>
+            <th colspan=2>Variables specific to assertion entry points classes</th>
+          </tr>
+          <tr>
+            <td>${all_assertions_entry_points}</td>
+            <td>all the generated entry points. ex: <span class="small-code">assertThat</span> for <span class="small-code">Assertions</span>  or <span class="small-code">then</span> for <span class="small-code">BddAssertions</span></td>
+          </tr>
+        </table>
+
+
+        <h3 class="page-header"><span id="quickstart"></span>Quickstart for NON Maven users</h3>
+
+        <p>This quickstart guide is for non maven users, if you are a maven user, you should use the <a href="assertj-assertions-generator-maven-plugin.html">assertions generator maven plugin</a>.</p>
+
+        <h4 class="page-header">1 - Get AssertJ assertions generator</h4>
+
+        <p>Get the AssertJ Assertions Generator <a href="http://search.maven.org/#search|ga|1|a%3A%22assertj-assertions-generator%22">archive</a> (either for unix or windows) and extract it, its structure is :</p>
 <pre><code class="bash">assertion-generator/
   |-- lib/
   |-- templates/
@@ -152,10 +641,24 @@
 
           <p>Your assertions classes have been generated ! You can find them in the current directory.</p>
 
-         <h5>Tip :</h5>
+         <h4 class="page-header">Tip - Change generated assertions</h4>
          <p>You can change what is generated by modifying the templates used for assertions creation (have a look at templates directory)</p>
 
-         <h3 class="page-header"><span id="news"></span><span id="1.6.0"></span>Assertions generator 1.6.0 release</h3>
+         <h3 class="page-header"><span id="news"></span><span id="2.0.0"></span>Assertions generator 2.0.0 release</h3>
+         <p>Release date : 2015-08-01</p>
+         <p>Thanks to <span class="contributor">Alexander Bischof</span> for his contributions to this release.</p>
+
+         <div class="release-section-category">Release notes:</div>
+         <ul>
+            <li>Uses java 7.</li>
+            <li>Define different assertion templates for whole number, real numbers and char properties.</li>
+            <li>Document how assertion templates are used to generate assertions.</li>
+            <li>Generate both <span class="small-code">hasValue(v)</span> and <span class="small-code">hasValueCloseTo(v, delta)</span> for real numbers properties.</li>
+            <li>Fix : Predicate assertion was badly generated when boolean property contained 'is'.</li>
+            <li>Fix : Predicate assertion is now generated for <span class="small-code">Boolean</span> property not starting by 'is'.</li>
+         </ul>
+
+         <h3 class="page-header"></span><span id="1.6.0"></span>Assertions generator 1.6.0 release</h3>
          <p>Release date : 2015-04-11</p>
          <p>Huge thanks to <span class="contributor">Jeremy Krieg</span> for his contributions to this release.</p>
 
