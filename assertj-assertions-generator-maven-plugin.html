@@ -62,6 +62,9 @@
             <ul class="bs-sidenav nav ">
                <li class="sidenav-header">Assertions generator</li>
                <li><a href="assertj-assertions-generator.html">Overview</a></li>
+               <li><a href="assertj-assertions-generator.html#generated-assertions">Created assertions</a></li>
+               <li><a href="assertj-assertions-generator.html#generated-entry-points">Created entry points</a></li>
+               <li><a href="assertj-assertions-generator.html#generated-assertions-templates">Assertion templates</a></li>
                <li><a href="assertj-assertions-generator.html#quickstart">Quick start</a></li>
                <li><a href="assertj-assertions-generator.html#news">News & releases</a></li>
                <li><a href="assertj-assertions-generator.html#mailing-list">Mailing list</a></li>
@@ -71,6 +74,7 @@
                <li><a href="assertj-assertions-generator-maven-plugin.html">Overview</a></li>
                <li><a href="assertj-assertions-generator-maven-plugin.html#quickstart">Quick start</a></li>
                <li><a href="assertj-assertions-generator-maven-plugin.html#configuration">Configuration</a></li>
+               <li><a href="assertj-assertions-generator-maven-plugin.html#custom-templates">Custom templates</a></li>
                <li><a href="assertj-assertions-generator-maven-plugin.html#news">News & releases</a></li>
                <li><a href="assertj-assertions-generator-maven-plugin.html#mailing-list">Mailing list</a></li>
                <li><a href="assertj-assertions-generator-maven-plugin.html#code">Code & issues <i class="fa fa-github"></i></a></li>
@@ -95,8 +99,8 @@
 <pre><code class="xml">&lt;dependency&gt;
     &lt;groupId&gt;org.assertj&lt;/groupId&gt;
     &lt;artifactId&gt;assertj-core&lt;/artifactId&gt;
-    &lt;!-- use version 1.7.0 or higher --&gt;
-    &lt;version&gt;1.7.0&lt;/version&gt;
+    &lt;!-- use version 2.0.0 or higher --&gt;
+    &lt;version&gt;2.0.0&lt;/version&gt;
     &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 
@@ -107,7 +111,7 @@
 <pre><code class="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.assertj&lt;/groupId&gt;
     &lt;artifactId&gt;assertj-assertions-generator-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.6.0&lt;/version&gt;
+    &lt;version&gt;2.0.0&lt;/version&gt;
     &lt;configuration&gt;
         &lt;packages&gt;
             &lt;param&gt;your.first.package&lt;/param&gt;
@@ -181,14 +185,15 @@ JUnitSoftAssertions entry point class has been generated in file:
 BDD Assertions entry point class has been generated in file:
 - .../generated-test-sources/assertj-assertions/org/assertj/examples/data/BddAssertions.java</code></pre>
 
-         <h3 class="page-header"><span id="configuration"></span>Plugin configuration</h3>
+         <h3 class="page-header"><span id="configuration" class="adjustAnchor"></span>Plugin configuration</h3>
 
          <p>Let's start with an example, the description of each configuration element is done afterwards :</p>
 
 <pre><code class="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.assertj&lt;/groupId&gt;
   &lt;artifactId&gt;assertj-assertions-generator-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.6.0&lt;/version&gt;
+  &lt;version&gt;2.0.0&lt;/version&gt;
+  
   &lt;!-- generate assertions at every build --&gt;
   &lt;executions&gt;
     &lt;execution&gt;
@@ -197,26 +202,33 @@ BDD Assertions entry point class has been generated in file:
       &lt;/goals&gt;
     &lt;/execution&gt;
   &lt;/executions&gt;
+
   &lt;configuration&gt;
+
     &lt;!-- list the package whose classes you want to generate assertions for --&gt;
     &lt;packages&gt;
       &lt;param&gt;org.assertj.examples.rpg&lt;/param&gt;
       &lt;param&gt;org.assertj.examples.data&lt;/param&gt;
       &lt;param&gt;com.google.common.net&lt;/param&gt;
     &lt;/packages&gt;
+
     &lt;!-- list the classes you want to generate assertions for --&gt;
     &lt;classes&gt;
       &lt;param&gt;java.nio.file.Path&lt;/param&gt;
       &lt;param&gt;com.fake.UnknownClass&lt;/param&gt;
     &lt;/classes&gt;
+
     &lt;!-- wether generated assertions classes can be inherited with consistent assertion chaining --&gt;
     &lt;hierarchical&gt;true&lt;/hierarchical&gt;
+
     &lt;!-- where to generate assertions entry point classes --&gt;
     &lt;entryPointClassPackage&gt;org.assertj&lt;/entryPointClassPackage&gt;
+
     &lt;!-- restrict classes to generate assertions for with regex --&gt;
     &lt;includes&gt; 
       &lt;param&gt;org\.assertj\.examples\.rpg.*&lt;/param&gt; 
     &lt;/includes&gt;
+
     &lt;!-- excludes with regex classes from generation --&gt;
     &lt;excludes&gt;
       &lt;param&gt;.*google.*HostSpecifier&lt;/param&gt;
@@ -225,24 +237,27 @@ BDD Assertions entry point class has been generated in file:
       &lt;param&gt;.*google.*Escaper.*&lt;/param&gt;
       &lt;param&gt;.*Examples.*&lt;/param&gt;
     &lt;/excludes&gt;
+
     &lt;!-- base directory where to generate assertions --&gt;
     &lt;targetDir&gt;src/test/generated-assertions&lt;/targetDir&gt;
+
     &lt;!-- select which assertions entry point classes to generate --&gt;
     &lt;generateAssertions&gt;true&lt;/generateAssertions&gt;
     &lt;generateBddAssertions&gt;true&lt;/generateBddAssertions&gt;
     &lt;generateSoftAssertions&gt;true&lt;/generateSoftAssertions&gt;
     &lt;generateJUnitSoftAssertions&gt;true&lt;/generateJUnitSoftAssertions&gt;
+
   &lt;/configuration&gt;
 &lt;/plugin&gt;</code></pre>          
 
-         <h4><i class="fa fa-caret-right">&nbsp;</i>Specify packages and classes</h4>
+         <h4 class="page-header"><i class="fa fa-caret-right">&nbsp;</i>Specify packages and classes</h4>
 
          <span class="small-code">packages</span> and <span class="small-code">classes</span> configuration elements indicate where to find classes you want to generate assertions for.
 
          <p>One who don't want to declare packages / classes in its <span class="small-code">pom.xml</span> can use properties <span class="small-code">assertj.packages</span> and <span class="small-code">assertj.classes</span>:
          <pre><code class="bash">mvn assertj:generate-assertions -Dassertj.packages=your.first.package,your.second.package</code></pre></p>
 
-         <h4><i class="fa fa-caret-right">&nbsp;</i>Including and excluding classes from assertion generation</h4>
+         <h4 class="page-header"><i class="fa fa-caret-right">&nbsp;</i>Including and excluding classes from assertion generation</h4>
 
          <p>Sometimes - not to say often - you don't want to generate assertions for all the classes of the specified packages. To avoid that, exclude classes using regular expressions. In the example below, we generate assertions for all classes in <span class="small-code">com.google.common.net</span> <b>except</b> for classes finishing with <span class="small-code">HostSpecifier</span>, <span class="small-code">Headers</span> or containing <span class="small-code">Escaper</span> :</p>
 
@@ -269,7 +284,7 @@ BDD Assertions entry point class has been generated in file:
     &lt;/packages&gt;
 &lt;/configuration&gt;</code></pre>
 
-         <h4><i class="fa fa-caret-right">&nbsp;</i>Generated classes destination directory</h4>
+         <h4 class="page-header"><i class="fa fa-caret-right">&nbsp;</i>Generated classes destination directory</h4>
          <p>You can specify the directory where assertion files are generated using <span class="small-code">targetDir</span> configuration element, e.g. :</p>
 <pre><code class="xml">&lt;configuration&gt;
     &lt;packages&gt;
@@ -279,7 +294,7 @@ BDD Assertions entry point class has been generated in file:
     &lt;targetDir&gt;src/test/java&lt;/targetDir&gt;
 &lt;/configuration&gt;</code></pre>
 
-         <h4><i class="fa fa-caret-right">&nbsp;</i>Selecting which assertion entry point classes to generate</h4>
+         <h4 class="page-header"><i class="fa fa-caret-right">&nbsp;</i>Selecting which assertion entry point classes to generate</h4>
 
          <p>By defaul all assertions entry point classes are generated (unless <span class="small-code">JUnitSoftAssertions</span> if JUnit can not be found), you can select which entry point class to generate as shown below :</p>
 
@@ -297,28 +312,185 @@ BDD Assertions entry point class has been generated in file:
 &lt;/plugin&gt;</code></pre>
         <p></p>
 
-         <h4><i class="fa fa-caret-right">&nbsp;</i>Assertions entry point classes directory</h4>
+         <h4 class="page-header"><i class="fa fa-caret-right">&nbsp;</i>Assertions entry point classes directory</h4>
 
          <p>Assertions entry point classes are generated in a package determined programatically, you can change it with <span class="small-code">entryPointClassPackage</span> configuration property : 
 <pre><code class="xml">&lt;configuration&gt;
     &lt;entryPointClassPackage&gt;my.entry.point.pakkage&lt;/entryPointClassPackage&gt;
 &lt;/configuration&gt;</code></pre></p>
 
-         <h4><i class="fa fa-caret-right">&nbsp;</i>Generating hierarchical assertion classes</h4>
+         <h4 class="page-header"><i class="fa fa-caret-right">&nbsp;</i>Generating hierarchical assertion classes</h4>
 
          <p>You can generate assertion classes that don't hide subclasses assertions after using an assertion from a super class. To do that, we need to generate two classes per domain class, e.g. for <span class="small-code">Book</span> domain class, <span class="small-code">AbstractBookAssert.java</span> and <span class="small-code">BookAssert.java</span> will be generated. Set <span class="small-code">hierarchical</span> property to true to enable this :   
 <pre><code class="xml">&lt;configuration&gt;
     &lt;hierarchical&gt;true&lt;/hierarchical&gt;
 &lt;/configuration&gt;</code></pre></p>
 
-         <h4><i class="fa fa-caret-right">&nbsp;</i>Generating assertion classes at every build</h4>
+
+         <h4 class="page-header"><span id="custom-templates" class="adjustAnchor"></span><i class="fa fa-caret-right">&nbsp;</i>Customizing generated assertions</h4>
+
+         <p>Assertions are generated using templates defining skeleton code with <a href="assertj-assertions-generator.html#template-variables">variables</a>, as explained in details <a href="assertj-assertions-generator.html#generated-assertions-templates">here</a>.</p>
+         <p>Since version 2.0, users can replace the existing <a href="assertj-assertions-generator.html#templates-list">templates</a> by their own to change how assertions are generated. See below an example of such configuration :</p>  
+
+<pre><code class="xml">&lt;configuration&gt;
+    &lt;templates&gt;
+        &lt;!-- specify templateDirectory as the base directory where to look for templates --&gt;
+        &lt;templateDirectory&gt;src/test/resources/templates/&lt;/templateDirectory&gt;
+        &lt;!-- change Object generated assertions (ex hasName(String expected)) --&gt;
+        &lt;objectAssertion&gt;my_object_assertion_template.txt&lt;/objectAssertion&gt;
+        &lt;!-- change Iterable generated assertions (ex hasTeamMates(String... teamMates)) --&gt;
+        &lt;iterableAssertion&gt;my_iterable_assertion_template.txt&lt;/iterableAssertion&gt;
+    &lt;/templates&gt;
+&lt;/configuration&gt;</code></pre>
+
+<h5>Configurable template properties :</h5>
+<pre><code class="xml">&lt;templates&gt;
+
+  &lt;!-- assertion method templates --&gt;     
+  &lt;objectAssertion&gt;my_has_assert_template.txt&lt;/objectAssertion&gt;
+  &lt;arrayAssertion&gt;my_array_assert_template.txt&lt;/arrayAssertion&gt;
+  &lt;iterableAssertion&gt;my_iterable_assert_template.txt&lt;/iterableAssertion&gt;
+  &lt;booleanAssertion&gt;my_boolean_assert_template.txt&lt;/booleanAssertion&gt;
+  &lt;booleanWrapperAssertion&gt;my_Boolean_wrapper_assert_template.txt&lt;/booleanWrapperAssertion&gt;
+  &lt;charAssertion&gt;my_char_assert_template.txt&lt;/charAssertion&gt;
+  &lt;characterAssertion&gt;my_Character_assert_template.txt&lt;/characterAssertion&gt;
+  &lt;realNumberAssertion&gt;my_real_number_assert_template.txt&lt;/realNumberAssertion&gt;
+  &lt;realNumberWrapperAssertion&gt;my_real_number_wrapper_assert_template.txt&lt;/realNumberWrapperAssertion&gt;
+  &lt;wholeNumberAssertion&gt;my_whole_number_assert_template.txt&lt;/wholeNumberAssertion&gt;
+  &lt;wholeNumberWrapperAssertion&gt;my_whole_number_wrapper_assert_template.txt&lt;/wholeNumberWrapperAssertion&gt;
+
+  &lt;!-- assertion class templates --&gt;
+  &lt;assertionClass&gt;my_assertion_class_template.txt&lt;assertionClass&gt;
+  &lt;hierarchicalAssertionConcreteClass&gt;my_hierarch_concrete_class.txt&lt;/hierarchicalAssertionConcreteClass&gt;
+  &lt;hierarchicalAssertionAbstractClass&gt;my_hierarch_base_class.txt&lt;/hierarchicalAssertionAbstractClass&gt;
+
+  &lt;!-- entry point templates --&gt;
+  &lt;assertionsEntryPointClass&gt;my_Assertions_class_template.txt&lt;/assertionsEntryPointClass&gt;
+  &lt;assertionEntryPointMethod&gt;my_assertThat_method_template.txt&lt;/assertionEntryPointMethod&gt;
+  &lt;bddEntryPointAssertionClass&gt;my_BddAssertions_class_template.txt&lt;/bddEntryPointAssertionClass&gt;
+  &lt;bddEntryPointAssertionMethod&gt;my_then_method_template.txt&lt;/bddEntryPointAssertionMethod&gt;/
+  &lt;softEntryPointAssertionClass&gt;my_SoftAssertions_class_template.txt&lt;/softEntryPointAssertionClass&gt;
+  &lt;softEntryPointAssertionMethod&gt;my_soft_assertThat_method_template.txt&lt;/softEntryPointAssertionMethod&gt;
+  &lt;junitSoftEntryPointAssertionClass&gt;my_JunitSoftAssertions_class_template.txt&lt;/junitSoftEntryPointAssertionClass&gt;
+
+&lt;/templates&gt;</code></pre>
+
+<h5>Default template properties values (used if not replaced) :</h5>
+        <table width="100%">
+          <tr>
+            <th>Assertion method property</th>
+            <th>Default template file</th>
+          </tr>
+          <tr>
+            <td>objectAssertion</td>
+            <td>has_assertion_template.txt</td>
+          </tr>
+          <tr>
+            <td>arrayAssertion</td>
+            <td>has_elements_assertion_template_for_array.txt</td>
+          </tr>
+          <tr>
+            <td>iterableAssertion</td>
+            <td>has_elements_assertion_template_for_iterable.txt</td>
+          </tr>
+          <tr>
+            <td>booleanAssertion</td>
+            <td>is_assertion_template.txt</td>
+          </tr>
+          <tr>
+            <td>booleanWrapperAssertion</td>
+            <td>is_wrapper_assertion_template.txt</td>
+          </tr>
+          <tr>
+            <td>charAssertion</td>
+            <td>has_assertion_template_for_char.txt</td>
+          </tr>
+          <tr>
+            <td>characterAssertion</td>
+            <td>has_assertion_template_for_character.txt</td>
+          </tr>
+          <tr>
+            <td>wholeNumberAssertion</td>
+            <td>has_assertion_template_for_whole_number.txt</td>
+          </tr>
+          <tr>
+            <td>wholeNumberWrapperAssertion</td>
+            <td>has_assertion_template_for_whole_number_wrapper.txt</td>
+          </tr>
+          <tr>
+            <td>realNumberAssertion</td>
+            <td>has_assertion_template_for_real_number.txt</td>
+          </tr>
+          <tr>
+            <td>realNumberWrapperAssertion</td>
+            <td>has_assertion_template_for_real_number_wrapper.txt</td>
+          </tr>
+        </table>
+        <p> </p>
+
+        <table width="100%">          
+          <tr>
+            <th>Assertion class property</th>
+            <th>Default template file</th>
+          </tr>
+          <tr>
+            <td>assertionClass</td>
+            <td>custom_assertion_class_template.txt</td>
+          </tr>
+          <tr>
+            <td>hierarchicalAssertionAbstractClass</td>
+            <td>custom_abstract_assertion_class_template.txt</td>
+          </tr>
+          <tr>
+            <td>hierarchicalAssertionConcreteClass</td>
+            <td>custom_hierarchical_assertion_class_template.txt</td>
+          </tr>
+        </table>
+        <p> </p>
+        <table width="100%">          
+          <tr>
+            <th>Assertion entry point property</th>
+            <th>Default template file</th>
+          </tr>
+          <tr>
+            <td>assertionsEntryPointClass</td>
+            <td>standard_assertions_entry_point_class_template.txt</td>
+          </tr>
+          <tr>
+            <td>assertionEntryPointMethod</td>
+            <td>standard_assertion_entry_point_method_template.txt</td>
+          </tr>
+          <tr>
+            <td>bddEntryPointAssertionClass</td>
+            <td>bdd_assertions_entry_point_class_template.txt</td>
+          </tr>
+          <tr>
+            <td>bddEntryPointAssertionMethod</td>
+            <td>bdd_assertion_entry_point_method_template.txt</td>
+          </tr>
+          <tr>
+            <td>softEntryPointAssertionClass</td>
+            <td>soft_assertions_entry_point_class_template.txt</td>
+          </tr>
+          <tr>
+            <td>softEntryPointAssertionMethod</td>
+            <td>soft_assertion_entry_point_method_template.txt</td>
+          </tr>
+          <tr>
+            <td>junitSoftEntryPointAssertionClass</td>
+            <td>junit_soft_assertions_entry_point_class_template.txt</td>
+          </tr>
+        </table>
+
+
+         <h4 class="page-header"><i class="fa fa-caret-right">&nbsp;</i>Generating assertion classes at every build</h4>
 
          <p>To generate assertions classes at every build, add an <span class="small-code">&lt;executions&gt;</span> section as shown below :</p>
 
 <pre><code class="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.assertj&lt;/groupId&gt;
     &lt;artifactId&gt;assertj-assertions-generator-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.6.0&lt;/version&gt;
+    &lt;version&gt;2.0.0&lt;/version&gt;
     &lt;executions&gt;
         &lt;execution&gt;
             &lt;goals&gt;
@@ -335,12 +507,20 @@ BDD Assertions entry point class has been generated in file:
 &lt;/plugin&gt;</code></pre>
         <p></p>
 
-         <h4><i class="fa fa-caret-right">&nbsp;</i>Disabling assertions generation</h4>
+         <h4 class="page-header"><i class="fa fa-caret-right">&nbsp;</i>Disabling assertions generation</h4>
 
          <p>To disable assertions generation, set <span class="small-code">assertj.skip</span> to <span class="small-code">true</span>:
          <pre><code class="bash">mvn assertj:generate-assertions -Dassertj.skip=true</code></pre></p>
 
-         <h3 class="page-header"><span id="news"></span><span id="1.6.0"></span>Assertions generator maven plugin 1.6.0 release</h3>
+         <h3 class="page-header"><span id="news"></span><span id="2.0.0"></span>Assertions generator maven plugin 2.0.0 release</h3>
+         <p>Release date : 2015-08-xx</p>
+
+         <div class="release-section-category">Release notes:</div>
+         <ul>
+            <li>Uses <a href="assertj-assertions-generator.html#2.0.0">assertj-assertions-generator 2.0.0</a>.</li>            
+         </ul>
+
+         <h3 class="page-header"></span><span id="1.6.0"></span>Assertions generator maven plugin 1.6.0 release</h3>
          <p>Release date : 2015-04-11</p>
 
          <div class="release-section-category">Release notes:</div>
