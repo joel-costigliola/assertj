@@ -115,9 +115,9 @@
          <li><a href="#default-description">Default description</a></li>
       </ul>
       <p>For the examples below, suppose that in the database there are these two tables :</p>
-<table width="100%">
+<table width="100%" style="border-width: 0px">
 <tr>
-<td align="left">
+<td align="left" style="border-width: 0px">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">MEMBERS</caption>
         <tr>
@@ -164,7 +164,7 @@
 </td>
 </tr>
 <tr>
-<td align="left">
+<td align="left" style="border-width: 0px">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">ALBUMS</caption>
         <tr>
@@ -342,8 +342,8 @@ Table table2 = new Table(source, "members");</code></pre>
 <p>The two <a href="db/api/org/assertj/db/type/Table.html">Table</a>s above 
 (<code class="java">table1</code> and <code class="java">table2</code>) are equivalent.</p>
 
-<table width="100%">
-<tr><td align="left">
+<table width="100%" style="border-width: 0px">
+<tr><td align="left" style="border-width: 0px">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "table1" or "table2"</caption>
         <tr>
@@ -398,9 +398,9 @@ Table table3 = new Table(source, &quot;members&quot;, new String[] { &quot;id&qu
 Table table4 = new Table(source, &quot;members&quot;, null, new String[] { &quot;birthdate&quot; });
 // Get the data from "name" column from "members" table (because "id" is included and excluded)
 Table table5 = new Table(source, &quot;members&quot;, new String[] { &quot;id&quot;, &quot;name&quot; }, new String[] { &quot;id&quot; });</code></pre>
-<table width="100%">
+<table width="100%" style="border-width: 0px">
 <tr>
-<td align="left" width="150px">
+<td align="left" width="150px" style="border-width: 0px">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "table3"</caption>
         <tr>
@@ -425,7 +425,7 @@ Table table5 = new Table(source, &quot;members&quot;, new String[] { &quot;id&qu
         </tr>
       </table>
 </td>
-<td align="left" width="400px">
+<td align="left" width="400px" style="border-width: 0px">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "table4"</caption>
         <tr>
@@ -465,7 +465,7 @@ Table table5 = new Table(source, &quot;members&quot;, new String[] { &quot;id&qu
         </tr>
       </table>
 </td>
-<td align="left">
+<td align="left" style="border-width: 0px">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "table5"</caption>
         <tr>
@@ -508,8 +508,8 @@ Request request2 = new Request(dataSource,
 <p>The two <a href="db/api/org/assertj/db/type/Request.html">Requet</a>s above 
 (<code class="java">request1</code> and <code class="java">request2</code>) are equivalent.</p>
 
-<table width="100%">
-<tr><td align="left">
+<table width="100%" style="border-width: 0px">
+<tr><td align="left" style="border-width: 0px">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "request1" or "request2"</caption>
         <tr>
@@ -547,9 +547,9 @@ Request request4 = new Request(dataSource,
                                "where name like ? and firstname like ?;",
                                "%e%",
                                "%Paul%");</code></pre>
-<table width="100%">
+<table width="100%" style="border-width: 0px">
 <tr>
-<td align="left" width="300px">
+<td align="left" width="300px" style="border-width: 0px">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "request3"</caption>
         <tr>
@@ -574,7 +574,7 @@ Request request4 = new Request(dataSource,
         </tr>
       </table>
 </td>
-<td align="left">
+<td align="left" style="border-width: 0px">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "request4"</caption>
         <tr>
@@ -634,9 +634,9 @@ But more important, the primary is used to determinate which rows at the same wi
 In <i>Representation of "changes4" or "changes5"</i> the modification of first row of the table become a creation and deletion.
 </p>
 
-<table width="100%">
+<table width="100%" style="border-width: 0px">
 <tr>
-<td align="left">
+<td align="left" style="border-width: 0px">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "changes1" or "changes2"</caption>
 
@@ -779,7 +779,7 @@ In <i>Representation of "changes4" or "changes5"</i> the modification of first r
 </td>
 </tr>
 <tr>
-<td align="left">
+<td align="left" style="border-width: 0px">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "changes3"</caption>
 
@@ -850,9 +850,9 @@ In <i>Representation of "changes4" or "changes5"</i> the modification of first r
 </td>
 </tr>
 <tr>
-<td align="left">
+<td align="left" style="border-width: 0px">
       <table border="1" cellspacing="0" cellpadding="2">
-      <caption style="font-size:70%;background-color:white">Representation of "changes4" or "changes5"</caption>
+      <caption style="font-size:70%;">Representation of "changes4" or "changes5"</caption>
 
         <tr>
         <td style="text-align:center;font-size:70%;background-color:white">Creation</td>
@@ -934,7 +934,7 @@ In <i>Representation of "changes4" or "changes5"</i> the modification of first r
 </td>
 </tr>
 <tr>
-<td align="left">
+<td align="left" style="border-width: 0px">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "changes6"</caption>
 
@@ -1004,9 +1004,9 @@ is a element of the <a href="db/api/org/assertj/db/type/Changes.html">Changes</a
 of "changes3".
 </p>
 
-<table width="100%">
+<table width="100%" style="border-width: 0px">
 <tr>
-<td align="left">
+<td align="left" style="border-width: 0px">
 
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "changes3"</caption>
@@ -1092,9 +1092,9 @@ of a <a href="db/api/org/assertj/db/type/Change.html">Change</a>.
 <p>Below framed in red the third <a href="db/api/org/assertj/db/type/Row.html">Row</a> of "table4".
 </p>
 
-<table width="100%">
+<table width="100%" style="border-width: 0px">
 <tr>
-<td align="left">
+<td align="left" style="border-width: 0px">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "table4"</caption>
         <tr>
@@ -1139,9 +1139,9 @@ of a <a href="db/api/org/assertj/db/type/Change.html">Change</a>.
 
 <p>Below framed in red the second <a href="db/api/org/assertj/db/type/Row.html">Row</a> of "request3".
 </p>
-<table width="100%">
+<table width="100%" style="border-width: 0px">
 <tr>
-<td align="left">
+<td align="left" style="border-width: 0px">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "request3"</caption>
         <tr>
@@ -1173,9 +1173,9 @@ the second <a href="db/api/org/assertj/db/type/Change.html">Change</a>
 of "changes3".
 </p>
 
-<table width="100%">
+<table width="100%" style="border-width: 0px">
 <tr>
-<td align="left">
+<td align="left" style="border-width: 0px">
 
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "changes3"</caption>
@@ -1262,9 +1262,9 @@ of a <a href="db/api/org/assertj/db/type/Change.html">Change</a>.
 <p>Below framed in red the second <a href="db/api/org/assertj/db/type/Column.html">Column</a> of "table4".
 </p>
 
-<table width="100%">
+<table width="100%" style="border-width: 0px">
 <tr>
-<td align="left">
+<td align="left" style="border-width: 0px">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "table4"</caption>
         <tr>
@@ -1309,9 +1309,9 @@ of a <a href="db/api/org/assertj/db/type/Change.html">Change</a>.
 
 <p>Below framed in red the second <a href="db/api/org/assertj/db/type/Column.html">Column</a> of "request3".
 </p>
-<table width="100%">
+<table width="100%" style="border-width: 0px">
 <tr>
-<td align="left">
+<td align="left" style="border-width: 0px">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "request3"</caption>
         <tr>
@@ -1343,9 +1343,9 @@ the second <a href="db/api/org/assertj/db/type/Change.html">Change</a>
 of "changes3".
 </p>
 
-<table width="100%">
+<table width="100%" style="border-width: 0px">
 <tr>
-<td align="left">
+<td align="left" style="border-width: 0px">
 
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "changes3"</caption>
@@ -1436,9 +1436,9 @@ or in a <a href="db/api/org/assertj/db/type/Column.html">Column</a>.
 </li>
 </ul>
 
-<table width="100%">
+<table width="100%" style="border-width: 0px">
 <tr>
-<td align="left">
+<td align="left" style="border-width: 0px">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "table4"</caption>
         <tr>
@@ -1490,9 +1490,9 @@ or in a <a href="db/api/org/assertj/db/type/Column.html">Column</a>.
 </li>
 </ul>
 
-<table width="100%">
+<table width="100%" style="border-width: 0px">
 <tr>
-<td align="left">
+<td align="left" style="border-width: 0px">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "request3"</caption>
         <tr>
@@ -1533,9 +1533,9 @@ of "changes3"
 </li>
 </ul>
 
-<table width="100%">
+<table width="100%" style="border-width: 0px">
 <tr>
-<td align="left">
+<td align="left" style="border-width: 0px">
 
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "changes3"</caption>
