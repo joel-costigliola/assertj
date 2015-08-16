@@ -327,10 +327,8 @@ Table table3 = new Table(source, &quot;members&quot;, new String[] { &quot;id&qu
 Table table4 = new Table(source, &quot;members&quot;, null, new String[] { &quot;birthdate&quot; });
 // Get the data from "name" column from "members" table (because "id" is included and excluded)
 Table table5 = new Table(source, &quot;members&quot;, new String[] { &quot;id&quot;, &quot;name&quot; }, new String[] { &quot;id&quot; });</code></pre>
-<table width="100%" style="border: 0px solid black">
-<tr>
-<td align="left" width="150px">
-      <table border="1" cellspacing="0" cellpadding="2" style="border: 0px solid black">
+<div>
+      <table border="1" cellspacing="0" cellpadding="2" style="border: 0px solid black;display: inline;">
       <caption style="font-size:70%">Representation of "table3"</caption>
         <tr>
         <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">ID</th>
@@ -353,9 +351,7 @@ Table table5 = new Table(source, &quot;members&quot;, new String[] { &quot;id&qu
         <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Mullen'</td>
         </tr>
       </table>
-</td>
-<td align="left" width="400px">
-      <table border="1" cellspacing="0" cellpadding="2">
+      <table border="1" cellspacing="0" cellpadding="2" style="border: 0px solid black;display: inline;">
       <caption style="font-size:70%">Representation of "table4"</caption>
         <tr>
         <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">ID</th>
@@ -393,9 +389,7 @@ Table table5 = new Table(source, &quot;members&quot;, new String[] { &quot;id&qu
         <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.70</td>
         </tr>
       </table>
-</td>
-<td align="left">
-      <table border="1" cellspacing="0" cellpadding="2">
+      <table border="1" cellspacing="0" cellpadding="2" style="border: 0px solid black;display: inline;">
       <caption style="font-size:70%">Representation of "table5"</caption>
         <tr>
         <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">NAME</th>
@@ -413,9 +407,7 @@ Table table5 = new Table(source, &quot;members&quot;, new String[] { &quot;id&qu
         <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Mullen'</td>
         </tr>
       </table>
-</td>
-</tr>
-</table>
+</div>
       <h4 class="page-header" ><span id="request"></span>Request</h4>
       <p>A <a href="db/api/org/assertj/db/type/Request.html">Request</a> represents
       a SQL request on the database.</p>
@@ -472,10 +464,8 @@ Request request4 = new Request(dataSource,
                                "where name like ? and firstname like ?;",
                                "%e%",
                                "%Paul%");</code></pre>
-<table width="100%">
-<tr>
-<td align="left" width="300px">
-      <table border="1" cellspacing="0" cellpadding="2">
+<div>
+      <table border="1" cellspacing="0" cellpadding="2" style="border: 0px solid black;display: inline;">
       <caption style="font-size:70%">Representation of "request3"</caption>
         <tr>
         <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">NAME</th>
@@ -498,9 +488,7 @@ Request request4 = new Request(dataSource,
         <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
         </tr>
       </table>
-</td>
-<td align="left">
-      <table border="1" cellspacing="0" cellpadding="2">
+      <table border="1" cellspacing="0" cellpadding="2" style="border: 0px solid black;display: inline;">
       <caption style="font-size:70%">Representation of "request4"</caption>
         <tr>
         <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">NAME</th>
@@ -513,9 +501,7 @@ Request request4 = new Request(dataSource,
         <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono'</td>
         </tr>
       </table>
-</td>
-</tr>
-</table>
+</div>
       <h4 class="page-header" ><span id="changes"></span>Changes</h4>
       <p>The <a href="db/api/org/assertj/db/type/Changes.html">Changes</a>
       are the differences of states in database between a <code class="java">start point</code> and a <code class="java">end point</code>. 
