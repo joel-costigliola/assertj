@@ -115,9 +115,7 @@
          <li><a href="#default-description">Default description</a></li>
       </ul>
       <p>For the examples below, suppose that in the database there are these two tables :</p>
-<table width="100%">
-<tr>
-<td align="left">
+
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">MEMBERS</caption>
         <tr>
@@ -161,10 +159,9 @@
         <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.70</td>
         </tr>
       </table>
-</td>
-</tr>
-<tr>
-<td align="left">
+
+      <br/>
+
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">ALBUMS</caption>
         <tr>
@@ -296,9 +293,6 @@
         <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
         </tr>
       </table>
-</td>
-</tr>
-</table>
 
       <h3 class="page-header" ><span id="connection"></span>Connection to the database</h3>
       <p>To make assertions on a database, it is necessary to connect. For that, it is possible to use a <code class="java">DataSource</code>
@@ -342,8 +336,6 @@ Table table2 = new Table(source, "members");</code></pre>
 <p>The two <a href="db/api/org/assertj/db/type/Table.html">Table</a>s above 
 (<code class="java">table1</code> and <code class="java">table2</code>) are equivalent.</p>
 
-<table width="100%">
-<tr><td align="left">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "table1" or "table2"</caption>
         <tr>
@@ -387,8 +379,8 @@ Table table2 = new Table(source, "members");</code></pre>
         <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.70</td>
         </tr>
       </table>
-</td></tr>
-</table>
+
+      <br/>
 
       <p>For a <a href="db/api/org/assertj/db/type/Table.html">Table</a>,
       it is possible to chose the columns to include and to exclude in the assertions.</p>
@@ -398,10 +390,10 @@ Table table3 = new Table(source, &quot;members&quot;, new String[] { &quot;id&qu
 Table table4 = new Table(source, &quot;members&quot;, null, new String[] { &quot;birthdate&quot; });
 // Get the data from "name" column from "members" table (because "id" is included and excluded)
 Table table5 = new Table(source, &quot;members&quot;, new String[] { &quot;id&quot;, &quot;name&quot; }, new String[] { &quot;id&quot; });</code></pre>
-<table width="100%">
+<table width="100%" style="border: 0px solid black">
 <tr>
 <td align="left" width="150px">
-      <table border="1" cellspacing="0" cellpadding="2">
+      <table border="1" cellspacing="0" cellpadding="2" style="border: 0px solid black">
       <caption style="font-size:70%">Representation of "table3"</caption>
         <tr>
         <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">ID</th>
@@ -505,11 +497,9 @@ Request request1 = new Request(source,
 // by using the DataSource
 Request request2 = new Request(dataSource, 
                                "select name, firstname from members where id = 2 or id = 3");</code></pre>
-<p>The two <a href="db/api/org/assertj/db/type/Request.html">Requet</a>s above 
+<p>The two <a href="db/api/org/assertj/db/type/Request.html">Request</a>s above 
 (<code class="java">request1</code> and <code class="java">request2</code>) are equivalent.</p>
 
-<table width="100%">
-<tr><td align="left">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "request1" or "request2"</caption>
         <tr>
@@ -528,8 +518,6 @@ Request request2 = new Request(dataSource,
         <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
         </tr>
       </table>
-</td></tr>
-</table>
 
       <p>For a <a href="db/api/org/assertj/db/type/Request.html">Request</a>,
       it is possible to use a simple SQL request or a SQL request with one or many parameters.
@@ -634,9 +622,6 @@ But more important, the primary is used to determinate which rows at the same wi
 In <i>Representation of "changes4" or "changes5"</i> the modification of first row of the table become a creation and deletion.
 </p>
 
-<table width="100%">
-<tr>
-<td align="left">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "changes1" or "changes2"</caption>
 
@@ -776,10 +761,8 @@ In <i>Representation of "changes4" or "changes5"</i> the modification of first r
         </tr>
 
       </table>
-</td>
-</tr>
-<tr>
-<td align="left">
+<br/>
+
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "changes3"</caption>
 
@@ -847,12 +830,10 @@ In <i>Representation of "changes4" or "changes5"</i> the modification of first r
         </tr>
 
       </table>
-</td>
-</tr>
-<tr>
-<td align="left">
+<br/>
+
       <table border="1" cellspacing="0" cellpadding="2">
-      <caption style="font-size:70%;background-color:white">Representation of "changes4" or "changes5"</caption>
+      <caption style="font-size:70%">Representation of "changes4" or "changes5"</caption>
 
         <tr>
         <td style="text-align:center;font-size:70%;background-color:white">Creation</td>
@@ -931,10 +912,8 @@ In <i>Representation of "changes4" or "changes5"</i> the modification of first r
         </tr>
 
       </table>
-</td>
-</tr>
-<tr>
-<td align="left">
+<br/>
+
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "changes6"</caption>
 
@@ -992,9 +971,7 @@ In <i>Representation of "changes4" or "changes5"</i> the modification of first r
         </tr>
 
       </table>
-</td>
-</tr>
-</table>
+<br/>
       <h4 class="page-header" ><span id="change"></span>Change</h4>
 
 <p>A <a href="db/api/org/assertj/db/type/Change.html">Change</a>
@@ -1003,10 +980,6 @@ is a element of the <a href="db/api/org/assertj/db/type/Changes.html">Changes</a
 <p>Below framed in red the first <a href="db/api/org/assertj/db/type/Change.html">Change</a>
 of "changes3".
 </p>
-
-<table width="100%">
-<tr>
-<td align="left">
 
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "changes3"</caption>
@@ -1076,11 +1049,6 @@ of "changes3".
 
       </table>
 
-
-</td>
-</tr>
-</table>
-
       <h4 class="page-header" ><span id="row"></span>Row</h4>
 
 <p>A <a href="db/api/org/assertj/db/type/Row.html">Row</a>
@@ -1092,9 +1060,6 @@ of a <a href="db/api/org/assertj/db/type/Change.html">Change</a>.
 <p>Below framed in red the third <a href="db/api/org/assertj/db/type/Row.html">Row</a> of "table4".
 </p>
 
-<table width="100%">
-<tr>
-<td align="left">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "table4"</caption>
         <tr>
@@ -1133,15 +1098,11 @@ of a <a href="db/api/org/assertj/db/type/Change.html">Change</a>.
         <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.70</td>
         </tr>
       </table>
-</td>
-</tr>
-</table>
+
+<br/>
 
 <p>Below framed in red the second <a href="db/api/org/assertj/db/type/Row.html">Row</a> of "request3".
 </p>
-<table width="100%">
-<tr>
-<td align="left">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "request3"</caption>
         <tr>
@@ -1165,17 +1126,14 @@ of a <a href="db/api/org/assertj/db/type/Change.html">Change</a>.
         <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
         </tr>
       </table>
-</td>
-</tr>
-</table>
+
+<br/>
+
 <p>Below framed in red the <a href="db/api/org/assertj/db/type/Row.html">Row</a> at end point of 
 the second <a href="db/api/org/assertj/db/type/Change.html">Change</a>
 of "changes3".
 </p>
 
-<table width="100%">
-<tr>
-<td align="left">
 
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "changes3"</caption>
@@ -1246,11 +1204,6 @@ of "changes3".
       </table>
 
 
-</td>
-</tr>
-</table>
-
-
       <h4 class="page-header" ><span id="column"></span>Column</h4>
 
 <p>A <a href="db/api/org/assertj/db/type/Column.html">Column</a>
@@ -1262,9 +1215,6 @@ of a <a href="db/api/org/assertj/db/type/Change.html">Change</a>.
 <p>Below framed in red the second <a href="db/api/org/assertj/db/type/Column.html">Column</a> of "table4".
 </p>
 
-<table width="100%">
-<tr>
-<td align="left">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "table4"</caption>
         <tr>
@@ -1303,15 +1253,11 @@ of a <a href="db/api/org/assertj/db/type/Change.html">Change</a>.
         <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.70</td>
         </tr>
       </table>
-</td>
-</tr>
-</table>
 
+<br/>
 <p>Below framed in red the second <a href="db/api/org/assertj/db/type/Column.html">Column</a> of "request3".
 </p>
-<table width="100%">
-<tr>
-<td align="left">
+
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "request3"</caption>
         <tr>
@@ -1335,17 +1281,11 @@ of a <a href="db/api/org/assertj/db/type/Change.html">Change</a>.
         <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
         </tr>
       </table>
-</td>
-</tr>
-</table>
+<br/>
 <p>Below framed in red the fourth <a href="db/api/org/assertj/db/type/Column.html">Column</a> of 
 the second <a href="db/api/org/assertj/db/type/Change.html">Change</a>
 of "changes3".
 </p>
-
-<table width="100%">
-<tr>
-<td align="left">
 
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "changes3"</caption>
@@ -1415,11 +1355,7 @@ of "changes3".
 
       </table>
 
-
-</td>
-</tr>
-</table>
-
+<br/>
 
       <h4 class="page-header" ><span id="value"></span>Value</h4>
 
@@ -1436,9 +1372,6 @@ or in a <a href="db/api/org/assertj/db/type/Column.html">Column</a>.
 </li>
 </ul>
 
-<table width="100%">
-<tr>
-<td align="left">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "table4"</caption>
         <tr>
@@ -1477,9 +1410,7 @@ or in a <a href="db/api/org/assertj/db/type/Column.html">Column</a>.
         <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.70</td>
         </tr>
       </table>
-</td>
-</tr>
-</table>
+<br/>
 
 <p>Below framed in red (depending of the path) :
 </p>
@@ -1490,9 +1421,6 @@ or in a <a href="db/api/org/assertj/db/type/Column.html">Column</a>.
 </li>
 </ul>
 
-<table width="100%">
-<tr>
-<td align="left">
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "request3"</caption>
         <tr>
@@ -1516,9 +1444,7 @@ or in a <a href="db/api/org/assertj/db/type/Column.html">Column</a>.
         <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
         </tr>
       </table>
-</td>
-</tr>
-</table>
+<br/>
 
 <p>Below framed in red (depending of the path) :
 </p>
@@ -1532,10 +1458,6 @@ the second <a href="db/api/org/assertj/db/type/Change.html">Change</a>
 of "changes3"
 </li>
 </ul>
-
-<table width="100%">
-<tr>
-<td align="left">
 
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "changes3"</caption>
@@ -1606,9 +1528,8 @@ of "changes3"
       </table>
 
 
-</td>
-</tr>
-</table>
+<br/>
+
 
       <h3 class="page-header" ><span id="type"></span>Type</h3>
       <h4 class="page-header" ><span id="datatype"></span>DataType</h4>

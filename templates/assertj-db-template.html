@@ -34,10 +34,7 @@ for his welcome, for his help and to have accepted to associate this project wit
 
       <p>Suppose that in the database there is this table :</p>
 
-<table width="100%">
-<tr>
-<td align="left">
-      <table border="1" cellspacing="0" cellpadding="2">
+      <table border="5" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">MEMBERS</caption>
         <tr>
         <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">ID</th>
@@ -80,9 +77,6 @@ for his welcome, for his help and to have accepted to associate this project wit
         <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.70</td>
         </tr>
       </table>
-</td>
-</tr>
-</table>
          <p>To quickly start using DataBase assertions, follow the steps below.</p>
 
          <h4 class="page-header">1 - Add assertj-db dependency to your project pom.xml</h4>
@@ -137,7 +131,7 @@ assertThat(table).row(1)
   <li><a href="assertj-db-concepts.html#tableorrequestasroot">the navigation</a> :
     <ul>
       <li>on the first check, navigation from the table to the column called "name" 
-      (<code>column("name")</code> move the assertion on the column), 
+      (<code>column("name")</code> move the assertion on the column),  
       from this column to the first value (<code>value()</code> first call move to the first value)
       and after to each value (<code>value()</code> next calls move the next value)
       </li>
