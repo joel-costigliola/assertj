@@ -88,6 +88,7 @@
       <h1 class="page-header">AssertJ Core latest news</h1>
       <ul>
          <li><a href="#assertj-core-next">AssertJ core next release</a></li>
+         <li><a href="#assertj-core-2.2.0">AssertJ core 2.2.0 release</a></li>
          <li><a href="#assertj-core-3.1.0">AssertJ core 3.1.0 for Java 8 release</a></li>
          <li><a href="#assertj-core-2.1.0">AssertJ core 2.1.0 release</a></li>
          <li><a href="#assertj-core-3.0.0">AssertJ core 3.0.0 for Java 8 release</a></li>
@@ -108,11 +109,43 @@
 
 <p>
    <ul>
-      <li>recursive field by field comparison</li>
+      <li>recursive field by field comparison (yes I will one day !)</li>
       <li>...</li>
    </ul>
 </p>
 
+<h3 class="page-header"><span id="assertj-core-2.2.0"></span>AssertJ core 2.2.0 release : New and noteworthy</h3>
+
+   <p>Release date : 2015-09-03<br>
+
+   <p>Thanks to <span class="contributor">Libor Ondrušek</span>, <span class="contributor">Pascal Schumacher</span> and <span class="contributor">Alexander Bischof</span> for their contributions.</p>
+
+   <h4 class="page-header"> Release notes</h4>
+   <div class="release-section-category"> Breaking changes</div>
+   <ul>
+      <li>objects "field by field" comparison is now performed on property first then field (should be a minor breaking change !)</span>.</li>
+   </ul>
+   <div class="release-section-category">New features :</div>
+   <ul>
+      <li>Add <span class="small-code">hasMessageMatching</span></a> to throwable assertions. <span class="contributor">(Libor Ondrušek)</span></li>
+      <li>Add <span class="small-code">withFailMessage</span></a> as an alternative to  <span class="small-code">overridingErrorMessage</span>. <span class="contributor">(Alexander Bischof)</span></li>
+      <li>Add <span class="small-code">isSubstringOf</span></a> to <span class="small-code">String</span> assertions.</li>
+      <li>Add <span class="small-code">Comparable</span></a> assertions to <span class="small-code">Path</span> as <span class="small-code">Path</span> implements <span class="small-code">Comparable</span>. </li>
+   </ul>
+   <div class="release-section-category">Improvements :</div>
+   <ul>
+      <li><span class="small-code">MapEntry</span></a> key and value formatting is now consistent with AssertJ format representation. <span class="contributor">(Libor Ondrušek)</span></li>
+      <li>Deprecate <del><span class="small-code">isWithinXXX</span></del> date assertions in favor of <span class="small-code">hasXXXField</span>. <span class="contributor">(Alexander Bischof)</span></li>
+      <li><span class="small-code">containsOnly</span> error does not display elements not found section anymore if there no elements not found to display.</li>
+      <li>Better spacing in Javadoc code examples. (<span class="contributor">Pascal Schumacher</span>)</li>
+      <li>Javadoc fixes : typos and dead links. (<span class="contributor">Pascal Schumacher</span>)</li>
+   </ul>
+   <div class="release-section-category">Fixed Bugs :</div>
+   <ul>
+      <li>Path's assertions should not rely on <span class="small-code">java.nio.Path.toFile()</span>. (<span class="contributor">Pascal Schumacher</span>)</li>
+   </ul>
+
+   <!-- detailed notes -->
 <h3 class="page-header"><span id="assertj-core-3.1.0"></span>AssertJ Core 3.1.0 for Java 8 release : New and noteworthy</h3>
 
    <p>Release date : 2015-06-25<br>
