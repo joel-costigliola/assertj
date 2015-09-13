@@ -1,0 +1,9 @@
+org.assertj.db.api
+org.assertj.db.api.assertions
+org.assertj.db.api.assertions.impl
+org.assertj.db.api.navigation
+org.assertj.db.api.origin
+org.assertj.db.error
+org.assertj.db.exception
+org.assertj.db.type
+org.assertj.db.util
