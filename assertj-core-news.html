@@ -88,6 +88,7 @@
       <h1 class="page-header">AssertJ Core latest news</h1>
       <ul>
          <li><a href="#assertj-core-next">AssertJ core next release</a></li>
+         <li><a href="#assertj-core-3.2.0">AssertJ core 3.2.0 release</a></li>
          <li><a href="#assertj-core-2.2.0">AssertJ core 2.2.0 release</a></li>
          <li><a href="#assertj-core-3.1.0">AssertJ core 3.1.0 for Java 8 release</a></li>
          <li><a href="#assertj-core-2.1.0">AssertJ core 2.1.0 release</a></li>
@@ -114,6 +115,94 @@
    </ul>
 </p>
 
+<h3 class="page-header"><span id="assertj-core-3.2.0"></span>AssertJ Core 3.2.0 for Java 8 release : New and noteworthy</h3>
+
+   <p>Release date : 2015-09-21<br>
+   <p>This release includes all changes from <a href="#assertj-core-2.2.0">AssertJ core 2.2.0</a> and additional ones specific to Java 8.</p>
+
+   <p>Thanks to <span class="contributor">Richard Lucas</span>, <span class="contributor">Tobias Bieniek</span>, <span class="contributor">Clément Mathieu</span> and <span class="contributor">Nicolai Parlog</span> for their contributions.</p>
+
+   <h4 class="page-header"> Release notes</h4>
+   <div class="release-section-category"> Breaking changes</div>
+   <ul>
+      <li>Rename <span class="small-code">StrictAssertions</span> to <span class="small-code">AssertionsForClassTypes</span>.</li>
+      <li>Reintroduce <span class="small-code">Assertions</span> providing all AssertJ methods - in case of ambigous <span class="small-code">assertThat</span> resolution, use either <span class="small-code">AssertionsForInterfaceTypes</span> or <span class="small-code">AssertionsForClassTypes</span>.</li>
+   </ul>
+   <div class="release-section-category">New features :</div>
+   <ul>
+      <li>Add <a href="assertj-core-news.html#assertj-core-3.2.0-future"><span class="small-code">CompletableFuture</span></a> assertions. <span class="contributor">(Tobias Bieniek)</span></li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-3.2.0-optional-hasValue"><span class="small-code">hasValue</span></a> <span class="small-code">Optional</span> assertion (alias of <span class="small-code">contains</span>). <span class="contributor">(Tobias Bieniek)</span></li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-3.2.0-optional-containsSame"><span class="small-code">containsSame</span></a> <span class="small-code">Optional</span> assertion. <span class="contributor">(Nicolai Parlog)</span></li>
+      <li>Allow using a specific <a href="assertj-core-news.html#assertj-core-3.2.0-optional-value-comparator">comparator to check <span class="small-code">Optional</span> value</a>. <span class="contributor">(Richard Lucas)</span></li>
+   </ul>
+   <div class="release-section-category">Improvements :</div>
+   <ul>
+      <li>Better looking Javadoc.</li>
+      <li>More Javadoc code examples.</li>
+   </ul>
+   <div class="release-section-category">Bugs :</div>
+   <ul>
+      <li>Add missing <span class="small-code">assertThatThrownBy</span> and <span class="small-code">catchThrowable</span> to <span class="small-code">WithAssertions</span>. <span class="contributor">(Clément Mathieu)</span></li>
+   </ul>
+
+   <h4 class="page-header"><span id="assertj-core-3.2.0-future" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">CompletableFuture</span>  assertions.</h4>
+
+   <p>Provide assertions for Java 8 <span class="small-code">CompletableFuture</span>.</p>
+   <p><span class="small-code">hasFailed()</span> is a shortcut for <span class="small-code">hasFailed()</span>.</p>
+   <p>Example :</p>
+   <pre><code class="java">// completed future
+CompletableFuture&lt;String&gt; completedFuture = CompletableFuture.completedFuture("something");
+assertThat(completedFuture).isCompleted()
+                           .isCompletedWithValue("something")
+                           .isCompletedWithValueMatching(val -> val.startsWith("some"))
+                           .isDone();
+// cancelled future
+CompletableFuture&lt;?&gt; cancelledFuture = new CompletableFuture&lt;&gt;();
+cancelledFuture.cancel(true);
+assertThat(cancelledFuture).isCancelled()
+                           .isDone()
+                           .hasNotFailed();
+
+// future completed exceptionally
+CompletableFuture&lt;?&gt; futureExplosion = new CompletableFuture&lt;&gt;();
+futureExplosion.completeExceptionally(new RuntimeException("boom !"));
+assertThat(futureExplosion).isCompletedExceptionally()
+                           .isDone();
+
+// failed future = isCompletedExceptionally() + isNotCancelled() 
+assertThat(futureExplosion).hasFailed()
+                           .hasFailedWithThrowableThat() // allow to chain exception assertions
+                               .isInstanceOf(RuntimeException.class)
+                               .hasMessage("boom !");
+</code></pre>
+  
+   <h4 class="page-header"><span id="assertj-core-3.2.0-optional-hasValue" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">hasValue</span> <span class="small-code">Optional</span> assertion (alias of <span class="small-code">contains</span>).</h4>
+
+   <p>Provide like <span class="small-code">contains</span> a way to check <span class="small-code">Optional</span> value.</p>
+   <p>Example :</p>
+   <pre><code class="java">assertThat(Optional.of("Yoda")).hasValue("Yoda");
+// same assertion using contains
+assertThat(Optional.of("Yoda")).contains("Yoda");</code></pre>
+  
+   <h4 class="page-header"><span id="assertj-core-3.2.0-optional-value-comparator" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow using a specific comparator for <span class="small-code">Optional</span> value.</h4>
+
+   <p>Provide a way to check <span class="small-code">Optional</span> value with a specific comparator.</p>
+   <p>Example :</p>
+   <pre><code class="java">// comparator implementation omitted
+Comparator&lt;String&gt; caseInsensitiveStringComparator = ...;
+
+assertThat(Optional.of("YODA")).usingValueComparator(caseInsensitiveStringComparator)
+                               .hasValue("yoda");                               
+</code></pre>
+  
+   <h4 class="page-header"><span id="assertj-core-3.2.0-optional-containsSame" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">containsSame</span> <span class="small-code">Optional</span>.</h4>
+
+   <p>Allow to check that an <span class="small-code">Optional</span> value is the same as a given one.</p>
+   <p>Example :</p>
+   <pre><code class="java">Player ginobili = new Player("Manu Ginobili");
+assertThat(Optional.of(ginobili)).containsSame(ginobili);
+</code></pre>
+  
 <h3 class="page-header"><span id="assertj-core-2.2.0"></span>AssertJ core 2.2.0 release : New and noteworthy</h3>
 
    <p>Release date : 2015-09-03<br>
@@ -145,7 +234,6 @@
       <li>Path's assertions should not rely on <span class="small-code">java.nio.Path.toFile()</span>. (<span class="contributor">Pascal Schumacher</span>)</li>
    </ul>
 
-   <!-- detailed notes -->
 <h3 class="page-header"><span id="assertj-core-3.1.0"></span>AssertJ Core 3.1.0 for Java 8 release : New and noteworthy</h3>
 
    <p>Release date : 2015-06-25<br>
@@ -179,7 +267,7 @@
   
    <h4 class="page-header"><span id="assertj-core-3.1.0-offset-date-time-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> New <span class="small-code">OffsetDateTime</span> assertions.</h4>
 
-   <p>Provides assertions for <span class="small-code">OffsetDateTime</span>. Most of the assertions come with a String based parameter equivalent that will be parsed into a <span class="small-code">OffsetDateTime</span>, the examples shown below use this possiblity for brevity sake's.</p>
+   <p>Provide assertions for <span class="small-code">OffsetDateTime</span>. Most of the assertions come with a String based parameter equivalent that will be parsed into a <span class="small-code">OffsetDateTime</span>, the examples shown below use this possiblity for brevity sake's.</p>
    <p>Examples :</p>
    <pre><code class="java">OffsetDateTime firstOfJanuary2000InUTC = OffsetDateTime.parse("2000-01-01T00:00:00Z");
       
@@ -211,7 +299,7 @@ assertThat(offsetDateTime1).isEqualToIgnoringNanos(offsetDateTime5);</code></pre
   
    <h4 class="page-header"><span id="assertj-core-3.1.0-offset-time-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> New <span class="small-code">OffsetTime</span> assertions.</h4>
 
-   <p>Provides assertions for <span class="small-code">OffsetTime</span>. Most of the assertions come with a String based parameter equivalent that will be parsed into a <span class="small-code">OffsetTime</span>, the examples shown below use this possiblity for brevity sake's.</p>
+   <p>Provide assertions for <span class="small-code">OffsetTime</span>. Most of the assertions come with a String based parameter equivalent that will be parsed into a <span class="small-code">OffsetTime</span>, the examples shown below use this possiblity for brevity sake's.</p>
    <p>Examples :</p>
    <pre><code class="java">OffsetTime oneAm = OffsetTime.parse("01:00:00+02:00");
 
