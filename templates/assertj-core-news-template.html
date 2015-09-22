@@ -76,7 +76,7 @@ $menu
    <h4 class="page-header"><span id="assertj-core-3.2.0-future" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">CompletableFuture</span>  assertions.</h4>
 
    <p>Provide assertions for Java 8 <span class="small-code">CompletableFuture</span>.</p>
-   <p><span class="small-code">hasFailed()</span> is a shortcut for <span class="small-code">hasFailed()</span>.</p>
+   <p>Note that <span class="small-code">hasFailed()</span> is a shortcut for <span class="small-code">isCompletedExceptionally()</span> and <span class="small-code">isNotCancelled()</span>.</p>
    <p>Example :</p>
    <pre><code class="java">// completed future
 CompletableFuture&lt;String&gt; completedFuture = CompletableFuture.completedFuture("something");
