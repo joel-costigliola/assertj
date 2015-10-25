@@ -13,7 +13,7 @@ $menu
          <div class="col-lg-12 text-center">
             <div class="main-section">
                <h1>AssertJ</h1>
-               <p>Fluent assertions for java</p>
+               <p>Fluent assertions for java </p>
             </div>
          </div>
       </div>
@@ -21,7 +21,9 @@ $menu
             <pre><code class="hljs-java">// unique entry point to get access to all assertThat methods and utility methods (e.g. entry)
 import static org.assertj.core.api.Assertions.*;
 
-// common assertions
+// in the following examples, fellowshipOfTheRing is a List of <a href="https://github.com/joel-costigliola/assertj-examples/blob/java-8/assertions-examples/src/main/java/org/assertj/examples/data/TolkienCharacter.java">TolkienCharacter</a>
+
+// basic assertions
 assertThat(frodo.getName()).isEqualTo("Frodo");
 assertThat(frodo).isNotEqualTo(sauron)
                  .isIn(fellowshipOfTheRing);
@@ -40,17 +42,36 @@ assertThat(fellowshipOfTheRing).hasSize(9)
 assertThat(fellowshipOfTheRing).extracting("name").contains("Boromir", "Gandalf", "Frodo", "Legolas")
                                                   .doesNotContain("Sauron", "Elrond");
 
-// map specific assertions, ringBearers initialized with the elves rings and the one ring bearers.
-assertThat(ringBearers).hasSize(4)
-                       .contains(entry(oneRing, frodo), entry(nenya, galadriel))
-                       .doesNotContainEntry(oneRing, aragorn);
+// Extracting with Java 8 love 
+assertThat(fellowshipOfTheRing).extracting(character -> character.getRace().getName())
+                               .contains("Hobbit", "Elf")               
+                               .doesNotContain("Orc");                                                 
 
-// and many more assertions : dates, file, numbers, exceptions ...</code></pre>
+// filter collection before assertion
+assertThat(fellowshipOfTheRing).filteredOn("race", HOBBIT)
+                               .containsOnly(sam, frodo, pippin, merry);
+
+
+// filter collection with java 8 lambda predicate
+assertThat(fellowshipOfTheRing).filteredOn(character -> character.getName().contains("o"))
+                               .containsOnly(aragorn, frodo, legolas, boromir);
+
+// combining filterting and extraction (yes we can)
+assertThat(fellowshipOfTheRing).filteredOn(character -> character.getName().contains("o"))
+                               .containsOnly(aragorn, frodo, legolas, boromir)
+                               .extracting(character -> character.getRace().getName())
+                               .contains("Hobbit", "Elf", "Man");
+
+// and many more assertions : map, dates (java 7 and java 8), file, numbers, exceptions ...</code></pre>
       </div>
       <div class="col-lg-12 text-center">
         <h3>Want to see more features ? Jump to the <a href="assertj-core-features-highlight.html">highlights section</a>.</h3>
-        <h3>Want to have Java 8 assertions ? Use <a href="assertj-core-news.html#assertj-core-3.1.0">AssertJ Core 3.x</a>.</h3>
-      </div>
+        <h3>AssertJ is IDE friendly, use code completion to discover assertions :</h3>
+            <br/>
+        <img src="images/ide-completion.png" alt="Screenshot of IDE completion">
+<h3>Assertions javadoc contain helping examples, e.g. <a href="http://joel-costigliola.github.io/assertj/core-8/api/org/assertj/core/api/AbstractCharSequenceAssert.html#containsOnlyDigits--">containsOnlyDigits</a>
+      </h3>      
+   </div>
    </div>
 </div>
 
