@@ -340,9 +340,9 @@ body {
 .reveal pre code {
 	padding: 5px;
 	overflow: auto;
-	width: 100%;
+	width: 110%;
 	word-wrap: normal;
-	font-size: 105%;
+	font-size: 100%;
 	line-height: 1.3em;
 }
 .reveal pre.stretch code {
