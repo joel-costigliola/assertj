@@ -18,17 +18,47 @@ $assertj_core_side_menu
       <p>AssertJ has some great features that people don't always know, the purpose of this page is to show them so that you take the most of AssertJ.</p>
 
       <ul>
-         <li><a href="assertj-core-news.html#assertj-core-3.0.0">Java 8 assertions in AssertJ Core 3.x</a></li>
+         <li><a href="#ide-automatic-static-import">IDE configuration to directly get <span class="small-code">assertThat</span> in code completion</a></li>
+         <li><a href="#describe-assertion">Describe you test assertion using <span class="small-code">as(String description, Object... args)</span></a></li>
+         <li><a href="assertj-core-news.html#assertj-core-3.2.0">Java 8 assertions in AssertJ Core 3.x</a></li>
          <li><a href="#filters">Combining filtering and assertions on iterables or arrays</a></li>
          <li><a href="#extracted-properties-assertion">Assertions on extracted properties/fields of iterable/array elements</a></li>
          <li><a href="#flat-extracted-properties-assertion">Flat(map) extracting</a></li>
          <li><a href="#extracted-method-result-assertion">Assertions on results of method call on iterable/array elements</a></li>
          <li><a href="#soft-assertions">Gather all errors message with Soft assertions</a></li>
          <li><a href="#file-content-string-assertions">Using String assertions on the content of a file</a></li>
-         <li><a href="#ide-automatic-static-import">IDE configuration to directly get <span class="small-code">assertThat</span> in code completion</a></li>
          <li><a href="#exception-assertion">Exception assertions best practices</a></li>
          <li><a href="#custom-comparison-strategy">Using a custom comparison strategy in assertions</a></li>
       </ul>
+
+      <h3 class="page-header"><span id="ide-automatic-static-import"></span><i class="fa fa-star"></i> IDE configuration to get assertThat in code completion</h3>
+
+      <p>We want here to start typing <span class="small-code">asser</span> and let code completion suggest you <span class="small-code">assertThat</span> from AssertJ (and not the one from Hamcrest !).</p>
+
+      <p class="list-section">Eclipse configuration</p>
+      <ol>
+         <li>Go to : preferences > Java > Editor > Content assist > Favorites > New Type</li>
+         <li>Enter : <span class="small-code">org.assertj.core.api.Assertions</span></li>
+         <li>You should see : <span class="small-code">org.assertj.core.api.Assertions.*</span> in a the list.</li>
+      </ol>
+
+      <p class="list-section">IntelliJ Idea</p>
+      <ol>
+         <li>No special configuration, just start typing <span class="small-code">assertThat</span> and then invoke completion (Ctrl-Space) twice.</li>
+      </ol>
+
+      <h3 class="page-header"><span id="describe-assertion"></span><i class="fa fa-star"></i> Describe you test assertion with as(String description, Object... args)</h3>
+
+      <p>It is often valuable to describe the assertion performed, specially for boolean assertion where the default error message just complains that it got <span class="small-code">false</span> instead of <span class="small-code">true</span> (or vice versa).</p>
+      <p>You can set such a description with <span class="small-code">as(String description, Object... args)</span> but remember to do it <b>before</b> calling the assertion otherwise it is simply ignored as a failing assertion breaks the following chained calls.</p>
+
+   <p>Example of a failing assertion with a description : </p>
+<pre><code class="java"> TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
+ // failing assertion, remember to call as() before the assertion, not after !
+ assertThat(frodo.getAge()).as("check %s's age", frodo.getName()).isEqualTo(100);</code></pre>
+
+   <p> The error message starts with the given description in [] :</p>
+<pre><code> [check Frodo's age] expected:&lt;33&gt; but was:&lt;100&gt;</code></pre>
 
       <h3 class="page-header"><span id="filters"></span><i class="fa fa-star"></i> Combining filtering and assertions on iterables or arrays</h3>
 
@@ -290,22 +320,6 @@ assertThat(contentOf(xFile)).startsWith("The Truth").contains("Is Out").endsWith
 
       <p>Note that it is meant to be used with small files since the whole content is loaded in memory.</p>
 
-
-      <h3 class="page-header"><span id="ide-automatic-static-import"></span><i class="fa fa-star"></i> IDE configuration to get assertThat in code completion</h3>
-
-      <p>We want here to start typing <span class="small-code">asser</span> and let code completion suggest you <span class="small-code">assertThat</span> from AssertJ (and not the one from Hamcrest !).</p>
-
-      <p class="list-section">Eclipse configuration</p>
-      <ol>
-         <li>Go to : preferences > Java > Editor > Content assist > Favorites > New Type</li>
-         <li>Enter : <span class="small-code">org.assertj.core.api.Assertions</span></li>
-         <li>You should see : <span class="small-code">org.assertj.core.api.Assertions.*</span> in a the list.</li>
-      </ol>
-
-      <p class="list-section">IntelliJ Idea</p>
-      <ol>
-         <li>No special configuration, just start typing <span class="small-code">assertThat</span> and then invoke completion (Ctrl-Space) twice.</li>
-      </ol>
 
       <h3 class="page-header"><span id="exception-assertion"></span><i class="fa fa-star"></i> Exception assertions best practices</h3>
 
