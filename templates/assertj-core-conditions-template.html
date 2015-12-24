@@ -49,17 +49,19 @@ assertThat("Yoda").is(jedi);</code></pre>
 
 <pre><code class="java">import static org.assertj.core.util.Sets.newLinkedHashSet;
 
-private final Condition&lt;String&gt; jedi = new Condition&lt;String&gt;("jedi") {
-  private final Set&lt;String&gt; jedis = newLinkedHashSet("Luke", "Yoda", "Obiwan");
+static Set&lt;String&gt; JEDIS = newLinkedHashSet("Luke", "Yoda", "Obiwan");
+
+// implementation with Java 8 :)
+Condition&lt;String&gt; jediPower = new Condition&lt;&gt;(JEDIS::contains, "jedi power"); 
+
+// implementation with Java 7 :(
+Condition&lt;String&gt; jedi = new Condition&lt;String&gt;("jedi") {
   @Override
   public boolean matches(String value) {
-    return jedis.contains(value);
+    return JEDIS.contains(value);
   }
 };
-
-private final Condition&lt;String&gt; jediPower = new Condition&lt;String&gt;("jedi power") {
-  // same implementation as jedi condition ...
-};</code></pre>
+</code></pre>
          <h3 class="page-header"><span id="example-is"></span>Example using is / isNot </h3>
          <p>An small example of <span class="small-code">is(Condition)</span> and <span class="small-code">isNot(Condition)</span> usage including an error message.</p>
 <pre><code class="java">assertThat("Yoda").is(jedi);
@@ -110,13 +112,9 @@ assertThat("Solo").is(allOf(not(jedi), not(sith)));</code></pre>
 
 <p>where sith condition is defined as :</p>
 
-<pre><code class="java">private final Condition&lt;String&gt; sith = new Condition&lt;String&gt;("sith") {
-  private final Set&lt;String&gt; siths = newLinkedHashSet("Sidious", "Vader", "Plagueis");
-  @Override
-  public boolean matches(String value) {
-    return siths.contains(value);
-  }
-};</code></pre>
+<pre><code class="java">static Set&lt;String&gt; SITHS = newHashSet("Sidious", "Vader", "Plagueis");
+Condition&lt;String&gt; sith = new Condition&lt;&gt;(SITHS::contains, "sith"); 
+</code></pre>
 
       </div>
    </div>
