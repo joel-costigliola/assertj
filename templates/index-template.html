@@ -39,24 +39,25 @@ assertThat(fellowshipOfTheRing).hasSize(9)
                                .doesNotContain(sauron);
 
 // using extracting magical feature to check fellowshipOfTheRing characters name :)
-assertThat(fellowshipOfTheRing).extracting("name").contains("Boromir", "Gandalf", "Frodo", "Legolas")
-                                                  .doesNotContain("Sauron", "Elrond");
+assertThat(fellowshipOfTheRing).extracting("name")
+                               .contains("Boromir", "Gandalf", "Frodo", "Legolas")
+                               .doesNotContain("Sauron", "Elrond");
 
-// Extracting with Java 8 love 
-assertThat(fellowshipOfTheRing).extracting(character -> character.getRace().getName())
-                               .contains("Hobbit", "Elf")               
-                               .doesNotContain("Orc");                                                 
+// Extracting with Java 8 love (type safe)
+assertThat(fellowshipOfTheRing).extracting(TolkienCharacter::getName)
+                               .contains("Boromir", "Gandalf", "Frodo", "Legolas")
+                               .doesNotContain("Sauron", "Elrond");
 
 // filter collection before assertion
 assertThat(fellowshipOfTheRing).filteredOn("race", HOBBIT)
                                .containsOnly(sam, frodo, pippin, merry);
 
 
-// filter collection with java 8 lambda predicate
+// filter collection with Java 8 Predicate
 assertThat(fellowshipOfTheRing).filteredOn(character -> character.getName().contains("o"))
                                .containsOnly(aragorn, frodo, legolas, boromir);
 
-// combining filterting and extraction (yes we can)
+// combining filtering and extraction (yes we can)
 assertThat(fellowshipOfTheRing).filteredOn(character -> character.getName().contains("o"))
                                .containsOnly(aragorn, frodo, legolas, boromir)
                                .extracting(character -> character.getRace().getName())
@@ -69,7 +70,7 @@ assertThat(fellowshipOfTheRing).filteredOn(character -> character.getName().cont
         <h3>AssertJ is IDE friendly, use code completion to discover assertions :</h3>
             <br/>
         <img src="images/ide-completion.png" alt="Screenshot of IDE completion">
-<h3>Assertions javadoc contain helping examples, e.g. <a href="http://joel-costigliola.github.io/assertj/core-8/api/org/assertj/core/api/AbstractCharSequenceAssert.html#containsOnlyDigits--">containsOnlyDigits</a>
+<h3>Javadoc assertion contains helping examples, e.g. <a href="http://joel-costigliola.github.io/assertj/core-8/api/org/assertj/core/api/AbstractCharSequenceAssert.html#containsOnlyDigits--">containsOnlyDigits</a>
       </h3>      
    </div>
    </div>
