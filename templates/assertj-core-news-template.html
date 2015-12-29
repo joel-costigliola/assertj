@@ -15,7 +15,7 @@ $menu
    <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
       <h1 class="page-header">AssertJ Core latest news</h1>
       <ul>
-         <li><a href="#assertj-core-next">AssertJ core next release</a></li>
+         <li><a href="#assertj-core-2.3.0">AssertJ core 2.3.0 release</a></li>
          <li><a href="#assertj-core-3.2.0">AssertJ core 3.2.0 release</a></li>
          <li><a href="#assertj-core-2.2.0">AssertJ core 2.2.0 release</a></li>
          <li><a href="#assertj-core-3.1.0">AssertJ core 3.1.0 for Java 8 release</a></li>
@@ -34,14 +34,203 @@ $menu
          <li><a href="#assertj-core-1.0.0">AssertJ core 1.0.0 release</a></li>
       </ul>
 
-<h3 class="page-header" ><span id="assertj-core-next"></span>What's coming in the next AssertJ core release:</h3>
+<h3 class="page-header"><span id="assertj-core-2.3.0"></span>AssertJ core 2.3.0 release : New and noteworthy</h3>
 
-<p>
+   <p>Release date : 2016-01-02<br>
+
+   <p>Special Thanks to <span class="contributor">Pascal Schumacher</span> for its contributions including relentless code cleanup and improvements, appreciated !<br/>
+   Many thanks also to <span class="contributor">Pierre Templier</span>, <span class="contributor">Guillaume Husta</span>, <span class="contributor">Libor Ondrušek</span>, <span class="contributor">Dan Corder</span> and <span class="contributor">Chris Arnott</span> for their contributions.</p>
+
+   <p>This release tried to make AssertJ Core usable for testing Android applications (by introducing <span class="small-code">Java6Assertions</span>) but this has not been reliably verified so any feedback is welcome.</p>
+
+   <p>AssertJ has used part of <a href="https://code.google.com/p/java-diff-utils/">java-diff-utils</a> code to produce better diff content, thanks to Dmitry Naumenko its creator !<p/>
+
+   <h4 class="page-header"> Release notes</h4>
+   <div class="release-section-category">New features :</div>
    <ul>
-      <li>recursive field by field comparison (yes I will one day !)</li>
-      <li>...</li>
+      <li>Add <a href="#assertj-core-2.3.0-extracting"><span class="small-code">extracting</span> feature</a> to <span class="small-code">Object</span> assertions. <span class="contributor">(Pascal Schumacher)</span></li>
+      <li>Add <a href="#assertj-core-2.3.0-hasFieldOrProperty"><span class="small-code">hasFieldOrProperty</span> / <span class="small-code">hasFieldOrPropertyWithValue</span></a> <span class="small-code">Object</span> assertions. <span class="contributor">(Libor Ondrušek)</span></li>
+      <li>Add <a href="#assertj-core-2.3.0-containsPattern"><span class="small-code">containsPattern(regex)</span></a> to check that a <span class="small-code">String</span> contains a regular expression. <span class="contributor">(Pierre Templier)</span></li>
+      <li>Add <span class="small-code">isNotEqualByComparingTo</span> <span class="small-code">BigDecimal</span> assertion. <span class="contributor">(Guillaume Husta)</span></li>
+      <li>Add <span class="small-code">isNotEqualToIgnoringWhitespace</span> <span class="small-code">String</span> assertion. <span class="contributor">(Dan Corder)</span></li>
+      <li>Add <a href="#assertj-core-2.3.0-containsAllEntriesOf"><span class="small-code">containsAllEntriesOf</span></a> <span class="small-code">Map</span> assertion. <span class="contributor">(Pascal Schumacher)</span></li>
+      <li><span class="small-code">double[]</span> and <span class="small-code">float[]</span> assertions now support specifying a <a href="#assertj-core-2.3.0-real-numbers-array-precision">precision</a> when comparing their elements.</li>
    </ul>
-</p>
+   <div class="release-section-category">Improvements :</div>
+   <ul>
+      <li><a href="#assertj-core-2.3.0-isSubsetOf"><span class="small-code">isSubsetOf</span></a> now supports array/varargs parameters. <span class="contributor">(Pascal Schumacher)</span></li>
+      <li><span class="small-code">isIn</span> and <span class="small-code">isNotIn</span> now accept null values.</li>
+      <li>Add <span class="small-code">String#format</span> syntax support to <a href="#assertj-core-2.3.0-hasMessage"><span class="small-code">hasMessage</span></a> <span class="small-code">Throwable</span> assertion.</li>
+      <li><a href="#assertj-core-2.3.0-diff">Better diff</a> when comparing text content based on <a href="https://code.google.com/p/java-diff-utils/">java-diff-utils</a>. (<span class="contributor">Chris Arnott</span>)</li>
+      <li>Add <span class="small-code">Java6Assertions</span> entry point class to improve support for Android applications (feedback welcome).</li>
+      <li><span class="small-code">assertIsEqualToIgnoringGivenFields</span></a> does not require anymore the ignored fields to exist.</li>
+      <li>Field by field comparison learned to compare objects of different types.</li>
+      <li>When possible, maps are displayed sorted in error messages to ease diagnostic. (<span class="contributor">gagba</span>)</li>
+      <li><span class="small-code">Map</span> assertions learned to use <span class="small-code">java.util.Map.Entry</span>. (<span class="contributor">Pascal Schumacher</span>)</li>
+      <li><span class="small-code">BigDecimalComparator</span> now handles null values.</li>
+      <li>To be OS agnostic, replace <span class="small-code">\n</span> by <span class="small-code">%n</span> in error messages. (<span class="contributor">Pascal Schumacher</span>)</li>
+      <li>A bunch of Javadoc improvements ! (<span class="contributor">Pascal Schumacher</span> and <span class="contributor">Chris Arnott</span>)</li>
+      <li>Javadoc : clarify <span class="small-code">as()</span> usage.</li>
+   </ul>
+   <div class="release-section-category">Fixed Bugs :</div>
+   <ul>
+      <li><span class="small-code">filteredOn</span> was not working with Soft assertions.</li>
+      <li><span class="small-code">containsSequence</span> <span class="small-code">String</span> assertion failed when given multiples of the same String.</li>
+      <li>OSGi : export all packages needed by other AssertJ libraries.</li>
+   </ul>
+
+   <h4 class="page-header"><span id="assertj-core-2.3.0-extracting" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">extracting</span> feature to <span class="small-code">Object</span> assertions</h4>
+
+   <p>Extract the values of given fields/properties from the object under test into an array, this new array becoming the object under test.</p>
+
+   <p>Example :</p>
+
+   <pre><code class="java">// Create frodo, setting its name, age and Race fields (Race having a name field)
+TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
+ 
+// let's verify Frodo's name, age and race name:
+assertThat(frodo).extracting("name", "age", "race.name")
+                 .containsExactly("Frodo", 33, "Hobbit");</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-2.3.0-hasFieldOrProperty" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">hasFieldOrProperty</span> / <span class="small-code">hasFieldOrPropertyWithValue</span> <span class="small-code">Object</span> assertions</h4>
+
+   <p><span class="small-code">hasFieldOrProperty</span> : assert that the actual object has the specified field or property.</p>
+   <p><span class="small-code">hasFieldOrPropertyWithValue</span> : assert that the actual object has the specified field or property with the given value.</p>
+
+   <p>Example :</p>
+
+   <pre><code class="java">// Create frodo, setting its name, age and Race fields (Race having a name field)
+TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
+ 
+// let's verify Frodo's age and race name:
+assertThat(frodo).hasFieldOrProperty("age")
+                 .hasFieldOrProperty("race.name")
+                 .hasFieldOrPropertyWithValue("age", 33) 
+                 .hasFieldOrPropertyWithValue("race.name", "Hobbit");</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-2.3.0-containsPattern" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">containsPattern(regex)</span> <span class="small-code">String</span> assertion</h4>
+
+   <p>Verifies that a <span class="small-code">String</span> contains the given regular expression.</p>
+
+   <p>Example :</p>
+
+   <pre><code class="java">// you can use a Pattern or a String to define the regex to find.
+assertThat("Frodo").containsPattern("Fr.d");
+assertThat("Frodo").containsPattern(Pattern.compile("Fr.d"));</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-2.3.0-containsAllEntriesOf" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">containsAllEntriesOf</span> <span class="small-code">Map</span> assertion</h4>
+
+   <p>Verifies that the <span class="small-code">Map</span> under test contains all entries of the given <span class="small-code">Map</span>.</p>
+ 
+   <p>Example :</p>
+
+   <pre><code class="java">Map&lt;Ring, TolkienCharacter&gt; ringBearers = new HashMap&lt;&gt;();
+ringBearers.put(nenya, galadriel);
+ringBearers.put(narya, gandalf);
+ringBearers.put(vilya, elrond);
+ringBearers.put(oneRing, frodo);
+
+Map&lt;Ring, TolkienCharacter&gt; elvesRingBearers = new HashMap&lt;&gt;();
+elvesRingBearers.put(nenya, galadriel);
+elvesRingBearers.put(narya, gandalf);
+elvesRingBearers.put(vilya, elrond);
+ 
+// assertion succeeds
+assertThat(ringBearers).containsAllEntriesOf(elvesRingBearers);</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-2.3.0-real-numbers-array-precision" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> <span class="small-code">double[]</span> and <span class="small-code">float[]</span> assertions with precision comparison</h4>
+
+   <p>All <span class="small-code">double[]</span> and <span class="small-code">float[]</span> assertions can now be performed with a given precision to compare numbers.</p>
+ 
+   <p>Example with <span class="small-code">contains</span> assertion for <span class="small-code">double[]</span>:</p>
+
+   <pre><code class="java">import static org.assertj.core.api.Assertions.withPrecision; 
+
+double[] values = new double[] { 1.0, 2.0, 3.0 };
+ 
+// assertion succeeds
+assertThat(values).contains(new double[] {1.01, 3.01, 2.0}, withPrecision(0.02));
+
+// assertions fails
+assertThat(values).contains(new double[] {1.0, 4.0}, withPrecision(0.5));</code></pre>
+
+   <p>Note that you can also use <span class="small-code">usingComparatorWithPrecision</span> to achieve the same result:</p>
+
+<pre><code class="java">double[] values = new double[] { 1.0, 2.0, 3.0 };
+ 
+// assertion succeeds
+assertThat(values).usingComparatorWithPrecision(0.5)
+                  .contains(1.1, 2.1);</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-2.3.0-isSubsetOf" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> <span class="small-code">isSubsetOf</span> now supports array/varargs parameters</h4>
+
+   <p>Verifies that the <span class="small-code">Iterable</span> under test contains a subset of the given values.</p>
+ 
+   <p>Example :</p>
+
+   <pre><code class="java">List&lt;Ring&gt; elvesRings = newArrayList(vilya, nenya, narya);
+
+// assertion succeeds
+assertThat(elvesRings).isSubsetOf(oneRing, vilya, nenya, narya);</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-2.3.0-hasMessage" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">String#format</span> syntax support to <span class="small-code">hasMessage</span> <span class="small-code">Throwable</span> assertion</h4>
+
+   <p>Verifies the message of an <span class="small-code">Exception</span> using <span class="small-code">String#format</span> syntax.</p>
+ 
+   <p>Example :</p>
+
+   <pre><code class="java">try {
+  List&lt;String&gt; abc = newArrayList("a", "b", "c");
+  abc.get(4);
+} catch (Exception e) {
+  assertThat(e).hasMessage("Index: %s, Size: %s", 4, 3);
+}
+</code></pre>
+
+   <h4 class="page-header"><span id="assertj-core-2.3.0-diff" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Better diff when comparing text content</h4>
+
+   <p>Files (or InputStreams) content comparison is smarter, much like version control diff thanks to <a href="https://code.google.com/p/java-diff-utils/">java-diff-utils</a>.</p>
+ 
+   <p>Example :</p>
+
+   <pre><code class="java">// writeFile takes file name and file content parameters
+File actual = writeFile("actual.txt", "aaaaaa\n" +
+                                      "bbbbbb\n" +
+                                      "cccccc\n" +
+                                      "dddddd\n");
+
+File expected = writeFile("expected.txt", "------\n" +
+                                          "aaaaaa\n" +
+                                          "bbbbbb\n" +
+                                          "CCCCCC\n" +
+                                          "dddddd\n" +
+                                          "eeeeee\n");
+
+// assertion fails
+assertThat(actual).hasSameContentAs(expected);</code></pre>
+
+   <p>The previous assertion fails with the following error message:</p>
+
+<pre><code class="java">File:
+  &lt;.../actual&gt;
+and file:
+  &lt;.../expected&gt;
+do not have same content:
+
+Missing content at line 1:
+  ["------"]
+
+Changed content at line 4:
+expecting:
+  ["CCCCCC"]
+but was:
+  ["cccccc"]
+
+Missing content at line 6:
+  ["eeeeee"]
+</code></pre>
+
+
 
 <h3 class="page-header"><span id="assertj-core-3.2.0"></span>AssertJ Core 3.2.0 for Java 8 release : New and noteworthy</h3>
 
@@ -54,7 +243,7 @@ $menu
    <div class="release-section-category"> Breaking changes</div>
    <ul>
       <li>Rename <span class="small-code">StrictAssertions</span> to <span class="small-code">AssertionsForClassTypes</span>.</li>
-      <li>Reintroduce <span class="small-code">Assertions</span> providing all AssertJ methods - in case of ambigous <span class="small-code">assertThat</span> resolution, use either <span class="small-code">AssertionsForInterfaceTypes</span> or <span class="small-code">AssertionsForClassTypes</span>.</li>
+      <li>Reintroduce <span class="small-code">Assertions</span> providing all AssertJ methods - in case of ambiguous <span class="small-code">assertThat</span> resolution, use either <span class="small-code">AssertionsForInterfaceTypes</span> or <span class="small-code">AssertionsForClassTypes</span>.</li>
    </ul>
    <div class="release-section-category">New features :</div>
    <ul>
@@ -144,14 +333,14 @@ assertThat(Optional.of(ginobili)).containsSame(ginobili);
    </ul>
    <div class="release-section-category">New features :</div>
    <ul>
-      <li>Add <span class="small-code">hasMessageMatching</span></a> to throwable assertions. <span class="contributor">(Libor Ondrušek)</span></li>
-      <li>Add <span class="small-code">withFailMessage</span></a> as an alternative to  <span class="small-code">overridingErrorMessage</span>. <span class="contributor">(Alexander Bischof)</span></li>
-      <li>Add <span class="small-code">isSubstringOf</span></a> to <span class="small-code">String</span> assertions.</li>
-      <li>Add <span class="small-code">Comparable</span></a> assertions to <span class="small-code">Path</span> as <span class="small-code">Path</span> implements <span class="small-code">Comparable</span>. </li>
+      <li>Add <span class="small-code">hasMessageMatching</span> to throwable assertions. <span class="contributor">(Libor Ondrušek)</span></li>
+      <li>Add <span class="small-code">withFailMessage</span> as an alternative to  <span class="small-code">overridingErrorMessage</span>. <span class="contributor">(Alexander Bischof)</span></li>
+      <li>Add <span class="small-code">isSubstringOf</span> to <span class="small-code">String</span> assertions.</li>
+      <li>Add <span class="small-code">Comparable</span> assertions to <span class="small-code">Path</span> as <span class="small-code">Path</span> implements <span class="small-code">Comparable</span>. </li>
    </ul>
    <div class="release-section-category">Improvements :</div>
    <ul>
-      <li><span class="small-code">MapEntry</span></a> key and value formatting is now consistent with AssertJ format representation. <span class="contributor">(Libor Ondrušek)</span></li>
+      <li><span class="small-code">MapEntry</span> key and value formatting is now consistent with AssertJ format representation. <span class="contributor">(Libor Ondrušek)</span></li>
       <li>Deprecate <del><span class="small-code">isWithinXXX</span></del> date assertions in favor of <span class="small-code">hasXXXField</span>. <span class="contributor">(Alexander Bischof)</span></li>
       <li><span class="small-code">containsOnly</span> error does not display elements not found section anymore if there no elements not found to display.</li>
       <li>Better spacing in Javadoc code examples. (<span class="contributor">Pascal Schumacher</span>)</li>
