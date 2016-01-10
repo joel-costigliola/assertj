@@ -87,6 +87,7 @@
    <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
       <h1 class="page-header">AssertJ Core latest news</h1>
       <ul>
+         <li><a href="#assertj-core-3.3.0">AssertJ core 3.3.0 release</a></li>
          <li><a href="#assertj-core-2.3.0">AssertJ core 2.3.0 release</a></li>
          <li><a href="#assertj-core-3.2.0">AssertJ core 3.2.0 release</a></li>
          <li><a href="#assertj-core-2.2.0">AssertJ core 2.2.0 release</a></li>
@@ -105,6 +106,134 @@
          <li><a href="#assertj-core-1.1.0">AssertJ core 1.1.0 release</a></li>
          <li><a href="#assertj-core-1.0.0">AssertJ core 1.0.0 release</a></li>
       </ul>
+
+
+<h3 class="page-header"><span id="assertj-core-3.3.0"></span>AssertJ Core 3.3.0 for Java 8 release : New and noteworthy</h3>
+
+   <p>Release date : 2016-01-10<br>
+   <p>This release includes all changes from <a href="#assertj-core-2.3.0">AssertJ core 2.3.0</a> and additional ones specific to Java 8.</p>
+
+   <p>Thanks to <span class="contributor">Pascal Schumacher</span>, <span class="contributor">Chris Arnott</span>, <span class="contributor">Jeremy Landis</span>, <span class="contributor">Trond Marius Øvstetun</span> and <span class="contributor">Misha Brukman</span> for their contributions.</p>
+
+   <h4 class="page-header"> Release notes</h4>
+   <div class="release-section-category">New features :</div>
+   <ul>
+      <li>Add <a href="assertj-core-news.html#assertj-core-3.3.0-stream"><span class="small-code">Stream</span></a> assertions. </li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-3.3.0-allMatch"><span class="small-code">allMatch</span></a> to <span class="small-code">Iterable</span> and <span class="small-code">Object[]</span> assertions. </li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-3.3.0-extracting"><span class="small-code">extracting</span></a> with lambdas functions to <span class="small-code">Object[]</span> assertions. </li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-3.3.0-extracting-on-object"><span class="small-code">extracting</span></a> feature with lambdas functions to <span class="small-code">Object</span> assertions. </li>
+      <li>Allow performing multiple assertions on an <span class="small-code">Optional</span> value with <a href="assertj-core-news.html#assertj-core-3.3.0-hasValueSatisfying"><span class="small-code">hasValueSatisfying</span></a>. <span class="contributor">(Trond Marius Øvstetun)</span></li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-3.3.0-isToday"><span class="small-code">isToday()</span></a> to  <span class="small-code">LocalDate</span> assertion. <span class="contributor">(Chris Arnott)</span></li>
+      <li><span class="small-code">Throwable</span> assertion <a href="assertj-core-news.html#assertj-core-3.3.0-withMessage"><span class="small-code">withMessage</span></a> now supports <span class="small-code">String#format</span> syntax.</li>
+   </ul>
+   <div class="release-section-category">Improvements :</div>
+   <ul>
+      <li>Maven pom improvements. <span class="contributor">Jeremy Landis</span> and <span class="contributor">Pascal Schumacher</span></li>
+      <li>Travis build status. <span class="contributor">Misha Brukman</span></li>
+      <li>More Javadoc code examples. <span class="contributor">Pascal Schumacher</span></li>
+   </ul>
+
+   <h4 class="page-header"><span id="assertj-core-3.3.0-stream" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">Stream</span> assertions.</h4>
+
+   <p><span class="small-code">assertThat(myStream)</span>Simply convert <span class="small-code">myStream</span> to a <span class="small-code">List</span> thus providing all <span class="small-code">List</span> assertions.<br/> 
+      Please note that the <span class="small-code">Stream</span> is <b>consumed and cannot be used again</b> (unless if you chain assertions).</p>
+   <p>Example :</p>
+  <pre><code class="java">Stream&lt;TolkienCharacter&gt; fellowshipOfTheRing = Stream.of(frodo, sam, pippin, boromir, 
+                                                         legolas, gandalf, gimli);   
+// all List assertion are available
+assertThat(fellowshipOfTheRing).contains(frodo)
+                               .doesNotContain(sauron);
+                               .extracting(TolkienCharacter::getRace)
+                               .contains(HOBBIT, ELF)
+                               .doesNotContain(ORC);
+
+// WARNING : this assertion is not possible as fellowshipOfTheRing was already consumed.
+assertThat(fellowshipOfTheRing).contains(frodo);</code></pre>
+  
+   <h4 class="page-header"><span id="assertj-core-3.3.0-extracting" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">extracting</span> with lambdas functions to <span class="small-code">Object[]</span> assertions.</h4>
+
+   <p>It was already possible to extract multiple values by name (using introspection), it is now possible to pass lambda functions to extract the values to check.</p>
+   <p>Example :</p>
+  <pre><code class="java">TolkienCharacter[] fellowshipOfTheRing = { frodo, sam, pippin, boromir, legolas, gandalf, gimli };   
+
+// TolkienCharacter age is public
+assertThat(fellowshipOfTheRingArray).extracting(TolkienCharacter::getName, 
+                                                tolkienCharacter -> tolkienCharacter.age)
+                                    .contains(tuple("Boromir", 37),
+                                              tuple("Sam", 38),
+                                              tuple("Legolas", 1000));</code></pre>
+  
+   <h4 class="page-header"><span id="assertj-core-3.3.0-allMatch" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">allMatch</span> to <span class="small-code">Iterable</span> and <span class="small-code">Object[]</span> assertions.</h4>
+
+   <p>Verifies that all the elements of the actual <span class="small-code">Iterable</span> or <span class="small-code">Object[]</span> match the given <span class="small-code">Predicate</span>.</p>
+   <p>Example :</p>
+  <pre><code class="java">// also works with hobbits defined as an Iterable&lt;TolkienCharacter&gt; 
+TolkienCharacter[] hobbits = { frodo, sam, pippin };   
+
+assertThat(hobbits).allMatch(character -> character.getRace() == HOBBIT);</code></pre>
+  
+   <h4 class="page-header"><span id="assertj-core-3.3.0-extracting" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">extracting</span> with lambdas functions to <span class="small-code">Object[]</span> assertions.</h4>
+
+   <p>It was already possible to extract multiple values by name (using introspection), it is now possible to pass lambda functions to extract the values to check.</p>
+   <p>Example :</p>
+  <pre><code class="java">TolkienCharacter[] fellowshipOfTheRing = { frodo, sam, pippin, boromir, legolas, gandalf, gimli };   
+
+// TolkienCharacter age is public
+assertThat(fellowshipOfTheRingArray).extracting(TolkienCharacter::getName, 
+                                                tolkienCharacter -> tolkienCharacter.age)
+                                    .contains(tuple("Boromir", 37),
+                                              tuple("Sam", 38),
+                                              tuple("Legolas", 1000));</code></pre>
+  
+   <h4 class="page-header"><span id="assertj-core-3.3.0-extracting-on-object" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">extracting</span> feature with lambdas functions to <span class="small-code">Object</span> assertions.</h4>
+
+   <p>Using lamdas functions, extract values from the object under test into an array, this new array becoming the object under test. (similar to <a href="#assertj-core-2.3.0-extracting"><span class="small-code">extracting</span> taking fields/properties names</a>)</p>
+   <p>Example :</p>
+  <pre><code class="java"> TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
+
+assertThat(frodo).extracting(TolkienCharacter::getName,
+                             character -> character.age,
+                             character -> character.getRace().getName())
+                 .containsExactly("Frodo", 33, "Hobbit");</code></pre>
+  
+   <h4 class="page-header"><span id="assertj-core-3.3.0-hasValueSatisfying" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow performing multiple assertions on an <span class="small-code">Optional</span> value with <span class="small-code">hasValueSatisfying</span>.</h4>
+
+   <p>Verifies that the actual <span class="small-code">Optional</span> contains a value and gives this value to the given <span class="small-code">Consumer</span> for further assertions allowing deeper assertions on the containing object.</p>
+   <p>Example :</p>
+  <pre><code class="java">// one requirement 
+ assertThat(Optional.of(10)).hasValueSatisfying(i -> { assertThat(i).isGreaterThan(9); });
+
+// multiple requirements
+assertThat(Optional.of("something")).hasValueSatisfying(s -> {
+    assertThat(s).startsWith("some");
+    assertThat(s).endsWith("thing");
+    assertThat(s).isEqualTo("something");
+}); </code></pre>
+  
+   <h4 class="page-header"><span id="assertj-core-3.3.0-isToday" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add<span class="small-code">isToday()</span> to  <span class="small-code">LocalDate</span> assertion.</h4>
+
+   <p>Verifies that the actual <span class="small-code">LocalDate</span> is today, that is matching current year, month and day.</p>
+   <p>Example ;
+
+// assertion will fail
+assertThat(theFellowshipOfTheRin ReleaseDate()).isToday();</code></pre>
+  
+   <h4 class="page-header"><span id="assertj-core-3.3.0-withMessage" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> <span class="small-code">Throwable</span> assertion <span class="small-code">withMessage</span> now supports <span class="small-code">String#format</span> syntax.</h4>
+
+   <p>Some users prefer <span class="small-code">assertThatExceptionOfType</span> over <span class="small-code">assertThatThrownBy</span> to check exceptions, it is now possible to check the exception message specifying the expected value using <span class="small-code">String#format</span> syntax.</p>
+   <p>Example :</p>
+   <pre><code class="java">assertThatExceptionOfType(IOException.class)
+                 .isThrownBy(() -> { throw new Exception("boom !"); })
+                 .withMessage("%s !", "boom");</code></pre>
+  
+   <h4 class="page-header"><span id="assertj-core-3.3.0-optional-containsSame" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">containsSame</span> <span class="small-code">Optional</span>.</h4>
+
+   <p>Allow to check that an <span class="small-code">Optional</span> value is the same as a given one.</p>
+   <p>Example :</p>
+   <pre><code class="java">Player ginobili = new Player("Manu Ginobili");
+assertThat(Optional.of(ginobili)).containsSame(ginobili);
+</code></pre>
+  
 
 <h3 class="page-header"><span id="assertj-core-2.3.0"></span>AssertJ core 2.3.0 release : New and noteworthy</h3>
 
