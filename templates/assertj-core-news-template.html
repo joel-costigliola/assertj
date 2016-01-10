@@ -78,6 +78,15 @@ assertThat(fellowshipOfTheRing).contains(frodo)
 // WARNING : this assertion is not possible as fellowshipOfTheRing was already consumed.
 assertThat(fellowshipOfTheRing).contains(frodo);</code></pre>
   
+   <h4 class="page-header"><span id="assertj-core-3.3.0-allMatch" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">allMatch</span> to <span class="small-code">Iterable</span> and <span class="small-code">Object[]</span> assertions.</h4>
+
+   <p>Verifies that all the elements of the actual <span class="small-code">Iterable</span> or <span class="small-code">Object[]</span> match the given <span class="small-code">Predicate</span>.</p>
+   <p>Example :</p>
+  <pre><code class="java">// also works with hobbits defined as an Iterable&lt;TolkienCharacter&gt; 
+TolkienCharacter[] hobbits = { frodo, sam, pippin };   
+
+assertThat(hobbits).allMatch(character -> character.getRace() == HOBBIT);</code></pre>
+  
    <h4 class="page-header"><span id="assertj-core-3.3.0-extracting" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">extracting</span> with lambdas functions to <span class="small-code">Object[]</span> assertions.</h4>
 
    <p>It was already possible to extract multiple values by name (using introspection), it is now possible to pass lambda functions to extract the values to check.</p>
@@ -90,15 +99,6 @@ assertThat(fellowshipOfTheRingArray).extracting(TolkienCharacter::getName,
                                     .contains(tuple("Boromir", 37),
                                               tuple("Sam", 38),
                                               tuple("Legolas", 1000));</code></pre>
-  
-   <h4 class="page-header"><span id="assertj-core-3.3.0-allMatch" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">allMatch</span> to <span class="small-code">Iterable</span> and <span class="small-code">Object[]</span> assertions.</h4>
-
-   <p>Verifies that all the elements of the actual <span class="small-code">Iterable</span> or <span class="small-code">Object[]</span> match the given <span class="small-code">Predicate</span>.</p>
-   <p>Example :</p>
-  <pre><code class="java">// also works with hobbits defined as an Iterable&lt;TolkienCharacter&gt; 
-TolkienCharacter[] hobbits = { frodo, sam, pippin };   
-
-assertThat(hobbits).allMatch(character -> character.getRace() == HOBBIT);</code></pre>
   
    <h4 class="page-header"><span id="assertj-core-3.3.0-extracting" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">extracting</span> with lambdas functions to <span class="small-code">Object[]</span> assertions.</h4>
 
