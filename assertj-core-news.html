@@ -128,15 +128,15 @@
    </ul>
    <div class="release-section-category">Improvements :</div>
    <ul>
-      <li>Maven pom improvements. <span class="contributor">Jeremy Landis</span> and <span class="contributor">Pascal Schumacher</span></li>
-      <li>Travis build status. <span class="contributor">Misha Brukman</span></li>
-      <li>More Javadoc code examples. <span class="contributor">Pascal Schumacher</span></li>
+      <li>Maven pom improvements. <span class="contributor">(Jeremy Landis</span> and <span class="contributor">Pascal Schumacher)</span></li>
+      <li>Travis build status. <span class="contributor">(Misha Brukman)</span></li>
+      <li>More Javadoc code examples. <span class="contributor">(Pascal Schumacher)</span></li>
    </ul>
 
    <h4 class="page-header"><span id="assertj-core-3.3.0-stream" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">Stream</span> assertions.</h4>
 
-   <p><span class="small-code">assertThat(myStream)</span>Simply convert <span class="small-code">myStream</span> to a <span class="small-code">List</span> thus providing all <span class="small-code">List</span> assertions.<br/> 
-      Please note that the <span class="small-code">Stream</span> is <b>consumed and cannot be used again</b> (unless if you chain assertions).</p>
+   <p><span class="small-code">assertThat(myStream)</span>simply converts <span class="small-code">myStream</span> to a <span class="small-code">List</span> thus providing all <span class="small-code">List</span> assertions.<br/> 
+      Please note that the <span class="small-code">Stream</span> is <b>consumed and cannot be used again</b> (unless you chain assertions).</p>
    <p>Example :</p>
   <pre><code class="java">Stream&lt;TolkienCharacter&gt; fellowshipOfTheRing = Stream.of(frodo, sam, pippin, boromir, 
                                                          legolas, gandalf, gimli);   
@@ -189,7 +189,7 @@ assertThat(fellowshipOfTheRingArray).extracting(TolkienCharacter::getName,
 
    <p>Using lamdas functions, extract values from the object under test into an array, this new array becoming the object under test. (similar to <a href="#assertj-core-2.3.0-extracting"><span class="small-code">extracting</span> taking fields/properties names</a>)</p>
    <p>Example :</p>
-  <pre><code class="java"> TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
+  <pre><code class="java">TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
 
 assertThat(frodo).extracting(TolkienCharacter::getName,
                              character -> character.age,
@@ -216,7 +216,9 @@ assertThat(Optional.empty()).hasValueSatisfying(i -> { assertThat(i).isEqualTo("
    <h4 class="page-header"><span id="assertj-core-3.3.0-isToday" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">isToday()</span> to  <span class="small-code">LocalDate</span> assertion.</h4>
 
    <p>Verifies that the actual <span class="small-code">LocalDate</span> is today, that is matching current year, month and day.</p>
-   <p>Example ;
+   <p>Example :</p>
+  <pre><code class="java"> // assertion will pass
+assertThat(LocalDate.now()).isToday();
 
 // assertion will fail
 assertThat(theFellowshipOfTheRin ReleaseDate()).isToday();</code></pre>
@@ -355,7 +357,7 @@ double[] values = new double[] { 1.0, 2.0, 3.0 };
 // assertion succeeds
 assertThat(values).contains(new double[] {1.01, 3.01, 2.0}, withPrecision(0.02));
 
-// assertions fails
+// assertion fails
 assertThat(values).contains(new double[] {1.0, 4.0}, withPrecision(0.5));</code></pre>
 
    <p>Note that you can also use <span class="small-code">usingComparatorWithPrecision</span> to achieve the same result:</p>
