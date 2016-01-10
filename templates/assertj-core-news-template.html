@@ -129,16 +129,19 @@ assertThat(frodo).extracting(TolkienCharacter::getName,
    <p>Verifies that the actual <span class="small-code">Optional</span> contains a value and gives this value to the given <span class="small-code">Consumer</span> for further assertions allowing deeper assertions on the containing object.</p>
    <p>Example :</p>
   <pre><code class="java">// one requirement 
- assertThat(Optional.of(10)).hasValueSatisfying(i -> { assertThat(i).isGreaterThan(9); });
+assertThat(Optional.of(10)).hasValueSatisfying(i -> { assertThat(i).isGreaterThan(9); });
 
 // multiple requirements
 assertThat(Optional.of("something")).hasValueSatisfying(s -> {
     assertThat(s).startsWith("some");
     assertThat(s).endsWith("thing");
     assertThat(s).isEqualTo("something");
-}); </code></pre>
+}); 
+
+// failing assertion as the Optional does not have a value.
+assertThat(Optional.empty()).hasValueSatisfying(i -> { assertThat(i).isEqualTo("something"); });</code></pre>
   
-   <h4 class="page-header"><span id="assertj-core-3.3.0-isToday" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add<span class="small-code">isToday()</span> to  <span class="small-code">LocalDate</span> assertion.</h4>
+   <h4 class="page-header"><span id="assertj-core-3.3.0-isToday" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">isToday()</span> to  <span class="small-code">LocalDate</span> assertion.</h4>
 
    <p>Verifies that the actual <span class="small-code">LocalDate</span> is today, that is matching current year, month and day.</p>
    <p>Example ;
