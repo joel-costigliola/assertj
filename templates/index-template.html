@@ -38,6 +38,17 @@ assertThat(fellowshipOfTheRing).hasSize(9)
                                .contains(frodo, sam)
                                .doesNotContain(sauron);
 
+// Java 8 exception assertion                               
+assertThatThrownBy(() -> { throw new Exception("boom!") }).isInstanceOf(Exception.class)
+                                                          .hasMessageContaining("boom");
+
+// Java 8 BDD style exception assertion                               
+Throwable thrown = catchThrowable(() -> { throw new Exception("boom!") });
+
+assertThat(thrown).isInstanceOf(Exception.class)
+                  .hasMessageContaining("boom");
+
+
 // using extracting magical feature to check fellowshipOfTheRing characters name :)
 assertThat(fellowshipOfTheRing).extracting("name")
                                .contains("Boromir", "Gandalf", "Frodo", "Legolas")
@@ -47,6 +58,12 @@ assertThat(fellowshipOfTheRing).extracting("name")
 assertThat(fellowshipOfTheRing).extracting(TolkienCharacter::getName)
                                .contains("Boromir", "Gandalf", "Frodo", "Legolas")
                                .doesNotContain("Sauron", "Elrond");
+
+// Extracting multiple values at once (using tuple to group them)
+assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name")
+                               .contains(tuple("Boromir", 37, "Man"),
+                                         tuple("Sam", 38, "Hobbit"),
+                                         tuple("Legolas", 1000, "Elf"));
 
 // filter collection before assertion
 assertThat(fellowshipOfTheRing).filteredOn("race", HOBBIT)
@@ -63,10 +80,10 @@ assertThat(fellowshipOfTheRing).filteredOn(character -> character.getName().cont
                                .extracting(character -> character.getRace().getName())
                                .contains("Hobbit", "Elf", "Man");
 
-// and many more assertions : map, dates (java 7 and java 8), file, numbers, exceptions ...</code></pre>
+// and many more assertions : map, dates (java 7 and java 8), file, numbers, optional ...</code></pre>
       </div>
       <div class="col-lg-12 text-center">
-        <h3>Want to see more features ? Jump to the <a href="assertj-core-features-highlight.html">highlights section</a>.</h3>
+        <h3>Want to see more features ? Jump to the <i><a href="assertj-core-features-highlight.html">Highlights section</a></i>.</h3>
         <h3>AssertJ is IDE friendly, use code completion to discover assertions :</h3>
             <br/>
         <img src="images/ide-completion.png" alt="Screenshot of IDE completion">
