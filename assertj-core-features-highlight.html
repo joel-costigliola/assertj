@@ -99,7 +99,7 @@
          <li><a href="#extracted-method-result-assertion">Assertions on results of method call on iterable/array elements</a></li>
          <li><a href="#soft-assertions">Gather all errors message with Soft assertions</a></li>
          <li><a href="#file-content-string-assertions">Using String assertions on the content of a file</a></li>
-         <li><a href="#exception-assertion">Exception assertions best practices</a></li>
+         <li><a href="#exception-assertion">Exception assertions guide</a></li>
          <li><a href="#custom-comparison-strategy">Using a custom comparison strategy in assertions</a></li>
          <li><a href="assertj-core-conditions.html">Extending assertions with condition</a></li>
       </ul>
@@ -394,11 +394,48 @@ assertThat(contentOf(xFile)).startsWith("The Truth").contains("Is Out").endsWith
       <p>Note that it is meant to be used with small files since the whole content is loaded in memory.</p>
 
 
-      <h3 class="page-header"><span id="exception-assertion"></span><i class="fa fa-star"></i> Exception assertions best practices</h3>
+      <h3 class="page-header"><span id="exception-assertion"></span><i class="fa fa-star"></i> Exception assertions guide</h3>
 
-      <p>How to assert that an exception has been thrown and that exception is the one expected ?</p>
+      <p>How to assert that an exception has been thrown and check it is the expected one ?</p>
 
-      <p class="list-section">With Java 7:</p>
+   <p class="list-section">With Java 8 (AssertJ 3.x) :</p>
+
+   <p>Testing assertions in Java 8 is elegant, use <span class="small-code">assertThatThrownBy(ThrowingCallable)</span> to capture and then assert on a <span class="small-code">Throwable</span>, <span class="small-code">ThrowingCallable</span> being a functional interface it can be expressed by a lambda.</p>
+   <p>Example :</p>
+
+   <pre><code class="java">@Test
+public void testException() {
+   assertThatThrownBy(() -> { throw new Exception("boom!") }).isInstanceOf(Exception.class)
+                                                             .hasMessageContaining("boom");
+}</code></pre>
+
+   <p>An alternative syntax is provided as some people find it more natural :</p>
+
+   <pre><code class="java">@Test
+public void testException() {
+   assertThatExceptionOfType(IOException.class).isThrownBy(() -> { throw new IOException("boom!"); })
+                                               .withMessage("%s!", "boom")
+                                               .withMessageContaining("boom")
+                                               .withNoCause(); 
+}</code></pre>
+
+   <p>Finally, BDD aficionados can separate <i>when</i> and <i>then</i> steps by using <span class="small-code">catchThrowable(ThrowingCallable)</span> to capture the throwable and then perform assertions.</p>
+   <p>Example :</p>
+
+   <pre><code class="java">@Test
+public void testException() {
+   // given some preconditions
+
+   // when
+   Throwable thrown = catchThrowable(() -> { throw new Exception("boom!") });
+
+   // then
+   assertThat(thrown).isInstanceOf(Exception.class)
+                     .hasMessageContaining("boom");
+}</code></pre>
+
+      <p class="list-section">With Java 7 (AssertJ 2.x) :</p>
+      <p>Asserting on exception is not as nice compared to the Java 8 way, this is how you would do it in AssertJ 2.x :</p>
       <ol>
          <li>Put the code to should throw in a try-catch.</li>
          <li>Call <span class="small-code">fail</span> method immediately after the code that should throw the exception, so that if it is not thrown, the test fails.</li>
@@ -436,32 +473,6 @@ try {
   failBecauseExceptionWasNotThrown(IndexOutOfBoundsException.class);
 } catch (IndexOutOfBoundsException e) {
   assertThat(e).hasMessage("Index: 9, Size: 9");
-}</code></pre>
-
-   <p class="list-section">With Java 8:</p>
-
-   <p>Testing assertions are much more elegant with Java 8. Use <span class="small-code">assertThatThrownBy(ThrowingCallable)</span> to capture and then assert on a <span class="small-code">Throwable</span>, <span class="small-code">ThrowingCallable</span> being a functinonal interface it can be expressed by a lambda.</p>
-   <p>Example :</p>
-
-   <pre><code class="java">@Test
-public void testException() {
-   assertThatThrownBy(() -> { throw new Exception("boom!") }).isInstanceOf(Exception.class)
-                                                             .hasMessageContaining("boom");
-}</code></pre>
-
-   <p>BDD aficionados can separate <i>when</i> and <i>then</i> steps by using <span class="small-code">catchThrowable(ThrowingCallable)</span> to capture the throwable and then perform assertions.</p>
-   <p>Example :</p>
-
-   <pre><code class="java">@Test
-public void testException() {
-   // given some preconditions
-
-   // when
-   Throwable thrown = catchThrowable(() -> { throw new Exception("boom!") });
-
-   // then
-   assertThat(thrown).isInstanceOf(Exception.class)
-                     .hasMessageContaining("boom");
 }</code></pre>
 
       <h3 class="page-header"><span id="custom-comparison-strategy"></span><i class="fa fa-star"></i> Using a custom comparison strategy in assertions</h3>
