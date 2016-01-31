@@ -98,7 +98,7 @@ sed: preserving permissions for `./sed004220': Permission denied</code></pre>
 
          <h5 class="page-header">2 - Converting <span class="small-code">assertEquals(expectedSize, myList.size())</span> to <span class="small-code">assertThat(myList).hasSize(expectedSize)</h5>
          <p>Find/replace Regexp :</p>
-         <pre><code class="java">assertEquals&#92;((.*),(*.).size&#92;(&#92;)&#92;); -> assertThat(&#92;2).hasSize(&#92;1);</code></pre>
+         <pre><code class="java">assertEquals&#92;((.*),(.*).size&#92;(&#92;)&#92;); -> assertThat(&#92;2).hasSize(&#92;1);</code></pre>
          <p>It's important to run this one before the <span class="small-code">assertEquals</span> -> <span class="small-code">isEqualTo</span> conversion to avoid ending with : <span class="small-code">assertThat(myList.size()).isEqualTo(expectedSize)</span></p>
 
          <h5 class="page-header">3 - Converting <span class="small-code">assertEquals(value, valueUnderTest)</span> to <span class="small-code">assertThat(valueUnderTest).isEqualTo(value)</h5>
