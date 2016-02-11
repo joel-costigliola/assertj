@@ -123,14 +123,14 @@
          <h3>Example</h3>
          <p>This example takes a screenshot of the desktop when a test fails and saves the image as
             <code>myTest.png</code>:</p>
-         <pre class="pre-scrollable"><code class="language-java">// import static org.assertj.util.Files.currentFolder;
+         <pre class="pre-scrollable"><code class="language-java">// import static org.assertj.core.util.Files.currentFolder;
 // import static java.io.File.separator
 
 ScreenshotTaker screenshotTaker = new ScreenshotTaker();
 
 String currentFolderPath = currentFolder().getCanonicalPath();
 
-File imageFolder = new File(currentFolderPath + separator + "failed-tests"))
+File imageFolder = new File(currentFolderPath + separator + "failed-tests");
 String imageFolderPath = imageFolder.getCanonicalPath() + separator;
 
 try {
