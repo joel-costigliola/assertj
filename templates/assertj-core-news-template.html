@@ -172,7 +172,7 @@ assertThat(Optional.of(ginobili)).containsSame(ginobili);
 
    <p>Release date : 2016-01-02<br>
 
-   <p>Special Thanks to <span class="contributor">Pascal Schumacher</span> for its contributions including relentless code cleanup and improvements, appreciated !<br/>
+   <p>Special thanks to <span class="contributor">Pascal Schumacher</span> for his contributions including relentless code cleanup and improvements, appreciated !<br/>
    Many thanks also to <span class="contributor">Pierre Templier</span>, <span class="contributor">Guillaume Husta</span>, <span class="contributor">Libor Ondrušek</span>, <span class="contributor">Dan Corder</span> and <span class="contributor">Chris Arnott</span> for their contributions.</p>
 
    <p>This release tried to make AssertJ Core usable for testing Android applications (by introducing <span class="small-code">Java6Assertions</span>) but this has not been reliably verified so any feedback is welcome.</p>
@@ -199,7 +199,7 @@ assertThat(Optional.of(ginobili)).containsSame(ginobili);
       <li>Add <span class="small-code">Java6Assertions</span> entry point class to improve support for Android applications (feedback welcome).</li>
       <li><span class="small-code">assertIsEqualToIgnoringGivenFields</span></a> does not require anymore the ignored fields to exist.</li>
       <li>Field by field comparison learned to compare objects of different types.</li>
-      <li>When possible, maps are displayed sorted in error messages to ease diagnostic. (<span class="contributor">gagba</span>)</li>
+      <li>When possible, maps are displayed sorted in error messages to ease diagnostics. (<span class="contributor">gagba</span>)</li>
       <li><span class="small-code">Map</span> assertions learned to use <span class="small-code">java.util.Map.Entry</span>. (<span class="contributor">Pascal Schumacher</span>)</li>
       <li><span class="small-code">BigDecimalComparator</span> now handles null values.</li>
       <li>To be OS agnostic, replace <span class="small-code">\n</span> by <span class="small-code">%n</span> in error messages. (<span class="contributor">Pascal Schumacher</span>)</li>
@@ -1803,7 +1803,7 @@ TolkienCharacter sam = new TolkienCharacter("Sam", 38, HOBBIT);
 assertThat(newArrayList(frodo)).usingElementComparatorOnFields("race").contains(sam);
 
 // Before 1.7.0, this basic assertion would not work as element comparison semantics 
-// were only honoured in IterableAssert/Array specifc assertions, but now it works !
+// were only honoured in IterableAssert/Array specific assertions, but now it works !
 assertThat(newArrayList(frodo)).usingElementComparatorOnFields("race").isEqualTo(newArrayList(sam));
 </code></pre>
 
@@ -2010,7 +2010,7 @@ public void host_dinner_party_where_nobody_dies() {
 <h4 class="page-header"></span><i class="fa fa-arrow-circle-right"></i> Extracting feature for method calls</h4>
 
 <p>Like <span class="small-code">extracting</span> feature but instead of extracting properties/fields, it extracts the result of given method invocation on the elements of Iterable/Array under test and puts the results into a new Iterable/Array which becomes the object under test.<br>
-   It allows you to test the results of method call on elements instead of testing the elements themselves, it's especially usefull for classes that does not conform to Java Bean's getter specification (e.g <span class="small-code">toString()</span> or <span class="small-code">String status()</span> instead of <span class="small-code">String getStatus()</span>).
+   It allows you to test the results of method call on elements instead of testing the elements themselves, it's especially useful for classes that does not conform to Java Bean's getter specification (e.g <span class="small-code">toString()</span> or <span class="small-code">String status()</span> instead of <span class="small-code">String getStatus()</span>).
 </p>
 <p>Let's take an example to make things clearer :</p>
   <pre><code class="java">// Build a array of WesterosHouse, a WesterosHouse has a method: public String sayTheWords()
@@ -2184,7 +2184,7 @@ public void host_dinner_party_where_nobody_dies() {
      1) [Living Guests] expected:<[7]> but was:<[6]>
      2) [Library] expected:<'[clean]'> but was:<'[messy]'>
      3) [Candlestick] expected:<'[pristine]'> but was:<'[bent]'>
-     4) [Professor] expected:<'[well kempt]'> but was:<'[bloodied and disheveled]'></code></pre>
+     4) [Professor] expected:<'[well kempt]'> but was:<'[bloodied and dishevelled]'></code></pre>
 
 <p>Thanks to <span class="contributor">Brian Laframboise</span> for this contribution.</p>
 
