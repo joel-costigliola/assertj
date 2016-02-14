@@ -86,11 +86,11 @@ assertThat(fellowshipOfTheRing).hasSize(9)
                                .doesNotContain(sauron);
 
 // Java 8 exception assertion                               
-assertThatThrownBy(() -> { throw new Exception("boom!") }).isInstanceOf(Exception.class)
+assertThatThrownBy(() -> { throw new Exception("boom!"); }).isInstanceOf(Exception.class)
                                                           .hasMessageContaining("boom");
 
 // Java 8 BDD style exception assertion                               
-Throwable thrown = catchThrowable(() -> { throw new Exception("boom!") });
+Throwable thrown = catchThrowable(() -> { throw new Exception("boom!"); });
 
 assertThat(thrown).isInstanceOf(Exception.class)
                   .hasMessageContaining("boom");
