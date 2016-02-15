@@ -95,7 +95,6 @@ Throwable thrown = catchThrowable(() -> { throw new Exception("boom!") });
 assertThat(thrown).isInstanceOf(Exception.class)
                   .hasMessageContaining("boom");
 
-
 // using extracting magical feature to check fellowshipOfTheRing characters name :)
 assertThat(fellowshipOfTheRing).extracting("name")
                                .contains("Boromir", "Gandalf", "Frodo", "Legolas")
