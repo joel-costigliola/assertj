@@ -15,7 +15,7 @@ $menu
    <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
       <h1 class="page-header">Creating assertions specific to your classes</h1>
       <p>Having the possibility to create assertions specific to your own classes is important because it makes your test assertions reflect the domain model. It's a way to use Domain Driven Design ubiquitous language in your tests. Custom assertions can be seen as a DSL of domain assertions.</p>
-      <p>Writing its own assertions is simple : create a class inheriting from <span class="small-code">AbstractAssert</span> and add your custom assertions methods.<br>
+      <p>Writing your own assertions is simple : create a class inheriting from <span class="small-code">AbstractAssert</span> and add your custom assertions methods.<br>
          To be easy to use, you should also add a static method <span class="small-code">assertThat</span> to provide an handy entry point to your new assertion class.
       </p>
 
@@ -31,7 +31,7 @@ $menu
 
       <h3 class="page-header"><span id="custom-assertion-class"></span> Creating your own assertion class</h3>
 
-      <p>Let's see how to do that on an example !<br>
+      <p>Let's see how to do that with an example !<br>
       The example is taken from <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> and more specifically <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/custom/TolkienCharacterAssert.java">TolkienCharacterAssert.java</a>.
       </p>
 
@@ -44,8 +44,8 @@ public class TolkienCharacter {
   private int age;
 }</code></pre>
 
-      <p>Let's name our assertion class <span class="small-code">TolkienCharacterAssert</span> to follow AssertJ convention,
-         we make it inherit from <span class="small-code">AbstractAssert</span> and specify the generic parameters, first is the class itself (needed for assertion chaining) and second is the class we want to make assertions on : <span class="small-code">TolkienCharacter</span>.</p>
+      <p>Let's name our assertion class <span class="small-code">TolkienCharacterAssert</span>. To follow AssertJ conventions,
+         we make it inherit from <span class="small-code">AbstractAssert</span> and specify two generic parameters, the first is the class itself (needed for assertion chaining) and the second is the class we want to make assertions on : <span class="small-code">TolkienCharacter</span>.</p>
 
       <p>Inheriting from <span class="small-code">AbstractAssert</span> will give you all the basic assertions : <span class="small-code">isEqualTo</span>, <span class="small-code">isNull</span>, ...</p>
 
@@ -105,7 +105,7 @@ assertThat(frodo).hasName("Frodo");</code></pre>
 
       <h3 class="page-header"><span id="custom-assertion-entry-point"></span> Providing an entry point for all your custom assertions</h3>
 
-      <p>Now that you have a bunch of custom assertions classes, you want to access them easily, this is not too hard hopefully, just create an <span class="small-code">Assertions</span> class providing <span class="small-code">assertThat</span> static methods for each of your assertions classes, example:</p>
+      <p>Now that you have a bunch of custom assertions classes, you want to access them easily. Just create an <span class="small-code">Assertions</span> class providing static <span class="small-code">assertThat</span> methods for each of your assertions classes. For example:</p>
 
 <pre><code class="java">public class MyProjectAssertions {
 
