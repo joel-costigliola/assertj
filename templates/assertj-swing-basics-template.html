@@ -46,28 +46,33 @@ $assertj_swing_sample_without_base_test
 $assertj_swing_sample_with_base_test
 
          <h3 class="page-header"><span id="configuration"></span>Configuration</h3>
-         <p>$assertj_swing_name provides the class <code>org.assertj.swing.core.Settings</code> to configure instances of
-            <code>org.assertj.swing.core.Robot</code>. Configuration options include scope of component look-ups, delays
+         <p>$assertj_swing_name provides the class <code>org.assertj.swing.core.Settings</code> which holds the configurable
+            properties. There are properties that can be modified at runtime. These options include scope of component look-ups, delays
             and timeouts for different actions, and many more.</p>
 
          <p>For example to set the delay between generated events to 50&nbsp;ms, you would write</p>
          <pre><code class="language-java">Robot robot = BasicRobot.robotWithNewAwtHierarchy();
 robot.settings().delayBetweenEvents(50);</code></pre>
 
+         <p>Each property has a default value which is provided by $assertj_swing_name and can be found in the JavaDoc
+            but these defaults can be changed. You can add a file called <code>assertj-swing.properties</code> to
+            the classpath. This file may contain key value pairs that the defaults provided byoverride $assertj_swing_name.</p>
+
+         <p>If this is not enough one may also override specific properties via Java System Properties.</p>
+
+         <p>For example the default delay between generated events might be overridden with a <code>assertj-swing.properties</code>
+            file containing</p>
+         <pre><code>org.assertj.swing.delay.between_events = 75</code></pre>
+
+         <p>This might be overridden with the following additional parameter at startup</p>
+         <pre><code>-Dorg.assertj.swing.delay.between_events=80</code></pre>
+
+         <p>There are also properties that cannot be modified at runtime. These options can only be modified via a
+            properties file. Or via a system property.</p>
+
          <p>For more information about the available configuration settings (including defaults and valid values),
             see the
             <a href="swing/api/org/assertj/swing/core/Settings.html" target="_blank">Settings Javadoc</a>.</p>
-
-         <div class="panel panel-info">
-            <div class="panel-heading">Note</div>
-            <div class="panel-body">
-               <p>Currently configuration settings can be set per <code>Robot</code> instance. Settings can be changed
-               <strong>per test</strong> only. We consider that the provided default values are good enough for general
-               GUI testing. So far, we have not provided a way to have general settings that can affect all instances of
-               <code>Robot</code> in a test suite (e.g. a configuration file).</p>
-               <p>If you need global configuration settings, please let us know!</p>
-            </div>
-         </div>
 
          <h3 class="page-header"><span id="verifications"></span>Verifications with $assertj_swing_name</h3>
          <p>$assertj_swing_name allows you to check the state of the components via the component fixtures. Each fixture
