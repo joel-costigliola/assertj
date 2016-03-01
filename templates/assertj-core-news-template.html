@@ -829,7 +829,7 @@ assertThat(optional).containsInstanceOf(String.class);</code></pre>
    <h4 class="page-header"> Release notes</h4>
    <div class="release-section-category"> Breaking changes</div>
    <ul>
-      <li>Use strict instead of lenient date parsing by default, this might break few tests, if you really wan to use lenient parsing just call <span class="small-code">Assertions.setLenientDateParsing(true)</span>.</li>
+      <li>Use strict instead of lenient date parsing by default, this might break few tests, if you really want to use lenient parsing just call <span class="small-code">Assertions.setLenientDateParsing(true)</span>.</li>
    </ul>
    <div class="release-section-category">New features :</div>
    <ul>
@@ -1210,7 +1210,7 @@ assertThat(Throwable.class).isNotFinal();</code></pre>
    <h4 class="page-header"><span id="assertj-core-3.0.0-new-date-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Java 8 <span class="small-code">Date/Time</span></a> assertions.</h4>
 
    <p>AssertJ provides assertions for <span class="small-code">ZonedDateTime</span>, <span class="small-code">LocalDateTime</span>, <span class="small-code">LocalDate</span> and <span class="small-code">LocalTime</span>. Most of the assertions come with a <span class="small-code">String</span> based parameter equivalent that will be parsed into the expected date/time type, the examples shown below use this possiblity for brevity sake's.</p>
-   <p>Note that for <span class="small-code">ZonedDateTime</span> assertions, comparison is perfomed in actual's time zone.</p>
+   <p>Note that for <span class="small-code">ZonedDateTime</span> assertions, comparison is performed in actual's time zone.</p>
    <p>Comparing date/time ignoring some fields only checks that the non-ignored fields are equal. The ignored fields are those below (or equal) to the given precision, for example ignoring minutes means that minutes, seconds and nanoseconds will be ignored. It is also important to understand that the time difference does not count, it turns out that, as in the example below, two date/time can have only 1 ns difference with different minutes, seconds and nanoseconds fields.</p>
 
    <pre><code class="java">LocalDateTime localDateTimeA = LocalDateTime.of(2000, 1, 1, 23, 50, 00, 000);

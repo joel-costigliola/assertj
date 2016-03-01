@@ -68,7 +68,6 @@ assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name")
 assertThat(fellowshipOfTheRing).filteredOn("race", HOBBIT)
                                .containsOnly(sam, frodo, pippin, merry);
 
-
 // filter collection with Java 8 Predicate
 assertThat(fellowshipOfTheRing).filteredOn(character -> character.getName().contains("o"))
                                .containsOnly(aragorn, frodo, legolas, boromir);
@@ -100,21 +99,21 @@ assertThat(fellowshipOfTheRing).filteredOn(character -> character.getName().cont
          <div class="col-lg-4 col-md-4">
             <h3><i class="fa fa-check-circle"></i> Rich and easy to use</h3>
 
-            <p>AssertJ provides a rich set of assertions, truly-helpful error messages, it improves test code
-               readability and has been designed to be super easy to use within your favorite IDE.</p>
+            <p>AssertJ provides a rich set of assertions, truly helpful error messages, improves test code
+               readability and is designed to be super easy to use within your favorite IDE.</p>
 
             <p>Get started right away with the <a
-                  href="assertj-core-quick-start.html">one minute starting guide</a>, have a look at some AssertJ <a
-                  href="assertj-core-features-highlight.html">great features</a> or stay tune with the latest
+                  href="assertj-core-quick-start.html">one minute starting guide</a>, have a look at some of AssertJ <a
+                  href="assertj-core-features-highlight.html">great features</a> or stay up to date with the latest
                <a href="assertj-core-news.html">releases</a>.</p>
 
-            <p>If you are convinced by AssertJ, you can automatically <a href="assertj-core-converting-junit-assertions-to-assertj.html#automatic-conversion">convert your JUnit assertions to AssertJ</a></p>
+            <p>If you are convinced by AssertJ, you can automatically <a href="assertj-core-converting-junit-assertions-to-assertj.html#automatic-conversion">convert your JUnit assertions to AssertJ.</a></p>
          </div>
          <div class="col-lg-4 col-md-4">
             <h3><i class="fa fa-pencil"></i> Extensible</h3>
 
-            <p>You can easily write assertions for your own classes, it will make your test assertions reflect the
-               domain, it's a way to use <a href="http://en.wikipedia.org/wiki/Domain-driven_design">ubiquitous
+            <p>You can easily write assertions for your own classes, which will make your test assertions reflect the
+               domain and is a way to use the <a href="http://en.wikipedia.org/wiki/Domain-driven_design">ubiquitous
                   language</a> in your tests !</p>
 
             <p>We provide an <a href="assertj-assertions-generator.html">assertion generator</a> to quickly create assertions for
@@ -126,8 +125,7 @@ assertThat(fellowshipOfTheRing).filteredOn(character -> character.getName().cont
             <p>AssertJ only exists to help the dev community, we listen to users ideas to provide the most useful
                assertions.</p>
 
-            <p>AssertJ is a <a href="assertj-core.html#fork">fork</a> of the great Fest Assert library which is no more
-               active these days.</p>
+            <p>AssertJ is a <a href="assertj-core.html#fork">fork</a> of the great Fest Assert library which is not maintained anymore.</p>
             <p>AssertJ will remain open and free forever.</p>
          </div>
       </div>
