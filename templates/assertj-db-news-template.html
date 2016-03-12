@@ -25,16 +25,20 @@ $menu
 <div class="release-section-category">Improvements&nbsp;:</div>
 <ul>
 <li>Add from(Calendar) and now() methods to DateValue, TimeValue and DateTimeValue</li>
+<li><a href="https://github.com/joel-costigliola/assertj-db/issues/9">issue #9</a>&nbsp;: Make a way to view the data of a Table, of a Request or of Changes</span></li>
 <li><a href="https://github.com/joel-costigliola/assertj-db/issues/15">issue #15</a>&nbsp;: Add support of UUID columns type <span class="contributor">(Otoniel Isidoro)</span></li>
 <li>Add isOfClass(Class) assertion method for value</li>
 <li><a href="https://github.com/joel-costigliola/assertj-db/issues/19">issue #19</a>&nbsp;: Add the support of BLOB and CLOB</span></li>
 <li><a href="https://github.com/joel-costigliola/assertj-db/issues/22">issue #22</a>&nbsp;: Add isEqualTo(Object) for the values. Add hasValues(Object...) for the columns. Add hasValues(Object) and hasValues(Object, Object) for the columns of the changes</span></li>
 <li><a href="https://github.com/joel-costigliola/assertj-db/issues/25">issue #25</a>&nbsp;: Add containsValues(...) methods for the columns</span></li>
+<li><a href="https://github.com/joel-costigliola/assertj-db/issues/34">issue #34</a>&nbsp;: Enhance exception message when column does not exist</span></li>
 </ul>
 <div class="release-section-category">Bug fixes&nbsp;:</div>
 <ul>
 <li><a href="https://github.com/joel-costigliola/assertj-db/issues/21">issue #21</a>&nbsp;: Add possibility to pass a reference containing null value like parameter to <code class="java">isEqualTo()</code> and <code class="java">isNotEqualTo()</code></span></li>
 <li><a href="https://github.com/joel-costigliola/assertj-db/issues/23">issue #23</a>&nbsp;: Fix the support of Number (bug when the mapping is a Double instance)</span></li>
+<li><a href="https://github.com/joel-costigliola/assertj-db/issues/31">issue #31</a>&nbsp;: Fix the detection of primary key (cause by letter case) in some DBMS</span></li>
+<li><a href="https://github.com/joel-costigliola/assertj-db/issues/32">issue #32</a>&nbsp;: Fix the SQL request for DBMS with letter case different of upper case in the name of the DB elements</span></li>
 </ul>
 <h3 class="page-header"><span id="assertj-db-1.0.1"></span>AssertJ-DB 1.0.1&nbsp;:</h3>
 <p>Release date : 2015-08-09 (<a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-db|1.0.1|bundle">dependency declaration</a>)</p>
