@@ -15,21 +15,32 @@ $assertj_core_side_menu
    <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
       <h1 class="page-header">AssertJ Core features highlight</h1>
 
-      <p>AssertJ has some great features that people don't always know, the purpose of this page is to show them so that you take the most of AssertJ.</p>
+      <p>AssertJ has some great features that people are not always aware of, here's some of them.</p>
 
+      <p>Basic tips :</p>
       <ul>
+         <li>Java 8 assertions, see release notes : <a href="assertj-core-news.html#assertj-core-3.3.0">3.3.0</a> /<a href="assertj-core-news.html#assertj-core-3.2.0">3.2.0</a> / <a href="assertj-core-news.html#assertj-core-3.1.0">3.1.0</a> / <a href="assertj-core-news.html#assertj-core-3.0.0">3.0.0</a> </li>
          <li><a href="#ide-automatic-static-import">IDE configuration to directly get <span class="small-code">assertThat</span> in code completion</a></li>
          <li><a href="#describe-assertion">Describe you test assertion using <span class="small-code">as(String description, Object... args)</span></a></li>
-         <li>Java 8 assertions in AssertJ Core <a href="assertj-core-news.html#assertj-core-3.2.0">3.2.0</a> / <a href="assertj-core-news.html#assertj-core-3.1.0">3.1.0</a> / <a href="assertj-core-news.html#assertj-core-3.0.0">3.0.0</a> </li>
+         <li><a href="#exception-assertion">Exception assertions guide</a></li>
+         <li><a href="#file-content-string-assertions">Using String assertions on the content of a file</a></li>
+      </ul>
+
+      <p>Iterable and arrays assertions :</p>
+      <ul>
          <li><a href="#filters">Combining filtering and assertions on iterables or arrays</a></li>
          <li><a href="#extracted-properties-assertion">Assertions on extracted properties/fields of iterable/array elements</a></li>
          <li><a href="#flat-extracted-properties-assertion">Flat(map) extracting</a></li>
          <li><a href="#extracted-method-result-assertion">Assertions on results of method call on iterable/array elements</a></li>
+      </ul>
+
+      <p>Advanced tips :</p>
+      <ul>
          <li><a href="#soft-assertions">Gather all errors message with Soft assertions</a></li>
-         <li><a href="#file-content-string-assertions">Using String assertions on the content of a file</a></li>
-         <li><a href="#exception-assertion">Exception assertions guide</a></li>
          <li><a href="#custom-comparison-strategy">Using a custom comparison strategy in assertions</a></li>
+         <li><a href="#field-by-field-comparison">Field by field comparisons</a></li>
          <li><a href="assertj-core-conditions.html">Extending assertions with condition</a></li>
+         <li><a href="assertj-core-custom-assertions.html">Creating assertions to your domain</a></li>
       </ul>
 
       <h3 class="page-header"><span id="ide-automatic-static-import"></span><i class="fa fa-star"></i> IDE configuration to get assertThat in code completion</h3>
@@ -38,15 +49,15 @@ $assertj_core_side_menu
 
       <p class="list-section">Eclipse configuration</p>
       <ol>
-         <li>Go to : preferences > Java > Editor > Content assist > Favorites > New Type</li>
+         <li>Go to : preferences &gt; Java &gt; Editor &gt; Content assist &gt; Favorites &gt; New Type</li>
          <li>Enter : <span class="small-code">org.assertj.core.api.Assertions</span></li>
          <li>You should see : <span class="small-code">org.assertj.core.api.Assertions.*</span> in a the list.</li>
       </ol>
 
       <p class="list-section">IntelliJ Idea</p>
-      <ol>
+      <ul>
          <li>No special configuration, just start typing <span class="small-code">assertThat</span> and then invoke completion (Ctrl-Space) twice.</li>
-      </ol>
+      </ul>
 
       <h3 class="page-header"><span id="describe-assertion"></span><i class="fa fa-star"></i> Describe you test assertion with as(String description, Object... args)</h3>
 
@@ -427,6 +438,119 @@ assertThat(fellowshipOfTheRing).contains(gandalf).doesNotContain(sauron);
 
 // ... but if we compare race only, Sauron is in fellowshipOfTheRing (he's a Maia like Gandalf)
 assertThat(fellowshipOfTheRing).usingElementComparator(raceComparator).contains(sauron);</code></pre>
+
+      <h3 class="page-header"><span id="field-by-field-comparison"></span><i class="fa fa-star"></i> Field by field comparisons</h3>
+
+      <p>This is a special case of <a href="#custom-comparison-strategy">custom comparison</a> where objects are compared "by value", the comparison is performed on all fields/properties, several variants are provided :
+         <ul>
+            <li><a href="#field-by-field"><span class="small-code">isEqualToComparingFieldByField</span></a> : compares all fields/properties including inherited ones - not recursive</li>
+            <li><a href="#field-by-field-only"><span class="small-code">isEqualToComparingOnlyGivenFields</span></a> : compares only the specified fields/properties - not recursive</li>
+            <li><a href="#field-by-field-ignoring"><span class="small-code">isEqualToIgnoringGivenFields</span></a> : compares all fields/properties except specified ones - not recursive</li>
+            <li><a href="#field-by-field-null"><span class="small-code">isEqualToIgnoringNullFields</span></a> : compares non null fields/properties only - not recursive</li>
+            <li><a href="#field-by-field-recursive"><span class="small-code">isEqualToComparingFieldByFieldRecursively</span></a> : compares all fields/properties recursively</li>
+         </ul>
+      </p>
+
+      <p>Except <span class="small-code">isEqualToComparingFieldByFieldRecursively</span>, the comparison performed is not recursive, i.e. if one of the field is an <span class="small-code">Object</span>, it will be compared to the other field using its <span class="small-code">equals</span> method (whether <span class="small-code">equals</span> has been overriden or not), on the other hand <span class="small-code">isEqualToComparingFieldByFieldRecursively</span> compares <span class="small-code">Object</span> fields with a field by field strategy unless it has a custom <span class="small-code">equals</span> implementation (i.e. the overriden <span class="small-code">equals</span> method will be used instead of a field by field comparison).</p>
+
+      <p>You can specify a custom comparison strategy by <a href="assertj-core-news.html#assertj-core-2.4.0-usingComparatorForType">field type</a> or for a given <a href="assertj-core-news.html#assertj-core-2.4.0-usingComparatorForFields">group of fields</a>, this is useful when comparing doubles or floats as shown at the end of <span class="small-code">isEqualToComparingFieldByFieldRecursively</span> <a href="#field-by-field-recursive">example</a>.</p>
+
+      <p><u>Examples :</u></p>
+
+      <p>In the following examples, the <span class="small-code">TolkienCharacter</span> class has getters but its <span class="small-code">equals</span> method has not been overridden.</p>
+
+      <p><span id="field-by-field" class="small-code">isEqualToComparingFieldByField</span> :</p>
+<pre><code class="java">TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
+TolkienCharacter frodoClone = new TolkienCharacter("Frodo", 33, HOBBIT);
+
+// Fail as equals compares object references
+assertThat(frodo).isEqualsTo(frodoClone);
+
+// frodo and frodoClone are equals when doing a field by field comparison.
+assertThat(frodo).isEqualToComparingFieldByField(frodoClone);</code></pre>
+
+      <p><span id="field-by-field-only" class="small-code">isEqualToComparingOnlyGivenFields</span> :</p>
+<pre><code class="java">TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
+TolkienCharacter sam = new TolkienCharacter("Sam", 38, HOBBIT);
+
+// frodo and sam both are hobbits, so they are equals when comparing only race
+assertThat(frodo).isEqualToComparingOnlyGivenFields(sam, "race"); // OK
+
+// they are also equals when comparing only race name (nested field).
+assertThat(frodo).isEqualToComparingOnlyGivenFields(sam, "race.name"); // OK
+
+// ... but not when comparing both name and race
+assertThat(frodo).isEqualToComparingOnlyGivenFields(sam, "name", "race"); // FAIL</code></pre>
+
+      <p><span id="field-by-field-ignoring" class="small-code">isEqualToIgnoringGivenFields</span> :</p>
+<pre><code class="java">TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
+TolkienCharacter sam = new TolkienCharacter("Sam", 38, HOBBIT);
+
+// frodo and sam are equals when ignoring name and age as the only remaining field is race
+assertThat(frodo).isEqualToIgnoringGivenFields(sam, "name", "age"); // OK both are HOBBIT
+ 
+// ... but they are not equals if only age is ignored as their names differ.
+assertThat(frodo).isEqualToIgnoringGivenFields(sam, "age"); // FAIL</code></pre>
+
+      <p><span id="field-by-field-null" class="small-code">isEqualToIgnoringNullFields</span> :</p>
+<pre><code class="java">TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
+TolkienCharacter mysteriousHobbit = new TolkienCharacter(null, 33, HOBBIT);
+
+// Null fields in expected object are ignored, mysteriousHobbit has a null name thus it's ignored
+assertThat(frodo).isEqualToIgnoringNullFields(mysteriousHobbit); // OK
+ 
+// ... but this is not reversible !
+assertThat(mysteriousHobbit).isEqualToIgnoringNullFields(frodo); // FAIL</code></pre>
+
+      <p><span id="field-by-field-recursive" class="small-code">isEqualToComparingFieldByFieldRecursively</span> :</p>
+<pre><code class="java">public class Person {
+  public String name;
+  public double height;
+  public Home home = new Home();
+  public Person bestFriend;
+  // constructor with name and height omitted for brevity's sake 
+}
+
+public class Home {
+  public Address address = new Address();
+}
+
+public static class Address {
+  public int number = 1;
+}
+
+Person jack = new Person("Jack", 1.80);
+jack.home.address.number = 123;
+
+Person jackClone = new Person("Jack", 1.80);
+jackClone.home.address.number = 123;
+
+// cycle are handled in comparison  
+jack.bestFriend = jackClone;
+jackClone.bestFriend = jack;
+
+// will fail as equals compares object references
+assertThat(jack).isEqualsTo(jackClone);
+
+// jack and jackClone are equals when doing a recursive field by field comparison
+assertThat(jack).isEqualToComparingFieldByFieldRecursively(jackClone);
+
+// any type/field can be compared with a a specific comparator. 
+// let's change  jack's height a little bit 
+jack.height = 1.81;
+
+// assertion fails because of the height difference 
+// (the default precision comparison for double is 1.0E-15)
+assertThat(jack).isEqualToComparingFieldByFieldRecursively(jackClone);
+
+// use usingComparatorForType to specify how to compare the given type 
+// assertion succeeds because we allow a 0.5 tolerance on double 
+assertThat(jack).usingComparatorForType(new DoubleComparator(0.5), Double.class)
+                .isEqualToComparingFieldByFieldRecursively(jackClone);
+                
+// use usingComparatorForFields to specify how to compare some fields (nested fields are supported)
+assertThat(jack).usingComparatorForFields(new DoubleComparator(0.5), "height")
+                .isEqualToComparingFieldByFieldRecursively(jackClone);</code></pre>
 
    </div>
 </div>
