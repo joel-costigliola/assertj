@@ -87,14 +87,15 @@
    <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
       <h1 class="page-header">AssertJ Core latest news</h1>
       <ul>
+         <li><a href="#assertj-core-3.4.0">AssertJ core 3.4.0 release</a> (requires Java 8)</li>
          <li><a href="#assertj-core-2.4.0">AssertJ core 2.4.0 release</a></li>
-         <li><a href="#assertj-core-3.3.0">AssertJ core 3.3.0 release</a></li>
+         <li><a href="#assertj-core-3.3.0">AssertJ core 3.3.0 release</a> (requires Java 8)</li>
          <li><a href="#assertj-core-2.3.0">AssertJ core 2.3.0 release</a></li>
-         <li><a href="#assertj-core-3.2.0">AssertJ core 3.2.0 release</a></li>
+         <li><a href="#assertj-core-3.2.0">AssertJ core 3.2.0 release</a> (requires Java 8)</li>
          <li><a href="#assertj-core-2.2.0">AssertJ core 2.2.0 release</a></li>
-         <li><a href="#assertj-core-3.1.0">AssertJ core 3.1.0 for Java 8 release</a></li>
+         <li><a href="#assertj-core-3.1.0">AssertJ core 3.1.0 release</a> (requires Java 8)</li>
          <li><a href="#assertj-core-2.1.0">AssertJ core 2.1.0 release</a></li>
-         <li><a href="#assertj-core-3.0.0">AssertJ core 3.0.0 for Java 8 release</a></li>
+         <li><a href="#assertj-core-3.0.0">AssertJ core 3.0.0 release</a> (requires Java 8)</li>
          <li><a href="#assertj-core-2.0.0">AssertJ core 2.0.0 release</a></li>
          <li><a href="#assertj-core-1.7.1">AssertJ core 1.7.1 release</a></li>
          <li><a href="#assertj-core-1.7.0">AssertJ core 1.7.0 release</a></li>
@@ -107,6 +108,58 @@
          <li><a href="#assertj-core-1.1.0">AssertJ core 1.1.0 release</a></li>
          <li><a href="#assertj-core-1.0.0">AssertJ core 1.0.0 release</a></li>
       </ul>
+
+<h3 class="page-header"><span id="assertj-core-3.4.0"></span>AssertJ Core 3.4.0 for Java 8 release : New and noteworthy</h3>
+
+   <p>Release date : 2016-03-30<br>
+   <p>This release includes all changes from <a href="#assertj-core-2.4.0">AssertJ core 2.4.0</a> and add some specific to Java 8.</p>
+
+   <p>Thanks to <span class="contributor">Pascal Schumacher</span> and <span class="contributor">Grzegorz Piwowarek</span> for their contributions.</p>
+
+   <h4 class="page-header"> Release notes</h4>
+   <div class="release-section-category">New features :</div>
+   <ul>
+      <li>Add <a href="assertj-core-news.html#assertj-core-3.4.0-isNotPresent"><span class="small-code">isNotPresent</span></a> to <span class="small-code">Optional</span> assertions. </li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-3.4.0-isNotEmpty"><span class="small-code">isNotEmpty</span></a> to <span class="small-code">Optional</span> assertions. <span class="contributor">(Grzegorz Piwowarek)</span></li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-3.4.0-withStackTraceContaining"><span class="small-code">withStackTraceContaining</span></a> exception assertion.</li>
+   </ul>
+   <div class="release-section-category">Improvements :</div>
+   <ul>
+      <li>Better error message for <span class="small-code">Optional#shouldContain</span> assertion. <span class="contributor">(Grzegorz Piwowarek)</span></li>
+      <li>Make <span class="small-code">AbstractZonedDateTimeAssert</span> constructor protected to allow extension.</li>
+      <li>Javadoc improvements. <span class="contributor">(Pascal Schumacher)</span></li>
+   </ul>
+
+   <h4 class="page-header"><span id="assertj-core-3.4.0-isNotPresent" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">isNotPresent</span> to <span class="small-code">Optional</span> assertions.</h4>
+
+   <p><span class="small-code">isNotPresent</span> is simply an alias of <span class="small-code">isEmpty</span> assertion.</p>
+   <p>Example :</p>
+  <pre><code class="java">// assertion succeeds
+assertThat(Optional.empty()).isNotPresent();
+
+// assertion fails
+assertThat(Optional.of("something")).isNotPresent();</code></pre>
+
+  <h4 class="page-header"><span id="assertj-core-3.4.0-isNotEmpty" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">isNotEmpty</span> to <span class="small-code">Optional</span> assertions.</h4>
+
+  <p><span class="small-code">isNotEmpty</span> is simply an alias of <span class="small-code">isPresent</span> assertion.</p>
+  <p>Example :</p>
+  <pre><code class="java">// assertion succeeds
+assertThat(Optional.of("something")).isNotEmpty();
+
+// assertion fails
+assertThat(Optional.empty()).isNotEmpty();</code></pre>
+
+  <h4 class="page-header"><span id="assertj-core-3.4.0-withStackTraceContaining" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">withStackTraceContaining</span> exception assertion.</h4>
+
+  <p><span class="small-code">withStackTraceContaining</span> is used when starting exception assertions with <span class="small-code">assertThatExceptionOfType</span>, it's an alternative of <span class="small-code">hasStackTraceContaining</span>.</p>
+  <p>Example :</p>
+  <pre><code class="java">Throwable runtime = new RuntimeException("no way", 
+                                          new Exception("you shall not pass"));
+ // assertion will pass
+ assertThatExceptionOfType(RuntimeException.class)
+           .isThrownBy(() -> {throw runtime;})
+           .withStackTraceContaining("you shall not pass");</code></pre>
 
 
 <h3 class="page-header"><span id="assertj-core-2.4.0"></span>AssertJ core 2.4.0 release : New and noteworthy</h3>
@@ -335,14 +388,6 @@ assertThat(elvesRings).containsExactlyInAnyOrder(nenya, vilya, narya);
 assertThat(elvesRings).containsOnly(nenya, vilya, narya);</code></pre>
 
 
-
-
-
-
-
-
-
-
 <h3 class="page-header"><span id="assertj-core-3.3.0"></span>AssertJ Core 3.3.0 for Java 8 release : New and noteworthy</h3>
 
    <p>Release date : 2016-01-10<br>
@@ -370,7 +415,7 @@ assertThat(elvesRings).containsOnly(nenya, vilya, narya);</code></pre>
 
    <h4 class="page-header"><span id="assertj-core-3.3.0-stream" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">Stream</span> assertions.</h4>
 
-   <p><span class="small-code">assertThat(myStream)</span>simply converts <span class="small-code">myStream</span> to a <span class="small-code">List</span> thus providing all <span class="small-code">List</span> assertions.<br/> 
+   <p><span class="small-code">assertThat(myStream)</span> simply converts <span class="small-code">myStream</span> to a <span class="small-code">List</span> thus providing all <span class="small-code">List</span> assertions.<br/> 
       Please note that the <span class="small-code">Stream</span> is <b>consumed and cannot be used again</b> (unless you chain assertions).</p>
    <p>Example :</p>
   <pre><code class="java">Stream&lt;TolkienCharacter&gt; fellowshipOfTheRing = Stream.of(frodo, sam, pippin, boromir, 
