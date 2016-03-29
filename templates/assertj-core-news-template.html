@@ -42,7 +42,7 @@ $menu
    <p>Release date : 2016-03-28<br>
 
    <p>Special thanks to <span class="contributor">Pascal Schumacher</span> for his contributions including relentless code cleanup and documentation, thanks buddy !<br/>
-   Many thanks also to <span class="contributor">Michaël Bitard</span>, <span class="contributor">Michael W. Fender</span>, <span class="contributor">Lovro Pandzic</span> and <span class="contributor">Peter Phillips</span> for their contributions.</p>
+   Many thanks also to <span class="contributor">Michaël Bitard</span>, <span class="contributor">Michael W. Fender</span>, <span class="contributor">Lovro Pandzic</span>, <span class="contributor">Peter Phillips</span> and <span class="contributor">Daniel Zlotin</span> for their contributions.</p>
 
    <p>Recursive comparison is based on <a href="https://github.com/jdereg/java-util/">java-util</a> <span class="small-code">deep equals</span> by John DeRegnaucourt and Ken Partlow, thanks to them !<p/>
 
@@ -52,27 +52,27 @@ $menu
       <li>Add <a href="#assertj-core-2.4.0-isEqualToComparingFieldByFieldRecursively"><span class="small-code">isEqualToComparingFieldByFieldRecursively</span></a> to <span class="small-code">Object</span> assertions. <span class="contributor">(Pascal Schumacher)</span></li>
       <li>Allow specifying a comparator for fields of a given type when comparing objects fields by fields with <a href="#assertj-core-2.4.0-usingComparatorForType"><span class="small-code">usingComparatorForType</span></a>. <span class="contributor">(Pascal Schumacher)</span></li>
       <li>Allow specifying a comparator for a group of fields when comparing objects fields by fields with <a href="#assertj-core-2.4.0-usingComparatorForFields"><span class="small-code">usingComparatorForFields</span></a>. <span class="contributor">(Pascal Schumacher)</span></li>
-      <li>Add <span class="small-code">hasStackTraceContaining</span> exception assertion.</li>
+      <li>Add <span class="small-code">hasStackTraceContaining</span> exception assertion. (<span class="contributor">Daniel Zlotin</span>)</li>
       <li>Add <a href="#assertj-core-2.4.0-assertHasSameContentAs"><span class="small-code">assertHasSameContentAs(File/Path, Charset)</span></a> assertion for <span class="small-code">File</span> and <span class="small-code">Path</span>. <span class="contributor">(Pascal Schumacher)</span></li>
       <li>Add <a href="#assertj-core-2.4.0-containsExactlyInAnyOrder"><span class="small-code">containsExactlyInAnyOrder</span></a> assertion for <span class="small-code">iterable</span> and <span class="small-code">array</span>. <span class="contributor">(Lovro Pandzic)</span></li>
    </ul>
    <div class="release-section-category">Improvements :</div>
    <ul>
-      <li> Better support for raw type assertions, specially <span class="small-code">Map</span> and <span class="small-code">Iterable</span>.</li>
-      <li>add <span class="small-code">ComparableAssert</span> and <span class="small-code">UrlAssert</span> entry points to soft assertions .</li>
+      <li>Better support for raw type assertions, specially <span class="small-code">Map</span> and <span class="small-code">Iterable</span>.</li>
+      <li>Add <span class="small-code">ComparableAssert</span> and <span class="small-code">UrlAssert</span> entry points to soft assertions. (<span class="contributor">Pascal Schumacher</span>)</li>
       <li><span class="small-code">isCloseTo(expected, Percentage p)</span> now accepts percentage values > 100%.</li>
       <li><span class="small-code">AbstractSoftAssertions</span> exposes <span class="small-code">errorsCollected()</span> to subclasses. (<span class="contributor">Michael W. Fender</span>)</li>
       <li>Ignore synthetic fields when comparing fields on an object. (<span class="contributor">Peter Phillips</span>)</li>
       <li><span class="small-code">assertSameContentAs</span> produces a better error message in case of <span class="small-code">MalformedInputException</span>. (<span class="contributor">Michaël Bitard</span>)</li>
-      <li>Remove unecessary reference to Path in order to improve Android compatibility</li>
+      <li>Remove unnecessary reference to <span class="small-code">java.nio.file.Path</span> in order to improve Android compatibility.</li>
       <li>A bunch of Javadoc improvements ! (<span class="contributor">Pascal Schumacher</span>)</li>
    </ul>
    <div class="release-section-category">Fixed Bugs :</div>
    <ul>
       <li><span class="small-code">instanceOf</span> assertions family was failing on <span class="small-code">Iterator</span>.</li>
-      <li><span class="small-code">isCloseTo(expected, Percentage p)</span> did not work with negative expected values.</li>
-      <li>Fix AssertJ's <span class="small-code">MapEntry</span> that was not compatible with <span class="small-code">java.util.Map.Entry</span>. (<span class="contributor">Pascal Schumacher</span>)</li>
-      <li><span class="small-code">assertHasSameContentAs</span> now uses the charset set by <span class="small-code">usingCharset</span> to read the actual file/path.</li>
+      <li><span class="small-code">isCloseTo(expected, Percentage p)</span> did not work with negative expected values. (<span class="contributor">Pascal Schumacher</span>)</li>
+      <li>Fix AssertJ's <span class="small-code">MapEntry</span> that was not compatible with <span class="small-code">java.util.Map.Entry</span>.</li>
+      <li><span class="small-code">assertHasSameContentAs</span> now uses the charset set by <span class="small-code">usingCharset</span> to read the actual file/path. (<span class="contributor">Pascal Schumacher</span>)</li>
       <li>Fix OSGi export manifest to include repackaged cglib classes.</li>
    </ul>
 
@@ -85,7 +85,7 @@ $menu
 
 <p>You can specify a custom comparator per (nested) fields or type with respectively <a href="#assertj-core-2.4.0-usingComparatorForFields"><span class="small-code">usingComparatorForFields(Comparator, String...)</span></a> and <a href="#assertj-core-2.4.0-usingComparatorForType"><span class="small-code">usingComparatorForType(Comparator, Class)</span></a>.
 </p>
-<p>The objects to compare can be of different types but must have the same properties/fields. For example if actual object has a name String field, it is expected the other object to also have one. If an object has a field and a property with the same name, the property value will be used over the field.</p>
+<p>The objects to compare can be of different types but must have the same properties/fields. For example if the actual object has a name String field, it is expected that the other object also has one. If an object has a field and a property with the same name, the property value will be used over the field.</p>
 
    <p>Example :</p>
 
@@ -184,7 +184,7 @@ assertThat(frodo).usingComparatorForType(closeEnough, Double.class)
    <h4 class="page-header"><span id="assertj-core-2.4.0-usingComparatorForFields" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Set a comparator for a group of fields in field by field comparisons</h4>
 
    <p>Allows to set a specific comparator to compare properties or fields with the given names. A typical usage is for comparing <span class="small-code">double/float</span> fields with a given precision.
-Comparators specified by this method have precedence on comparators specified by <span class="small-code">usingComparatorForType</span>.</p>
+Comparators specified by this method have precedence over comparators specified by <span class="small-code">usingComparatorForType</span>.</p>
 
    <p>Example :</p>
 
@@ -205,7 +205,7 @@ Comparator&lt;Double&gt; closeEnough = new Comparator&lt;Double&gt;() {
   }
 };
  
-// assertions succeed  (it is possible to specify multiple fields)
+// assertions succeed (it is possible to specify multiple fields)
 assertThat(frodo).usingComparatorForFields(closeEnough, "height")
                  .isEqualToComparingFieldByField(tallerFrodo);
                   
@@ -231,17 +231,17 @@ assertThat(frodo).usingComparatorForFields(closeEnough, "height")
 
    <pre><code class="java">Set&lt;String&gt; lines = Collections.singleton("Gerçek");
 
-Path utf8File = Files.write(Paths.get("actual"), lines, "UTF-8");
+Path utf8File = Files.write(Paths.get("actual"), lines, StandardCharsets.UTF_8);
 Charset turkishCharset = Charset.forName("windows-1254");
 Path turkishFile = Files.write(Paths.get("expected"), lines, turkishCharset);
  
 // The following assertion succeeds:
-assertThat(utf8File).usingCharset("UTF-8")
+assertThat(utf8File).usingCharset(StandardCharsets.UTF_8)
                     .hasSameContentAs(turkishFile, turkishCharset);
  
 // The following assertion fails:
-assertThat(utf8File).usingCharset("UTF-8")
-                    .hasSameContentAs(turkishFile, "UTF-8");</code></pre>
+assertThat(utf8File).usingCharset(StandardCharsets.UTF_8)
+                    .hasSameContentAs(turkishFile, StandardCharsets.UTF_8);</code></pre>
 
 
 
