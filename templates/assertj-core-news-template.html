@@ -90,14 +90,14 @@ assertThat(Optional.empty()).isNotEmpty();</code></pre>
            .withStackTraceContaining("you shall not pass");</code></pre>
 
 
-<h3 class="page-header"><span id="assertj-core-2.4.0"></span>AssertJ core 2.4.0 release : New and noteworthy</h3>
+<h3 class="page-header"><span id="assertj-core-2.4.0"></span>AssertJ Core 2.4.0 release : New and noteworthy</h3>
 
    <p>Release date : 2016-03-28<br>
 
    <p>Special thanks to <span class="contributor">Pascal Schumacher</span> for his contributions including relentless code cleanup and documentation, thanks buddy !<br/>
    Many thanks also to <span class="contributor">Michaël Bitard</span>, <span class="contributor">Michael W. Fender</span>, <span class="contributor">Lovro Pandzic</span>, <span class="contributor">Peter Phillips</span> and <span class="contributor">Daniel Zlotin</span> for their contributions.</p>
 
-   <p>Recursive comparison is based on <a href="https://github.com/jdereg/java-util/">java-util</a> <span class="small-code">deep equals</span> by John DeRegnaucourt and Ken Partlow, thanks to them !<p/>
+   <p>Recursive comparison is based on <a href="https://github.com/jdereg/java-util/">java-util</a> <span class="small-code">deepEquals</span> by John DeRegnaucourt and Ken Partlow, thanks to them !<p/>
 
    <h4 class="page-header"> Release notes</h4>
    <div class="release-section-category">New features :</div>
@@ -448,7 +448,7 @@ assertThat(Optional.of(ginobili)).containsSame(ginobili);
 </code></pre>
   
 
-<h3 class="page-header"><span id="assertj-core-2.3.0"></span>AssertJ core 2.3.0 release : New and noteworthy</h3>
+<h3 class="page-header"><span id="assertj-core-2.3.0"></span>AssertJ Core 2.3.0 release : New and noteworthy</h3>
 
    <p>Release date : 2016-01-02<br>
 
@@ -734,7 +734,7 @@ assertThat(Optional.of("YODA")).usingValueComparator(caseInsensitiveStringCompar
 assertThat(Optional.of(ginobili)).containsSame(ginobili);
 </code></pre>
   
-<h3 class="page-header"><span id="assertj-core-2.2.0"></span>AssertJ core 2.2.0 release : New and noteworthy</h3>
+<h3 class="page-header"><span id="assertj-core-2.2.0"></span>AssertJ Core 2.2.0 release : New and noteworthy</h3>
 
    <p>Release date : 2015-09-03<br>
 
@@ -972,7 +972,7 @@ assertThat(fellowshipOfTheRing).filteredOn("race.name", "Man")
    <p>As an example, let's check all employees whose age > 100 :</p>
 
    <pre><code class="java">// old employee condition, "old employees" describes the condition in error message
-// you just have to implement 'matches' method 
+// you just have to implement a 'matches' method 
 Condition&lt;Employee&gt; oldEmployees = new Condition&lt;Employee&gt;("old employees") {
       @Override
       public boolean matches(Employee employee) {
@@ -984,7 +984,7 @@ Condition&lt;Employee&gt; oldEmployees = new Condition&lt;Employee&gt;("old empl
 assertThat(employees).filteredOn(oldEmployees)
                      .containsOnly(yoda, obiwan);
 
-// You can combine Condition with condition operator like Not:
+// You can combine Conditions with condition operators like Not:
 assertThat(employees).filteredOn(not(oldEmployees))
                      .containsOnly(luke);</code></pre>
 
@@ -1122,7 +1122,7 @@ To be exact, the following whitespace rules are applied:
    </ul>
    <p>Example :</p>
 
-   <pre><code class="java">// assertion will pass
+   <pre><code class="java">// assertions will pass
 assertThat("  my foo bar  ").isEqualToIgnoringWhitespace("my foo bar");
 assertThat("my      foo bar").isEqualToIgnoringWhitespace("my foo bar");
 assertThat(" my     foo bar ").isEqualToIgnoringWhitespace("my foo bar");
@@ -1191,7 +1191,7 @@ assertThat(parents).flatExtracting("children")
 
    <p>Example :</p>
 
-   <pre><code class="java">// assertions will pass:
+   <pre><code class="java">// assertion will pass:
 assertThat("321").containsOnlyDigits();
 
 // assertion will fail:
@@ -1205,7 +1205,7 @@ assertThat("321.0").containsOnlyDigits();</code></pre>
    <pre><code class="java">import static org.assertj.core.api.Assertions.within;
 ...
 
-// assertions will pass:
+// assertion will pass:
 assertThat(5).isCloseTo(7, within(3));
 
 // if difference is exactly equals to the offset, it's ok
@@ -1422,7 +1422,7 @@ assertThat((byte)5).isCloseTo((byte)7, within((byte)3));</code></pre>
    <p>It is now easier to build a <span class="small-code">Condition</span>, one just has to provide a predicate and a description (instead of having to extends <span class="small-code">Condition</span>). You can specify the description using <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#format-java.lang.String-java.lang.Object...-"><span class="small-code">String.format</span></a> syntax.</p>
    <p>Example :</p>
 
-   <pre><code class="java">// build Condition with a Predicate
+   <pre><code class="java">// build a Condition with a Predicate
 Condition&lt;String&gt; fairyTale = new Condition&lt;String&gt;(s -> s.startsWith("Once upon a time"), 
                                                     "a %s tale", "fairy");
 String littleRedCap = "Once upon a time there was a dear little girl ...";
@@ -2254,7 +2254,7 @@ public void host_dinner_party_where_nobody_dies() {
    // No call to softly.assertAll(), assertions global verification is done by JUnitSoftAssertions rule
 }</code></pre>
 
-      <p>This works only for JUnit, in TestNG however it does not seem possible to make the glocal verification in an @AfterMethod method because if it throws an exception, TestNG skips all subsequent tests.</p>
+      <p>This works only for JUnit, in TestNG however it does not seem possible to make the global verification in an @AfterMethod method because if it throws an exception, TestNG skips all subsequent tests.</p>
 
       <p>Thanks to <span class="contributor">Gregor Zeitlinger</span> for this contribution.</p>
 
