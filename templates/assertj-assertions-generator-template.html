@@ -13,13 +13,13 @@ $menu
       $assertj_assertions_generator_side_menu
 
       <div class="col-lg-10 col-md-10 col-sm-10 text-left">
-         <h1 class="page-header">AssertJ assertions generator</h1>
+         <h1 class="page-header">AssertJ Assertions Generator</h1>
 
          <p>Use the Assertion Generator to create assertions specific to your own classes, either through a simple <a href="#quickstart">command line tool</a> or a <a href="assertj-assertions-generator-maven-plugin.html">maven plugin</a>.</p>
 
          <p>Having assertions specific to your own classes allows you to use the domain model vocabulary in your test assertions, making them easier to read and closer to the problem you are trying to solve. It's a way to apply Domain Driven Design ubiquitous language in tests.</p>
 
-         <p>Let's say that you have a <span class="small-code">Player</span> class with <span class="small-code">name</span>, <span class="small-code">team</span> and <span class="small-code">teamMates</span> properties (works also with public fields).</p>
+         <p>Let's say you have a <span class="small-code">Player</span> class with <span class="small-code">name</span>, <span class="small-code">team</span> and <span class="small-code">teamMates</span> properties (also works with public fields).</p>
 <pre><code class="java">public class Player {
 
   private String name;
@@ -43,12 +43,12 @@ $menu
   }  
 }</code></pre>
 
-          <p>The generator is able to create a <span class="small-code">PlayerAssert</span> assertions class with
-            <span class="small-code">hasName</span> and <span class="small-code">hasTeam</span> assertions which can be used like :</p>
+          <p>The generator is able to create a <span class="small-code">PlayerAssert</span> assertion class with a 
+            <span class="small-code">hasName</span> and a <span class="small-code">hasTeam</span> assertion which can be used like this :</p>
 <pre><code class="java">assertThat(mj).hasName("Michael Jordan")
               .hasTeam("Chicago Bulls")
               .hasTeamMates("Scottie Pippen", "Tony Kukoc");</code></pre>
-          <p>The error messages used when an assertion fails also reflects the property checked, for example if hasName fails you will an error message like.</p>
+          <p>The error message of a failed assertion reflects the property checked. For example if <span class="small-code">hasName</span> fails you will get this error message :</p>
 <pre><code class="java">Expecting name of:
   &lt;Player[name=Air Jordan]&gt;
 to be:
@@ -57,7 +57,7 @@ but was:
   &lt;Air Jordan&gt;</code></pre>          
 
           <h3 class="page-header"><span id="generated-assertions"></span>Created assertions</h3>
-          <p>The generator creates assertions for each properties or public fields, the assertions created are specific to the property/field type. The following list shows which assertions are created for a given type :</p>
+          <p>The generator creates assertions for each property and public field. The assertions created are specific to the property/field type. The following list shows which assertions are created for a given type :</p>
           <ul>
             <li><span class="small-code">boolean</span> :
               <ul>
@@ -83,7 +83,7 @@ but was:
                 <li><span class="small-code">doesNotHaveX(T... values)</span></li>
                 <li><span class="small-code">hasNoX()</span></li>
               </ul>
-              Element comparison is based on <span class="small-code">T::equals</span> method.
+              Element comparison is based on the <span class="small-code">T::equals</span> method.
             </li>
             <li><span class="small-code">Object</span> :
               <ul>
@@ -98,7 +98,7 @@ but was:
 
 
           <h4 class="page-header">Example</h4>
-          <p>Let's enrich our <span class="small-code">Player</span> with different properties/public fields to see what assertions are generated.</p>
+          <p>Let's enrich our <span class="small-code">Player</span> with different properties/public fields to see what assertions are generated :</p>
 <pre><code class="java">public class Player {
   // no getter needed to generate assertion for public fields
   // private fields getters and setters omitted for brevity
@@ -149,8 +149,8 @@ but was:
         <h3 class="page-header"><span id="generated-entry-points"></span>Generated entry point classes</h3>
 
 
-        <p>The generator will also create entry point classes like <span class="small-code">Assertions</span>, <a href="assertj-core-news.html#assertj-core-1.6.0-bdd-assertions-style"><span class="small-code">BddAssertions</span></a> and <a href="http://joel-costigliola.github.io/assertj/assertj-core-features-highlight.html#soft-assertions">SoftAssertions/JUnitSoftAssertions</a> to ease accessing each generated <span class="small-code">*Assert</span> classes.</p>
-        <p>Let's say for example that the generator has been applied on <span class="small-code">Player</span> and <span class="small-code">Game</span> classes, it has then created <span class="small-code">PlayerAssert</span> and <span class="small-code">GameAssert</span> classes and an <span class="small-code">Assertions</span> class looking like:</p>
+        <p>The generator will also create entry point classes like <span class="small-code">Assertions</span>, <a href="assertj-core-news.html#assertj-core-1.6.0-bdd-assertions-style"><span class="small-code">BddAssertions</span></a> and <a href="http://joel-costigliola.github.io/assertj/assertj-core-features-highlight.html#soft-assertions">SoftAssertions/JUnitSoftAssertions</a> to ease accessing each generated <span class="small-code">*Assert</span> class.</p>
+        <p>Let's say for example that the generator has been applied on the <span class="small-code">Player</span> and <span class="small-code">Game</span> classes. It will have created <span class="small-code">PlayerAssert</span> and <span class="small-code">GameAssert</span> classes and an <span class="small-code">Assertions</span> class looking like this :</p>
 <pre><code class="java">// the generator selects the base package of classes it generates assertions for 
 package org.player;
 
@@ -184,7 +184,7 @@ public class Assertions {
   }
 }</code></pre>
 
-         <p>You now just have to statically import <span class="small-code">com.myproject.Assertions.assertThat</span> to use custom assertions for <span class="small-code">Player</span> and <span class="small-code">Game</span> in your tests.</p>
+         <p>Now you just have to statically import <span class="small-code">org.player.Assertions.assertThat</span> to use custom assertions for <span class="small-code">Player</span> and <span class="small-code">Game</span> in your tests :</p>
 
 <pre><code class="java">import static org.player.Assertions.assertThat;
 ...
@@ -193,9 +193,9 @@ assertThat(mj).hasName("Michael Jordan")
               .hasTeamMates("Scottie Pippen", "Tony Kukoc");</code></pre>
 
         <h3 class="page-header"><span id="generated-assertions-templates"></span>Assertions templates</h3>
-        <p>The assertion generator uses templates to create assertions, templates are located in the <a href="#quickstart">templates directory</a>. There is a template for each type and templates for assert class and entry points. </p>
+        <p>The assertion generator uses templates to create assertions, templates are located in the <a href="#quickstart">templates directory</a>. There is a template for each type and templates for assert class and entry points.</p>
         <p>You can (and are encouraged to) modify the templates to generate additional or different assertions, but be sure to generate code that compiles ! :) </p>
-        <p>The templates contain <a href="#template-variables">variables</a> describing the properties, fields and classes for which assertions are generated, these variables are replaced by the actual values read for each class we generate assertions for.</p>
+        <p>The templates contain <a href="#template-variables">variables</a> describing the properties, fields and classes for which assertions are generated. These variables are replaced by the actual values read for each class we generate assertions for.</p>
 
         <h4 class="page-header">Example</h4>
 
