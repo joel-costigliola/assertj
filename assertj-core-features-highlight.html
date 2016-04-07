@@ -416,7 +416,7 @@ assertThat(contentOf(xFile)).startsWith("The Truth").contains("Is Out").endsWith
 
    <pre><code class="java">@Test
 public void testException() {
-   assertThatThrownBy(() -> { throw new Exception("boom!") }).isInstanceOf(Exception.class)
+   assertThatThrownBy(() -> { throw new Exception("boom!"); }).isInstanceOf(Exception.class)
                                                              .hasMessageContaining("boom");
 }</code></pre>
 
@@ -438,7 +438,7 @@ public void testException() {
    // given some preconditions
 
    // when
-   Throwable thrown = catchThrowable(() -> { throw new Exception("boom!") });
+   Throwable thrown = catchThrowable(() -> { throw new Exception("boom!"); });
 
    // then
    assertThat(thrown).isInstanceOf(Exception.class)

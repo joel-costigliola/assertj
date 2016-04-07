@@ -1436,7 +1436,7 @@ assertThat(zonedDateTime1).isEqualToIgnoringNanos(zonedDateTime5);
 
    <pre><code class="java">@Test
 public void testException() {
-   assertThatThrownBy(() -> { throw new Exception("boom!") }).isInstanceOf(Exception.class)
+   assertThatThrownBy(() -> { throw new Exception("boom!"); }).isInstanceOf(Exception.class)
                                                              .hasMessageContaining("boom");
 }</code></pre>
 
@@ -1448,7 +1448,7 @@ public void testException() {
    // given some preconditions
 
    // when
-   Throwable thrown = catchThrowable(() -> { throw new Exception("boom!") });
+   Throwable thrown = catchThrowable(() -> { throw new Exception("boom!") };);
 
    // then
    assertThat(thrown).isInstanceOf(Exception.class)
@@ -1666,7 +1666,7 @@ public void path_assertions() throws Exception {
 
    <pre><code class="java">@Test
 public void testException() {
-   assertThatThrownBy(() -> { throw new Exception("boom!") }).isInstanceOf(Exception.class)
+   assertThatThrownBy(() -> { throw new Exception("boom!"); }).isInstanceOf(Exception.class)
                                                              .hasMessageContaining("boom");
 }</code></pre>
 
@@ -1694,7 +1694,7 @@ public void testException() {
    <pre><code class="java">@Test
 public void testException() {
    // when
-   Throwable thrown = catchThrowable(() -> { throw new Exception("boom!") });
+   Throwable thrown = catchThrowable(() -> { throw new Exception("boom!"); });
 
    // then
    assertThat(thrown).isInstanceOf(Exception.class)
