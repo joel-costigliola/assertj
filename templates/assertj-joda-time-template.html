@@ -28,11 +28,12 @@ $menu
 <pre><code class="xml">&lt;dependency&gt;
   &lt;groupId&gt;org.assertj&lt;/groupId&gt;
   &lt;artifactId&gt;assertj-joda-time&lt;/artifactId&gt;
-  &lt;version&gt;1.1.0&lt;/version&gt;
+  &lt;!-- use 1.1.0 for Java 7 projects --&gt;
+  &lt;version&gt;2.0.0&lt;/version&gt;
   &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 
-         <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-joda-time|1.1.0|bundle">assertj dependency declaration</a> for your tool.</p>
+         <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-joda-time|2.0.0|bundle">assertj dependency declaration</a> for your tool.</p>
 
          <h4 class="page-header">2 - Statically import <span class="small-code">org.assertj.jodatime.api.Assertions.assertThat</span> ...</h4>
          <p>... and use your preferred IDE code completion after <span class="small-code">assertThat.</span></p>
@@ -91,7 +92,17 @@ dateTime2 = new DateTime(2000, 1, 1, 23, 50, 10, 456, UTC);
 // ignore seconds and milliseconds in comparison
 assertThat(dateTime1).isEqualToIgnoringSeconds(dateTime2);</code></pre>
 
-         <h3 class="page-header"><span id="latest-release"/></span>Joda-Time assertions 1.1.0 release</h3>
+         <h3 class="page-header"><span id="latest-release"/></span>Joda-Time assertions 2.0.0 release</h3>
+         <p>Release date : 2016-04-10</p>
+         <p>AssertJ Joda Time 2.0.0 requires Java 8 as it relies on AssertJ Core 3.x, use 1.1.0 version if you are still using Java 7.</p>
+
+         <div class="release-section-category">Release notes:</div>
+         <ul>
+            <li><b>BREAKING CHANGE</b> : requires Java 8.</li>
+            <li><span class="small-code">DateTime</span> assertion : better handling of null in assertions</li>
+         </ul>
+
+         <h3 class="page-header">Joda-Time assertions 1.1.0 release</h3>
          <p>Release date : 2013-07-14</p>
 
          <div class="release-section-category">Release notes:</div>
