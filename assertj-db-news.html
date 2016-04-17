@@ -79,18 +79,22 @@
       <h1 class="page-header">AssertJ-DB latest news</h1>
       <ul>
          <li><a href="#assertj-db-next">AssertJ-DB next release</a></li>
+         <li><a href="#assertj-db-1.1.0">AssertJ-DB 1.1.0 release</a></li>
          <li><a href="#assertj-db-1.0.1">AssertJ-DB 1.0.1 release</a></li>
          <li><a href="#assertj-db-1.0.0">AssertJ-DB 1.0.0 release</a></li>
       </ul>
 
 <h3 class="page-header" ><span id="assertj-db-next"></span>What's coming in the next AssertJ-DB release:</h3>
+<p>Nothing in progress.</p>
+<h3 class="page-header" ><span id="assertj-db-1.1.0"></span>AssertJ-DB 1.1.0&nbsp;:</h3>
+<p>Release date : 2016-04-14 (<a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-db|1.1.0|bundle">dependency declaration</a>)</p>
 <p>Javadoc&nbsp;: <a href="db/1.1.x/api/index.html">for versions 1.1.x</a>
 <div class="release-section-category">Improvements&nbsp;:</div>
 <ul>
 <li>Add <code class="java">from(Calendar)</code> and <code class="java">now()</code> methods to <code class="java">DateValue</code>, <code class="java">TimeValue</code> and <code class="java">DateTimeValue</code></li>
 <li><a href="https://github.com/joel-costigliola/assertj-db/issues/9">issue #9</a>&nbsp;: Make a way to view the data of a <code class="java">Table</code>, of a <code class="java">Request</code> or of <code class="java">Changes</code> with <code class="java">Displaying</code></span></li>
 <li><a href="https://github.com/joel-costigliola/assertj-db/issues/15">issue #15</a>&nbsp;: Add support of <code class="java">UUID</code> columns type <span class="contributor">(Otoniel Isidoro)</span></li>
-<li>Add isOfClass(Class) assertion method for value</li>
+<li>Add <code class="java">isOfClass(Class)</code> assertion method for value and column</li>
 <li><a href="https://github.com/joel-costigliola/assertj-db/issues/18">issue #18</a>&nbsp;: Add <code class="java">isCloseTo(...)</code> methods for <code class="java">Number</code>, <code class="java">DateValue</code>, <code class="java">TimeValue</code> and <code class="java">DateTimeValue</code></span></li>
 <li><a href="https://github.com/joel-costigliola/assertj-db/issues/19">issue #19</a>&nbsp;: Add the support of BLOB and CLOB</span></li>
 <li><a href="https://github.com/joel-costigliola/assertj-db/issues/22">issue #22</a>&nbsp;: Add <code class="java">isEqualTo(Object)</code> for the values. Add <code class="java">hasValues(Object...)</code> for the columns. Add <code class="java">hasValues(Object)</code> and <code class="java">hasValues(Object, Object)</code> for the columns of the changes</span></li>
@@ -100,8 +104,8 @@
 </ul>
 <div class="release-section-category">Bug fixes&nbsp;:</div>
 <ul>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/21">issue #21</a>&nbsp;: Add possibility to pass a reference containing null value like parameter to <code class="java">isEqualTo()</code> and <code class="java">isNotEqualTo()</code></span></li>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/23">issue #23</a>&nbsp;: Fix the support of Number (bug when the mapping is a Double instance)</span></li>
+<li><a href="https://github.com/joel-costigliola/assertj-db/issues/21">issue #21</a>&nbsp;: Add possibility to pass a reference containing <code class="java">null</code> value like parameter to <code class="java">isEqualTo()</code> and <code class="java">isNotEqualTo()</code></span></li>
+<li><a href="https://github.com/joel-costigliola/assertj-db/issues/23">issue #23</a>&nbsp;: Fix the support of <code class="java">Number</code> (bug when the mapping is a <code class="java">Double</code> instance)</span></li>
 <li><a href="https://github.com/joel-costigliola/assertj-db/issues/31">issue #31</a>&nbsp;: Fix the detection of primary key (cause by letter case) in some DBMS</span></li>
 <li><a href="https://github.com/joel-costigliola/assertj-db/issues/32">issue #32</a>&nbsp;: Fix the SQL request for DBMS with letter case different of upper case in the name of the DB elements</span></li>
 </ul>

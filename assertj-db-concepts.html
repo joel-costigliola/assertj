@@ -85,6 +85,8 @@
             <ul>
               <li><a href="#datasource">DataSource</a></li>
               <li><a href="#source">Source</a></li>
+              <li><a href="#datasourcewithlettercase">DataSource with LetterCase</a> <small><i>(since 1.1.0)</i></small></li>
+              <li><a href="#sourcewithlettercase">Source with LetterCase</a> <small><i>(since 1.1.0)</i></small></li>
             </ul>
          </li>
          <li><a href="#elements">Elements of the database</a>
@@ -113,6 +115,19 @@
          </li>
          <li><a href="#datevalue-timevalue-datetimevalue">DateValue, TimeValue and DateTimeValue</a></li>
          <li><a href="#default-description">Default description</a></li>
+         <li><a href="#dblettercase">Letter Case of the database</a> <small><i>(since 1.1.0)</i></small>
+            <ul>
+              <li><a href="#caseconversion">CaseConversion</a></li>
+              <li><a href="#casecomparison">CaseComparison</a></li>
+              <li><a href="#lettercase">LetterCase</a></li>
+            </ul>
+         </li>
+         <li><a href="#output">Output</a> <small><i>(since 1.1.0)</i></small>
+            <ul>
+              <li><a href="#typeoutput">Type of output</a></li>
+              <li><a href="#destination">Destination</a></li>
+            </ul>
+         </li>
       </ul>
       <p>For the examples below, suppose that in the database there are these two tables :</p>
 
@@ -294,6 +309,7 @@
         </tr>
       </table>
 
+
       <h3 class="page-header" ><span id="connection"></span>Connection to the database</h3>
       <p>To make assertions on a database, it is necessary to connect. For that, it is possible to use a <code class="java">DataSource</code>
       or a <code class="java">Source</code>.</p>
@@ -308,6 +324,30 @@
       to connect to H2 database in memory :
       </p>
       <pre><code class="java">Source source = new Source("jdbc:h2:mem:test", "sa", "");</code></pre>
+
+
+      <h4 class="page-header" ><span id="datasourcewithlettercase"></span>DataSource with LetterCase</h4>
+      <p><i>Since 1.1.0</i></p>
+      <p>A <a href="db/current/api/org/assertj/db/type/DataSourceWithLetterCase.html">DataSourceWithLetterCase</a> is a 
+      <a href="http://docs.oracle.com/javase/6/docs/api/javax/sql/DataSource.html">DataSource</a> which allows to indicate the
+      <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> 
+      for the tables, columns and primary keys.</p>
+      <pre><code class="java">DataSource ds = new DataSourceWithLetterCase(dataSource, 
+                                             tableLetterCase, 
+                                             columnLetterCase, 
+                                             pkLetterCase);</code></pre>
+      <p>For more information, see the <a href="#dblettercase">paragraph on LetterCase</a>.</p>
+      <h4 class="page-header" ><span id="sourcewithlettercase"></span>Source with LetterCase</h4>
+      <p><i>Since 1.1.0</i></p>
+      <p>A <a href="db/current/api/org/assertj/db/type/SourceWithLetterCase.html">SourceWithLetterCase</a> is a 
+      <a href="db/current/api/org/assertj/db/type/Source.html">Source</a> which allows to indicate the
+      <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> 
+      for the tables, columns and primary keys.</p>
+      <pre><code class="java">Source s = new SourceWithLetterCase("jdbc:h2:mem:test", "sa", "", 
+                                    tableLetterCase, 
+                                    columnLetterCase, 
+                                    pkLetterCase);</code></pre>
+      <p>For more information, see the <a href="#dblettercase">paragraph on LetterCase</a>.</p>
 
       <h3 class="page-header" ><span id="elements"></span>Elements of the database</h3>
       <p>Here the elements on which it is possible to make assertions.
@@ -1553,6 +1593,7 @@ of "changes3"
         <li><code class="java">DATE</code> for a <code class="java">java.sql.Date</code></li>
         <li><code class="java">TIME</code> for a <code class="java">java.sql.Time</code></li>
         <li><code class="java">DATE_TIME</code> for a <code class="java">java.sql.Timestamp</code></li>
+        <li><code class="java">UUID</code> for a <code class="java">java.util.UUID</code> <small><i>(since 1.1.0)</i></small></li>
         <li><code class="java">NUMBER</code> for a <code class="java">java.lang.Byte</code>, 
         <code class="java">java.lang.Short</code>, 
         <code class="java">java.lang.Integer</code>, 
@@ -1616,7 +1657,7 @@ assertThat(changes)...</code></pre>
       <a href="db/current/api/org/assertj/db/type/DateTimeValue.html">DateTimeValue</a> classes
       are simpler but contains this kind of informations.
       </p>
-      <p>There is 3 kind of static methods to instantiate these values :
+      <p>There is 4 kinds of static methods to instantiate these values :
       </p>
       <ul>
       <li><code class="java">of</code> which receive the informations by <code class="java">int</code> parameters
@@ -1638,6 +1679,7 @@ DateTimeValue dateTimeValue2 = DateTimeValue.of(dateValue, timeValue1);</code></
       (<code class="java">java.sql.Date</code>, 
       <code class="java">java.sql.Time</code> and 
       <code class="java">java.sql.Timestamp</code>)
+      or a <code class="java">java.util.Calendar</code> <small><i>(since version 1.1.0)</i></small> 
       <pre><code class="java">Date date = Date.valueOf("2007-12-23");
 DateValue dateValue = DateValue.from(date);
 
@@ -1645,7 +1687,13 @@ Time time = Time.valueOf("09:01:06");
 TimeValue timeValue = TimeValue.from(time);
 
 Timestamp timestamp = Timestamp.valueOf("2007-12-23 09:01:06.000000003");
-DateTimeValue dateTimeValue = DateTimeValue.from(timestamp);</code></pre>
+DateTimeValue dateTimeValue = DateTimeValue.from(timestamp);
+
+// Since 1.1.0
+Calendar calendar = Calendar.getInstance();
+DateValue dateValueFromCal = DateValue.from(calendar);
+TimeValue timeValueFromCal = TimeValue.from(calendar);
+DateTimeValue dateTimeValueFromCal = DateTimeValue.from(calendar);</code></pre>
       </li>
       <li><code class="java">parse</code> which receive a <code class="java">String</code> to represent the value (this method can throw a 
       <code class="java">ParseException</code>)
@@ -1667,8 +1715,13 @@ DateTimeValue dateTimeValue2 = DateTimeValue.parse("2007-12-23T09:01:06");
 // With date and time (nanoseconds additional)
 DateTimeValue dateTimeValue2 = DateTimeValue.parse("2007-12-23T09:01:06.000000003");</code></pre>
       </li>
+      <li><code class="java">now</code> <small><i>(since version 1.1.0)</i></small> which create an instance corresponding to the current moment. 
+      <pre><code class="java">DateValue dateValue = DateValue.now();                   // The current date
+TimeValue timeValue = TimeValue.now();                   // The current time
+DateTimeValue dateTimeValue = DateTimeValue.now();       // The current date/time</code></pre>
+      </li>
       </ul>
-      <p>All these static methods have equivalent constructors.
+      <p>All these static methods (except for <code class="java">now</code> method) have equivalent constructors.
       </p>
       <h3 class="page-header" ><span id="default-description"></span>Default description</h3>
       <p>In assertj, it is possible to add description with the methods of <a href="core/api/org/assertj/core/api/Descriptable.html">Descriptable</a><br/>
@@ -1699,7 +1752,176 @@ DateTimeValue dateTimeValue2 = DateTimeValue.parse("2007-12-23T09:01:06.00000000
       </ul>
       <p>This default description can be replace by the choice of the tester by using the methods of <a href="core/api/org/assertj/core/api/Descriptable.html">Descriptable</a>.
       </p>
+      <h3 class="page-header" ><span id="dblettercase"></span>Letter Case of the database</h3>
+      <p><i>Since 1.1.0</i></p>
+      <p>Databases have different letter cases for the name of the elements. For example, the name of the table can
+      be upper case either the name is inputed in upper case or not. So this concept (and feature too) is here to
+      manage these shades.</p>
+      <p>It is possible to declare <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a>
+      with <a href="#datasourcewithlettercase">DataSource with LetterCase</a> or with
+      <a href="#sourcewithlettercase">Source with LetterCase</a>.</p>
+      <p>The concept of <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a>
+      is composed of <a href="db/current/api/org/assertj/db/type/lettercase/CaseConversion.html">CaseConversion</a>
+      and <a href="db/current/api/org/assertj/db/type/lettercase/CaseComparison.html">CaseComparison</a>.</p>
+      <h4 class="page-header" ><span id="caseconversion"></span>CaseConversion</h4>
+      <p>The <a href="db/current/api/org/assertj/db/type/lettercase/CaseConversion.html">CaseConversion</a> is used
+      when getting a name with letter case from database : a table name, a column name or a primary key name.</p>
+      <p>There are three conversions : <a href="db/current/api/org/assertj/db/type/lettercase/CaseConversions.html#UPPER">UPPER</a>
+      which converts to upper case (<code class="java">"Name"</code> becomes <code class="java">"NAME"</code>),
+      <a href="db/current/api/org/assertj/db/type/lettercase/CaseConversions.html#LOWER">LOWER</a> which converts to lower case (<code class="java">"Name"</code> becomes <code class="java">"name"</code>)
+      and <a href="db/current/api/org/assertj/db/type/lettercase/CaseConversions.html#NO">NO</a> which keep with the same case (<code class="java">"Name"</code> remains <code class="java">"Name"</code>).</p>
+      <p>Each name (table, column and primary key) got from the database is converted using a <a href="db/current/api/org/assertj/db/type/lettercase/CaseConversion.html">CaseConversion</a>.</p>
+      <h4 class="page-header" ><span id="casecomparison"></span>CaseComparison</h4>
+      <p>The <a href="db/current/api/org/assertj/db/type/lettercase/CaseComparison.html">CaseComparison</a> is used
+      when comparing something with letter case from database or with a parameter.</p>
+      <p>There are two comparisons : <a href="db/current/api/org/assertj/db/type/lettercase/CaseComparisons.html#IGNORE">IGNORE</a> which compares <code class="java">String</code> by ignoring the case (<code class="java">"Name"</code> is considered equal to <code class="java">"NAME"</code>)
+      and <a href="db/current/api/org/assertj/db/type/lettercase/CaseComparisons.html#STRICT">STRICT</a> which compares strictly<code class="java">String</code> (<code class="java">"Name"</code> is considered different from <code class="java">"NAME"</code>).</p>
+      <p>During navigation (e.g. from table to column) and assertion (e.g. on column name), the name are compared using a <a href="db/current/api/org/assertj/db/type/lettercase/CaseComparison.html">CaseComparison</a>.</p>
+      <h4 class="page-header" ><span id="lettercase"></span>LetterCase</h4>
+      <p>A <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> is created with 
+      the <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html#getLetterCase-org.assertj.db.type.lettercase.CaseConversion-org.assertj.db.type.lettercase.CaseComparison-">getLetterCase</a>
+      static method which have a
+      <a href="db/current/api/org/assertj/db/type/lettercase/CaseConversion.html">CaseConversion</a> and a
+      <a href="db/current/api/org/assertj/db/type/lettercase/CaseComparison.html">CaseComparison</a> as parameters.
+      </p>
+      <pre><code class="java">LetterCase letterCase = LetterCase.getLetterCase(CaseConversions.NO, CaseComparisons.IGNORE)</code></pre>
 
+      <p>In AssertJ-DB, there are three different uses of a <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> :
+      the table name, the column name and the primary key name.
+      That is the reason why the <a href="db/current/api/org/assertj/db/type/DataSourceWithLetterCase.html">DataSourceWithLetterCase</a>
+      constructor and the <a href="db/current/api/org/assertj/db/type/SourceWithLetterCase.html">SourceWithLetterCase</a> constructor
+      have three parameters about <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a>.
+      </p>
+      <p>The <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> on the tables is used :
+      </p>
+      <ul>
+      <li>to convert the table name : when a name is got from the database like for the <a href="db/current/api/org/assertj/db/type/Table.html">Table</a>
+      instantiation or for the table with changes found with <a href="db/current/api/org/assertj/db/type/Changes.html">Changes</a>.
+      </li>
+      <li>to compare the table name : for the instantiation when the table is search in the database for <a href="db/current/api/org/assertj/db/type/Table.html">Table</a>, 
+      for navigation (e.g. from changes to a change on a table) or for a assertion (like <a href="db/current/api/org/assertj/db/api/assertions/AssertOnDataType.html#isOnTable-java.lang.String-">isOnTable(String name)</a>).
+      </li>
+      </ul>
+      <p>The <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> on the columns is used :
+      </p>
+      <ul>
+      <li>to convert the column name : when a column name is got from the database for a table or a request
+      </li>
+      <li>to compare the column name : for the navigation (e.g. from a table to a column) or for a assertion (like <a href="db/current/api/org/assertj/db/api/assertions/AssertOnColumnName.html#hasColumnName-java.lang.String-">hasColumnName(String columnName)</a>).
+      </li>
+      </ul>
+      <p>The <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> on the primary keys is used :
+      </p>
+      <ul>
+      <li>to convert the primary key name : when a primary key name is got from the database for a table
+      </li>
+      <li>to compare the primary key name : for a assertion (like <a href="db/current/api/org/assertj/db/api/assertions/AssertOnPrimaryKey.html#hasPksNames-java.lang.String...-">hasPksNames(String... names)</a>).
+      </li>
+      </ul>
+      <p>The different <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> are explictly indicated
+      for <a href="db/current/api/org/assertj/db/type/DataSourceWithLetterCase.html">DataSourceWithLetterCase</a>
+      and <a href="db/current/api/org/assertj/db/type/SourceWithLetterCase.html">SourceWithLetterCase</a>. But for 
+      <a href="http://docs.oracle.com/javase/6/docs/api/javax/sql/DataSource.html">DataSource</a> and 
+      <a href="db/current/api/org/assertj/db/type/Source.html">Source</a>, there are <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a>
+      too but there are implicit :</p>
+      <ul>
+      <li><a href="db/current/api/org/assertj/db/type/lettercase/CaseConversions.html#NO">NO</a> conversion 
+      and <a href="db/current/api/org/assertj/db/type/lettercase/CaseComparisons.html#IGNORE">IGNORE</a> comparison for table names
+      </li>
+      <li><a href="db/current/api/org/assertj/db/type/lettercase/CaseConversions.html#UPPER">UPPER</a> conversion 
+      and <a href="db/current/api/org/assertj/db/type/lettercase/CaseComparisons.html#IGNORE">IGNORE</a> comparison for the column and primary key name
+      </li>
+      </ul>
+      <p>In this example, The uses of <a href="db/current/api/org/assertj/db/type/Source.html">Source</a>
+      and <a href="db/current/api/org/assertj/db/type/SourceWithLetterCase.html">SourceWithLetterCase</a>
+      are equivalent :</p>
+      <pre><code class="java">Source source = new Source("jdbc:h2:mem:test", "sa", "");
+Table table = new Table(source, "members");
+
+LetterCase tableLetterCase = LetterCase.getLetterCase(CaseConversions.NO, CaseComparisons.IGNORE);
+LetterCase columnLetterCase = LetterCase.getLetterCase(CaseConversions.UPPER, CaseComparisons.IGNORE);
+LetterCase pkLetterCase = LetterCase.getLetterCase(CaseConversions.UPPER, CaseComparisons.IGNORE);
+Source sourceWithLC = new SourceWithLetterCase("jdbc:h2:mem:test", "sa", "",
+                                               tableLetterCase,
+                                               columnLetterCase,
+                                               pkLetterCase);
+Table tableWithLC = new Table(sourceWithLC, "members");</code></pre>
+      <p>And in this example, the uses of <a href="http://docs.oracle.com/javase/6/docs/api/javax/sql/DataSource.html">DataSource</a>
+      and <a href="db/current/api/org/assertj/db/type/DataSourceWithLetterCase.html">DataSourceWithLetterCase</a>
+      are equivalent :</p>
+      <pre><code class="java">DataSource dataSource = .....
+Table table = new Table(dataSource, "members");
+
+LetterCase tableLetterCase = LetterCase.getLetterCase(CaseConversions.NO, CaseComparisons.IGNORE);
+LetterCase columnLetterCase = LetterCase.getLetterCase(CaseConversions.UPPER, CaseComparisons.IGNORE);
+LetterCase pkLetterCase = LetterCase.getLetterCase(CaseConversions.UPPER, CaseComparisons.IGNORE);
+DataSource dataSourceWithLC = new DataSourceWithLetterCase(dataSource,
+                                                           tableLetterCase,
+                                                           columnLetterCase,
+                                                           pkLetterCase);
+Table tableWithLC = new Table(dataSourceWithLC, "members");</code></pre>
+      <p>Note that the letter case is extensible because the <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html#getLetterCase-org.assertj.db.type.lettercase.CaseConversion-org.assertj.db.type.lettercase.CaseComparison-">getLetterCase</a>
+      static method's parameters are instances of <a href="db/current/api/org/assertj/db/type/lettercase/CaseConversion.html">CaseConversion</a>
+      and <a href="db/current/api/org/assertj/db/type/lettercase/CaseComparison.html">CaseComparison</a> interfaces.
+      So this is not limited to the implementations in the corresponding enums.
+      </p>
+      <h3 class="page-header" ><span id="output"></span>Ouput</h3>
+      <p><i>Since 1.1.0</i></p>
+      <p>It could be insteresting to view the values on which an assertion is (in example for debug).
+      The output allows that. This is a simple example :</p>
+      <pre><code class="java">import static org.assertj.db.output.Outputs.output;
+
+Table table = new Table(dataSource, "members");
+
+// Output the content of the table in the console
+output(table).toConsole();</code></pre>
+<p>These lines give the result below :</p>
+<pre style="display: block; background-color: #FFFFFF; border-radius: 8px; font-size: 17px; padding: 10px 20px;">[MEMBERS table]
+|-----------|---------|-----------|-----------|--------------|-----------|-----------|-----------|
+|           |         | *         |           |              |           |           |           |
+|           | PRIMARY | ID        | NAME      | FIRSTNAME    | SURNAME   | BIRTHDATE | SIZE      |
+|           | KEY     | (NUMBER)  | (TEXT)    | (TEXT)       | (TEXT)    | (DATE)    | (NUMBER)  |
+|           |         | Index : 0 | Index : 1 | Index : 2    | Index : 3 | Index : 4 | Index : 5 |
+|-----------|---------|-----------|-----------|--------------|-----------|-----------|-----------|
+| Index : 0 | 1       | 1         | Hewson    | Paul David   | Bono      | 05-10-60  | 1.75      |
+| Index : 1 | 2       | 2         | Evans     | David Howell | The Edge  | 08-08-61  | 1.77      |
+| Index : 2 | 3       | 3         | Clayton   | Adam         |           | 03-13-60  | 1.78      |
+| Index : 4 | 4       | 4         | Mullen    | Larry        |           | 10-31-61  | 1.70      |
+|-----------|---------|-----------|-----------|--------------|-----------|-----------|-----------|</pre>
+      <p>
+      In the example above, the output is in plain text in the console. It is possible to change the type of output and the destination.
+      </p>
+      <h4 class="page-header" ><span id="typeoutput"></span>Type of output</h4>
+      <p>
+      There are two outputs already implemented :
+      </p>
+      <ul>
+      <li><a href="db/current/api/org/assertj/db/output/impl/OutputType.html#PLAIN">PLAIN</a> : like in the example above (and the default type of output)</li>
+      <li><a href="db/current/api/org/assertj/db/output/impl/OutputType.html#HTML">HTML</a> : which represents the result in a HTML document</li>
+      </ul>
+      <pre><code class="java">// Change the output of the table to be HTML
+output(table).withType(OutputType.HTML).....;</code></pre>
+      <p>Note that the type of output is extensible because the 
+      <a href="db/current/api/org/assertj/db/output/AbstractOutputter.html#withType-org.assertj.db.output.impl.Output-">withType(Output outputType)</a>
+      method's parameter is instance of <a href="db/current/api/org/assertj/db/output/impl/Output.html">Output</a>
+      interface.
+      So this is not limited to the implementations in the <a href="db/current/api/org/assertj/db/output/impl/OutputType.html">OutputType</a> enum.
+      </p>
+      <h4 class="page-header" ><span id="destination"></span>Destination</h4>
+      <p>The destination is the way to print the display. There are three destinations :</p>
+      <ul>
+      <li>to the console with <a href="db/current/api/org/assertj/db/output/AbstractOutputter.html#toConsole--">toConsole()</a> method 
+      </li>
+      <li>to a file with <a href="db/current/api/org/assertj/db/output/AbstractOutputter.html#toFile-java.lang.String-">toFile(String fileName)</a> method
+      </li>
+      <li>to a stream with <a href="db/current/api/org/assertj/db/output/AbstractOutputter.html#toStream-java.io.OutputStream-">toStream(OutputStream outputStream)</a> method
+      </li>
+      </ul>
+      <p>Note that with this last method the possibilities of destination are really flexible.</p>
+      <p>These three methods are also fluent. In this short example, the output is a plain representation in console and a html output in a file :</p> 
+      <pre><code class="java">// Display the content of the table with plain text in the console 
+// and with HTML output in the file
+output(table).toConsole().withType(OutputType.HTML).toFile("test.html");</code></pre>
 </div>
 
 <br>

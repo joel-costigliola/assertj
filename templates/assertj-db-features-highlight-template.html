@@ -53,6 +53,7 @@ $assertj_db_side_menu
                   <li><a href="#oncolumnequality-time">With Time</a></li>
                   <li><a href="#oncolumnequality-datetime">With Date/Time</a></li>
                   <li><a href="#oncolumnequality-string">With String</a></li>
+                  <li><a href="#oncolumnequality-uuid">With UUID</a> <small><i>(since 1.1.0)</i></small></li>
                 </ul>
               </li>
               <li><a href="#oncolumnname">On the name of a column</a>
@@ -61,15 +62,19 @@ $assertj_db_side_menu
               </li>
               <li><a href="#oncolumntype">On the type of column</a>
               </li>
+              <li><a href="#oncolumnclass">On the class of column</a> <small><i>(since 1.1.0)</i></small>
+              </li>
+              <li><a href="#oncolumncontent">On the content of column</a> <small><i>(since 1.1.0)</i></small>
+              </li>
               <li><a href="#ondatatype">On the type of data</a>
               </li>
-              <li><a href="#onmodifiedcolumns">On the modified columns in a change</a>
+              <li><a href="#onmodifiedcolumns">On the modified columns in a change</a> <small><i>(modified since 1.1.0)</i></small>
               </li>
-              <li><a href="#onnumberchanges">On the number of changes</a>
+              <li><a href="#onnumberchanges">On the number of changes</a> <small><i>(modified since 1.1.0)</i></small>
               </li>
-              <li><a href="#onnumbercolumns">On the number of column</a>
+              <li><a href="#onnumbercolumns">On the number of columns</a> <small><i>(modified since 1.1.0)</i></small>
               </li>
-              <li><a href="#onnumberrows">On the number of rows</a>
+              <li><a href="#onnumberrows">On the number of rows</a> <small><i>(modified since 1.1.0)</i></small>
               </li>
               <li><a href="#onprimarykeys">On the primary keys</a>
               </li>
@@ -81,6 +86,8 @@ $assertj_db_side_menu
               </li>
               <li><a href="#onvaluecomparison">On the comparison with a value</a>
               </li>
+              <li><a href="#onvaluecloseness">On the closeness of a value</a> <small><i>(since 1.1.0)</i></small>
+              </li>
               <li><a href="#onvaluequality">On the equality with a value</a>
                 <ul>
                   <li><a href="#onvaluequality-boolean">With Boolean</a></li>
@@ -90,6 +97,7 @@ $assertj_db_side_menu
                   <li><a href="#onvaluequality-time">With Time</a></li>
                   <li><a href="#onvaluequality-datetime">With Date/Time</a></li>
                   <li><a href="#onvaluequality-string">With String</a></li>
+                  <li><a href="#onvaluequality-uuid">With UUID</a> <small><i>(since 1.1.0)</i></small></li>
                 </ul>
               </li>
               <li><a href="#onvaluenonquality">On the non equality with a value</a>
@@ -101,11 +109,14 @@ $assertj_db_side_menu
                   <li><a href="#onvaluenonquality-time">With Time</a></li>
                   <li><a href="#onvaluenonquality-datetime">With Date/Time</a></li>
                   <li><a href="#onvaluenonquality-string">With String</a></li>
+                  <li><a href="#onvaluenonquality-uuid">With UUID</a> <small><i>(since 1.1.0)</i></small></li>
                 </ul>
               </li>
               <li><a href="#onvaluenullity">On the nullity of a value</a>
               </li>
               <li><a href="#onvaluetype">On the type of a value</a>
+              </li>
+              <li><a href="#onvalueclass">On the class of a value</a> <small><i>(since 1.1.0)</i></small>
               </li>
             </ul>
          </li>
@@ -716,7 +727,7 @@ assertThat(changes).change().column()
       <h5 class="page-header" ><span id="oncolumnequality-string">With String</h5>
                   <pre><code class="java">// Verify that values are equal to texts 
 assertThat(table).column("name")
-            .hasValues("Hewson"),
+            .hasValues("Hewson",
                        "Evans",
                        "Clayton",
                        "Mullen");
@@ -728,6 +739,18 @@ assertThat(changes).changeOfModification().column("size")
 assertThat(table).column()
             .hasValues("2007-12-23T09:01"),
                        "1975-05-19");</code></pre>
+      <h5 class="page-header" ><span id="oncolumnequality-uuid">With UUID</h5>
+      <p><i>Since 1.1.0</i></p>
+                  <pre><code class="java">// Verify that the values of the first column of the table
+// was equal to 30B443AE-C0C9-4790-9BEC-CE1380808435, 0E2A1269-EFF0-4233-B87B-B53E8B6F164D
+// and 2B0D1BDD-909E-4362-BA10-C930BA82718D
+assertThat(table).column().hasValues(UUID.fromString("30B443AE-C0C9-4790-9BEC-CE1380808435"), 
+                                     UUID.fromString("0E2A1269-EFF0-4233-B87B-B53E8B6F164D"), 
+                                     UUID.fromString("2B0D1BDD-909E-4362-BA10-C930BA82718D"));
+// Verify that the value of the first column of the first change
+// is not modified and is equal to 399FFFCA-7874-4225-9903-E227C4E9DCC1
+assertThat(changes).change()
+                   .column().hasValues(UUID.fromString("399FFFCA-7874-4225-9903-E227C4E9DCC1"));</code></pre>
       <h4 class="page-header" ><span id="oncolumnname">On the name of a column</h4>
       <p>This assertion is described in <a href="db/current/api/org/assertj/db/api/assertions/AssertOnColumnName.html">AssertOnColumnName</a> interface.</p>
       <p>This assertion allows to verify the name of a column (the column of a table, of a request or of a change).</p>
@@ -760,6 +783,31 @@ assertThat(request).column(2).isText(true);
 // of the first change is either a date or a number
 assertThat(changes).change().column()
     .isOfAnyOfTypes(ValueType.DATE, ValueType.NUMBER);</code></pre>
+      <h4 class="page-header" ><span id="oncolumnclass">On the class of column</h4>
+      <p><i>Since 1.1.0</i></p>
+      <p>This assertion is described in <a href="db/current/api/org/assertj/db/api/assertions/AssertOnColumnClass.html">AssertOnColumnClass</a> interface.</p>
+      <p>This assertion allows to verify the class of the values of a column (a column from a table, from a request or from a change).</p>
+      <pre><code class="java">// Verify that the values of the column called "firstname"
+// of the table are a String (null values are considered as wrong)
+assertThat(table).column("firstname").isOfClass(String.class, false);
+// Verify that the values of the first column
+// of the first change is a Locale (null values are considered as right)
+assertThat(changes).change().column().isOfClass(Locale.class, true);</code></pre>
+      <h4 class="page-header" ><span id="oncolumncontent">On the content of column</h4>
+      <p><i>Since 1.1.0</i></p>
+      <p>These assertions are described in <a href="db/current/api/org/assertj/db/api/assertions/AssertOnColumnContent.html">AssertOnColumnContent</a> interface.</p>
+      <p>These assertions allow to verify the content of a column (a column from a table or from a request).</p>
+      <pre><code class="java">// Verify that the content of the column called "name"
+assertThat(table).column("name").containsValues("Hewson",
+                                                "Evans",
+                                                "Clayton",
+                                                "Mullen");
+// This second assertion is equivalent because the order of the values is not important
+assertThat(table).column("name").containsValues("Evans",
+                                                "Clayton", 
+                                                "Hewson", 
+                                                "Mullen");
+</code></pre>
       <h4 class="page-header" ><span id="ondatatype">On the type of data</h4>
       <p>These assertions are described in <a href="db/current/api/org/assertj/db/api/assertions/AssertOnDataType.html">AssertOnDataType</a> interface.</p>
       <p>These assertions allow to verify the type of the date on which is a change.</p>
@@ -782,23 +830,59 @@ assertThat(changes).change().hasNumberOfModifiedColumns(2);
 assertThat(changes).change().hasModifiedColumns(1, 2);
 // Verify that the modified column in change are "name" and "firstname"
 assertThat(changes).change().hasModifiedColumns("name", "firstname");</code></pre>
+      <p><i>Since version 1.1.0</i>, there are new assertions which allow to compare the number of modified columns between the start point and the end point.</p>
+      <pre><code class="java">// Verify that the number of modified columns in the first change is more than 5 
+assertThat(changes).change().hasNumberOfModifiedColumnsGreaterThan(5);
+// Verify that the number of modified columns in the first change is at least 5
+assertThat(changes).change().hasNumberOfModifiedColumnsGreaterThanOrEqualTo(5);
+// Verify that the number of modified columns in the first change is less than 6
+assertThat(changes).change().hasNumberOfModifiedColumnsLessThan(6);
+// Verify that the number of modified columns in the first change is at most 6
+assertThat(changes).change().hasNumberOfModifiedColumnsLessThanOrEqualTo(6);</code></pre>
       <h4 class="page-header" ><span id="onnumberchanges">On the number of changes</h4>
       <p>This assertion is described in <a href="db/current/api/org/assertj/db/api/assertions/AssertOnNumberOfChanges.html">AssertOnNumberOfChanges</a> interface.</p>
       <p>This assertion allows to verify the number of changes.</p>
       <pre><code class="java">// Verify that there are 4 changes
 assertThat(changes).hasNumberOfChanges(4);</code></pre>
-      <h4 class="page-header" ><span id="onnumbercolumns">On the number of column</h4>
+      <p><i>Since version 1.1.0</i>, there are new assertions which allow to compare the number of changes between the start point and the end point.</p>
+      <pre><code class="java">// Verify that the number of changes is more than 5 
+assertThat(changes).hasNumberOfChangesGreaterThan(5);
+// Verify that the number of changes is at least 5
+assertThat(changes).hasNumberOfChangesGreaterThanOrEqualTo(5);
+// Verify that the number of changes is less than 6
+assertThat(changes).hasNumberOfChangesLessThan(6);
+// Verify that the number of changes is at most 6
+assertThat(changes).hasNumberOfChangesLessThanOrEqualTo(6);</code></pre>
+      <h4 class="page-header" ><span id="onnumbercolumns">On the number of columns</h4>
       <p>This assertion is described in <a href="db/current/api/org/assertj/db/api/assertions/AssertOnNumberOfColumns.html">AssertOnNumberOfColumns</a> interface.</p>
       <p>This assertion allows to verify the number of columns (columns from a table, from a request or from a change).</p>
       <pre><code class="java">// Verify that there are 6 columns in the table
 assertThat(table).hasNumberOfColumns(6);
 // Verify that there are 4 columns in the change
 assertThat(changes).change().hasNumberOfColumns(4);</code></pre>
+      <p><i>Since version 1.1.0</i>, there are new assertions which allow to compare the number of columns.</p>
+      <pre><code class="java">// Verify that the number of columns is more than 5 
+assertThat(table).hasNumberOfColumnsGreaterThan(5);
+// Verify that the number of columns is at least 5
+assertThat(request).hasNumberOfColumnsGreaterThanOrEqualTo(5);
+// Verify that the number of columns is less than 6
+assertThat(changes).hasNumberOfColumnsLessThan(6);
+// Verify that the number of columns is at most 6
+assertThat(changes).hasNumberOfColumnsLessThanOrEqualTo(6);</code></pre>
       <h4 class="page-header" ><span id="onnumberrows">On the number of rows</h4>
       <p>This assertion is described in <a href="db/current/api/org/assertj/db/api/assertions/AssertOnNumberOfRows.html">AssertOnNumberOfRows</a> interface.</p>
       <p>This assertion allows to verify the number of rows (rows from a table or from a request).</p>
       <pre><code class="java">// Verify that there are 7 rows in the table
 assertThat(table).hasNumberOfRows(7);</code></pre>
+      <p><i>Since version 1.1.0</i>, there are new assertions which allow to compare the number of rows.</p>
+      <pre><code class="java">// Verify that the number of rows is more than 5 
+assertThat(table).hasNumberOfRowsGreaterThan(5);
+// Verify that the number of rows is at least 5
+assertThat(request).hasNumberOfRowsGreaterThanOrEqualTo(5);
+// Verify that the number of rows is less than 6
+assertThat(changes).hasNumberOfRowsLessThan(6);
+// Verify that the number of rows is at most 6
+assertThat(changes).hasNumberOfRowsLessThanOrEqualTo(6);</code></pre>
       <h4 class="page-header" ><span id="onprimarykeys">On the primary keys</h4>
       <p>These assertions are described in <a href="db/current/api/org/assertj/db/api/assertions/AssertOnPrimaryKey.html">AssertOnPrimaryKey</a> interface.</p>
       <p>These assertions allow to verify the names and the values of the columns which compose the primary keys of the rows from a change.</p>
@@ -852,6 +936,18 @@ assertThat(table).row(1).value("size")
 assertThat(changes).change().column("size").valueAtEndPoint()
                             .isGreaterThanOrEqualTo(1.7)
                             .isLessThanOrEqualTo(1.8);</code></pre>
+      <h4 class="page-header" ><span id="onvaluecloseness">On the closeness of a value</h4>
+      <p><i>Since 1.1.0</i></p>
+      <p>These assertions are described in <a href="db/current/api/org/assertj/db/api/assertions/AssertOnValueCloseness.html">AssertOnValueCloseness</a> interface.</p>
+      <p>These assertions allow to verify if a value (the value of a table, of a request or of a change) is close to another.</p>
+      <pre><code class="java">// Verify if the value is close to 2 with a tolerance of 0.5
+// So the values between 1.5 and 2.5 are right
+assertThat(table).row(1).value("size")
+                        .isCloseTo(2, 0.5);
+// Verify the value is close to 05-10-1960 with a tolerance of two days
+assertThat(changes).change().column("birth").valueAtEndPoint()
+                            .isCloseTo(DateValue(1960, 5, 10),
+                                       DateValue(0, 0, 2));</code></pre>
       <h4 class="page-header" ><span id="onvaluequality">On the equality with a value</h4>
       <p>These assertions are described in <a href="db/current/api/org/assertj/db/api/assertions/AssertOnValueEquality.html">AssertOnValueEquality</a> interface.</p>
       <p>These assertion allow to verify that a value (the value of a table, of a request or of a change) is equal to another value (in parameter).</p>
@@ -901,6 +997,12 @@ assertThat(table).row().value().isEqualTo("1")
                        .value().isEqualTo("Bono")
                        .value().isEqualTo("1960-05-10")
                        .value().isEqualTo("1.75");</code></pre>
+      <h5 class="page-header" ><span id="onvaluequality-uuid">With UUID</h5>
+      <p><i>Since 1.1.0</i></p>
+                  <pre><code class="java">// Verify that the values are equal to UUID
+assertThat(table).column().value().isEqualTo(UUID.fromString("30B443AE-C0C9-4790-9BEC-CE1380808435"))
+                          .value().isEqualTo(UUID.fromString("0E2A1269-EFF0-4233-B87B-B53E8B6F164D"))
+                          .value().isEqualTo(UUID.fromString("2B0D1BDD-909E-4362-BA10-C930BA82718D"));</code></pre>
       <h4 class="page-header" ><span id="onvaluenonquality">On the non equality with a value</h4>
       <p>These assertions are described in <a href="db/current/api/org/assertj/db/api/assertions/AssertOnValueNonEquality.html">AssertOnValueNonEquality</a> interface.</p>
       <p>These assertion allow to verify that a value (the value of a table, of a request or of a change) is not equal to another value (in parameter).</p>
@@ -948,6 +1050,13 @@ assertThat(table).row().value().isNotEqualTo("5")
                        .value().isNotEqualTo("McGuiness")
                        .value().isNotEqualTo("Paul")
                        .value("birthdate").isNotEqualTo("1951-06-17");</code></pre>
+      <h5 class="page-header" ><span id="onvaluenonquality-uuid">With UUID</h5>
+      <p><i>Since 1.1.0</i></p>
+                  <pre><code class="java">// Verify that the values are not equal to UUID
+assertThat(table).column()
+                 .value().isNotEqualTo(UUID.fromString("30B443AE-C0C9-4790-9BEC-CE1380808435"))
+                 .value().isNotEqualTo(UUID.fromString("0E2A1269-EFF0-4233-B87B-B53E8B6F164D"))
+                 .value().isNotEqualTo(UUID.fromString("2B0D1BDD-909E-4362-BA10-C930BA82718D"));</code></pre>
       <h4 class="page-header" ><span id="onvaluenullity">On the nullity of a value</h4>
       <p>These assertions are described in <a href="db/current/api/org/assertj/db/api/assertions/AssertOnValueNullity.html">AssertOnValueNullity</a> interface.</p>
       <p>These assertions allow to verify if a value (the value of a table, of a request or of a change) is null or not.</p>
@@ -970,6 +1079,17 @@ assertThat(request).row(1).value(2).isText();
 // of the first change is either a date or a number
 assertThat(changes).change().column().valueAtStartPoint()
     .isOfAnyOfTypes(ValueType.DATE, ValueType.NUMBER);</code></pre>
+      <h4 class="page-header" ><span id="onvalueclass">On the class of a value</h4>
+      <p><i>Since 1.1.0</i></p>
+      <p>This assertion is described in <a href="db/current/api/org/assertj/db/api/assertions/AssertOnValueClass.html">AssertOnValueClass</a> interface.</p>
+      <p>This assertion allows to verify the class of a value (a value from a table, from a request or from changes).</p>
+      <pre><code class="java">// Verify that the value of the column called "firstname"
+// of the fifth row of the table is a String
+assertThat(table).row(4).value("firstname").isOfClass(String.class);
+// Verify that the value at start point of the first column
+// of the first change is a Locale
+assertThat(changes).change().column().valueAtStartPoint()
+    .isOfClass(Locale.class);</code></pre>
 </div>
 
 $footer

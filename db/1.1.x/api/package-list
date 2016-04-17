@@ -1,9 +1,14 @@
 org.assertj.db.api
 org.assertj.db.api.assertions
 org.assertj.db.api.assertions.impl
-org.assertj.db.api.navigation
-org.assertj.db.api.origin
 org.assertj.db.error
 org.assertj.db.exception
+org.assertj.db.global
+org.assertj.db.navigation
+org.assertj.db.navigation.element
+org.assertj.db.navigation.origin
+org.assertj.db.output
+org.assertj.db.output.impl
 org.assertj.db.type
+org.assertj.db.type.lettercase
 org.assertj.db.util
