@@ -8,11 +8,7 @@
 
   @Before
   public void setUp() {
-    SimpleCopyApplication frame = GuiActionRunner.execute(new GuiQuery&lt;SimpleCopyApplication&gt;() {
-      protected SimpleCopyApplication executeInEDT() {
-        return new SimpleCopyApplication();
-      }
-    });
+    SimpleCopyApplication frame = GuiActionRunner.execute(() -&gt; new SimpleCopyApplication());
     window = new FrameFixture(frame);
     window.show(); // shows the frame to test
   }

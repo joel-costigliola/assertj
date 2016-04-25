@@ -194,18 +194,14 @@
 
 @Before
 public void setUp() {
-  SimpleCopyApplication frame = GuiActionRunner.execute(new GuiQuery&lt;SimpleCopyApplication&gt;() {
-    protected SimpleCopyApplication executeInEDT() {
-      return new SimpleCopyApplication();
-    }
-  });
+  SimpleCopyApplication frame = GuiActionRunner.execute(() -&gt; new SimpleCopyApplication());
   window = new FrameFixture(frame);
   window.show(); // shows the frame to test
 }</code></pre>
 
          <p>It may seem a little weird the way we create a new instance of <code>SimpleCopyApplication</code>. Since
             creation of a frame triggers a <em>paint</em> action, we need to create the frame in the Event Dispatch
-            Thread (EDT.) More details about the EDT and Swing threading can be found
+            Thread (EDT). More details about the EDT and Swing threading can be found
             <a href="assertj-swing-edt.html">here</a>.</p>
 
          <h4>3. Write methods to test your GUI's behavior</h4>
@@ -252,11 +248,7 @@ public void tearDown() {
 
   @Before
   public void setUp() {
-    SimpleCopyApplication frame = GuiActionRunner.execute(new GuiQuery&lt;SimpleCopyApplication&gt;() {
-      protected SimpleCopyApplication executeInEDT() {
-        return new SimpleCopyApplication();
-      }
-    });
+    SimpleCopyApplication frame = GuiActionRunner.execute(() -&gt; new SimpleCopyApplication());
     window = new FrameFixture(frame);
     window.show(); // shows the frame to test
   }
@@ -274,6 +266,7 @@ public void tearDown() {
   }
 }</code></pre>
 
+
          <h3 class="page-header">Alternatively, extend a AssertJ Swing test case</h3>
          <p>AssertJ Swing provides a base test class, to simplify creation of GUI tests. The following code listing
             provides the same functionality as the code above, with less code, thanks to
@@ -286,11 +279,7 @@ public class SimpleCopyApplication_UseBaseTest extends AssertJSwingJUnitTestCase
 
   @Override
   protected void onSetUp() {
-    SimpleCopyApplication frame = GuiActionRunner.execute(new GuiQuery&lt;SimpleCopyApplication&gt;() {
-      protected SimpleCopyApplication executeInEDT() {
-        return new SimpleCopyApplication();
-      }
-    });
+    SimpleCopyApplication frame = GuiActionRunner.execute(() -&gt; new SimpleCopyApplication());
     // IMPORTANT: note the call to 'robot()'
     // we must use the Robot from AssertJSwingJUnitTestCase
     window = new FrameFixture(robot(), frame);
@@ -304,6 +293,7 @@ public class SimpleCopyApplication_UseBaseTest extends AssertJSwingJUnitTestCase
     window.label("copiedText").requireText("Some random text");
   }
 }</code></pre>
+
          <div class="panel panel-danger">
             <div class="panel-heading">Do not create a new Robot!</div>
             <div class="panel-body">When using a base test case, do not create a new <code>Robot</code>. The base test

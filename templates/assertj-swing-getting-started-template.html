@@ -71,18 +71,14 @@ $assertj_swing_get_it
 
 @Before
 public void setUp() {
-  SimpleCopyApplication frame = GuiActionRunner.execute(new GuiQuery&lt;SimpleCopyApplication&gt;() {
-    protected SimpleCopyApplication executeInEDT() {
-      return new SimpleCopyApplication();
-    }
-  });
+  SimpleCopyApplication frame = GuiActionRunner.execute(() -&gt; new SimpleCopyApplication());
   window = new FrameFixture(frame);
   window.show(); // shows the frame to test
 }</code></pre>
 
          <p>It may seem a little weird the way we create a new instance of <code>SimpleCopyApplication</code>. Since
             creation of a frame triggers a <em>paint</em> action, we need to create the frame in the Event Dispatch
-            Thread (EDT.) More details about the EDT and Swing threading can be found
+            Thread (EDT). More details about the EDT and Swing threading can be found
             <a href="assertj-swing-edt.html">here</a>.</p>
 
          <h4>3. Write methods to test your GUI's behavior</h4>

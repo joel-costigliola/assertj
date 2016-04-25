@@ -32,11 +32,7 @@ final JButton okButton = //obtain a reference to the "OK" button
 pause(new Condition("OK button to be enabled") {
 
   public boolean test() {
-    return execute(new GuiQuery&lt;Boolean&gt;() {
-      public Boolean executeInEDT() {
-        return okButton.isEnabled();
-      }
-    }
+    return execute(okButton::isEnabled);
   }
 
 }, timeout(10000));</code></pre>

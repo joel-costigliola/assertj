@@ -130,6 +130,11 @@ dialog.list("employees").pressKey(VK_CONTROL)
                         .click()
                         .releaseKey(VK_CONTROL);</code></pre>
 
+         <p>You can even simplify this by using <code>pressKeyWhileRunning(int, Runnable)</code> which takes a
+         <code>Runnable</code> to run between pressing and releasing keys:</p>
+         <pre><code class="language-java">// import static java.awt.event.KeyEvent.*;
+dialog.list("employees").pressKeyWhileRunning(VK_CONTROL, dialog.list("employees")::click);</code></pre>
+
          <h3>Typing text</h3>
          <p>Often we just want to enter some text into a text field. Using <code>pressAndReleaseKeys(int...)</code>
             is unhandy for this purpose. The text component fixtures have a method <code>enterText(String)</code> to

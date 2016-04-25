@@ -135,11 +135,7 @@
 
   @Before
   public void setUp() {
-    SimpleCopyApplication frame = GuiActionRunner.execute(new GuiQuery&lt;SimpleCopyApplication&gt;() {
-      protected SimpleCopyApplication executeInEDT() {
-        return new SimpleCopyApplication();
-      }
-    });
+    SimpleCopyApplication frame = GuiActionRunner.execute(() -&gt; new SimpleCopyApplication());
     window = new FrameFixture(frame);
     window.show(); // shows the frame to test
   }
@@ -157,6 +153,7 @@
   }
 }</code></pre>
 
+
          <p>And the following is with using the base test case:</p>
          <pre class="pre-scrollable"><code class="language-java">
 public class SimpleCopyApplication_UseBaseTest extends AssertJSwingJUnitTestCase {
@@ -164,11 +161,7 @@ public class SimpleCopyApplication_UseBaseTest extends AssertJSwingJUnitTestCase
 
   @Override
   protected void onSetUp() {
-    SimpleCopyApplication frame = GuiActionRunner.execute(new GuiQuery&lt;SimpleCopyApplication&gt;() {
-      protected SimpleCopyApplication executeInEDT() {
-        return new SimpleCopyApplication();
-      }
-    });
+    SimpleCopyApplication frame = GuiActionRunner.execute(() -&gt; new SimpleCopyApplication());
     // IMPORTANT: note the call to 'robot()'
     // we must use the Robot from AssertJSwingJUnitTestCase
     window = new FrameFixture(robot(), frame);
@@ -182,6 +175,7 @@ public class SimpleCopyApplication_UseBaseTest extends AssertJSwingJUnitTestCase
     window.label("copiedText").requireText("Some random text");
   }
 }</code></pre>
+
 
          <h3 class="page-header"><span id="configuration"></span>Configuration</h3>
          <p>AssertJ Swing provides the class <code>org.assertj.swing.core.Settings</code> which holds the configurable

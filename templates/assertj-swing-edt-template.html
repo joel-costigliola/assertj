@@ -45,37 +45,40 @@ $assertj_swing_side_menu
          <h3 class="page-header"><span id="accessing-on-edt"></span>Accessing Swing Components in the EDT</h3>
 
          <p>$assertj_swing_name performs all access to Swing components in the EDT. $assertj_swing_name also exposes a convenient
-            mechanism to access Swing components in the EDT from your test code. This mechanism involves three classes:</p>
+            mechanism to access Swing components in the EDT from your test code. This mechanism involves one (with lambda expressions) to three (traditional way) classes:</p>
 
          <ul>
-            <li><a href="swing/api/org/assertj/swing/edt/GuiQuery.html" target="_blank">GuiQuery</a>, for performing
+            <li><a href="swing/api/org/assertj/swing/edt/GuiQuery.html" target="_blank">GuiQuery</a>*, for performing
                 actions in the EDT that return a value</li>
-            <li><a href="swing/api/org/assertj/swing/edt/GuiTask.html" target="_blank">GuiTask</a>, for performing
+            <li><a href="swing/api/org/assertj/swing/edt/GuiTask.html" target="_blank">GuiTask</a>*, for performing
                 actions in the EDT that do not return a value</li>
             <li><a href="swing/api/org/assertj/swing/edt/GuiActionRunner.html" target="_blank">GuiActionRunner</a>,
-                executes a GuiQuery or GuiTask in the EDT, rethrowing any exceptions thrown when executing any GUI
+                executes a <code>GuiQuery</code> or <code>GuiTask</code> (or Callable/Runnable via lambda expressions) in the EDT, rethrowing any exceptions thrown when executing any GUI
                 action in the EDT.</li>
          </ul>
+
+         <p>* If you use lambda expressions you don't need to use this class directly.</p>
 
          <h4>Examples</h4>
 
          <p>When you would like to <em>read</em> the text of a label, execute the following code:</p>
 
          <pre><code class="language-java">final JLabel nameLabel = ... // get a reference to a JLabel
-String text = GuiActionRunner.execute(new GuiQuery&lt;String&gt;() {
-  public String executeInEDT() {
-    return nameLabel.getText();
-  }
-});</code></pre>
+String text = GuiActionRunner.execute(() -&gt; nameLabel.getText());</code></pre>
 
-         <p>When you would like to <em>set</em> the text of a label, instead use the <code>GuiTask</code>:</p>
+         <p>When you would like to <em>set</em> the text of a label, execute:</p>
 
          <pre><code class="language-java">final JLabel nameLabel = ... // get a reference to a JLabel
-GuiActionRunner.execute(new GuiTask() {
-  public void executeInEDT() {
-    nameLabel.setText("Name:");
-  }
-});</code></pre>
+GuiActionRunner.execute(() -&gt; nameLabel.setText("Name:"));</code></pre>
+
+         <div class="panel panel-info">
+            <div class="panel-heading">Note</div>
+            <div class="panel-body">
+               In some cases the lambda expression does not work. You can always use the above examples with
+               anonymous or dedicated subclasses of <a href="swing/api/org/assertj/swing/edt/GuiQuery.html" target="_blank">GuiQuery</a>
+               and <a href="swing/api/org/assertj/swing/edt/GuiTask.html" target="_blank">GuiTask</a>.
+            </div>
+         </div>
 
          <h3 class="page-header"><span id="testing-violations"></span>Testing that access to Swing components is done
                                                                       in the EDT</h3>

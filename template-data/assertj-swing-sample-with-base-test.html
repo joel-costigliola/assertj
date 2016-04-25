@@ -4,11 +4,7 @@ public class SimpleCopyApplication_UseBaseTest extends AssertJSwingJUnitTestCase
 
   @Override
   protected void onSetUp() {
-    SimpleCopyApplication frame = GuiActionRunner.execute(new GuiQuery&lt;SimpleCopyApplication&gt;() {
-      protected SimpleCopyApplication executeInEDT() {
-        return new SimpleCopyApplication();
-      }
-    });
+    SimpleCopyApplication frame = GuiActionRunner.execute(() -&gt; new SimpleCopyApplication());
     // IMPORTANT: note the call to 'robot()'
     // we must use the Robot from AssertJSwingJUnitTestCase
     window = new FrameFixture(robot(), frame);
