@@ -65,20 +65,20 @@
          </div>
       </div>
       <div class="col-lg-12">
-            <pre><code class="hljs-java">// unique entry point to get access to all assertThat methods and utility methods (e.g. entry)
+            <pre><code class="hljs-java">// entry point for all assertThat methods and utility methods (e.g. entry)
 import static org.assertj.core.api.Assertions.*;
-
-// in the following examples, fellowshipOfTheRing is a List of <a href="https://github.com/joel-costigliola/assertj-examples/blob/java-8/assertions-examples/src/main/java/org/assertj/examples/data/TolkienCharacter.java">TolkienCharacter</a>
 
 // basic assertions
 assertThat(frodo.getName()).isEqualTo("Frodo");
 assertThat(frodo).isNotEqualTo(sauron)
                  .isIn(fellowshipOfTheRing);
 
-// String specific assertions
+// string specific assertions
 assertThat(frodo.getName()).startsWith("Fro")
                            .endsWith("do")
                            .isEqualToIgnoringCase("frodo");
+
+// in the following examples, fellowshipOfTheRing is a List of <a href="https://github.com/joel-costigliola/assertj-examples/blob/java-8/assertions-examples/src/main/java/org/assertj/examples/data/TolkienCharacter.java">TolkienCharacters</a>
 
 // collection specific assertions
 assertThat(fellowshipOfTheRing).hasSize(9)
@@ -91,31 +91,30 @@ assertThatThrownBy(() -> { throw new Exception("boom!"); }).isInstanceOf(Excepti
 
 // Java 8 BDD style exception assertion                               
 Throwable thrown = catchThrowable(() -> { throw new Exception("boom!"); });
-
 assertThat(thrown).isInstanceOf(Exception.class)
                   .hasMessageContaining("boom");
 
-// using extracting magical feature to check fellowshipOfTheRing characters name :)
+// using the extracting feature to check fellowshipOfTheRing character names
 assertThat(fellowshipOfTheRing).extracting("name")
                                .contains("Boromir", "Gandalf", "Frodo", "Legolas")
                                .doesNotContain("Sauron", "Elrond");
 
-// Extracting with Java 8 love (type safe)
+// extracting with Java 8 love (type safe)
 assertThat(fellowshipOfTheRing).extracting(TolkienCharacter::getName)
                                .contains("Boromir", "Gandalf", "Frodo", "Legolas")
                                .doesNotContain("Sauron", "Elrond");
 
-// Extracting multiple values at once (using tuple to group them)
+// extracting multiple values at once (using a tuple to group them)
 assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name")
                                .contains(tuple("Boromir", 37, "Man"),
                                          tuple("Sam", 38, "Hobbit"),
                                          tuple("Legolas", 1000, "Elf"));
 
-// filter collection before assertion
+// filtering a collection before asserting
 assertThat(fellowshipOfTheRing).filteredOn("race", HOBBIT)
                                .containsOnly(sam, frodo, pippin, merry);
 
-// filter collection with Java 8 Predicate
+// filtering a collection with a Java 8 Predicate
 assertThat(fellowshipOfTheRing).filteredOn(character -> character.getName().contains("o"))
                                .containsOnly(aragorn, frodo, legolas, boromir);
 
@@ -132,7 +131,7 @@ assertThat(fellowshipOfTheRing).filteredOn(character -> character.getName().cont
         <h3>AssertJ is IDE friendly, use code completion to discover assertions :</h3>
             <br/>
         <img src="images/ide-completion.png" alt="Screenshot of IDE completion">
-<h3>Javadoc assertion contains helping examples, e.g. <a href="http://joel-costigliola.github.io/assertj/core-8/api/org/assertj/core/api/AbstractCharSequenceAssert.html#containsOnlyDigits--">containsOnlyDigits</a>
+<h3>Javadoc of assertion methods contains helpful examples, e.g. <a href="http://joel-costigliola.github.io/assertj/core-8/api/org/assertj/core/api/AbstractCharSequenceAssert.html#containsOnlyDigits--">containsOnlyDigits</a>
       </h3>      
    </div>
    </div>
