@@ -87,13 +87,13 @@
    <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
       <h1 class="page-header">AssertJ Core features highlight</h1>
 
-      <p>AssertJ has some great features that people are not always aware of, here's some of them.</p>
+      <p>AssertJ has many great features that not everybody is aware of. Here are some of them.</p>
 
       <p>Basic tips :</p>
       <ul>
          <li>Java 8 assertions, see release notes : <a href="assertj-core-news.html#assertj-core-3.3.0">3.3.0</a> /<a href="assertj-core-news.html#assertj-core-3.2.0">3.2.0</a> / <a href="assertj-core-news.html#assertj-core-3.1.0">3.1.0</a> / <a href="assertj-core-news.html#assertj-core-3.0.0">3.0.0</a> </li>
          <li><a href="#ide-automatic-static-import">IDE configuration to directly get <span class="small-code">assertThat</span> in code completion</a></li>
-         <li><a href="#describe-assertion">Describe you test assertion using <span class="small-code">as(String description, Object... args)</span></a></li>
+         <li><a href="#describe-assertion">Describe you assertion using <span class="small-code">as(String description, Object... args)</span></a></li>
          <li><a href="#exception-assertion">Exception assertions guide</a></li>
          <li><a href="#file-content-string-assertions">Using String assertions on the content of a file</a></li>
       </ul>
@@ -108,11 +108,11 @@
 
       <p>Advanced tips :</p>
       <ul>
-         <li><a href="#soft-assertions">Gather all errors message with Soft assertions</a></li>
+         <li><a href="#soft-assertions">Gather all errors message with soft assertions</a></li>
          <li><a href="#custom-comparison-strategy">Using a custom comparison strategy in assertions</a></li>
          <li><a href="#field-by-field-comparison">Field by field comparisons</a></li>
          <li><a href="assertj-core-conditions.html">Extending assertions with conditions</a></li>
-         <li><a href="assertj-core-custom-assertions.html">Creating assertions to your domain</a></li>
+         <li><a href="assertj-core-custom-assertions.html">Creating assertions for your domain</a></li>
       </ul>
 
       <h3 class="page-header"><span id="ide-automatic-static-import"></span><i class="fa fa-star"></i> IDE configuration to get assertThat in code completion</h3>
@@ -131,10 +131,10 @@
          <li>No special configuration, just start typing <span class="small-code">assertThat</span> and then invoke completion (Ctrl-Space) twice.</li>
       </ul>
 
-      <h3 class="page-header"><span id="describe-assertion"></span><i class="fa fa-star"></i> Describe you test assertion with as(String description, Object... args)</h3>
+      <h3 class="page-header"><span id="describe-assertion"></span><i class="fa fa-star"></i> Describe you assertion with as(String description, Object... args)</h3>
 
       <p>It is often valuable to describe the assertion performed, especially for boolean assertion where the default error message just complains that it got <span class="small-code">false</span> instead of <span class="small-code">true</span> (or vice versa).</p>
-      <p>You can set such a description with <span class="small-code">as(String description, Object... args)</span> but remember to do it <b>before</b> calling the assertion otherwise it is simply ignored as a failing assertion breaks the following chained calls.</p>
+      <p>You can set such a description with <span class="small-code">as(String description, Object... args)</span> but remember to do it <b>before</b> calling the assertion. Otherwise it is simply ignored as a failing assertion breaks the following chained calls.</p>
 
    <p>Example of a failing assertion with a description : </p>
 <pre><code class="java"> TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
@@ -147,11 +147,11 @@
       <h3 class="page-header"><span id="filters"></span><i class="fa fa-star"></i> Combining filtering and assertions on iterables or arrays</h3>
 
       <p>
-         Filtering can be done on arrays or iterables, filters criteria are expressed by :
+         Filtering can be done on arrays or iterables. Filter criteria are expressed by :
       <ul>
          <li>a Java 8 <span class="small-code">Predicate</span></li>
          <li>a condition (<span class="small-code">org.assertj.core.api.Condition</span>)</li>
-         <li>some operation on property/field of array/iterable elements</li>
+         <li>some operation on a property/field of array/iterable elements</li>
       </ul>
       </p>
 
@@ -164,7 +164,7 @@
                                .containsOnly(aragorn, frodo, legolas, boromir);</code></pre>
                                
    <p class="list-section">Filtering on a property or a field</p> 
-   <p>First you specify the property/field name to filter on and then its expected value. The filter first tries to get the value from a property, then from a field. Reading private fields is supported by default, this can be disabled globally by calling <span class="small-code">Assertions.setAllowExtractingPrivateFields(false)</span>.</p>
+   <p>First you specify the property/field name to filter on and then its expected value. The filter first tries to get the value from a property, then from a field. Reading private fields is supported by default, but can be disabled globally by calling <span class="small-code">Assertions.setAllowExtractingPrivateFields(false)</span>.</p>
    <p>Filters support reading nested properties/fields. Note that if an intermediate value is null the whole nested property/field is considered to be null. Thus reading <span class="small-code">"address.street.name"</span> will return null if <span class="small-code">"address.street"</span> is null.</p>
    <p>Filters support these basic operations : <span class="small-code">not</span>, <span class="small-code">in</span>, <span class="small-code">notIn</span></p>
 
@@ -200,7 +200,7 @@ assertThat(fellowshipOfTheRing).filteredOn("race", MAN)
       <p class="list-section">Filtering with a <span class="small-code">Condition</span></p>
 
    <p>Filter the iterable/array under test keeping only elements matching the given <a href="assertj-core-conditions.html"><span class="small-code">Condition</span></a>. </p>
-      <p>Two methods are available : <span class="small-code">being(Condition)</span> and <span class="small-code">having(Condition)</span>, they do the same job - pick the one that makes your code more readable !</p>
+      <p>Two methods are available : <span class="small-code">being(Condition)</span> and <span class="small-code">having(Condition)</span>. They do the same job - pick the one that makes your code more readable !</p>
 
 <pre><code class="java">import org.assertj.core.api.Condition;
 
@@ -244,7 +244,7 @@ for (TolkienCharacter tolkienCharacter : fellowshipOfTheRing) {
 // ... and finally assert something
 assertThat(names).contains("Boromir", "Gandalf", "Frodo", "Legolas");</code></pre>
 
-<p>Hey ! It is too much work to extract fields and/or properties by hand, let AssertJ help you taking care of that. Here is
+<p>Hey ! It is too much work to extract fields and/or properties by hand. Let AssertJ help you taking care of that. Here is
    how to check the names of the TolkienCharacter elements in the fellowshipOfTheRing list:</p>
 
 <pre><code class="java">// "name" needs to be either a property or a field of the TolkienCharacter class
@@ -266,7 +266,7 @@ assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name")
 
 <p>More examples are available in the test method <span class="small-code">iterable_assertions_on_extracted_property_values_example</span> in <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/IterableAssertionsExamples.java">IterableAssertionsExamples.java</a> of the <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project.</p>
 
-<p>Note that <span class="small-code">extracting</span> one property can be made strongly typed by giving the property type as a second argument.</p>
+<p>Note that <span class="small-code">extracting</span> one property can be made strongly typed by giving the property type as the second argument.</p>
 
 <pre><code class="java">// to have type safe extracting, use the second parameter to pass the expected property type:
 assertThat(fellowshipOfTheRing).extracting("name", String.class)
@@ -319,7 +319,7 @@ assertThat(greatHouses).extractingResultOf("sayTheWords")
                        .contains("Winter is Coming", "We Do Not Sow", "Hear Me Roar")
                        .doesNotContain("Lannisters always pay their debts");</code></pre>
 
-      <h3 class="page-header"><span id="soft-assertions"></span><i class="fa fa-star"></i> Collect all errors with Soft assertions</h3>
+      <h3 class="page-header"><span id="soft-assertions"></span><i class="fa fa-star"></i> Collect all errors with soft assertions</h3>
 
 <p>Using soft assertions, AssertJ collects all assertion errors instead of stopping at the first one.<br>
 So, assuming something goes awry at your dinner party, when using "standard" assertions, this test ...</p>
@@ -402,7 +402,7 @@ assertThat(xFile).exists().isFile().isRelative();
 // String assertions on the file content : contentOf() comes from Assertions.contentOf static import
 assertThat(contentOf(xFile)).startsWith("The Truth").contains("Is Out").endsWith("There");</code></pre>
 
-      <p>Note that this is meant to be used with small files only as the whole content is loaded into memory.</p>
+      <p>Note that this is meant to be used with small files only, as the whole content is loaded into memory.</p>
 
 
       <h3 class="page-header"><span id="exception-assertion"></span><i class="fa fa-star"></i> Exception assertions guide</h3>
