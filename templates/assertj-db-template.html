@@ -19,13 +19,13 @@ $menu
          It requires Java 7 or later and can be used with either JUnit or TestNG.
          </p>
 
-         <p>If you need additional assertions, just fill a ticket in <a href="https://github.com/joel-costigliola/assertj-db/issues?labels=&milestone=&page=1&state=open">AssertJ-DB issue tracker</a>.</p>
+         <p>If you need additional assertions, just fill a ticket in the <a href="https://github.com/joel-costigliola/assertj-db/issues?labels=&milestone=&page=1&state=open">AssertJ-DB issue tracker</a>.</p>
 
          <p>AssertJ-DB is hosted on github : <a href="https://github.com/joel-costigliola/assertj-db">https://github.com/joel-costigliola/assertj-db</a>.<br/>
          </p>
          <p>
 Big thanks to &nbsp;<span class="contributor">Joel Costigliola</span>&nbsp; 
-for his welcome, for his help and to have accepted to associate this project with a great project like AssertJ.
+for his welcome, for his help and for having accepted to associate this project with a great project like AssertJ.
          </p>
 
          <i>R&eacute;gis Pouiller (AssertJ-DB creator)</i>
@@ -118,7 +118,7 @@ assertThat(table).row(1)
                  .value().isEqualTo(DateValue.of(1961, 8, 8))
                  .value().isEqualTo(1.77);</code></pre>
 
-<p>On this simple example you can see many <a href="assertj-db-concepts.html">concepts of AssertJ-DB</a> (the concepts are simple but i advice to take time to well know them) :</p>
+<p>In this simple example you can see many <a href="assertj-db-concepts.html">concepts of AssertJ-DB</a> (the concepts are simple but I advice you to take the time to know them well) :</p>
 <ul>
   <li><a href="assertj-db-concepts.html#elements">the elements</a> :
     <ul>
@@ -130,16 +130,16 @@ assertThat(table).row(1)
   </li>
   <li><a href="assertj-db-concepts.html#tableorrequestasroot">the navigation</a> :
     <ul>
-      <li>on the first check, navigation from the table to the column called "name" 
-      (<code>column("name")</code> move the assertion on the column),  
-      from this column to the first value (<code>value()</code> first call move to the first value)
-      and after to each value (<code>value()</code> next calls move the next value)
+      <li>The first check, navigates from the table to the column called "name" 
+      (<code>column("name")</code> moves the assertion to the column),
+      from this column to the first value (the first call of <code>value()</code> moves to the first value)
+      and after that to each value (each call of <code>value()</code> moves to the next value of the column).
       </li>
       <li>
-        on the second check, navigation from the table to the row with index 1
-        (<code>row(1)</code> move the assertion on the row),
-        from this column to the first value
-        and after to each value (<code>value()</code> have a similar behavior from a row and from a column)
+        The second check, navigates from the table to the row with index 1
+        (<code>row(1)</code> moves the assertion to the row),
+        from this row to the first value
+        and after that to each value (<code>value()</code> calls have similar behavior for rows and columns).
       </li>
     </ul> 
   </li>
@@ -168,19 +168,19 @@ assertThat(table).row(1)
          You can learn more by looking at <a href="db/current/api/index.html">AssertJ-DB javadoc</a>.
          </p>
          <p>
-         Another way is to go see <a href="https://github.com/joel-costigliola/assertj-examples/tree/master/assertions-examples/src/test/java/org/assertj/examples/db">assertj-db-examples tests</a>, it covers what is possible with AssertJ Assertions with running code, you can clone it and run its tests !
+         Another way is to take a look at <a href="https://github.com/joel-costigliola/assertj-examples/tree/master/assertions-examples/src/test/java/org/assertj/examples/db">assertj-db-examples tests</a>. They show what is possible with AssertJ DB Assertions with running code. You can clone the repository and run its tests !
          </p>
 
          <h3 class="page-header"><span id="mailing-list"/></span>Mailing list</h3>
 
-         <p>If you have any questions, please use
+         <p>If you have any questions, please use the
             <a href="https://groups.google.com/forum/?fromgroups=#!forum/assertj">AssertJ google group</a>.</p>
 
          <h3 class="page-header"><span id="code"/></span>Code and issue tracker</h3>
 
          <p>AssertJ-DB is hosted on github : <a href="https://github.com/joel-costigliola/assertj-db">https://github.com/joel-costigliola/assertj-db</a>.</p>
 
-         <p>Please report bugs or missing features in <a href="https://github.com/joel-costigliola/assertj-db/issues?labels=&milestone=&page=1&state=open">AssertJ-DB issue tracker</a>.</p>
+         <p>Please report bugs or missing features in the <a href="https://github.com/joel-costigliola/assertj-db/issues?labels=&milestone=&page=1&state=open">AssertJ-DB issue tracker</a>.</p>
 
          <h3 class="page-header"><span id="contributing"/></span>Contributing</h3>
 
