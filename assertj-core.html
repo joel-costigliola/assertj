@@ -70,6 +70,7 @@
                <li><a href="http://joel-costigliola.github.io/assertj/core/api/index.html" target="_blank">Javadoc (2.x)</a></li>
                <li><a href="http://joel-costigliola.github.io/assertj/core-8/api/index.html" target="_blank">Javadoc (3.x)</a></li>
                <li><a href="assertj-core.html#mailing-list">Mailing list</a></li>
+               <li><a href="assertj-core.html#FAQ">F.A.Q</a></li>
                <li><a href="assertj-core.html#code">Code & issues <i class="fa fa-github"></i></a></li>
                <li><a href="assertj-core.html#contributing">Contributing</a></li>
                <li class="sidenav-header">Migrating</li>
@@ -93,7 +94,7 @@
             <p>AssertJ major versions depend on different Java versions :</p>
             <ul>
                <li>AssertJ 1.x requires Java 6 or higher (suitable for Android)</li>
-               <li>AssertJ 2.x requires Java 7 or higher (should be suitable for Android - please file an issue if it's not the case)</li>
+               <li>AssertJ 2.x requires Java 7 or higher (should be suitable for Android - please <a href="https://github.com/joel-costigliola/assertj-core/issues?state=open">raise an issue</a> if it's not the case)</li>
                <li>AssertJ 3.x requires Java 8 or higher (not suitable for Android due to <span class="small-code">Path</span> assertions)</li>
             </ul>
             <p>Note that AssertJ 3.x includes all AssertJ 2.x features and adds Java 8 specific ones (like <a href="assertj-core-features-highlight.html#exception-assertion">exception assertions with lambdas</a>).</p>
@@ -120,14 +121,11 @@
             <li><a href="assertj-core-migrating-from-fest.html#fest-1.4">Migrating from Fest 1.4</a></li>
          </ul>
 
-         <p>AssertJ core javadoc is published
-            <a href="http://joel-costigliola.github.io/assertj/core/api/index.html">here</a>.</p>
-
          <p>If you have any questions, please use
             <a href="https://groups.google.com/forum/?fromgroups=#!forum/assertj">AssertJ google group</a>.</p>
 
          <p>You are more than welcome to
-            <a href="https://github.com/joel-costigliola/assertj-core/issues?state=open">file a ticket</a> if you need new assertions or see potential improvements.
+            <a href="https://github.com/joel-costigliola/assertj-core/issues?state=open">raise an issue</a> if you need new assertions or see potential improvements.
          </p>
 
          <h3 class="page-header">Working with AssertJ core</h3>
@@ -178,6 +176,34 @@
          You can ask questions and make suggestions on <a
             href="https://groups.google.com/forum/?fromgroups=#!forum/assertj">AssertJ google group</a>.
 
+         <h3 class="page-header"><span id="FAQ"/></span>F.A.Q</h3>
+
+            <ul>
+               <li><a href="#faq-incorrect-api-usage">FindBugs <span class="small-code">CheckReturnValue</span> error</a></li>
+            </ul>
+
+            <h4 class="page-header"><span id="faq-incorrect-api-usage" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> FindBugs <span class="small-code">CheckReturnValue</span> error</h4>
+
+            <p>The following example shows an incorrect AssertJ API usage:</p>
+
+            <pre><code class="java">// BAD USAGE : DON'T DO THIS ! It does not assert anything
+assertThat(a1.equals(b1));
+assertThat(a2.equals(b2));
+assertThat(a3.equals(b3));
+
+// DO THIS :
+assertThat(a1)isEqualTo(b1);
+assertThat(a2)isEqualTo(b2);
+assertThat(a3)isEqualTo(b3);
+
+// OR THIS (less classy but ok):
+assertThat(a1.equals(b1)).isTrue();
+assertThat(a2.equals(b2)).isTrue();
+assertThat(a3.equals(b3)).isTrue();</code></pre>
+
+            <p>FindBugs can now detect such problems thanks to the <a href="https://github.com/joel-costigliola/assertj-core/pull/695"><span class="small-code">CheckReturnValue</span></a> annotation introduced on 2.5.+ / 3.5.+</p>
+
+
          <h3 class="page-header"><span id="code"/></span>Code and issue tracker</h3>
 
          <p>AssertJ Core is hosted on github : <a href="https://github.com/joel-costigliola/assertj-core">https://github.com/joel-costigliola/assertj-core</a>.</p>
@@ -203,6 +229,7 @@
             <li>Alexander Bischof</li>
             <li>Alexandre Balhier</li>
             <li>Andrew Gaul</li>
+            <li>Ben Blank</li>
             <li>Brian Laframboise</li>
             <li>Brice Dutheil</li>
             <li>Chris Arnott</li>
@@ -210,17 +237,23 @@
             <li>Clément Mathieu</li>
             <li>Dan Corder</li>
             <li>Daniel Zlotin</li>
+            <li>Dima Gerasimov</li>
             <li>dmwvr</li>
+            <li>Fabien Duminy</li>
             <li>Fabien Meurisse</li>
             <li>Francis Galiegue</li>
+            <li>Filip Hrisafov</li>
             <li>Gregor Zeitlinger</li>
             <li>hgcummings</li>
+            <li>James Strachan</li>
             <li>Jean Christophe Gay</li>
             <li>Jeremy Landis</li>
             <li>Johannes Schneider</li>
+            <li>Johannes Brodwall</li>
             <li>Guillaume Husta</li>
             <li>Grzegorz Piwowarek</li>
             <li>Kamil Szymanski</li>
+            <li>Kevin Fang</li>
             <li>Lovro Pandzic</li>
             <li>Lukasz Kryger</li>
             <li>Libor Ondrušek</li>
@@ -238,6 +271,7 @@
             <li>Mikhail Mazursky</li>
             <li>Misha Brukman</li>
             <li>Nicolai Parlog</li>
+            <li>Nick Stolwijk</li>
             <li>Paul Doran</li>
             <li>Pascal Schumacher</li>
             <li>Paweł Barszcz</li>
@@ -247,6 +281,7 @@
             <li>Richard Lucas</li>
             <li>Ted Young</li>
             <li>Tim Perry</li>
+            <li>timmikk</li>
             <li>Tobias Bieniek</li>
             <li>Tobias Liefke</li>
             <li>Tomasz Bartczak</li>

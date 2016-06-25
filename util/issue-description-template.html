@@ -1,0 +1,11 @@
+  <h4 class="page-header"><span id="assertj-core-2.5.0-withStackTraceContaining" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">withStackTraceContaining</span> exception assertion.</h4>
+
+  <p><span class="small-code">withStackTraceContaining</span> is used when starting exception assertions with <span class="small-code">assertThatExceptionOfType</span>, it's an alternative of <span class="small-code">hasStackTraceContaining</span>.</p>
+  <p>Example :</p>
+  <pre><code class="java">Throwable runtime = new RuntimeException("no way", 
+                                          new Exception("you shall not pass"));
+ // assertion will pass
+ assertThatExceptionOfType(RuntimeException.class)
+           .isThrownBy(() -> {throw runtime;})
+           .withStackTraceContaining("you shall not pass");</code></pre>
+
