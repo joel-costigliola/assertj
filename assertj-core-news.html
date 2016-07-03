@@ -318,8 +318,8 @@ assertThat(fellowshipOfTheRing).flatExtracting(TolkienCharacter::getAge,
       <li>Add <a href="#assertj-core-2.5.0-hasNoNullFieldsOrProperties"><span class="small-code">hasNoNullFieldsOrProperties/Except</span></a> assertion methods for Object. (<span class="contributor">Johannes Brodwall</span>)</li>
       <li>Add <a href="#assertj-core-2.5.0-hasParameter"><span class="small-code">URL</span> and <span class="small-code">URI</span> parameters assertions</a>. (<span class="contributor">Ben Blank</span>)</li>
       <li>Add <a href="#assertj-core-2.5.0-usingRecursiveFieldByFieldElementComparator"><span class="small-code">usingRecursiveFieldByFieldElementComparator</span></a> for <span class="small-code">iterable</span> and <span class="small-code">array</span>. <span class="contributor">(Pascal Schumacher)</span></li>
-      <li>Allow to register a <a href="#assertj-core-2.5.0-usingComparatorForElementFieldsWithType">specific comparator for a given type </a> in field by field comparisons. <span class="contributor">(Pascal Schumacher)</span></li>
-      <li>Allow to register a <a href="#assertj-core-2.5.0-usingComparatorForElementFieldsWithNames">specific comparator for a list of fields</a> in field by field comparisons. <span class="contributor">(Pascal Schumacher)</span></li>
+      <li>Allow to register a <a href="#assertj-core-2.5.0-usingComparatorForElementFieldsWithType">specific comparator for a given type </a> in field by field element of array/iterable comparisons. <span class="contributor">(Pascal Schumacher)</span></li>
+      <li>Allow to register a <a href="#assertj-core-2.5.0-usingComparatorForElementFieldsWithNames">specific comparator for a list of fields</a> in field by field element of array/iterable comparisons. <span class="contributor">(Pascal Schumacher)</span></li>
       <li>Expose the result of the <a href="#assertj-core-2.5.0-last-soft-assertion-check">last soft assertion</a>. <span class="contributor">(Fabien Duminy)</span></li>
       <li>Expose the ongoing <a href="#assertj-core-2.5.0-soft-assertion-errors">soft assertions errors</a>.</li>
    </ul>
@@ -332,12 +332,12 @@ assertThat(fellowshipOfTheRing).flatExtracting(TolkienCharacter::getAge,
    </ul>
    <div class="release-section-category">Fixed Bugs :</div>
    <ul>
-      <li>soft assertions were not handling nested calls correctly.</li>
-      <li>isEqualTo failed when given an Iterator.</li>
+      <li><span class="small-code">SoftAssertions</span> were not handling nested calls correctly.</li>
+      <li><span class="small-code">isEqualTo</span> failed when given an Iterator.</li>
       <li><span class="small-code">assertSame</span> and <span class="small-code">assertNotSame</span> assertions were failing for <span class="small-code">Iterator</span>. (<span class="contributor">Nick Stolwijk</span>)</li>
-      <li><span class="small-code">startsWith</span> assertion did not work for infinite <span class="small-code">Iterator</span>.</li>
-      <li>Add missing <span class="small-code">BDD assertions</span> entry point methods.</li>
-      <li>Add missing <span class="small-code">soft assertions</span> entry point methods.</li>
+      <li><span class="small-code">startsWith</span> assertion did not work for infinite <span class="small-code">Iterator</span>s.</li>
+      <li>Add missing <span class="small-code">BDDAssertions</span> entry point methods.</li>
+      <li>Add missing <span class="small-code">SoftAssertions</span> entry point methods.</li>
    </ul>
 
   <h4 class="page-header"><span id="assertj-core-2.5.0-flat-extraction" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Flat extraction</a> of several <span class="small-code">Iterable</span>'s elements properties</h4>
@@ -352,7 +352,7 @@ assertThat(fellowshipOfTheRing).flatExtracting("name", "age", "race.name")
                                          "Sam", 38, "Hobbit",
                                          "Legolas", 1000, "Elf");
 // classic extraction : 
-// - need tuple to check values
+// - needs a tuple to check values
 // - stricter assertion -> using tuple("Legolas", 38, "Hobbit") would fail
 assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name")
                                .contains(tuple("Boromir", 37, "Man"),
@@ -361,7 +361,7 @@ assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name")
 
   <h4 class="page-header"><span id="assertj-core-2.5.0-navigational-assertions-element" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Navigate and perform assertions on an <span class="small-code">Iterable</span>'s elements</h4>
 
-  <p>The idea is to allow navigating to any <span class="small-code">Iterable</span> elements in order to perform assertions on it which are by default <span class="small-code">Object</span> assertions, if you want specific ones like <span class="small-code">String</span> assertions you will have to provide the corresponding <span class="small-code">Assert</span> class i.e. <span class="small-code">StringAssert</span> (the reason being Java generics limitations).</p>
+  <p>The idea is to allow navigating to any <span class="small-code">Iterable</span> element in order to perform assertions on it which are by default <span class="small-code">Object</span> assertions. If you want specific ones like <span class="small-code">String</span> assertions you will have to provide the corresponding <span class="small-code">Assert</span> class i.e. <span class="small-code">StringAssert</span> (the reason being Java generics limitations).</p>
   <p>Possible navigations:</p>  
   <ul>
       <li>first()</li>
@@ -392,7 +392,7 @@ assertThat(hobbitsNames, StringAssert.class).last()
 
   <h4 class="page-header"><span id="assertj-core-2.5.0-navigational-assertions-size" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Navigate and perform assertions on an <span class="small-code">Iterable</span>'s size</h4>
 
-  <p>It is now possible to navigate to an <span class="small-code">Iterable</span>'s size, perform <span class="small-code">Integer</span> assertions on it, navigate back to the <span class="small-code">Iterable</span> to chain other assertions.</p>
+  <p>It is now possible to navigate to an <span class="small-code">Iterable</span>'s size, perform <span class="small-code">Integer</span> assertions on it and then navigate back to the <span class="small-code">Iterable</span> to chain other assertions.</p>
 
   <p>Example : instead of ...</p>
   <pre><code class="java">Iterable&lt;Ring&gt; elvesRings = newArrayList(vilya, nenya, narya);
@@ -413,7 +413,7 @@ assertThat(elvesRings).size()
 
   <h4 class="page-header"><span id="assertj-core-2.5.0-navigational-assertions-map-size" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Navigate and perform assertions on a <span class="small-code">Map</span>'s size</h4>
 
-  <p>It is now possible to navigate to a <span class="small-code">Map</span>'s size, perform <span class="small-code">Integer</span> assertions on it, navigate back to the <span class="small-code">Map</span> to chain other assertions.</p>
+  <p>It is now possible to navigate to a <span class="small-code">Map</span>'s size, perform <span class="small-code">Integer</span> assertions on it and then navigate back to the <span class="small-code">Map</span> to chain other assertions.</p>
 
   <p>Example : instead of ...</p>
   <pre><code class="java">Map&lt;Ring TolkienCharacter&gt; ringBearers = new HashMap&lt;&gt;();
@@ -437,7 +437,7 @@ assertThat(ringBearers).containsKeys(oneRing, nenya, narya)
 
   <h4 class="page-header"><span id="assertj-core-2.5.0-customRepresentation" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Control types format in assertions error messages with a custom <span class="small-code">Representation</span></h4>
 
-  <p>AssertJ relies on a <span class="small-code">Representation</span> object to format types in error messages, users can now register their own <span class="small-code">Representation</span> either per assertion or globally (i.e. for all future assertions error messages).</p>
+  <p>AssertJ relies on a <span class="small-code">Representation</span> object to format types in error messages. Users can now register their own <span class="small-code">Representation</span> either per assertion or globally (i.e. for all future assertions error messages).</p>
   <ul>
     <li>global scope : <span class="small-code">Assertions.useRepresentation(myRepresentation)</span></li>
     <li>per assertion scope : <span class="small-code">assertThat(actual).withRepresentation(myRepresentation)</span></li>
@@ -499,7 +499,7 @@ to start with:
 
   <h4 class="page-header"><span id="assertj-core-2.5.0-hasNoNullFieldsOrProperties" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code"> hasNoNullFieldsOrProperties/Except</span> to <span class="small-code">Object</span> assertions </h4>
 
-  <p>Verifies the actual object has no null fields or properties (inherited ones are taken into account) except the given ones (if any).</p>
+  <p>Verifies that the actual object has no <span class="small-code">Null<span> fields or properties (inherited ones are taken into account) except the given ones (if any).</p>
 
   <p>Example :</p>
   <pre><code class="java">// all TolkienCharacter fields are set 
@@ -544,8 +544,8 @@ assertThat(new URL("http://www.helloworld.org/index.html?happy=very")).hasNoPara
   <h4 class="page-header"><span id="assertj-core-2.5.0-usingRecursiveFieldByFieldElementComparator" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">usingRecursiveFieldByFieldElementComparator</span> for iterable and array</h4>
 
   <p>Use a recursive field/property by field/property comparison (including inherited fields/properties) instead of relying on actual type <span class="small-code">equals</span> method to compare iterable/array elements for incoming assertion checks.</p>
-  <p>The recursive property/field comparison is not applied on fields having a custom equals implementation, i.e. the overriden equals method will be used instead of a field/property by field/property comparison.</p>
-  <p> The recursive comparison handles cycles.</p>
+  <p>The recursive property/field comparison is not applied on fields having a custom equals implementation, i.e. the overridden equals method will be used instead of a field/property by field/property comparison.</p>
+  <p>The recursive comparison handles cycles.</p>
   <p>You can specify a custom comparator per (nested) name or type of element field with <a href="#assertj-core-2.5.0-usingComparatorForElementFieldsWithNames"><span class="small-code">usingComparatorForElementFieldsWithNames</span></a> and <a href="#assertj-core-2.5.0-usingComparatorForElementFieldsWithType"><span class="small-code">usingComparatorForElementFieldsWithType</span></a>.</p>
   <p>The objects to compare can be of different types but must have the same properties/fields. For example if actual object has a name String field, the other object must also have one. If an object has a field and a property with the same name, the property value will be used over the field.</p>
 
@@ -572,9 +572,9 @@ samClone.friend = jonClone;
 assertThat(asList(jon, sam)).usingRecursiveFieldByFieldElementComparator()
                             .contains(jonClone, samClone);</code></pre>
 
-  <h4 class="page-header"><span id="assertj-core-2.5.0-usingComparatorForElementFieldsWithType" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow to register a specific comparator for a <i>type</i> in field by field comparisons</h4>
+  <h4 class="page-header"><span id="assertj-core-2.5.0-usingComparatorForElementFieldsWithType" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow to register a specific comparator for a <i>type</i> in field by field element of array/iterable comparisons</h4>
 
-  <p>Allows to set a comparator to compare properties or fields of elements with the given type.</p>
+  <p>Allows to set a comparator to compare properties or fields of elements of an array/iterable with the given type.</p>
   <p>Comparators need to be specified by <span class="small-code">usingComparatorForElementFieldsWithType</span> <b>before</b> calling any of:                   
   <ul>                                                                                                        
   <li><span class="small-code">usingFieldByFieldElementComparator</span></li>                                                        
@@ -615,14 +615,14 @@ assertThat(hobbits).usingComparatorForElementFieldsWithType(closeEnough, Double.
                    .contains(tallerDude);
 
 Dude reallyTallDude = new Dude("Frodo", 1.9);
-// asserton FAILS : 1.9 - 1.2 > 0.5
+// assertion FAILS : 1.9 - 1.2 > 0.5
 assertThat(asList(dude)).usingComparatorForElementFieldsWithType(closeEnough, Double.class)
                         .usingFieldByFieldElementComparator()
                         .contains(reallyTallDude);</code></pre>
 
-  <h4 class="page-header"><span id="assertj-core-2.5.0-usingComparatorForElementFieldsWithNames" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow to register a specific comparator for a list of <i>fields</i> in field by field comparisons</h4>
+  <h4 class="page-header"><span id="assertj-core-2.5.0-usingComparatorForElementFieldsWithNames" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow to register a specific comparator for a list of <i>fields</i> in field by field element of array/iterable comparisons</h4>
 
-  <p>Allows to set a comparator to compare properties or fields of elements with the given names.</p>
+  <p>Allows to set a comparator to compare properties or fields of elements of an array/iterable with the given names.</p>
   <p>Comparators need to be specified by <span class="small-code">usingComparatorForElementFieldsWithNames</span> <b>before</b> calling any of:                   
   <ul>                                                                                                        
   <li><span class="small-code">usingFieldByFieldElementComparator</span></li>                                                        
@@ -665,15 +665,15 @@ assertThat(hobbits).usingComparatorForElementFieldsWithNames(closeEnough, "heigh
 
 
 Dude reallyTallDude = new Dude("Frodo", 1.9);
-// asserton FAILS : 1.9 - 1.2 > 0.5
+// assertion FAILS : 1.9 - 1.2 > 0.5
 assertThat(asList(dude)).usingComparatorForElementFieldsWithNames(closeEnough, "height")
                         .usingFieldByFieldElementComparator()
                         .contains(reallyTallDude);</code></pre>
 
   <h4 class="page-header"><span id="assertj-core-2.5.0-isBetween" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">isBetween</span> and <span class="small-code">isStrictlyBetween</span> to <span class="small-code">Comparable</span> assertions</h4>
 
-  <p><span class="small-code">isBetween</span> verifies that the actual value is in [start, end] range (start included, end included).</p>
-  <p><span class="small-code">isStrictlyBetween</span> verifies that the actual value is in start, end[ range (start excluded, end excluded).</p>
+  <p><span class="small-code">isBetween</span> verifies that the actual value is in the [start, end] range (start included, end included).</p>
+  <p><span class="small-code">isStrictlyBetween</span> verifies that the actual value is in the ]start, end[ range (start excluded, end excluded).</p>
 
   <p>Example :</p>
   <pre><code class="java">// assertions succeed :
@@ -681,12 +681,13 @@ assertThat('b').isBetween('a', 'b');
 assertThat('b').isBetween('a', 'c');
 assertThat('b').isStrictlyBetween('a', 'c');
 
-// assertion fails :
+// assertions fail :
+assertThat('a').isStrictlyBetween('a', 'b');
 assertThat('b').isStrictlyBetween('a', 'b');</code></pre>
 
   <h4 class="page-header"><span id="assertj-core-2.5.0-last-soft-assertion-check" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Expose the result of the last soft assertion</h4>
 
-  <p>The result of last soft assertion is now available with method <span class="small-code">wasSuccess()</span>, it can be used to decide what the next assertion should be, one noteworthy usage is to check the presence of some value before verifying it.</p>
+  <p>The result of last soft assertion is now available from the method <span class="small-code">wasSuccess()</span>. It can be used to decide what the next assertion should be. One noteworthy usage is to check the presence of some value before verifying it.</p>
   <p>Example :</p>
   <pre><code class="java">SoftAssertions soft = new SoftAssertions();
 
