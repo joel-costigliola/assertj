@@ -46,7 +46,7 @@ $menu
    <p>This release includes all changes from <a href="#assertj-core-2.5.0">AssertJ core 2.5.0</a> and add some specific to Java 8.</p>
    <p>The 3.5.1 release fixes a regression on <span class="small-code">Stream isEqualTo</span> assertion which was changed in 3.5.0 to support reference comparison.</p>
 
-   <p>Thanks to <span class="contributor">Pascal Schumacher</span>, <span class="contributor">Dima Gerasimov</span>, <span class="contributor">tommyshem</span>, <span class="contributor">Filip Hrisafov</span> and <span class="contributor">timmikk</span> for their contributions.</p>
+   <p>Thanks to <span class="contributor">Pascal Schumacher</span>, <span class="contributor">Dima Gerasimov</span>, <span class="contributor">tommyshem</span>, <span class="contributor">Filip Hrisafov</span>, <span class="contributor">Fabien Duminy</span> and <span class="contributor">timmikk</span> for their contributions.</p>
 
    <h4 class="page-header"> Release notes</h4>
    <div class="release-section-category">New features :</div>
@@ -60,12 +60,12 @@ $menu
    <div class="release-section-category">Improvements :</div>
    <ul>
       <li>Better cross OS line separator support in error messages. <span class="contributor">(timmikk)</span></li>
-      <li>Soft assertions output line numbers of failed assertions <span class="contributor">(Pascal Schumacher)</span></li>
+      <li>Soft assertions output line numbers of failed assertions. <span class="contributor">(Pascal Schumacher, Fabien Duminy)</span></li>
       <li>Javadoc improvements. <span class="contributor">(Pascal Schumacher, tommyshem)</span></li>
    </ul>
    <div class="release-section-category">Fixed Bugs :</div>
    <ul>
-      <li>Fix <span class="small-code">Stream</span> assertions relying on checking the original stream (ex: <span class="small-code">isSameAs</span>)</li>
+      <li>Fix <span class="small-code">Stream</span> assertions relying on checking the original stream (ex: <span class="small-code">isSameAs</span>).</li>
    </ul>
 
    <h4 class="page-header"><span id="assertj-core-3.5.0-predicate" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">Predicate</span> assertions</h4>
@@ -107,7 +107,7 @@ assertThat(ballSportPredicate).rejectsAll(list("curling", "judo", "football"));<
    <h4 class="page-header"><span id="assertj-core-3.5.0-satisfies" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">satisfies</span> base assertion to run a group of assertions</h4>
 
    <p>Verifies that the actual object satisfied the given requirements expressed as a <span class="small-code">Consumer&lt;T&gt;</span>.</p>
-   <p>This is useful to perform a group of assertions on a single object or to avoid to have a local variable in order to run multiple assertions.</p>
+   <p>This is useful to perform a group of assertions on multiple objects or to avoid having to declare a local variable in order to use multiple assertions on a single object.</p>
 
    <p>Example :</p>
   <pre><code class="java">// second constructor parameter is the light saber color
@@ -127,7 +127,7 @@ assertThat(luke).satisfies(jediRequirements);
 Jedi vader = new Jedi("Vader", "Red");
 assertThat(vader).satisfies(jediRequirements);</code></pre>
 
-   <p>In the following example, <span class="small-code">satisfies</span> prevents the need of define a local variable in order to multiple assertions:</p>
+   <p>In the following example, <span class="small-code">satisfies</span> allows multiple assertions without the declaration of a local variable:</p>
 
 <pre><code class="java">// no need to define team.getPlayers().get(0).getStats() as a local variable
 assertThat(team.getPlayers().get(0).getStats()).satisfies(stats -> {
@@ -138,9 +138,9 @@ assertThat(team.getPlayers().get(0).getStats()).satisfies(stats -> {
 
    <h4 class="page-header"><span id="assertj-core-3.5.0-registerFormatterForType" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Control the formatting of a given type in error messages with <span class="small-code">registerFormatterForType</span></h4>
 
-   <p>Assertions error messages uses a <span class="small-code">Representation</span> to format the different types involved, by using <span class="small-code">registerFormatterForType</span> you can control the formatting of a given type by providing a specific formatter.</p>
+   <p>Assertions error messages use a <span class="small-code">Representation</span> to format the different types involved. By using <span class="small-code">registerFormatterForType</span> you can control the formatting of a given type by providing a specific formatter.</p>
 
-Registering a formatter makes it available for all AssertJ Representation:
+Registering a formatter makes it available to all of AssertJs representations:
    <ul>
       <li><span class="small-code">StandardRepresentation</span></li>
       <li><span class="small-code">UnicodeRepresentation</span></li>
@@ -155,7 +155,7 @@ assertThat(STANDARD_REPRESENTATION.toStringOf(123L)).isEqualTo("123L");
 // register a formatter for Long
 Assertions.registerFormatterForType(Long.class, value -> "$" + value + "$");
 
-// now Long will be formatted between in $$ in error message.
+// now Longs will be formatted between $$ in error messages
 assertThat(STANDARD_REPRESENTATION.toStringOf(longNumber)).isEqualTo("$123$");
 
 // The following assertion fails ...
@@ -165,7 +165,7 @@ expected:<$456$> but was:<$123$></code></pre>
 
   <h4 class="page-header"><span id="assertj-core-3.5.0-hasOnlyOneElementSatisfying" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">hasOnlyOneElementSatisfying</span> iterable/array assertions</h4>
 
-  <p>Verifies that the iterable/array has a unique element and that unique element satifies the given assertions expressed as a <span class="small-code">Consumer</span>, if it does not, only the first error is reported (use SoftAssertions to get all the errors).</p>
+  <p>Verifies that the iterable/array contains only a single element and that the element satisfies the given assertions expressed as a <span class="small-code">Consumer</span>. If it does not, only the first error is reported (use SoftAssertions to get all errors).</p>
   <p>Example :</p>
   <pre><code class="java">List&lt;Jedi&gt; jedis = asList(new Jedi("Yoda", "red"));
 
@@ -177,22 +177,22 @@ assertThat(jedis).hasOnlyOneElementSatisfying(yoda -> {
  assertThat(yoda.getLightSaberColor()).isEqualTo("red");
 });
 
-// assertions will fail
+// assertion will fail
 assertThat(jedis).hasOnlyOneElementSatisfying(yoda -> assertThat(yoda.getName()).startsWith("Vad"));
 
-// fail as one the assertions is not satisfied
+// fails as one the assertions is not satisfied
 assertThat(jedis).hasOnlyOneElementSatisfying(yoda -> {
  assertThat(yoda.getName()).isEqualTo("Yoda");
  assertThat(yoda.getLightSaberColor()).isEqualTo("purple");
 });
 
-// fail but only report the first error
+// fails but only reports the first error
 assertThat(jedis).hasOnlyOneElementSatisfying(yoda -> {
  assertThat(yoda.getName()).isEqualTo("Luke");
  assertThat(yoda.getLightSaberColor()).isEqualTo("green");
 });
 
-// fail and reports the errors thanks to Soft assertions
+// fails and reports all errors thanks to SoftAssertions
 assertThat(jedis).hasOnlyOneElementSatisfying(yoda -> {
  SoftAssertions softly = new SoftAssertions();
  softly.assertThat(yoda.getName()).isEqualTo("Luke");
@@ -201,14 +201,15 @@ assertThat(jedis).hasOnlyOneElementSatisfying(yoda -> {
 });
 
 jedis.add(new Jedi("Luke", "green"));
-// FAIL : the given assertion requirements are met but there are too many jedis !
+
+// fails : the given assertion requirements are met but there are too many jedis !
 assertThat(jedis).hasOnlyOneElementSatisfying(yoda -> assertThat(yoda.getName()).startsWith("Yo"));</code></pre>
 
   <h4 class="page-header"><span id="assertj-core-3.5.0-flat-extraction" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Flat extraction of several <span class="small-code">Iterable</span>'s elements using lambda extractors</h4>
 
-  <p>Extract multiple values from each Iterable's element according to the given Extractors and concatenate/flatten the extracted values in a list that is used as the new object under test.</p>
+  <p>Extracts multiple values from each Iterable's element according to the given Extractors and concatenates/flattens the extracted values into a list that is used as the new object under test.</p>
 
-  <p>If extracted values were not flattened, instead of a simple list like (given 2 extractors) :</p>
+  <p>If the extracted values were not flattened, instead of a simple list like (given 2 extractors) :</p>
   <p><span class="small-code">&nbsp;&nbsp;element1.value1, element1.value2, element2.value1, element2.value2, ...  </span></p>
 
   <p>we would get a list of list like :</p>
@@ -230,15 +231,15 @@ assertThat(fellowshipOfTheRing).flatExtracting(TolkienCharacter::getAge,
 
    <p>Special thanks to <span class="contributor">Pascal Schumacher</span> for his contributions including relentless code cleanup and documentation, thanks mate !<p/>
 
-   <p>Many thanks also to <span class="contributor">Dima Gerasimov</span>, <span class="contributor">Nick Stolwijk</span>, <span class="contributor">Ben Blank</span>, <span class="contributor">Fabien Duminy</span>, <span class="contributor">James Strachan</span>, <span class="contributor">Johannes Brodwall</span> and <span class="contributor">Kevin Fang</span> for their contributions.</p>
+   <p>Many thanks to <span class="contributor">Dima Gerasimov</span>, <span class="contributor">Nick Stolwijk</span>, <span class="contributor">Ben Blank</span>, <span class="contributor">Fabien Duminy</span>, <span class="contributor">James Strachan</span>, <span class="contributor">Johannes Brodwall</span> and <span class="contributor">Kevin Fang</span> for their contributions.</p>
 
    <h4 class="page-header"> Release notes</h4>
    <div class="release-section-category">New features :</div>
    <ul>
       <li><a href="#assertj-core-2.5.0-flat-extraction">Flat extraction</a> of several <span class="small-code">Iterable</span>'s elements properties.</li>
-      <li><a href="#assertj-core-2.5.0-navigational-assertions-element">Navigate and perform assertions on <span class="small-code">Iterable</span>'s element</a>. <span class="contributor">(James Strachan)</span></li>
-      <li><a href="#assertj-core-2.5.0-navigational-assertions-size">Navigate and perform assertions on <span class="small-code">Iterable</span>'s size</a>. <span class="contributor">(Pascal Schumacher)</span></li>
-      <li><a href="#assertj-core-2.5.0-navigational-assertions-map-size">Navigate and perform assertions on <span class="small-code">Map</span>'s size</a>. <span class="contributor">(Pascal Schumacher)</span></li>
+      <li><a href="#assertj-core-2.5.0-navigational-assertions-element">Navigate and perform assertions on an <span class="small-code">Iterable</span>'s elements</a>. <span class="contributor">(James Strachan)</span></li>
+      <li><a href="#assertj-core-2.5.0-navigational-assertions-size">Navigate and perform assertions on an <span class="small-code">Iterable</span>'s size</a>. <span class="contributor">(Pascal Schumacher)</span></li>
+      <li><a href="#assertj-core-2.5.0-navigational-assertions-map-size">Navigate and perform assertions on a <span class="small-code">Map</span>'s size</a>. <span class="contributor">(Pascal Schumacher)</span></li>
       <li>Control types format in assertions error messages with a <a href="#assertj-core-2.5.0-customRepresentation">custom <span class="small-code">Representation</span></a>. <span class="contributor">(Pascal Schumacher)</span></li>
       <li>Add <a href="#assertj-core-2.5.0-isBetween"><span class="small-code">isBetween</span></a> and <a href="#assertj-core-2.5.0-isBetween"><span class="small-code">isStrictlyBetween</span></a> to <span class="small-code">Comparable</span> assertions. <span class="contributor">(Pascal Schumacher)</span></li>
       <li>Add <a href="#assertj-core-2.5.0-hasNoNullFieldsOrProperties"><span class="small-code">hasNoNullFieldsOrProperties/Except</span></a> assertion methods for Object. (<span class="contributor">Johannes Brodwall</span>)</li>
@@ -251,8 +252,8 @@ assertThat(fellowshipOfTheRing).flatExtracting(TolkienCharacter::getAge,
    </ul>
    <div class="release-section-category">Improvements :</div>
    <ul>
-      <li>Add <span class="small-code">CheckReturnValue</span> to detect incorrect API usage assertions in FindBugs. (<span class="contributor">Dima Gerasimov</span>)</li>
-      <li>Add Java 6 soft assertions (standard, bdd and JUnit style) for Android projects. (<span class="contributor">Kevin Fang</span>)</li>
+      <li>Add <span class="small-code">CheckReturnValue</span> to detect incorrect API usage of assertions in FindBugs. (<span class="contributor">Dima Gerasimov</span>)</li>
+      <li>Add Java 6 soft assertions (Standard, BDD and JUnit style) for Android projects. (<span class="contributor">Kevin Fang</span>)</li>
       <li>Include <span class="small-code">Object</span> assertions in <span class="small-code">Throwable</span> ones.</li>
       <li>A bunch of Javadoc improvements ! (<span class="contributor">most of them by Pascal Schumacher</span>)</li>
    </ul>
@@ -285,7 +286,7 @@ assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name")
                                          tuple("Sam", 38, "Hobbit"),
                                          tuple("Legolas", 1000, "Elf"));</code></pre>
 
-  <h4 class="page-header"><span id="assertj-core-2.5.0-navigational-assertions-element" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Navigate and perform assertions on <span class="small-code">Iterable</span>'s element</h4>
+  <h4 class="page-header"><span id="assertj-core-2.5.0-navigational-assertions-element" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Navigate and perform assertions on an <span class="small-code">Iterable</span>'s elements</h4>
 
   <p>The idea is to allow navigating to any <span class="small-code">Iterable</span> elements in order to perform assertions on it which are by default <span class="small-code">Object</span> assertions, if you want specific ones like <span class="small-code">String</span> assertions you will have to provide the corresponding <span class="small-code">Assert</span> class i.e. <span class="small-code">StringAssert</span> (the reason being Java generics limitations).</p>
   <p>Possible navigations:</p>  
@@ -316,7 +317,7 @@ assertThat(hobbitsNames, StringAssert.class).element(1)
 assertThat(hobbitsNames, StringAssert.class).last()
                                             .endsWith("in");</code></pre>
 
-  <h4 class="page-header"><span id="assertj-core-2.5.0-navigational-assertions-size" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Navigate and perform assertions on <span class="small-code">Iterable</span>'s size</h4>
+  <h4 class="page-header"><span id="assertj-core-2.5.0-navigational-assertions-size" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Navigate and perform assertions on an <span class="small-code">Iterable</span>'s size</h4>
 
   <p>It is now possible to navigate to an <span class="small-code">Iterable</span>'s size, perform <span class="small-code">Integer</span> assertions on it, navigate back to the <span class="small-code">Iterable</span> to chain other assertions.</p>
 
@@ -337,7 +338,7 @@ assertThat(elvesRings).size()
                          .contains(narya)
                          .doesNotContain(oneRing);</code></pre>
 
-  <h4 class="page-header"><span id="assertj-core-2.5.0-navigational-assertions-map-size" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Navigate and perform assertions on <span class="small-code">Map</span>'s size</h4>
+  <h4 class="page-header"><span id="assertj-core-2.5.0-navigational-assertions-map-size" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Navigate and perform assertions on a <span class="small-code">Map</span>'s size</h4>
 
   <p>It is now possible to navigate to a <span class="small-code">Map</span>'s size, perform <span class="small-code">Integer</span> assertions on it, navigate back to the <span class="small-code">Map</span> to chain other assertions.</p>
 
