@@ -346,7 +346,7 @@ assertThat(fellowshipOfTheRing).flatExtracting(TolkienCharacter::getAge,
   <p>Example :</p>
   <pre><code class="java">Iterable&lt;TolkienCharacter&gt; fellowshipOfTheRing = ...
 
-// flat extraction : all the extracted values are put in a single list
+// flat extraction : all extracted values are put into a single list
 assertThat(fellowshipOfTheRing).flatExtracting("name", "age", "race.name")
                                .contains("Boromir", 37, "Man",
                                          "Sam", 38, "Hobbit",
@@ -361,7 +361,7 @@ assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name")
 
   <h4 class="page-header"><span id="assertj-core-2.5.0-navigational-assertions-element" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Navigate and perform assertions on an <span class="small-code">Iterable</span>'s elements</h4>
 
-  <p>The idea is to allow navigating to any <span class="small-code">Iterable</span> element in order to perform assertions on it which are by default <span class="small-code">Object</span> assertions. If you want specific ones like <span class="small-code">String</span> assertions you will have to provide the corresponding <span class="small-code">Assert</span> class i.e. <span class="small-code">StringAssert</span> (the reason being Java generics limitations).</p>
+  <p>The idea is to allow navigating to any <span class="small-code">Iterable</span> element in order to perform assertions on it, which are <span class="small-code">Object</span> assertions by default. If you want specific ones like <span class="small-code">String</span> assertions you will have to provide the corresponding <span class="small-code">Assert</span> class i.e. <span class="small-code">StringAssert</span> (the reason being Java generics limitations).</p>
   <p>Possible navigations:</p>  
   <ul>
       <li>first()</li>
@@ -428,12 +428,12 @@ assertThat(ringBearers).containsKeys(oneRing, nenya, narya)
                        .containsEntry(oneRing, frodo);</code></pre>
   <p>... you can now write:</p>
   <pre><code class="java">// all Integer assertions are available after size()
-    assertThat(ringBearers).size()
-                              .isGreaterThan(1)
-                              .isLessThanOrEqualTo(3)
-                           .returnToMap()
-                              .containsKeys(oneRing, nenya, narya)
-                              .containsEntry(oneRing, frodo);</code></pre>
+assertThat(ringBearers).size()
+                          .isGreaterThan(1)
+                          .isLessThanOrEqualTo(3)
+                       .returnToMap()
+                          .containsKeys(oneRing, nenya, narya)
+                          .containsEntry(oneRing, frodo);</code></pre>
 
   <h4 class="page-header"><span id="assertj-core-2.5.0-customRepresentation" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Control types format in assertions error messages with a custom <span class="small-code">Representation</span></h4>
 
@@ -499,14 +499,14 @@ to start with:
 
   <h4 class="page-header"><span id="assertj-core-2.5.0-hasNoNullFieldsOrProperties" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code"> hasNoNullFieldsOrProperties/Except</span> to <span class="small-code">Object</span> assertions </h4>
 
-  <p>Verifies that the actual object has no <span class="small-code">Null<span> fields or properties (inherited ones are taken into account) except the given ones (if any).</p>
+  <p>Verifies that the actual object has no <span class="small-code">Null</span> fields or properties (inherited ones are taken into account) except the given ones (if any).</p>
 
   <p>Example :</p>
   <pre><code class="java">// all TolkienCharacter fields are set 
 TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
 assertThat(frodo).hasNoNullFieldsOrProperties();
 
-// 'name' fields is not set set 
+// 'name' fields is not set 
 TolkienCharacter hobbitWithoutName = new TolkienCharacter(null, 38, HOBBIT);
 assertThat(hobbitWithoutName).hasNoNullFieldsOrPropertiesExcept("name");</code></pre>
 
