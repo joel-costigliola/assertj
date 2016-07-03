@@ -248,17 +248,16 @@ $assertj_db_side_menu
 
 
       <h3 class="page-header" ><span id="connection"></span>Connection to the database</h3>
-      <p>To make assertions on a database, it is necessary to connect. For that, it is possible to use a <code class="java">DataSource</code>
+      <p>To make assertions on a database, it is necessary to connect. For that, either to use a <code class="java">DataSource</code>
       or a <code class="java">Source</code>.</p>
       <h4 class="page-header" ><span id="datasource"></span>DataSource</h4>
-      <p>A <a href="http://docs.oracle.com/javase/6/docs/api/javax/sql/DataSource.html">DataSource</a> is the classical way of Java 
+      <p>A <a href="http://docs.oracle.com/javase/6/docs/api/javax/sql/DataSource.html">DataSource</a> is the classic Java way
       to get a <a href="http://docs.oracle.com/javase/6/docs/api/java/sql/Connection.html">Connection</a> to a database.</p>
       <h4 class="page-header" ><span id="source"></span>Source</h4>
-      <p>A <a href="db/current/api/org/assertj/db/type/Source.html">Source</a> allows
-      to indicate the different informations to connect to a database. A
-      <a href="db/current/api/org/assertj/db/type/Source.html">Source</a> is a way
-      to do if you have not access to a DataSource or if you do not want to use it. Below an example of Source
-      to connect to H2 database in memory :
+      <p>A <a href="db/current/api/org/assertj/db/type/Source.html">Source</a> is a way
+      to connect if you have not access to a DataSource or if you do not want to use one. It allows you
+      to pass the necessary connection information as constructor parameters. Below is an example of using a Source
+      to connect to H2 in memory database :
       </p>
       <pre><code class="java">Source source = new Source("jdbc:h2:mem:test", "sa", "");</code></pre>
 
@@ -287,28 +286,24 @@ $assertj_db_side_menu
       <p>For more information, see the <a href="#dblettercase">paragraph on LetterCase</a>.</p>
 
       <h3 class="page-header" ><span id="elements"></span>Elements of the database</h3>
-      <p>Here the elements on which it is possible to make assertions.
-      </p>
+      <p>Here the elements on which it is possible to make assertions.</p>
       <p>Note that, there are only 3 root elements : <a href="db/current/api/org/assertj/db/type/Table.html">Table</a>,
       <a href="db/current/api/org/assertj/db/type/Request.html">Request</a>
-      and <a href="db/current/api/org/assertj/db/type/Changes.html">Changes</a>.<br/>
-      That means that the other elements are components or sub components of a root element.<br/>
-      A root element is a element on which the assertion start (in practical, the parameter of <code class="java">assertThat(...)</code> method).
+      and <a href="db/current/api/org/assertj/db/type/Changes.html">Changes</a>.</p>
+      <p>That means that the other elements are components or sub components of a root element.</p>
+      <p>A root element is an element on which the assertion start (in practice, the parameter of a <code class="java">assertThat(...)</code> method).</p>
       </p>
       <h4 class="page-header" ><span id="table"></span>Table</h4>
       <p>A <a href="db/current/api/org/assertj/db/type/Table.html">Table</a> represents
       a table in the database.<br/>
       <p>A <a href="db/current/api/org/assertj/db/type/Table.html">Table</a> 
       needs a way to connect to the database (either a <a href="http://docs.oracle.com/javase/6/docs/api/javax/sql/DataSource.html">DataSource</a>
-      or a <a href="db/current/api/org/assertj/db/type/Source.html">Source</a>) and a name.<br/>
-      That is the two mandatory parameters.</p>
+      or a <a href="db/current/api/org/assertj/db/type/Source.html">Source</a>) and a name (the two mandatory constructor parameters).</p>
       <pre><code class="java">// Get a DataSource
 DataSource dataSource = ...
-// Declare the "members" table
-// by using the DataSource
+// Declare the "members" table by using a DataSource
 Table table1 = new Table(dateSource, "members");
-// Declare the "members" table
-// by using a Source
+// Declare the "members" table by using a Source
 Table table2 = new Table(source, "members");</code></pre>
 <p>The two <a href="db/current/api/org/assertj/db/type/Table.html">Table</a>s above 
 (<code class="java">table1</code> and <code class="java">table2</code>) are equivalent.</p>
@@ -360,12 +355,12 @@ Table table2 = new Table(source, "members");</code></pre>
       <br/>
 
       <p>For a <a href="db/current/api/org/assertj/db/type/Table.html">Table</a>,
-      it is possible to chose the columns to include and to exclude in the assertions.</p>
-      <pre><code class="java">// Get the data from "id" and "name" columns from "members" table
+      it is possible to choose the columns to include and to exclude in the assertions.</p>
+      <pre><code class="java">// Get the data of the "id" and "name" columns of the "members" table
 Table table3 = new Table(source, &quot;members&quot;, new String[] { &quot;id&quot;, &quot;name&quot; }, null);
-// Get the data from "members" table but not from "birthdate" column
+// Get the data of the "members" table but not of the "birthdate" column
 Table table4 = new Table(source, &quot;members&quot;, null, new String[] { &quot;birthdate&quot; });
-// Get the data from "name" column from "members" table (because "id" is included and excluded)
+// Get the data of the "name" column of the "members" table (because "id" is included and excluded)
 Table table5 = new Table(source, &quot;members&quot;, new String[] { &quot;id&quot;, &quot;name&quot; }, new String[] { &quot;id&quot; });</code></pre>
 <div>
       <table border="1" cellspacing="0" cellpadding="2" style="border: 0px solid black;display: inline;">
@@ -451,18 +446,18 @@ Table table5 = new Table(source, &quot;members&quot;, new String[] { &quot;id&qu
       <h4 class="page-header" ><span id="request"></span>Request</h4>
       <p>A <a href="db/current/api/org/assertj/db/type/Request.html">Request</a> represents
       a SQL request on the database.</p>
-      <p>Like for a <a href="db/current/api/org/assertj/db/type/Table.html">Table</a>,
+      <p>Like a <a href="db/current/api/org/assertj/db/type/Table.html">Table</a>,
       a <a href="db/current/api/org/assertj/db/type/Request.html">Request</a> 
       needs a way to connect to the database (either a <a href="http://docs.oracle.com/javase/6/docs/api/javax/sql/DataSource.html">DataSource</a>
       or a <a href="db/current/api/org/assertj/db/type/Source.html">Source</a>).<br/>
       </p>
       <pre><code class="java">// Get a DataSource
 DataSource dataSource = ...
-// Declare a request which get the name and firstname of the corresponding members
+// Declare a request which gets the name and the firstname of the corresponding members
 // by using a Source
 Request request1 = new Request(source, 
                                "select name, firstname from members where id = 2 or id = 3");
-// Declare a request which get the name and firstname of the corresponding members
+// Declare a request which gets the name and the firstname of the corresponding members
 // by using the DataSource
 Request request2 = new Request(dataSource, 
                                "select name, firstname from members where id = 2 or id = 3");</code></pre>
@@ -491,14 +486,14 @@ Request request2 = new Request(dataSource,
       <p>For a <a href="db/current/api/org/assertj/db/type/Request.html">Request</a>,
       it is possible to use a simple SQL request or a SQL request with one or many parameters.
       </p>
-      <pre><code class="java">// Declare a request which get the name and firstname of the members
-// and have "%e%" like parameter
+      <pre><code class="java">// Declare a request which gets the name and the firstname of the members
+// and use "%e%" as a parameter
 Request request3 = new Request(dataSource, 
                                "select name, firstname from members " +
                                "where name like ?;",
                                "%e%");
-// Declare a request which get the name and firstname of the members
-// and have "%e%" and "%Paul%" like parameters
+// Declare a request which gets the name and the firstname of the members
+// and use "%e%" and "%Paul%" as parameters
 Request request4 = new Request(dataSource, 
                                "select name, firstname from members " +
                                "where name like ? and firstname like ?;",
@@ -565,8 +560,8 @@ Changes changes2 = new Changes(source);
 Changes changes3 = new Changes(table4);
 Changes changes4 = new Changes(request3);
 Changes changes5 = new Changes(request4);
-// The names of the columns in primary key are found with the metadata for a table 
-// but for a request it could be important to indicate
+// The names of the columns used for the primary key are found in the metadata for a table
+// but for a request it can be important to set the primary key
 Changes changes6 = new Changes(request4).setPksName("name");</code></pre>
 <p>The two <a href="db/current/api/org/assertj/db/type/Changes.html">Changes</a> above 
 (<code class="java">changes1</code> and <code class="java">changes2</code>) are equivalent.</p>
@@ -575,13 +570,13 @@ Changes changes6 = new Changes(request4).setPksName("name");</code></pre>
 
 <p>The changes are ordered :</p>
 <ul>
-  <li>First by type of change : creation, modification and after deletion</li>
+  <li>First by the type of the change : creation, modification and after deletion</li>
   <li>After if it a change on a table by the name of the table</li>
   <li>To finish by the values of the primary key and if there are no primary key by the values of the row (for a modification)</li>
 </ul>
 
-<p>As indicated just above, the primary key is used to order the changes.
-But more important, the primary is used to determinate which rows at the same with modifications.<br/>
+<p>As indicated above, the primary key is used to order the changes.
+But more important, the primary key is used to determinate which rows at the same with modifications.<br/>
 In <i>Representation of "changes4" or "changes5"</i> the modification of first row of the table become a creation and deletion.
 </p>
 
@@ -938,7 +933,7 @@ In <i>Representation of "changes4" or "changes5"</i> the modification of first r
       <h4 class="page-header" ><span id="change"></span>Change</h4>
 
 <p>A <a href="db/current/api/org/assertj/db/type/Change.html">Change</a>
-is a element of the <a href="db/current/api/org/assertj/db/type/Changes.html">Changes</a>.
+is an element of the <a href="db/current/api/org/assertj/db/type/Changes.html">Changes</a>.
 </p>
 <p>Below framed in red the first <a href="db/current/api/org/assertj/db/type/Change.html">Change</a>
 of "changes3".
@@ -1016,7 +1011,7 @@ of "changes3".
 
 <p>A <a href="db/current/api/org/assertj/db/type/Row.html">Row</a>
 can represent a row of a <a href="db/current/api/org/assertj/db/type/Table.html">Table</a>
-, of a <a href="db/current/api/org/assertj/db/type/Request.html">request</a> or 
+, of a <a href="db/current/api/org/assertj/db/type/Request.html">Request</a> or 
 of a <a href="db/current/api/org/assertj/db/type/Change.html">Change</a>.
 </p>
 
@@ -1171,7 +1166,7 @@ of "changes3".
 
 <p>A <a href="db/current/api/org/assertj/db/type/Column.html">Column</a>
 can represent a column of a <a href="db/current/api/org/assertj/db/type/Table.html">Table</a>
-, of a <a href="db/current/api/org/assertj/db/type/Request.html">request</a> or 
+, of a <a href="db/current/api/org/assertj/db/type/Request.html">Request</a> or 
 of a <a href="db/current/api/org/assertj/db/type/Change.html">Change</a>.
 </p>
 
@@ -1587,7 +1582,7 @@ assertThat(changes)...</code></pre>
       <p>More details on this concept in <a href="assertj-db-features-highlight.html#changesasroot">feature highlight</a>.
 
       <h3 class="page-header" ><span id="datevalue-timevalue-datetimevalue"></span>DateValue, TimeValue and DateTimeValue</h3>
-      <p>AssertJ-DB is compatible with Java 7, but we need system to simply compare 
+      <p>AssertJ-DB is compatible with Java 7, but we need a system to simply compare 
       data in a database with date, time and date/time like LocalDate, LocalTime and LocalDateTime of Java 8.</p>
       <p>So The <a href="db/current/api/org/assertj/db/type/DateValue.html">DateValue</a>,
       <a href="db/current/api/org/assertj/db/type/TimeValue.html">TimeValue</a> and
@@ -1597,7 +1592,7 @@ assertThat(changes)...</code></pre>
       <p>There is 4 kinds of static methods to instantiate these values :
       </p>
       <ul>
-      <li><code class="java">of</code> which receive the informations by <code class="java">int</code> parameters
+      <li><code class="java">of</code> which receives the informations as <code class="java">int</code> parameters
       <pre><code class="java">DateValue dateValue = DateValue.of(2007, 12, 23);
 
 // With hours and minutes only
@@ -1612,7 +1607,7 @@ DateTimeValue dateTimeValue1 = DateTimeValue.of(dateValue);
 // With date and time
 DateTimeValue dateTimeValue2 = DateTimeValue.of(dateValue, timeValue1);</code></pre>
       </li>
-      <li><code class="java">from</code> which receive the equivalent from <code class="java">java.sql</code> package
+      <li><code class="java">from</code> which receives the equivalent from <code class="java">java.sql</code> package
       (<code class="java">java.sql.Date</code>, 
       <code class="java">java.sql.Time</code> and 
       <code class="java">java.sql.Timestamp</code>)
@@ -1632,7 +1627,7 @@ DateValue dateValueFromCal = DateValue.from(calendar);
 TimeValue timeValueFromCal = TimeValue.from(calendar);
 DateTimeValue dateTimeValueFromCal = DateTimeValue.from(calendar);</code></pre>
       </li>
-      <li><code class="java">parse</code> which receive a <code class="java">String</code> to represent the value (this method can throw a 
+      <li><code class="java">parse</code> which receives a <code class="java">String</code> to represent the value (this method can throw a 
       <code class="java">ParseException</code>)
       <pre><code class="java">DateValue dateValue = DateValue.parse("2007-12-23");
 
@@ -1661,11 +1656,11 @@ DateTimeValue dateTimeValue = DateTimeValue.now();       // The current date/tim
       <p>All these static methods (except for <code class="java">now</code> method) have equivalent constructors.
       </p>
       <h3 class="page-header" ><span id="default-description"></span>Default description</h3>
-      <p>In assertj, it is possible to add description with the methods of <a href="core/api/org/assertj/core/api/Descriptable.html">Descriptable</a><br/>
+      <p>In assertj, it is possible to add a description with the methods of <a href="core/api/org/assertj/core/api/Descriptable.html">Descriptable</a><br/>
       This description is used in the error message if the assertion fails.
       </p>
-      <p>Due to the navigation, it is more complicated is asserj-db to well know on wich element an error can be thrown.
-      So to help the tester, there are default description.<br/>
+      <p>Due to the navigation, it is more complicated in asserj-db to know on which element an error can be thrown.
+      So to help the tester, there are default descriptions.<br/>
       For examples :
       </p>
       <ul>
@@ -1687,7 +1682,7 @@ DateTimeValue dateTimeValue = DateTimeValue.now();       // The current date/tim
       for an assertion on a value of the row at end point of a change on a table
       </li>
       </ul>
-      <p>This default description can be replace by the choice of the tester by using the methods of <a href="core/api/org/assertj/core/api/Descriptable.html">Descriptable</a>.
+      <p>This default description can be replaced by the choice of the tester by using the methods of <a href="core/api/org/assertj/core/api/Descriptable.html">Descriptable</a>.
       </p>
       <h3 class="page-header" ><span id="dblettercase"></span>Letter Case of the database</h3>
       <p><i>Since 1.1.0</i></p>
@@ -1804,7 +1799,7 @@ Table tableWithLC = new Table(dataSourceWithLC, "members");</code></pre>
       </p>
       <h3 class="page-header" ><span id="output"></span>Ouput</h3>
       <p><i>Since 1.1.0</i></p>
-      <p>It could be insteresting to view the values on which an assertion is (in example for debug).
+      <p>It could be interesting to view the values on which an assertion is (in example for debug).
       The output allows that. This is a simple example :</p>
       <pre><code class="java">import static org.assertj.db.output.Outputs.output;
 
