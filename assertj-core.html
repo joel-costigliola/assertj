@@ -192,17 +192,16 @@ assertThat(a2.equals(b2));
 assertThat(a3.equals(b3));
 
 // DO THIS :
-assertThat(a1)isEqualTo(b1);
-assertThat(a2)isEqualTo(b2);
-assertThat(a3)isEqualTo(b3);
+assertThat(a1).isEqualTo(b1);
+assertThat(a2).isEqualTo(b2);
+assertThat(a3).isEqualTo(b3);
 
 // OR THIS (less classy but ok):
 assertThat(a1.equals(b1)).isTrue();
 assertThat(a2.equals(b2)).isTrue();
 assertThat(a3.equals(b3)).isTrue();</code></pre>
 
-            <p>FindBugs can now detect such problems thanks to the <a href="https://github.com/joel-costigliola/assertj-core/pull/695"><span class="small-code">CheckReturnValue</span></a> annotation introduced on 2.5.+ / 3.5.+</p>
-
+            <p>FindBugs can now detect such problems thanks to the <a href="https://github.com/joel-costigliola/assertj-core/pull/695"><span class="small-code">CheckReturnValue</span></a> annotation introduced in 2.5.+ / 3.5.+.</p>
 
          <h3 class="page-header"><span id="code"/></span>Code and issue tracker</h3>
 
