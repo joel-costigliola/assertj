@@ -15,14 +15,14 @@ $menu
       <div class="col-lg-10 col-md-10 col-sm-10 text-left">
          <h1 class="page-header">AssertJ assertions generator maven plugin</h1>
 
-         <p>This maven plugin generates AssertJ assertions specific to your own classes, it's a wrapper on <a href="assertj-assertions-generator.html">AssertJ Assertions Generator</a>.</p>
+         <p>This maven plugin generates AssertJ assertions specific to your own classes, it's a wrapper of the <a href="assertj-assertions-generator.html">AssertJ Assertions Generator</a>.</p>
          <p>Starting with version 2.0, users can now <a href="#custom-templates">customize generated assertions</a> by using their own templates.</p>
 
-         <p>Big thanks to <a href="https://github.com/mostr"><span class="contributor">Michal Ostruszka</span></a> for its major contribution on this plugin.</p>
+         <p>Big thanks to <a href="https://github.com/mostr"><span class="contributor">Michal Ostruszka</span></a> for his major contributions to this plugin.</p>
 
          <h3 class="page-header"><span id="quickstart"></span>Quickstart</h3>
 
-         <p>You need to configure your project <span class="small-code">pom.xml</span> in order to use maven assertions generator plugin.</p>
+         <p>You need to configure your project <span class="small-code">pom.xml</span> in order to use the maven assertions generator plugin.</p>
 
          <h4 class="page-header">1 - Add AssertJ Core dependency to your pom.xml</h4>
 
@@ -53,12 +53,12 @@ $menu
     &lt;/configuration&gt;
 &lt;/plugin&gt;</code></pre>
 
-         <h4 class="page-header">3 - launch the maven plugin</h4>
+         <h4 class="page-header">3 - Launch the maven plugin</h4>
 
          <p>Execute the command :</p>
          <pre><code class="bash">mvn assertj:generate-assertions</code></pre>
 
-         <p>By default, assertions are generated in : <span class="small-code">target/generated-test-sources/assertj-assertions/</span></p>
+         <p>By default, assertions are generated in the <span class="small-code">target/generated-test-sources/assertj-assertions/</span> folder.</p>
 
          <p>Execution example in <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project :</p>
 <pre><code class="bash">====================================
@@ -186,9 +186,9 @@ BDD Assertions entry point class has been generated in file:
 
          <h4 class="page-header"><i class="fa fa-caret-right">&nbsp;</i>Specify packages and classes</h4>
 
-         <span class="small-code">packages</span> and <span class="small-code">classes</span> configuration elements indicate where to find classes you want to generate assertions for.
+         <span class="small-code">packages</span> and <span class="small-code">classes</span> configuration elements indicate where to find the classes you want to generate assertions for.
 
-         <p>One who don't want to declare packages / classes in its <span class="small-code">pom.xml</span> can use properties <span class="small-code">assertj.packages</span> and <span class="small-code">assertj.classes</span>:
+         <p>Instead of declaring packages / classes in the <span class="small-code">pom.xml</span> you can use the properties <span class="small-code">assertj.packages</span> and <span class="small-code">assertj.classes</span>:
          <pre><code class="bash">mvn assertj:generate-assertions -Dassertj.packages=your.first.package,your.second.package</code></pre></p>
 
          <h4 class="page-header"><i class="fa fa-caret-right">&nbsp;</i>Including and excluding classes from assertion generation</h4>
@@ -206,7 +206,7 @@ BDD Assertions entry point class has been generated in file:
     &lt;/packages&gt;
 &lt;/configuration&gt;</code></pre>
 
-         <p>From the specified packages, it might be easier to <b>restrict</b> the classes you want to generate assertions for, you can by including them using regular expression. Only classes from the specified packages matching at least one of the given regular expressions will have assertions generated for. In the example below, assertions we will only be generated for DTO and Model classes :</p>
+         <p>From the specified packages, it might be easier to <b>restrict</b> the classes you want to generate assertions for. You can do this by including them using regular expressions. Only classes from the specified packages matching at least one of the given regular expressions will have assertions generated for. In the example below, assertions will only be generated for DTO and Model classes :</p>
 
 <pre><code class="xml">&lt;configuration&gt;
     &lt;packages&gt;
@@ -219,7 +219,7 @@ BDD Assertions entry point class has been generated in file:
 &lt;/configuration&gt;</code></pre>
 
          <h4 class="page-header"><i class="fa fa-caret-right">&nbsp;</i>Generated classes destination directory</h4>
-         <p>You can specify the directory where assertion files are generated using <span class="small-code">targetDir</span> configuration element, e.g. :</p>
+         <p>You can specify the directory where assertion files are generated using the <span class="small-code">targetDir</span> configuration element, e.g. :</p>
 <pre><code class="xml">&lt;configuration&gt;
     &lt;packages&gt;
         &lt;param&gt;your.first.package&lt;/param&gt;
@@ -230,7 +230,7 @@ BDD Assertions entry point class has been generated in file:
 
          <h4 class="page-header"><i class="fa fa-caret-right">&nbsp;</i>Selecting which assertion entry point classes to generate</h4>
 
-         <p>By defaul all assertions entry point classes are generated (unless <span class="small-code">JUnitSoftAssertions</span> if JUnit can not be found), you can select which entry point class to generate as shown below :</p>
+         <p>By default all assertions entry point classes are generated (<span class="small-code">JUnitSoftAssertions</span> are not generated if JUnit can not be found). You can configure which entry point classes to generate as shown below :</p>
 
 <pre><code class="xml">&lt;configuration&gt;
         &lt;packages&gt;
@@ -248,14 +248,14 @@ BDD Assertions entry point class has been generated in file:
 
          <h4 class="page-header"><i class="fa fa-caret-right">&nbsp;</i>Assertions entry point classes directory</h4>
 
-         <p>Assertions entry point classes are generated in a package determined programatically, you can change it with <span class="small-code">entryPointClassPackage</span> configuration property : 
+         <p>Assertions entry point classes are generated in a package determined programatically, you can change it with the <span class="small-code">entryPointClassPackage</span> configuration property : 
 <pre><code class="xml">&lt;configuration&gt;
-    &lt;entryPointClassPackage&gt;my.entry.point.pakkage&lt;/entryPointClassPackage&gt;
+    &lt;entryPointClassPackage&gt;my.entry.point.package&lt;/entryPointClassPackage&gt;
 &lt;/configuration&gt;</code></pre></p>
 
          <h4 class="page-header"><i class="fa fa-caret-right">&nbsp;</i>Generating hierarchical assertion classes</h4>
 
-         <p>You can generate assertion classes that don't hide subclasses assertions after using an assertion from a super class. To do that, we need to generate two classes per domain class, e.g. for <span class="small-code">Book</span> domain class, <span class="small-code">AbstractBookAssert.java</span> and <span class="small-code">BookAssert.java</span> will be generated. Set <span class="small-code">hierarchical</span> property to true to enable this :   
+         <p>You can generate assertion classes that don't hide subclasses assertions after using an assertion from a super class. To do that, we need to generate two classes per domain class, e.g. for the <span class="small-code">Book</span> domain class, <span class="small-code">AbstractBookAssert.java</span> and <span class="small-code">BookAssert.java</span> will be generated. Set the <span class="small-code">hierarchical</span> property to true to enable this :
 <pre><code class="xml">&lt;configuration&gt;
     &lt;hierarchical&gt;true&lt;/hierarchical&gt;
 &lt;/configuration&gt;</code></pre></p>
@@ -263,8 +263,8 @@ BDD Assertions entry point class has been generated in file:
 
          <h4 class="page-header"><span id="custom-templates" class="adjustAnchor"></span><i class="fa fa-caret-right">&nbsp;</i>Customizing generated assertions</h4>
 
-         <p>Assertions are generated using templates that define skeleton code with <a href="assertj-assertions-generator.html#template-variables">variables</a>, as explained in great details <a href="assertj-assertions-generator.html#generated-assertions-templates">here</a>.</p>
-         <p>Since version 2.0, users can replace the existing <a href="assertj-assertions-generator.html#templates-list">templates</a> by their own to change how assertions are generated. See below an example of such configuration :</p>  
+         <p>Assertions are generated using templates that define skeleton code with <a href="assertj-assertions-generator.html#template-variables">variables</a>, as explained in detail <a href="assertj-assertions-generator.html#generated-assertions-templates">here</a>.</p>
+         <p>Since version 2.0, users can replace the existing <a href="assertj-assertions-generator.html#templates-list">templates</a> by their own to change how assertions are generated. See below an example of such a configuration :</p>  
 
 <pre><code class="xml">&lt;configuration&gt;
     &lt;templates&gt;
@@ -420,9 +420,9 @@ BDD Assertions entry point class has been generated in file:
 
          <p>The default template files can be found either in the assertj-assertions-generator-2.x.x jar or in <a href="https://github.com/joel-costigliola/assertj-assertions-generator/tree/assertj-assertions-generator-2.0.0/src/main/resources/templates">assertj-assertions-generator github project</a>.</p>  
 
-         <h4 class="page-header"><i class="fa fa-caret-right">&nbsp;</i>Generating assertion classes at every build</h4>
+         <h4 class="page-header"><i class="fa fa-caret-right">&nbsp;</i>Generating assertion classes with every build</h4>
 
-         <p>To generate assertions classes at every build, add an <span class="small-code">&lt;executions&gt;</span> section as shown below :</p>
+         <p>To generate assertions classes with every build, add an <span class="small-code">&lt;executions&gt;</span> section as shown below :</p>
 
 <pre><code class="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.assertj&lt;/groupId&gt;
