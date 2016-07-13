@@ -25,10 +25,6 @@ import static org.assertj.core.api.Assertions.*;
 
 // basic assertions
 assertThat(frodo.getName()).isEqualTo("Frodo");
-// as() is used to describe the test and will be shown before the error message
-assertThat(frodo.getAge()).as("check %s's age", frodo.getName()).isEqualTo(33);
-assertThat(frodo).isNotEqualTo(sauron)
-                 .isIn(fellowshipOfTheRing);
 
 // chaining string specific assertions
 assertThat(frodo.getName()).startsWith("Fro")
@@ -40,16 +36,21 @@ assertThat(fellowshipOfTheRing).hasSize(9)
                                .contains(frodo, sam)
                                .doesNotContain(sauron);
 
+// as() is used to describe the test and will be shown before the error message
+assertThat(frodo.getAge()).as("check %s's age", frodo.getName()).isEqualTo(33);
+assertThat(frodo).isNotEqualTo(sauron)
+                 .isIn(fellowshipOfTheRing);
+
 // Java 8 exception assertion, standard style ...
 assertThatThrownBy(() -> { throw new Exception("boom!"); }).hasMessage("boom!");
 // ... or BDD style
 Throwable thrown = catchThrowable(() -> { throw new Exception("boom!"); });
 assertThat(thrown).hasMessageContaining("boom");
 
-// using 'extracting' feature to check fellowshipOfTheRing character's names (Java 7)
+// using the 'extracting' feature to check fellowshipOfTheRing character's names (Java 7)
 assertThat(fellowshipOfTheRing).extracting("name")
                                .contains("Boromir", "Gandalf", "Frodo", "Legolas")
-// same thing using Java 8 method reference
+// same thing using a Java 8 method reference
 assertThat(fellowshipOfTheRing).extracting(TolkienCharacter::getName)
                                .doesNotContain("Sauron", "Elrond");
 
@@ -72,7 +73,7 @@ assertThat(fellowshipOfTheRing).filteredOn(character -> character.getName().cont
                                .extracting(character -> character.getRace().getName())
                                .contains("Hobbit", "Elf", "Man");
 
-// and many more assertions : map, dates (java 7 and java 8), file, numbers, optional ...</code></pre>
+// and many more assertions : iterable, stream, array, map, dates (java 7 and java 8), path, file, numbers, predicate, optional ...</code></pre>
       </div>
       <div class="col-lg-12 text-center">
         <h3>Want to see more features ? Jump to the <i><a href="assertj-core-features-highlight.html">Highlights section</a></i>.</h3>
@@ -143,16 +144,16 @@ assertThat(fellowshipOfTheRing).filteredOn(character -> character.getName().cont
          <div class="col-lg-4 col-md-4">
             <h3><i class="fa fa-code"></i> Joda Time</h3>
 
-            <p>Provides assertions for Joda Time like DateTime and LocalDateTime. More will come
+            <p>Provides assertions for Joda Time types like DateTime and LocalDateTime. More will come
                later, contributions are very welcome !
             </p>
 
             <p>Check AssertJ Joda Time assertions <a href="assertj-joda-time.html#latest-release">latest news</a> and <a href="assertj-joda-time.html">documentation</a>.</p>
          </div>
          <div class="col-lg-4 col-md-4">
-            <h3><i class="fa fa-code"></i> Neo4J</h3>
+            <h3><i class="fa fa-code"></i>Neo4J</h3>
 
-            <p>Provides assertions for Neo4J</p>
+            <p>Provides assertions for Neo4J types like Node, Path and Relationship.</p>
 
             <p>Check AssertJ Neo4J assertions <a href="assertj-neo4j.html#latest-release">latest news</a> and <a href="assertj-neo4j.html">documentation</a>.</p>
 
