@@ -103,15 +103,15 @@ assertThat(optional).isPresent().contains("Test");</code></pre>
          <div class="release-section-category">Release notes:</div>
          <ul>
             <li><b>Breaking change</b> : AssertJ Guava 2.0.0 relies on Java 7 and Assertj Core 2.x (but not 3.x).</li>
-            <li>New Multimap assertions : <a href="assertj-guava.html#2.0.0-hasSameEntriesAs"><span class="small-code">hasSameEntriesAs(Multimap other)</span></a>.</li>
-            <li>New Multimap assertions : <a href="assertj-guava.html#2.0.0-containsAllEntriesOf"><span class="small-code">containsAllEntriesOf(Multimap other)</span></a>.</li>
+            <li>New Multimap assertion : <a href="assertj-guava.html#2.0.0-hasSameEntriesAs"><span class="small-code">hasSameEntriesAs(Multimap other)</span></a>.</li>
+            <li>New Multimap assertion : <a href="assertj-guava.html#2.0.0-containsAllEntriesOf"><span class="small-code">containsAllEntriesOf(Multimap other)</span></a>.</li>
             <li>Allow to run assertions on Optional value with <a href="assertj-guava.html#2.0.0-extractingValue"><span class="small-code">extractingValue()</span></a>. <span class="contributor">(William Delanoue)</span></li>
             <li>Make <span class="small-code">MapEntry</span> generic i.e. : <span class="small-code">MapEntry&lt;K, V&gt;</span>.</li>
             <li>Make assertj-guava OSGI compatible.</li>
-            <li>Javadoc improvements <span class="contributor">(Pascal Schumacher)</span></li>
+            <li>Javadoc improvements. <span class="contributor">(Pascal Schumacher)</span></li>
          </ul>
 
-<h4 class="page-header"><span id="2.0.0-hasSameEntriesAs" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> New Multimap assertions : <span class="small-code">hasSameEntriesAs(Multimap other)</span>.</h4>
+<h4 class="page-header"><span id="2.0.0-hasSameEntriesAs" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> New Multimap assertion : <span class="small-code">hasSameEntriesAs(Multimap other)</span>.</h4>
 
    <p>Allow to compare the content of two multimaps who would not be equal because being of different types like <span class="small-code">SetMultimap</span> and <span class="small-code">ListMultimap</span>.</p>
    <p>Example :</p>
@@ -130,7 +130,7 @@ assertThat(listMultimap).hasSameEntriesAs(setMultimap);
 assertThat(listMultimap).isEqualTo(setMultimap);
 </code></pre>         
 
-<h4 class="page-header"><span id="2.0.0-containsAllEntriesOf" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> New Multimap assertions : <span class="small-code">containsAllEntriesOf(Multimap other)</span>.</h4>
+<h4 class="page-header"><span id="2.0.0-containsAllEntriesOf" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> New Multimap assertion : <span class="small-code">containsAllEntriesOf(Multimap other)</span>.</h4>
 
    <p>Verifies that the actual <span class="small-code">Multimap</span> contains all entries of the given one (it might contain more entries).</p>
    <p>Example :</p>
@@ -149,7 +149,7 @@ assertThat(actual).containsAllEntriesOf(other);
 assertThat(other).containsAllEntriesOf(actual);
 </code></pre>   
 
-<h4 class="page-header"><span id="2.0.0-extractingValue" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow to run assertions on Optional value with .</h4>
+<h4 class="page-header"><span id="2.0.0-extractingValue" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow to run assertions on Optional value with <span class="small-code">extractingValue()</span>.</h4>
 
    <p>Allow to chain assertion on the content of the <span class="small-code">Optional</span> using <span class="small-code">extractingValue()</span>.</p>
    <p>Example :</p>
@@ -178,7 +178,7 @@ assertThat(optional).extractingCharSequence()
 
          <div class="release-section-category">Release notes:</div>
          <ul>
-            <li>New Multimap assertions : <span class="small-code">isNotEmpty()</span> <span class="contributor">(Simon Barbey)</span></li>
+            <li>New Multimap assertion : <span class="small-code">isNotEmpty()</span> <span class="contributor">(Simon Barbey)</span></li>
             <li>Javadoc code syntax highlighting.</li>
             <li>Javadoc fix <span class="contributor">(Jochen Kupperschmidt)</span></li>
          </ul>
@@ -198,7 +198,7 @@ assertThat(optional).extractingCharSequence()
          <h3 class="page-header"><span id="1.1.0"/></span>Guava assertions 1.1.0 release</h3>
          <p>Release date : 2013-12-27</p>
 
-         <p>Thanks to <span class="contributor">Andrew Gaul</span> for its contributions to this version.</p>
+         <p>Thanks to <span class="contributor">Andrew Gaul</span> for his contributions to this version.</p>
 
          <div class="release-section-category">Release notes:</div>
          <ul>
@@ -210,7 +210,7 @@ assertThat(optional).extractingCharSequence()
          <p>2013-03-26 : 1.0.0 release</p>
 
          <p>First release after Fest fork.</p>
-         <p>Thanks to <span class="contributor">Jan Gorman</span> for its contributions to this version.</p>
+         <p>Thanks to <span class="contributor">Jan Gorman</span> for his contributions to this version.</p>
 
          <div class="release-section-category">Release notes:</div>
          <ul>
