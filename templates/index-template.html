@@ -21,10 +21,9 @@ $menu
             <pre><code class="hljs-java">// entry point for all assertThat methods and utility methods (e.g. entry)
 import static org.assertj.core.api.Assertions.*;
 
-// in the examples below fellowshipOfTheRing is a List&lt;<a href="https://github.com/joel-costigliola/assertj-examples/blob/java-8/assertions-examples/src/main/java/org/assertj/examples/data/TolkienCharacter.java">TolkienCharacter</a>&gt;
-
 // basic assertions
 assertThat(frodo.getName()).isEqualTo("Frodo");
+assertThat(frodo).isNotEqualTo(sauron);
 
 // chaining string specific assertions
 assertThat(frodo.getName()).startsWith("Fro")
@@ -32,14 +31,13 @@ assertThat(frodo.getName()).startsWith("Fro")
                            .isEqualToIgnoringCase("frodo");
 
 // collection specific assertions (there are plenty more)
+// in the examples below fellowshipOfTheRing is a List&lt;<a href="https://github.com/joel-costigliola/assertj-examples/blob/java-8/assertions-examples/src/main/java/org/assertj/examples/data/TolkienCharacter.java">TolkienCharacter</a>&gt;
 assertThat(fellowshipOfTheRing).hasSize(9)
                                .contains(frodo, sam)
                                .doesNotContain(sauron);
 
 // as() is used to describe the test and will be shown before the error message
 assertThat(frodo.getAge()).as("check %s's age", frodo.getName()).isEqualTo(33);
-assertThat(frodo).isNotEqualTo(sauron)
-                 .isIn(fellowshipOfTheRing);
 
 // Java 8 exception assertion, standard style ...
 assertThatThrownBy(() -> { throw new Exception("boom!"); }).hasMessage("boom!");
