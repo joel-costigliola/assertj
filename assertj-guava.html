@@ -220,10 +220,10 @@ assertThat(optional).extractingValue()
                     .isInstanceOf(Long.class)
                     .isEqualTo(12L);
 </code></pre>         
-   <p>There is a special support for  <span class="small-code">String</span> value with <span class="small-code">extractingCharSequence()</span>.</p>
+   <p>There is a special support for  <span class="small-code">String</span> values with <span class="small-code">extractingCharSequence()</span>.</p>
    <p>Example :</p>
    <pre><code class="java">Optional&lt;String&gt; optional = Optional.of("Bill");
-// extractingCharSequence allows to chain String specific assertion
+// extractingCharSequence allows to chain String specific assertions
 assertThat(optional).extractingCharSequence()
                     .startsWith("Bi");
 </code></pre>         
@@ -240,9 +240,9 @@ assertThat(optional).extractingCharSequence()
 
          <div class="release-section-category">Release notes:</div>
          <ul>
-            <li>New Multimap assertion : <span class="small-code">isNotEmpty()</span> <span class="contributor">(Simon Barbey)</span></li>
+            <li>New Multimap assertion : <span class="small-code">isNotEmpty()</span>. <span class="contributor">(Simon Barbey)</span></li>
             <li>Javadoc code syntax highlighting.</li>
-            <li>Javadoc fix <span class="contributor">(Jochen Kupperschmidt)</span></li>
+            <li>Javadoc fix. <span class="contributor">(Jochen Kupperschmidt)</span></li>
          </ul>
          
          <h3 class="page-header"><span id="1.2.0"/></span><span id="1.2.0"/></span>Guava assertions 1.2.0 release</h3>
@@ -254,7 +254,7 @@ assertThat(optional).extractingCharSequence()
          <ul>
             <li>Guava Range assertions <span class="contributor">(Marcin Kwaczyński)</span></li>
             <li>New Table assertions <span class="contributor">(David Harris)</span></li>
-            <li>Javadoc improvements.</li>
+            <li>Javadoc improvements</li>
          </ul>
          
          <h3 class="page-header"><span id="1.1.0"/></span>Guava assertions 1.1.0 release</h3>
@@ -290,13 +290,13 @@ assertThat(optional).extractingCharSequence()
 
          <pre><code class="java">import static org.fest.assertions.api.GUAVA</code></pre>
 
-         <p>by :</p>
+         <p>with :</p>
 
          <pre><code class="java">import static org.assertj.guava.api.Assertions</code></pre>
 
           <h3 class="page-header"><span id="core-and-guava-assertions"/></span>Using both AssertJ <a href="https://github.com/joel-costigliola/assertj-core">Core assertions</a> and Guava assertions</h3>
 
-         <p>You will have to make two static import : one for <span class="small-code">org.assertj.core.api.Assertions.assertThat</span>
+         <p>You will have to use two static imports : one for <span class="small-code">org.assertj.core.api.Assertions.assertThat</span>
             to get core assertions and one <span class="small-code">org.assertj.guava.api.Assertions.assertThat</span> for Guava assertions.</p>
 
 <pre><code class="java">import static org.assertj.core.api.Assertions.assertThat;
