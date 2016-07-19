@@ -20,8 +20,8 @@ $menu
 
          <h3 class="page-header"><span id="assertj-build-site"></span>How to edit this site ?</h3>
 
-         <p>AssertJ site is hosted in github, in <span class="small-code">gh-pages</span> branch of <a href="https://github.com/joel-costigliola/assertj">assertj repository</a>, just use github pull requests to contribute to it.</p>
-         <p>The site is a composed of static HTML pages based on Bootstrap. A simple templating system is used to avoid duplicating site elements like menus or headers. The style aspects of AssertJ site is managed with <a href="http://lesscss.org/">LESS</a> files.</p>
+         <p>The AssertJ site is hosted on github, in the <span class="small-code">gh-pages</span> branch of the <a href="https://github.com/joel-costigliola/assertj">assertj repository</a>, just use github pull requests to contribute to it.</p>
+         <p>The site is composed of static HTML pages based on Bootstrap. A simple templating system is used to avoid duplicating site elements like menus or headers. The style aspects of AssertJs site are managed with <a href="http://lesscss.org/">LESS</a> files.</p>
 
          <p>To generate the full site : use the command:</p>
          <pre><code class="bash">./build-site.sh</code></pre>
@@ -30,16 +30,16 @@ $menu
 
          <h4 class="page-header">Templating system</h4>
 
-         <p>The templating system is a simple python script <span class="small-code">generate-html.py</span> which performs the following steps :</p>
+         <p>The templating system is a simple python script named <span class="small-code">generate-html.py</span> which performs the following steps :</p>
          <ul>
-            <li>read HTML fragments from files like <span class="small-code">assertj-head.html</span> and store their content in a map under predefined keys.</li>
-            <li>process all <span class="small-code">*template.html</span> files replacing <span class="small-code">&#36;key</span> by their map value, e.g. <span class="small-code">&#36;head</span> by <span class="small-code">assertj-head.html</span> content</li>
-            <li>dump the resulting content in a file without the template extension, e.g. <span class="small-code">assertj-neo4j.html</span> for <span class="small-code">assertj-neo4j-template.html</span></li>
+            <li>read HTML fragments from files like <span class="small-code">assertj-head.html</span> and store their content in a map under predefined keys</li>
+            <li>process all <span class="small-code">*template.html</span> files replacing <span class="small-code">&#36;key</span> by their map value, e.g. <span class="small-code">&#36;head</span> by the <span class="small-code">assertj-head.html</span> content</li>
+            <li>dump the resulting content into a file without the template extension, e.g. <span class="small-code">assertj-neo4j.html</span> for <span class="small-code">assertj-neo4j-template.html</span></li>
          </ul>
 
          <p>Thus the rules : </p>
          <ul>
-            <li><b>Never edit directly generated files</b></li>
+            <li><b>Never directly edit the generated files.</b></li>
             <li><b>Commit the generated files</b>, they have to be pushed to the remote git repository to be published.</li>
          </ul>
 
