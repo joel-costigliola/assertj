@@ -55,8 +55,8 @@ $menu
 <h3 class="page-header"><span id="assertj-core-3.5.0"></span>AssertJ Core 3.5.0/3.5.1 for Java 8 release : New and noteworthy</h3>
 
    <p>Release date : 2016-07-03<br>
-   <p>This release includes all changes from <a href="#assertj-core-2.5.0">AssertJ core 2.5.0</a> and add some specific to Java 8.</p>
-   <p>The 3.5.1 release fixes a regression on <span class="small-code">Stream isEqualTo</span> assertion which was changed in 3.5.0 to support reference comparison.</p>
+   <p>This release includes all changes from <a href="#assertj-core-2.5.0">AssertJ core 2.5.0</a> and adds some specific to Java 8.</p>
+   <p>The 3.5.1 release fixes a regression of the <span class="small-code">Stream isEqualTo</span> assertion which was changed in 3.5.0 to support reference comparison.</p>
 
    <p>Thanks to <span class="contributor">Pascal Schumacher</span>, <span class="contributor">Dima Gerasimov</span>, <span class="contributor">tommyshem</span>, <span class="contributor">Filip Hrisafov</span>, <span class="contributor">Fabien Duminy</span> and <span class="contributor">timmikk</span> for their contributions.</p>
 
@@ -84,10 +84,10 @@ $menu
 
    <p>The following <span class="small-code">Predicate</span> assertions are available:
    <ul>
-      <li><span class="small-code">accepts(T... values)</span> : succeed if all the given values pass the <span class="small-code">Predicate</span> under test</li>
-      <li><span class="small-code">rejects(T... values)</span> : succeed if all the given values are rejected by the <span class="small-code">Predicate</span> under test</li>
-      <li><span class="small-code">acceptsAll(Iterable)</span> : succeed if all the given <span class="small-code">Iterable</span> elements pass the <span class="small-code">Predicate</span> under test</li>
-      <li><span class="small-code">rejectsAll(Iterable)</span> : succeed if all the given <span class="small-code">Iterable</span> elements are rejected the <span class="small-code">Predicate</span> under test</li>
+      <li><span class="small-code">accepts(T... values)</span> : succeeds if all given values match the <span class="small-code">Predicate</span> under test</li>
+      <li><span class="small-code">rejects(T... values)</span> : succeeds if no given value matches the <span class="small-code">Predicate</span> under test</li>
+      <li><span class="small-code">acceptsAll(Iterable)</span> : succeeds if all elements of the given <span class="small-code">Iterable</span> match the <span class="small-code">Predicate</span> under test</li>
+      <li><span class="small-code">rejectsAll(Iterable)</span> : succeeds if no elements of the given <span class="small-code">Iterable</span> match the <span class="small-code">Predicate</span> under test</li>
    </ul>
 
    <p>Example : <span class="small-code">accepts & acceptsAll</span></p>
@@ -665,7 +665,7 @@ assertThat(soft.errorsCollected()).hasSize(2);
 <h3 class="page-header"><span id="assertj-core-3.4.0"></span>AssertJ Core 3.4.0 for Java 8 release : New and noteworthy</h3>
 
    <p>Release date : 2016-03-30<br>
-   <p>This release includes all changes from <a href="#assertj-core-2.4.0">AssertJ core 2.4.0</a> and add some specific to Java 8.</p>
+   <p>This release includes all changes from <a href="#assertj-core-2.4.0">AssertJ core 2.4.0</a> and adds some specific to Java 8.</p>
 
    <p>Thanks to <span class="contributor">Pascal Schumacher</span> and <span class="contributor">Grzegorz Piwowarek</span> for their contributions.</p>
 
