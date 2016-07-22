@@ -88,7 +88,7 @@
       <div class="col-lg-10 col-md-10 col-sm-10 text-left">
          <h1 class="page-header">Migrating from Fest 2.x</h1>
 
-         <p>Migrating from Fest 2.x is easy since AssertJ is a fork of Fest, there are very few breaking changes.</p>
+         <p>Migrating from Fest 2.x is easy since AssertJ is a fork of Fest and there are very few breaking changes.</p>
 
          <p>First thing first, change your static import, from:</p>
 
@@ -112,7 +112,7 @@
 
          <p><strong>Note:</strong> if your project uses both FestAssert Core assertions and Fest Joda-Time assertions, execute the above scripts for FestAssert Core Assertions <strong>after</strong> <a href="assertj-joda-time.html#migrating-from-fest">those for for Joda-Time</a>!</p>
 
-         <h5>Renamed assertions since Fest fork :</h5>
+         <h5>Renamed assertions since the Fest fork :</h5>
          <ul>
             <li><span class="small-code">isLenientEqualsToByIgnoringFields</span> renamed to <span class="small-code">isEqualToIgnoringGivenFields</span></li>
             <li><span class="small-code">isLenientEqualsToByAcceptingFields</span> renamed to <span class="small-code">isEqualToComparingOnlyGivenFields</span></li>
@@ -123,10 +123,10 @@
          <p>The linux commands to automatically rename the assertions:</p>
          <pre><code class="bash">find . -name "*.java" -exec sed -i "s/isLenientEqualsToByIgnoringFields/isEqualToIgnoringGivenFields/g;s/isLenientEqualsToByAcceptingFields/isEqualToComparingOnlyGivenFields/g;s/isLenientEqualsToByIgnoringNullFields/isEqualToIgnoringNullFields/g;s/isEqualsToByComparingFields/isEqualToComparingFieldByField/g" '{}' \;</code></pre>
 
-         <p>And the commande for Mac users:</p>
+         <p>And the commands for Mac users:</p>
          <pre><code class="bash">find . -name "*.java" -exec sed -i "" "s/isLenientEqualsToByIgnoringFields/isEqualToIgnoringGivenFields/g;s/isLenientEqualsToByAcceptingFields/isEqualToComparingOnlyGivenFields/g;s/isLenientEqualsToByIgnoringNullFields/isEqualToIgnoringNullFields/g;s/isEqualsToByComparingFields/isEqualToComparingFieldByField/g" '{}' \;</code></pre>
 
-         <h5>Removed assertions since Fest fork (we thought that they were very unclear) :</h5>
+         <h5>Removed assertions since the Fest fork (we thought that they were very unclear) :</h5>
          <ul>
             <li><span class="small-code">areNotAtLeast</span>, <span class="small-code">areNotAtMost</span>, <span class="small-code">areNotExactly</span></li>
             <li><span class="small-code">haveNotAtLeast</span>, <span class="small-code">haveNotAtMost</span>, <span class="small-code">haveNotExactly</span></li>
@@ -136,12 +136,12 @@
 
          <h1 class="page-header"><span id="fest-1.4" class="adjustAnchor"></span>Migrating from Fest 1.4</h1>
 
-         <p>Migrating Fest Assert 1.4 is a little more longer than migrating from Fest Assert 2.x but is not difficult.</p>
+         <p>Migrating Fest Assert 1.4 is a little more involved than migrating from Fest Assert 2.x but is not difficult.</p>
 
          <h5>Major changes</h5>
          <ul>
-            <li>the package change, API is now in <span class="small-code">org.assertj.core.api</span></li>
-            <li><span class="small-code">onProperty</span> feature has been renamed to the more powerful <span class="small-code">extracting</span></li>
+            <li>the package name changed, API is now in <span class="small-code">org.assertj.core.api</span></li>
+            <li>the <span class="small-code">onProperty</span> feature has been renamed to the more powerful <span class="small-code">extracting</span></li>
          </ul>
 
          <h5>Minor changes</h5>
@@ -150,7 +150,7 @@
             <li><span class="small-code">satisfies()</span> method has been replaced by <span class="small-code">is()</span> or <span class="small-code">has()</span> (hint: use the more readable for your code)</li>
             <li><span class="small-code">Delta.delta()</span> becomes <span class="small-code">offset()</span>, it is directly available from <span class="small-code">Assertions.offset()</span></li>
             <li><span class="small-code">fail()</span> method has been removed - prefer <span class="small-code">failBecauseExceptionWasNotThrown(exception class)</span>.</li>
-            <li>make your own assertion inheriting from <span class="small-code">AbstractAssert</span> (more details below)</li>
+            <li>make your own assertion inherit from <span class="small-code">AbstractAssert</span> (more details below)</li>
             <li><span class="small-code">description()</span> becomes <span class="small-code">descriptionText()</span></li>
             <li><span class="small-code">excludes()</span> becomes <span class="small-code">doesNotContain()</span></li>
          </ul>
@@ -165,7 +165,7 @@
 
          <h4 class="page-header"><span id="migrating-custom-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Migrating custom assertions</h4>
 
-<p>It is simple, instead of inheriting from <span class="small-code">GenericAssert</span> you must inherit from <span class="small-code">AbstractAssert</span> and invert the parameters order in the constructor.</p>
+<p>It is simple, instead of inheriting from <span class="small-code">GenericAssert</span> you inherit from <span class="small-code">AbstractAssert</span> and invert the parameter order in the constructor.</p>
 
 <p>in Fest 1.4 :</p>
 
@@ -195,7 +195,7 @@
          <pre><code class="java">failBecauseExceptionWasNotThrown(FileNotFoundException.class)</code></pre>
          <p>will throw an <span class="small-code">AssertionError</span> with message "Expected FileNotFoundException to be thrown"</p>
 
-         <p>All <span class="small-code">fail</span> methods are available from <span class="small-code">Assertions</span> or <span class="small-code">Fail</span> class.</p>
+         <p>All <span class="small-code">fail</span> methods are available from the <span class="small-code">Assertions</span> or the <span class="small-code">Fail</span> classes.</p>
 
          <h4 class="page-header"><span id="onProperty-to-extracting" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Migrating <span class="small-code">onProperty</span> usage to <span class="small-code">extracting</span></h4>
 
