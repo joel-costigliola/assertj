@@ -147,7 +147,7 @@ convert-junit-assertions-to-assertj-on-osx.sh</code></pre>
 12 --- optimize imports with your IDE to remove unused imports
 12 --- add "import static org.assertj.core.api.Assertions.within;" if you were using JUnit number assertions with deltas</code></pre>
 
-         <p>On windows you might have permission problems as sed creates temp files. If you get this error, you have to grant write permissions to current user for the folder where your test files live.</p>
+         <p>On windows you might have permission problems as sed creates temp files. If you get this error, you have to grant write permissions to the current user for the folder where your test files live.</p>
 
 <pre><code class="diff" style="font-size:83%;">Converting JUnit assertions to AssertJ assertions on files matching pattern : *Test.java
 
@@ -158,7 +158,7 @@ sed: preserving permissions for `./sed004220': Permission denied</code></pre>
 
          <h3 class="page-header"><span id="manual-conversion"></span>Converting your JUnit assertions to AssertJ with regexp</h3>
 
-         <p>Here's a list of find/replace expressions that allow to change JUnit assertion into AssertJ assertion (don't forget to check the regexp mode in your editor replace window).</p>
+         <p>Here's a list of find/replace expressions that allow to change JUnit assertions into AssertJ assertions (don't forget to check the regexp mode in your editor replace window).</p>
          <p>The order of find/replace is important, so that you can benefit from the most relevant AssertJ assertions. For example you should convert <span class="small-code">assertEquals(0, myList.size())</span> to <span class="small-code">assertThat(myList).isEmpty()</span> instead of
             <span class="small-code">assertThat(myList.size()).isEqualTo(0)</span>
          </p>
