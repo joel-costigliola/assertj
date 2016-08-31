@@ -105,10 +105,10 @@
 <pre><code class="bash"># in the directory containing the test files
 convert-testng-assertions-to-assertj.sh</code></pre>
 
-         <p>It is not perfect (multiline assertions are not converted) but should do most of the job. After executing it, you will need to: </p>
+         <p>It is not perfect (multiline assertions are not converted) but should do most of the job. After executing it, you will need to : </p>
          <ul>
             <li>optimize imports with your IDE to remove unused imports.</span></li>
-            <li>if you were using <span class="small-code">assertEquals</span> with a delta to compare numbers, you will probably need to statically import <span class="small-code">org.assertj.core.api.Assertions.offset</span> which is how you express deltas in AssertJ (see <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/NumberAssertionsExamples.java">number_assertions_with_offset_examples()</a> test at the end of NumberAssertionsExamples).</li>
+            <li>if you were using <span class="small-code">assertEquals</span> with a delta to compare numbers, you will need to statically import <span class="small-code">org.assertj.core.api.Assertions.offset</span> which is how you express deltas in AssertJ (see <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/NumberAssertionsExamples.java">number_assertions_with_offset_examples()</a> test at the end of NumberAssertionsExamples).</li>
          </ul>
 
          <p>The script handles the cases where you use an assertion description, for example :<pre><code class="java">assertEquals("test context", "a", "a");</code></pre> will be replaced by :</p><p><pre><code class="java">assertThat("a").as("test context").isEqualTo("a");</code></pre> </p>
