@@ -17,7 +17,7 @@
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/default.css" id="theme">
 
-		<!-- For syntax highlighting 
+		<!-- For syntax highlighting
 		<link rel="stylesheet" href="lib/css/railscasts.css">
 		-->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -42,29 +42,21 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h2>Improve your tests assertions with AssertJ</h2>
+					<h2>AssertJ assertions tips</h2>
 					<p>&nbsp;</p>
-					<p>website : <a href="http://assertj.org">http://assertj.org</a></p>
-					<p>github : <a href="https://github.com/joel-costigliola/assertj-core">https://github.com/joel-costigliola/assertj-core</a></p>
-				</section>
-
-				<section>
-					<h2>AssertJ is user friendly</h2>
 					<ul>
 						<li>Unique entry point for all assertions : <i>assertThat</i></li>
 						<li>IDE friendly : discover assertions using IDE code completion</li>
-						<li><a href="http://joel-costigliola.github.io/assertj/core/api/org/assertj/core/api/AbstractIterableAssert.html#containsExactly%28T...%29">Javadoc</a> with code examples.</li>
+						<li><a href="http://joel-costigliola.github.io/assertj/core/api/org/assertj/core/api/AbstractIterableAssert.html#containsExactly(ELEMENT...)">Javadoc</a> with code examples.</li>
 						<li>Useful error messages</li>
-						<li>Possibility to chain assertions </li>
+						<li>Latest version available in ivy and maven : 3.5.1 </li>
+					    <li>website : <a href="http://joel-costigliola.github.io/assertj/index.html">http://joel-costigliola.github.io/assertj/index.html</a></li>
 						<li><a href="http://joel-costigliola.github.io/assertj/assertj-core-quick-start.html">Quick start guide</a></li>
-						<li>Available in ivy and maven</li>
-						<li>Use version 2.2.0 for Java 7 and 3.2.0 for Java 8</li>
 					</ul>
 				</section>
-				
+
 				<section>
-					<h2>assertj-core : </h3>
-					<h2>Assertions for JDK types</h3>
+					<h2>Assertj Core provides assertions for:</h3>
 					<ul>
 						<li>string</li>
 						<li>collection / array / map</li>
@@ -87,35 +79,39 @@
    private Race race; // Enum
  }
 
- // Mr Frodo ! 
+ // Mr Frodo !
  TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
 
  // ... and his friends from the Fellowship of the Ring
- List&lt;TolkienCharacter&gt; fellowshipOfTheRing = Arrays.asList(
-    frodo, sam, merry, pippin, gandalf, legolas, gimli, aragorn, boromir);
+ List&lt;TolkienCharacter&gt; fellowshipOfTheRing = list(frodo, sam, merry,
+                                                   pippin, gandalf, legolas,
+                                                   gimli, aragorn, boromir);
 					</code></pre>
 				</section>
 
 
 				<section>
-					<h2>Basic assertions example</h2>
+					<h2>Basic usage</h2>
 					<pre><code class="java">
  // unique entry point to get all assertThat methods
  import static org.assertj.core.api.Assertions.assertThat;
 
- // use code completion to discover assertions
- assertThat(frodo).isNotEqualTo(sauron);
-
- // chain assertions
+ // use code completion to discover assertions and chain them
  assertThat(frodo.getName()).startsWith("Fro")
                             .endsWith("do")
                             .isEqualToIgnoringCase("frodo");
+
+ // use as to add test context information to ease understanding failure:
+ assertThat(frodo.age).as("check %s's age", frodo.getName()).isEqualTo(100);
+ // error message is:
+   "[check Frodo's age] expected:<[100]> but was:<[33]>"
 					</code></pre>
+					<p><a href="http://joel-costigliola.github.io/assertj/assertj-core-features-highlight.html#ide-automatic-static-import">Eclipse code completion setup tip</a></p>
 				</section>
 
 				<section>
 					<h2>Collection / array assertions</h2>
-					<pre><code class="java"> 
+					<pre><code class="java">
  assertThat(fellowshipOfTheRing).isNotEmpty()
                                 .hasSize(9)
                                 .contains(frodo, sam)
@@ -128,7 +124,7 @@
 				<section>
 					<h2>Extracting feature</h2>
 					<p>Useful to check properties/fields of collection elements</p>
-					<pre><code class="java"> 
+					<pre><code class="java">
  // extract the names of fellowshipOfTheRing characters and check them
  assertThat(fellowshipOfTheRing).extracting("name")
                                 .contains("Gandalf", "Frodo")
@@ -138,14 +134,18 @@
  assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name")
                                 .contains(tuple("Boromir", 37, "Man"),
                                           tuple("Sam", 38, "Hobbit"),
-                                          tuple("Legolas", 1000, "Elf")); 
+                                          tuple("Legolas", 1000, "Elf"));
+
+ // extracting using a lambda
+ assertThat(fellowshipOfTheRing).extracting(tc -> tc.getRace().getName())
+                                .contains("Hobbit", "Elf");
 
 </code></pre>
 				</section>
 
 				<section>
 					<h2>Filter collection before assertions</h2>
-					<pre><code class="java"> 
+					<pre><code class="java">
  // let's check who are the Hobbit in fellowshipOfTheRing
  assertThat(fellowshipOfTheRing).filteredOn("race", HOBBIT)
                                 .containsOnly(sam, frodo, pippin, merry);
@@ -154,6 +154,9 @@
  assertThat(fellowshipOfTheRing).filteredOn("race", in(MAIA, MAN))
                                 .containsOnly(gandalf, boromir, aragorn);
 
+ // filter using a Predicate
+ assertThat(fellowshipOfTheRing).filteredOn(tc -> tc.getName().contains("o"))
+                                .contains(aragorn, frodo, legolas, boromir);
 </code></pre>
 					<p>Full assertions showcase in <a href="https://github.com/joel-costigliola/assertj-examples/tree/master/assertions-examples/src/test/java/org/assertj/examples">assertj-examples</a> project.</p>
 				</section>
@@ -161,28 +164,27 @@
 				<section>
 					<h2>Java 8 love</h2>
 
-					<pre><code class="java"> 
- // matching using a Predicate 
- assertThat(frodo).matches(tc -> tc.getRace() == HOBBIT); 
-
- // extracting using a lambda	
- assertThat(fellowshipOfTheRing).extracting(tc -> tc.getRace().getName())
-                                .contains("Hobbit", "Elf");
-
- // filter using a Predicate
- assertThat(fellowshipOfTheRing).filteredOn(tc -> tc.getName().contains("o"))
-                                .contains(aragorn, frodo, legolas, boromir);
+					<pre><code class="java">
+ // matching using a Predicate
+ assertThat(frodo).matches(tc -> tc.getRace() == HOBBIT);
 
  // Optional assertion
  assertThat(Optional.of("Test")).isPresent()
                                 .contains("Test");
+
+// use type specific assertion on the Optional value
+ assertThat(Optional.of("something")).hasValueSatisfying(s -> {
+    // perform any number of assertions
+    assertThat(s).startsWith("some")
+                 .endsWith("thing");
+ });
 
 </code></pre>
 				</section>
 				<section>
 					<h2>Java 8 love : testing exception</h2>
 
-					<pre><code class="java"> 
+					<pre><code class="java">
  // call the code to test in a lambda
  assertThatThrownBy(() -> { throw new Exception("boom!") })
               .hasMessageContaining("boom");
@@ -190,108 +192,22 @@
  // --- BDD Style ---
  // GIVEN
  String[] s = new String[0];
- 
+
  // WHEN
  Throwable exception = catchThrowable(() -> System.out.println(s[7]));
- 
+
  // THEN
  assertThat(exception).hasMessage("7");
-               
-</code></pre>
-				</section>
-
-				<section>
-					<h2>When equals is not good enough ... </h2>
-					<p>... use comparison by values</p>
-
-					<pre><code class="java"> 
- TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
- TolkienCharacter frodoClone = new TolkienCharacter("Frodo", 33, HOBBIT);
-
- // if TolkienCharacter#equals has not been overridden, this assertion fails
- assertThat(frodo).isEqualTo(frodoClone);
- // ... but this one succeeds
- assertThat(frodo).isEqualToComparingFieldByField(frodoClone);
-
- // you can choose the fields used in comparison 
- TolkienCharacter frodo = new TolkienCharacter("Sam", 38, HOBBIT);
- assertThat(frodo).isEqualToComparingOnlyGivenFields(sam, "race");
-
- // ... or the fields to exclude in comparison
- assertThat(frodo).isEqualToIgnoringGivenFields(sam, "name", "age");
 
 </code></pre>
-				</section>
-
-				<section>
-					<h2>When equals is not good enough ... </h2>
-					<p>... use a custom comparator</p>
-
-					<pre><code class="java"> 
- // standard comparison : frodo is not equal to sam
- assertThat(frodo).isNotEqualTo(sam);
-
- // ... but if we compare only character's race frodo is equal to sam
- assertThat(frodo).usingComparator(raceNameComparator)
-                  .isEqualTo(sam);
-
- // the fellowshipOfTheRing includes Gandalf but not Sauron ...
- assertThat(fellowshipOfTheRing).contains(gandalf)
-                                .doesNotContain(sauron);
-
- // ... but if we compare by race, Sauron is in fellowshipOfTheRing 
- // because he's a Maia like Gandalf.
- assertThat(fellowshipOfTheRing).usingElementComparator(raceComparator)
-                                .contains(sauron);
-
-</code></pre>
-				</section>
-
-				<section>
-					<h2>Custom assertions</h2>
-					<p>Express <a href="http://joel-costigliola.github.io/assertj/assertj-core-custom-assertions.html#custom-assertion-class">assertions</a> in the domain language</p>
-					<pre><code class="java"> 
- // instead of:
- assertThat(frodo.getName()).isEqualto("Frodo");
- assertThat(frodo.getAge()).isEqualto(33);
- assertThat(frodo.getRace()).isEqualto(Race.HOBBIT);
-
- // you write :
- assertThat(frodo).hasName("Frodo")
-                  .hasAge(33)
-                  .hasRace(Race.HOBBIT);
-  </code></pre>
-					<p>Lazy ? Just generate your custom assertions with the</p>
-					<p><a href="http://joel-costigliola.github.io/assertj/assertj-assertions-generator.html">assertions generator maven plugin</a></p>
-				</section>
-
-				<section>
-					<h2>Custom assertions examples</h2>
-					<pre><code class="java"> 
- Observation obs1 = ...;
- Observation obs2 = ... ;
-
- // BEFORE          
- assertThat(obs1.getReliability().getValueAsEnum())
-           .isEqualTo(obs2.getReliability().getValueAsEnum());
- assertThat(obs1.getStatus().getValueAsEnum())
-           .isEqualTo(obs2.getStatus().getValueAsEnum());
-
- // AFTER          
- assertThat(obs1).hasReliability(obs2.getReliability())
-                 .hasStatus(obs2.getStatus());
-  </code></pre>
-
-					<p>Worflow :</p>
-					<p>Generate assertions / modified them (if needed) / add them to source control</p>
 				</section>
 
 				<section>
 					<h2>Using Condition</h2>
 					<p>Conditions are similar to Hamcrest matchers</p>
-					<pre><code class="java"> 
+					<pre><code class="java">
  Set&lt;String&gt; JEDIS = newLinkedHashSet("Luke", "Yoda", "Obiwan");
- Condition&lt;String&gt; jedi = new Condition&lt;&gt;(p -> JEDIS.contains(p), "jedi");
+ Condition&lt;String&gt; jedi = new Condition&lt;&gt;(name -> JEDIS.contains(name), "jedi");
 
  // use it
  assertThat("Yoda").is(jedi);
@@ -302,24 +218,26 @@
  // sith is another Condition
  assertThat("Solo").is(allOf(not(jedi), not(sith)));
  assertThat("Solo").isNot(anyOf(jedi, sith));
-
 </code></pre>
 
 				</section>
 
 				<section>
-					<section id="fragments">
-						<h2>More stuff </h2>
-						<ul>
-							<li>BDD assertions : use <i>then</i> as an alias of <i>assertThat</i></li>
-							<li>Soft assertions : record all assertion errors instead of stopping at the first one</li>
-							<li>assertj-joda-time : assertions for <i>DateTime</i> and <i>LocalDateTime</i></li>
-							<li>assertj-guava : assertions for <i>Multimap</i>, <i>Range</i>, <i>Optional</i> ...</li>
-							<li>assertj-db : assertions for relational databases</li>
-							<li>Lot of minor features ...</li>
-						</ul>
-					</section>
+					<h2>Other AssertJ features: </h2>
+					<ul>
+						<li>using <a href="http://joel-costigliola.github.io/assertj/assertj-core-features-highlight.html#custom-comparison-strategy">custom comparators</a> in assertions</li>
+						<li><a href="http://joel-costigliola.github.io/assertj/assertj-core-features-highlight.html#field-by-field-comparison">field by field comparison</a> (when objects don't override equals)</li>
+						<li><a href="http://joel-costigliola.github.io/assertj/assertj-assertions-generator.html">domain assertions</a></li>
+						<li><a href="http://joel-costigliola.github.io/assertj/assertj-core-features-highlight.html#flat-extracted-properties-assertion">flat(map) extracting</a></li>
+						<li>domain assertions generator</li>
+						<li><a href="http://joel-costigliola.github.io/assertj/assertj-guava.html">assertj guava assertions</a></li>
+						<li><a href="http://joel-costigliola.github.io/assertj/assertj-joda-time.html">assertj joda-time assertions</a></li>
+						<li><a href="http://joel-costigliola.github.io/assertj/assertj-db.html">assertj relational db assertions</a></li>
+						<li>...</li>
+					</ul>
+
 				</section>
+
 
 				<section>
 					<h1>QUESTIONS ?</h1>
