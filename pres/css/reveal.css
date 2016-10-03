@@ -91,6 +91,17 @@ body {
  * VIEW FRAGMENTS
  *********************************************/
 
+/* Added
+	width: 1200px !important;
+*/
+
+.reveal .slides {
+	width: 50% !important;
+}
+
+/* Added */
+
+
 .reveal .slides section .fragment {
 	opacity: 0;
 
