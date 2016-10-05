@@ -110,6 +110,18 @@
 				</section>
 
 				<section>
+					<h2>Don't do</h2>
+					<pre><code class="java">
+ // DON'T : that will not fail as you are not asserting anything
+ assertThat(true == false);
+
+ // DO :
+ assertThat(true == false).isFalse();
+					</code></pre>
+					<p>A FindBugs rule exists to check that mistake.</p>
+				</section>
+
+				<section>
 					<h2>Collection / array assertions</h2>
 					<pre><code class="java">
  assertThat(fellowshipOfTheRing).isNotEmpty()
@@ -144,7 +156,7 @@
 				</section>
 
 				<section>
-					<h2>Filter collection before assertions</h2>
+					<h2>Filter collection</h2>
 					<pre><code class="java">
  // let's check who are the Hobbit in fellowshipOfTheRing
  assertThat(fellowshipOfTheRing).filteredOn("race", HOBBIT)
@@ -229,6 +241,7 @@
 						<li><a href="http://joel-costigliola.github.io/assertj/assertj-core-features-highlight.html#field-by-field-comparison">field by field comparison</a> (when objects don't override equals)</li>
 						<li><a href="http://joel-costigliola.github.io/assertj/assertj-assertions-generator.html">domain assertions</a></li>
 						<li><a href="http://joel-costigliola.github.io/assertj/assertj-core-features-highlight.html#flat-extracted-properties-assertion">flat(map) extracting</a></li>
+						<li><a href="http://joel-costigliola.github.io/assertj/assertj-core-features-highlight.html#soft-assertions">soft assertions</a></li>
 						<li>domain assertions generator</li>
 						<li><a href="http://joel-costigliola.github.io/assertj/assertj-guava.html">assertj guava assertions</a></li>
 						<li><a href="http://joel-costigliola.github.io/assertj/assertj-joda-time.html">assertj joda-time assertions</a></li>
