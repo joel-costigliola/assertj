@@ -102,7 +102,7 @@
                             .isEqualToIgnoringCase("frodo");
 
  // use as to add test context information to ease understanding failure:
- assertThat(frodo.age).as("check %s's age", frodo.getName()).isEqualTo(100);
+ assertThat(frodo.age).as("check %s's age", frodo.getAge()).isEqualTo(100);
  // error message is:
    "[check Frodo's age] expected:<[100]> but was:<[33]>"
 					</code></pre>
