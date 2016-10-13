@@ -184,14 +184,14 @@
  assertThat(Optional.of("Test")).isPresent()
                                 .contains("Test");
 
-// use type specific assertion on the Optional value
+ // use type specific assertion on the Optional value
  assertThat(Optional.of("something")).hasValueSatisfying(s -> {
     // perform any number of assertions
     assertThat(s).startsWith("some")
                  .endsWith("thing");
  });
-
 </code></pre>
+					<p>AssertJ provides assertions for the new Java time API, Streams, CompletableFuture ...</p>
 				</section>
 				<section>
 					<h2>Java 8 love : testing exception</h2>
