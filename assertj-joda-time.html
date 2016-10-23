@@ -111,7 +111,7 @@ assertThat(dateTime).isAfterOrEqualTo(secondDateTime);
 // you can use Strings in comparisons to avoid a conversion (we do that for you)
 assertThat(new DateTime("2000-01-01")).isEqualTo("2000-01-01");
 
-// compare DateTimes ignoring seconds and milliseconds
+// compare DateTimes ignoring seconds and milliseconds in the comparison
 dateTime1 = new DateTime(2000, 1, 1, 23, 50, 0, 0, UTC);
 dateTime2 = new DateTime(2000, 1, 1, 23, 50, 10, 456, UTC);
 // assertion succeeds
