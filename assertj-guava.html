@@ -77,8 +77,8 @@
       <div class="col-lg-10 col-md-10 col-sm-10 text-left">
          <h1 class="page-header">AssertJ Guava assertions</h1>
 
-         <p>AssertJ assertions for <a href="https://github.com/google/guava">Guava</a> provides assertions for Guava types like <span class="small-code">Multimap</span>, <span class="small-code">Table</span>, <span class="small-code">Optional</span>, <span class="small-code">Range</span> or <span class="small-code">ByteSource</span>.</p>
-         <p>If you think some assertion is missing, please <a href="https://github.com/joel-costigliola/assertj-guava/issues">create an issue</a> or even better make a contribution!</p>
+         <p>AssertJ assertions for <a href="https://github.com/google/guava">Guava</a> provides assertions for Guava types like <span class="small-code">Multimap</span>, <span class="small-code">Multiset</span>, <span class="small-code">Table</span>, <span class="small-code">Optional</span>, <span class="small-code">Range</span> or <span class="small-code">ByteSource</span>.</p>
+         <p>If you think some assertion is missing, please <a href="https://github.com/joel-costigliola/assertj-guava/issues">create an issue</a> or even better contribute!</p>
          <p>AssertJ Guava is hosted on github : <a href="https://github.com/joel-costigliola/assertj-guava">https://github.com/joel-costigliola/assertj-guava</a>.</p>
 
          <h3 class="page-header"><span id="quickstart"></span>Guava assertions quickstart guide</h3>
@@ -91,11 +91,11 @@
   &lt;groupId&gt;org.assertj&lt;/groupId&gt;
   &lt;artifactId&gt;assertj-guava&lt;/artifactId&gt;
   &lt;!-- Use 2.x version if you rely on Java 7 / AssertJ Core 2.x --&gt;
-  &lt;version&gt;3.0.0&lt;/version&gt;
+  &lt;version&gt;3.1.0&lt;/version&gt;
   &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 
-         <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-guava|3.0.0|bundle">assertj-guava dependency declaration</a> for your tool.</p>
+         <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-guava|3.1.0|bundle">assertj-guava dependency declaration</a> for your tool.</p>
 
          <h4 class="page-header">2 - Statically import <span class="small-code">org.assertj.guava.api.Assertions.assertThat</span> ...</h4>
          <p>... and use your preferred IDE code completion after <span class="small-code">assertThat.</span></p>
@@ -112,6 +112,14 @@ actual.putAll("Spurs", newArrayList("Tony Parker", "Tim Duncan", "Manu Ginobili"
 
 assertThat(actual).containsKeys("Lakers", "Spurs");
 assertThat(actual).contains(entry("Lakers", "Kobe Bryant"), entry("Spurs", "Tim Duncan"));
+
+// Multiset assertions
+Multiset&lt;String&gt; actual = HashMultiset.create();   
+actual.add("shoes", 2);
+             
+assertThat(actual).contains(2, "shoes");
+assertThat(actual).containsAtLeast(1, "shoes");
+assertThat(actual).containsAtMost(3, "shoes");
 
 // Range assertions
 Range&lt;Integer&gt; range = Range.closed(10, 12);
@@ -146,7 +154,29 @@ assertThat(optional).isPresent().contains("Test");</code></pre>
 
          <p>Note that you can find more working examples in the <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/guava">guava package</a> of the <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project.</p>
 
-         <h3 class="page-header"><span id="3.0.0"/></span><span id="latest-release"/></span>Guava assertions 3.0.0 release</h3>
+         <h3 class="page-header"><span id="3.1.0"/></span><span id="latest-release"/></span>Guava assertions 3.1.0 release</h3>
+         <p>Release date : 2016-10-24</p>
+
+         <p>AssertJ Guava 3.1.0 requires Java 8 and AssertJ Core 3.x.</p>
+
+         <div class="release-section-category">Release notes:</div>
+         <ul>
+            <li>New Multiset assertions : <a href="assertj-guava.html#3.1.0-multiset"><span class="small-code">hasSameEntriesAs(Multimap other)</span></a>. <span class="contributor">(Max Daniline)</span></li>
+            <li>Don't impose a version range on Guava dependency.</li>
+         </ul>
+
+          <h4 class="page-header"><span id="3.1.0-multiset" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Multiset assertions.</h4>
+
+             <p>Allow to check the content of Multisets.</p>
+             <p>Example :</p>
+             <pre><code class="java"> Multiset&lt;String&gt; actual = HashMultiset.create();   
+ actual.add("shoes", 2);
+             
+ assertThat(actual).contains(2, "shoes");
+ assertThat(actual).containsAtLeast(1, "shoes");
+ assertThat(actual).containsAtMost(3, "shoes");</code></pre>         
+
+         <h3 class="page-header"><span id="3.0.0"/></span>Guava assertions 3.0.0 release</h3>
          <p>Release date : 2015-12-19</p>
 
          <p>AssertJ Guava 3.0.0 requires Java 8 and AssertJ Core 3.x.</p>
@@ -189,8 +219,7 @@ setMultimap.putAll("Bulls", newHashSet("Michael Jordan", "Scottie Pippen", "Derr
 assertThat(listMultimap).hasSameEntriesAs(setMultimap);
 
 // this assertion FAILS even though both multimaps have the same content
-assertThat(listMultimap).isEqualTo(setMultimap);
-</code></pre>         
+assertThat(listMultimap).isEqualTo(setMultimap);</code></pre>         
 
 <h4 class="page-header"><span id="2.0.0-containsAllEntriesOf" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> New Multimap assertion : <span class="small-code">containsAllEntriesOf(Multimap other)</span>.</h4>
 
@@ -208,8 +237,7 @@ other.putAll("Bulls", newHashSet("Michael Jordan", "Scottie Pippen"));
 assertThat(actual).containsAllEntriesOf(other);
 
 // this assertion FAILS as other does not contain "Spurs -> "Manu Ginobili" and "Bulls" -> "Derrick Rose"
-assertThat(other).containsAllEntriesOf(actual);
-</code></pre>   
+assertThat(other).containsAllEntriesOf(actual);</code></pre>   
 
 <h4 class="page-header"><span id="2.0.0-extractingValue" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow to run assertions on Optional value with <span class="small-code">extractingValue()</span>.</h4>
 
@@ -225,8 +253,7 @@ assertThat(optional).extractingValue()
    <pre><code class="java">Optional&lt;String&gt; optional = Optional.of("Bill");
 // extractingCharSequence allows to chain String specific assertions
 assertThat(optional).extractingCharSequence()
-                    .startsWith("Bi");
-</code></pre>         
+                    .startsWith("Bi");</code></pre>         
 
          <h3 class="page-header"><span id="1.3.1"/></span></span>Guava assertions 1.3.1 release</h3>
          <p>Release date : 2015-01-21</p>
@@ -330,10 +357,16 @@ assertThat("hello world").startsWith("hello");</code></pre>
 
          <p>Special thanks to AssertJ Guava contributors:</p>
          <ul>
-            <li>Marcin Kwaczyński</li>
-            <li>David Harris</li>
+            <li>Florent Biville</li>
+            <li>Max Daniline</li>
+            <li>William Delanoue</li>
+            <li>Frédéric Marcel Falliere</li>
             <li>Andrew Gaul</li>
             <li>Jan Gorman</li>
+            <li>Kornel Kiełczewski</li>
+            <li>David Harris</li>
+            <li>Marcin Kwaczyński</li>
+            <li>Pascal Schumacher</li>
          </ul>
 
       </div>
