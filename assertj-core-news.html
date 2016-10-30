@@ -85,6 +85,7 @@
    <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
       <h1 class="page-header">AssertJ Core latest news</h1>
       <ul>
+         <li><a href="#assertj-core-2.6.0">AssertJ core 2.6.0 release</a></li>
          <li><a href="#assertj-core-3.5.2">AssertJ core 3.5.2 release</a> (OSGi bugfix)</li>
          <li><a href="#assertj-core-3.5.0">AssertJ core 3.5.0/3.5.1 release</a> (requires Java 8)</li>
          <li><a href="#assertj-core-2.5.0">AssertJ core 2.5.0 release</a></li>
@@ -110,6 +111,191 @@
          <li><a href="#assertj-core-1.1.0">AssertJ core 1.1.0 release</a></li>
          <li><a href="#assertj-core-1.0.0">AssertJ core 1.0.0 release</a></li>
       </ul>
+
+<h3 class="page-header"><span id="assertj-core-2.6.0"></span>AssertJ Core 2.6.0 release : New and noteworthy</h3>
+
+   <p>Release date : 2016-11-xx</p>
+
+   <p>Many thanks to <span class="contributor">Class Augner</span>, <span class="contributor">Pascal Schumacher</span>, <span class="contributor">Mike Wilkes</span>, <span class="contributor">Kseniya Panasyuk</span>, <span class="contributor">Valeriy Vyrva</span>, <span class="contributor">Chris Arnott</span>, <span class="contributor">Gaël Lhez</span> and <span class="contributor">Filip Hrisafov</span> for their contributions.</p>
+
+   <h4 class="page-header"> Release notes</h4>
+   <div class="release-section-category">New features :</div>
+   <ul>
+      <li>Add <a href="#assertj-core-2.6.0-soft-failure-methods">failure methods</a> to soft assertions. <span class="contributor">(Class Augner)</span></li>
+      <li>Add <a href="#assertj-core-2.6.0-fail-string-format"><span class="small-code">fail(String failureMessage, Object... args)</span></a> following <span class="small-code">String#format</span> pattern. </li>
+      <li>Add <a href="#assertj-core-2.6.0-byte-array-int-overload-assertions">integer-based</a> method overloads to <span class="small-code">ByteArrayAssert</span>. <span class="contributor">(Pascal Schumacher)</span></li>
+      <li>Add <a href="#assertj-core-2.6.0-containsExactlyInAnyOrder"><span class="small-code">containsExactlyInAnyOrder</span></a> assertion for primitive arrays. <span class="contributor">(Pascal Schumacher)</span></li>
+      <li>Add <a href="#assertj-core-2.6.0-hasSuppressedException"><span class="small-code">hasSuppressedException</span></a> throwable assertion. </li>
+      <li>Add <a href="#assertj-core-2.6.0-hasNoSuppressedExceptions"><span class="small-code">hasNoSuppressedExceptions</span></a> throwable assertion. <span class="contributor">(Pascal Schumacher)</span></li>
+      <li>Add <a href="#assertj-core-2.6.0-hasEntrySatisfying"><span class="small-code">hasEntrySatisfying(K, Condition<? super V>)</span></a> map assertion. <span class="contributor">(Valeriy Vyrva)</span></li>
+      <li>Add <a href="#assertj-core-2.6.0-containsAnyOf"><span class="small-code">containsAnyOf(entries)</span></a> map assertion. </li>
+      <li>Add <a href="#assertj-core-2.6.0-isNotCloseTo"><span class="small-code">isNotCloseTo</span></a> number assertion. <span class="contributor">(Chris Arnott)</span></li>
+      <li>Add <a href="#assertj-core-2.6.0-isBlank"><span class="small-code">isBlank</span>/<span class="small-code">isNotBlank</span></a> string assertion. <span class="contributor">(Pascal Schumacher)</span></li>
+   </ul>
+   <div class="release-section-category">Improvements :</div>
+   <ul>
+      <li>Static fields should be ignored in field by field comparisons. <span class="contributor">(Mike Wilkes and Kseniya Panasyuk)</span></li>
+      <li>Add <span class="small-code">byLessThan</span> as an alias of <span class="small-code">within</span>/<span class="small-code">offset</span> for number assertions.</li>
+      <li><span class="small-code">usingComparatorForType</span> now accepts registered type subclasses instead of only an exact type match. (<span class="contributor">Filip Hrisafov</span>)</li>
+      <li>Limit to 1000 the number of elements from an iterable/array/map that are printed in an error message. (<span class="contributor">Filip Hrisafov</span>)</li>
+      <li>Add many missing tests. (<span class="contributor">Filip Hrisafov</span>)</li>
+      <li>Provide @SafeVarargs for <span class="small-code">ListAssert</span> and <span class="small-code">IterableAssert</span> (<span class="contributor">Gaël Lhez</span>)</li>
+      <li>Remove usage of <span class="small-code">java.beans.Introspection</span> to improve android compatibility. (<span class="contributor">Pascal Schumacher</span>)</li>
+      <li>Javadoc improvements ! (<span class="contributor">mainly by Pascal Schumacher</span>)</li>
+   </ul>
+   <div class="release-section-category">Fixed Bugs :</div>
+   <ul>
+      <li>Fixed issue on manifest generation removing maven-bundle-plugin duplicated execution. <span class="contributor">(Cristiano Gavião)</span></li>
+      <li>Increase priority of custom comparators in <span class="small-code">isEqualToComparingFieldByFieldRecursively</span> so that custom comparators can be used for collection types and maps. <span class="contributor">(Pascal Schumacher)</span></li>
+      <li><span class="small-code">containsExactly</span> was broken when the used comparison strategy found duplicate elements.</li>
+   </ul>
+
+  <h4 class="page-header"><span id="assertj-core-2.6.0-soft-failure-methods" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add failure methods to soft assertions</h4>
+
+  <p><span class="small-code">fail</span> methods have been added to soft assertions filling the gap with standard assertions.</p>
+  <p>Example :</p>
+  <pre><code class="java">SoftAssertions soft = new SoftAssertions();
+
+soft.assertThat("foo").startsWith("boo");
+assertThat(soft.errorsCollected()).hasSize(1);
+
+soft.fail("Fail");
+assertThat(soft.errorsCollected()).hasSize(2);</code></pre>
+
+  <h4 class="page-header"><span id="assertj-core-2.6.0-fail-string-format" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">fail(String failureMessage, Object... args)</span> following <span class="small-code">String#format</span> pattern</h4>
+
+  <p>The new <span class="small-code">fail</span> method allows to build the error message like <span class="small-code">String.format</span>.</p>
+  <p>Example :</p>
+  <pre><code class="java">try {
+  fail("I prefer %s over %s", "Batman", "Superman");
+} catch (AssertionError e) {
+  assertThat(e).hasMessage("I prefer Batman over Superman");
+}</code></pre>
+
+  <h4 class="page-header"><span id="assertj-core-2.6.0-byte-array-int-overload-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add integer-based method overloads to <span class="small-code">ByteArrayAssert</span></h4>
+
+  <p>Add int based version of assertions that were taking byte parameters.</p>
+  <p>One example (amongst many new assertions) :</p>
+  <pre><code class="java">// before
+assertThat(new byte[] { 1, 2, 3 }).contains((byte)1, (byte)2);
+// after
+assertThat(new byte[] { 1, 2, 3 }).contains(1, 2);</code></pre>
+
+  <h4 class="page-header"><span id="assertj-core-2.6.0-containsExactlyInAnyOrder" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">containsExactlyInAnyOrder</span> for primitive arrays</h4>
+
+  <p><span class="small-code">containsExactlyInAnyOrder</span> was initially added for iterable/object arrays, it is now available for primitive array, it verifies that the actual array contains exactly the given values and nothing else, in any order.</p>
+  <p>Example with <span class="small-code">int</span> array :</p>
+  <pre><code class="java">// this containsExactlyInAnyOrder assertion succeeds
+assertThat(new int[] { 1, 2, 1 }).containsExactlyInAnyOrder(1, 1, 2);
+ 
+// whereas this containsExactly fails given the same input since the order of values is different:
+assertThat(new int[] { 1, 2, 1 }).containsExactly(1, 1, 2);</code></pre>
+
+  <h4 class="page-header"><span id="assertj-core-2.6.0-hasSuppressedException" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">hasSuppressedException</span> throwable assertion</h4>
+
+  <p>Verifies that the actual <span class="small-code">Throwable</span> has a suppressed exception similar to the given one, that is with same type and message (no use of <span class="small-code">equals</span> method).</p>
+  <p>Example:</p>
+  <pre><code class="java">Throwable throwable = new Throwable();
+Throwable invalidArgException = new IllegalArgumentException("invalid argument");
+throwable.addSuppressed(invalidArgException);
+ 
+// These assertions succeed:
+assertThat(throwable).hasSuppressedException(invalidArgException);
+assertThat(throwable).hasSuppressedException(new IllegalArgumentException("invalid argument"));
+
+// These assertions fail:
+assertThat(throwable).hasSuppressedException(new IllegalArgumentException("invalid parameter"));
+assertThat(throwable).hasSuppressedException(new NullPointerException());</code></pre>
+
+  <h4 class="page-header"><span id="assertj-core-2.6.0-hasNoSuppressedExceptions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">hasNoSuppressedExceptions</span> throwable assertion</h4>
+
+  <p>Verifies that the actual <span class="small-code">Throwable</span> has the given exception in its suppressed exceptions.</p>
+  <p>Example:</p>
+  <pre><code class="java">Throwable throwable = new Throwable();
+
+// this assertion succeeds
+assertThat(new Throwable()).hasNoSuppressedExceptions();
+ 
+// this one fails
+throwable.addSuppressed(new IllegalArgumentException());
+assertThat(throwable).hasNoSuppressedExceptions();</code></pre>
+
+  <h4 class="page-header"><span id="assertj-core-2.6.0-hasEntrySatisfying" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">hasEntrySatisfying(K, Condition<? super V>)</span> map assertion</h4>
+
+  <p>Verifies that the actual <span class="small-code">map</span> contains a value for the given key that satisfies the given <a href="/assertj/assertj-core-conditions.html"><span class="small-code">Condition</span></a>.</p>
+  <p>Example:</p>
+  <pre><code class="java">Map&lt;Ring, TolkienCharacter&gt; ringBearers = new HashMap&lt;&gt;();
+ringBearers.put(nenya, galadriel);
+ringBearers.put(narya, gandalf);
+ringBearers.put(vilya, elrond);
+ringBearers.put(oneRing, frodo);
+ 
+Condition&lt;TolkienCharacter&gt; elfBearer = new Condition&lt;&gt;(tc -&gt; tc.getRace() == ELF, "an elf bearer");
+
+// this assertion will pass
+assertThat(ringBearers).hasEntrySatisfying(nenya, elfBearer);
+
+// this assertion will fail
+assertThat(ringBearers).hasEntrySatisfying(oneRing, elfBearer);</code></pre>
+
+  <h4 class="page-header"><span id="assertj-core-2.6.0-containsAnyOf" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">containsAnyOf(entries>)</span> map assertion</h4>
+
+  <p>Verifies that the actual <span class="small-code">map</span> contains at least one of the given entries.</p>
+  <p>Example:</p>
+  <pre><code class="java">Map&lt;Ring, TolkienCharacter&gt; ringBearers = new HashMap&lt;&gt;();
+ringBearers.put(nenya, galadriel);
+ringBearers.put(narya, gandalf);
+ringBearers.put(vilya, elrond);
+ringBearers.put(oneRing, frodo);
+ 
+// assertions will pass
+assertThat(ringBearers).containsAnyOf(entry(oneRing, frodo), entry(oneRing, sauron));
+ 
+// assertions will fail
+assertThat(ringBearers).containsAnyOf(entry(oneRing, gandalf), entry(oneRing, aragorn));</code></pre>
+
+  <h4 class="page-header"><span id="assertj-core-2.6.0-isNotCloseTo" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">isNotCloseTo</span> number assertion</h4>
+
+  <p>Verifies that the actual number is not close to the given one by less than the given offset. If the difference is equal to the offset value, the assertion fails.</p>
+  <p>Example with <span class="small-code">int</span>:</p>
+  <pre><code class="java">import static org.assertj.core.api.Assertions.byLessThan; 
+import static org.assertj.core.api.Assertions.withinPercentage; 
+
+// assertions will pass:
+assertThat(5).isNotCloseTo(7, byLessThan(1));
+assertThat(11).isNotCloseTo(10, withinPercentage(5));
+
+// assertions will fail
+assertThat(5).isNotCloseTo(7, byLessThan(2));
+assertThat(5).isNotCloseTo(7, byLessThan(3));
+assertThat(11).isNotCloseTo(10, withinPercentage(10));
+assertThat(11).isNotCloseTo(10, withinPercentage(20));</code></pre>
+
+  <h4 class="page-header"><span id="assertj-core-2.6.0-isBlank" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">isBlank</span>/<span class="small-code">isNotBlank</span> string assertions</h4>
+
+  <p>Verifies that the actual <span class="small-code">CharSequence</span> is blank, i.e. that it contains only whitespace characters, there are two variations of this assertion: <span class="small-code">isJavaBlank</span> with whitespace defined by java <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Character.html?is-external=true#isWhitespace(char)">Character#isWhitespace(char)</a> and <span class="small-code">isBlank</span> with whitespace defined according to the latest Unicode standard.</p>
+  <p><span class="small-code">isNotBlank</span> is (obviously) the opposite assertion of <span class="small-code">isBlank</span>.</p>
+  <p>Examples:</p>
+  <pre><code class="java"> // these assertions succeed:
+assertThat(" ").isBlank();
+assertThat("     ").isBlank();
+assertThat("a").isNotBlank();
+assertThat(" b").isNotBlank();
+assertThat("").isNotBlank(); 
+assertThat((String) null).isNotBlank();
+
+// these ones fail:
+assertThat("a").isBlank();
+assertThat(" b").isBlank();
+assertThat("").isBlank(); 
+assertThat((String) null).isBlank(); 
+assertThat(" ").isNotBlank();
+assertThat("     ").isNotBlank();</code></pre>
+
+
+
+
+
 
 <h3 class="page-header"><span id="assertj-core-3.5.2"></span>AssertJ Core 3.5.2 bugfix release</h3>
 
