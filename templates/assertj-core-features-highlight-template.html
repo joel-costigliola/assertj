@@ -295,9 +295,16 @@ public void host_dinner_party_where_nobody_dies() {
      3) [Candlestick] expected:<'[pristine]'> but was:<'[bent]'>
      4) [Professor] expected:<'[well kempt]'> but was:<'[bloodied and dishevelled]'></code></pre>
 
-      <p>AssertJ also provides a JUnit rule that takes care of automatically calling soft assertions global verification :</p>
+      <p>AssertJ also provides a few ways to avoid to have to call <span class="small-code">softly.assertAll()</span> manually:</p>
+      <ul>
+         <li><a href="#JUnitSoftAssertions"><span class="small-code">JUnitSoftAssertions</span> with a JUnit rule</a></li>
+         <li><a href="#AutoCloseableSoftAssertions"><span class="small-code">AutoCloseableSoftAssertions</span> </a></li>
+         <li><a href="#assertSoftly">Using the static <span class="small-code">assertSoftly</span> method</a></li>
+      </ul>
 
-  <pre><code class="java">@Rule
+      <p><span class="small-code">JUnitSoftAssertions</span> example:</p>
+
+  <span id="JUnitSoftAssertions"></span><pre><code class="java">@Rule
 public final JUnitSoftAssertions softly = new JUnitSoftAssertions();
 
 @Test
@@ -315,7 +322,43 @@ public void host_dinner_party_where_nobody_dies() {
    // No need to call softly.assertAll(), it is automatically done by JUnitSoftAssertions rule
 }</code></pre>
 
-      <p>This works only for JUnit. In TestNG it is not possible to make the global verification in an @AfterMethod method because if it throws an exception, TestNG skips all subsequent tests.</p>
+      <p><span class="small-code">AutoCloseableSoftAssertions</span> example:</p>
+
+  <span id="AutoCloseableSoftAssertions"></span><pre><code class="java">@Test
+public void host_dinner_party_where_nobody_dies() {
+   Mansion mansion = new Mansion();
+   mansion.hostPotentiallyMurderousDinnerParty();
+   try (AutoCloseableSoftAssertions softly = new AutoCloseableSoftAssertions()) {
+      softly.assertThat(mansion.guests()).as("Living Guests").isEqualTo(7);
+      softly.assertThat(mansion.kitchen()).as("Kitchen").isEqualTo("clean");
+      softly.assertThat(mansion.library()).as("Library").isEqualTo("clean");
+      softly.assertThat(mansion.revolverAmmo()).as("Revolver Ammo").isEqualTo(6);
+      softly.assertThat(mansion.candlestick()).as("Candlestick").isEqualTo("pristine");
+      softly.assertThat(mansion.colonel()).as("Colonel").isEqualTo("well kempt");
+      softly.assertThat(mansion.professor()).as("Professor").isEqualTo("well kempt");
+      // no need to call assertAll, it is done when softly is closed.
+   }
+}</code></pre>
+
+      <p><span class="small-code">assertSoftly</span> example:</p>
+
+  <span id="assertSoftly"></span><pre><code class="java">@Test
+public void host_dinner_party_where_nobody_dies() {
+   Mansion mansion = new Mansion();
+   mansion.hostPotentiallyMurderousDinnerParty();
+   SoftAssertions.assertSoftly(softly -> {
+      softly.assertThat(mansion.guests()).as("Living Guests").isEqualTo(7);
+      softly.assertThat(mansion.kitchen()).as("Kitchen").isEqualTo("clean");
+      softly.assertThat(mansion.library()).as("Library").isEqualTo("clean");
+      softly.assertThat(mansion.revolverAmmo()).as("Revolver Ammo").isEqualTo(6);
+      softly.assertThat(mansion.candlestick()).as("Candlestick").isEqualTo("pristine");
+      softly.assertThat(mansion.colonel()).as("Colonel").isEqualTo("well kempt");
+      softly.assertThat(mansion.professor()).as("Professor").isEqualTo("well kempt");
+      // no need to call assertAll, it is done by assertSoftly.
+   });
+}</code></pre>
+
+      <p>Note that in TestNG it is not possible to make the global verification in an <span class="small-code">@AfterMethod</span> method because if it throws an exception, TestNG skips all subsequent tests.</p>
 
       <h3 class="page-header"><span id="file-content-string-assertions"></span><i class="fa fa-star"></i> Using String assertions on the content of a file</h3>
 

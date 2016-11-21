@@ -85,6 +85,7 @@
    <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
       <h1 class="page-header">AssertJ Core latest news</h1>
       <ul>
+         <li><a href="#assertj-core-3.6.0">AssertJ core 3.6.0 release</a></li>
          <li><a href="#assertj-core-2.6.0">AssertJ core 2.6.0 release</a></li>
          <li><a href="#assertj-core-3.5.2">AssertJ core 3.5.2 release</a> (OSGi bugfix)</li>
          <li><a href="#assertj-core-3.5.0">AssertJ core 3.5.0/3.5.1 release</a> (requires Java 8)</li>
@@ -111,6 +112,170 @@
          <li><a href="#assertj-core-1.1.0">AssertJ core 1.1.0 release</a></li>
          <li><a href="#assertj-core-1.0.0">AssertJ core 1.0.0 release</a></li>
       </ul>
+
+
+<h3 class="page-header"><span id="assertj-core-3.6.0"></span>AssertJ Core 3.6.0 for Java 8 release : New and noteworthy</h3>
+
+   <p>Release date : 2016-11-xx</p>
+   <p>This release includes all changes from <a href="#assertj-core-2.6.0">AssertJ core 2.6.0</a> and adds the following that are Java 8 specific.</p>
+
+   <p>Thanks to <span class="contributor">Pascal Schumacher</span>, <span class="contributor">Mike Kobit</span>, <span class="contributor">Clément Mathieu</span>, <span class="contributor">Kseniya Panasyuk</span>, <span class="contributor">Gaël Lhez</span>, <span class="contributor">Valeriy Vyrva</span> and <span class="contributor">Filip Hrisafov</span> for their contributions.</p>
+
+   <h4 class="page-header"> Release notes</h4>
+   <div class="release-section-category">New features :</div>
+   <ul>
+      <li>Add <a href="assertj-core-news.html#assertj-core-3.6.0-allSatisfy"><span class="small-code">allSatisfy</span> iterable/array assertion</a>. <span class="contributor">(Kseniya Panasyuk)</span></li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-3.6.0-isInstanceOfSatisfying"><span class="small-code">isInstanceOfSatisfying</span></a> assertion.</li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-3.6.0-map-flatmap"><span class="small-code">map</span> and <span class="small-code">flatMap</span></a> to ease using optional assertions. <span class="contributor">(Kseniya Panasyuk)</span></li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-3.6.0-hasEntrySatisfying"><span class="small-code">hasEntrySatisfying</span></a> map assertion. <span class="contributor">(Valeriy Vyrva)</span></li>
+      <li>Add <a href="assertj-core-news.html#assertj-core-3.6.0-hasValueSatisfying"><span class="small-code">hasValueSatisfying</span></a> optional assertion. <span class="contributor">(Kseniya Panasyuk)</span></li>
+      <li>Add static <a href="assertj-core-news.html#assertj-core-3.6.0-assertSoftly"><span class="small-code">assertSoftly</span></a> method for soft assertions. <span class="contributor">(Jilles Van Gurp)</span></li>
+   </ul>
+   <div class="release-section-category">Improvements :</div>
+   <ul>
+      <li>Parameterize <span class="small-code">registerFormatterForType</span> with type. <span class="contributor">(Kseniya Panasyuk)</span></li>
+      <li><span class="small-code">Predicate</span> assertions error message improvements. <span class="contributor">(Filip Hrisafov)</span></li>
+      <li>Allow to pass a <a href="assertj-core-news.html#assertj-core-3.6.0-predicate-description"><span class="small-code">Predicate</span> description</a> to <span class="small-code">allMatch</span> iterable/array assertion. <span class="contributor">(Filip Hrisafov)</span></li>
+      <li>Varargs warning removal. <span class="contributor">(Gaël Lhez)</span></li>
+      <li>Add missing <span class="small-code">assertThat</span> in <span class="small-code">WithAssertions</span>. <span class="contributor">(Clément Mathieu)</span></li>
+      <li>A bunch of code cleanup and javadoc improvements. <span class="contributor">(Pascal Schumacher, Mike Kobit)</span></li>
+   </ul>
+   <div class="release-section-category">Fixed Bugs :</div>
+   <ul>
+      <li>Fix stack overflow for completable future <span class="small-code">toStringOf</span> joining on another future that cycles back to the first. <span class="contributor">(Kseniya Panasyuk)</span></li>
+   </ul>
+
+   <h4 class="page-header"><span id="assertj-core-3.6.0-isInstanceOfSatisfying" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">isInstanceOfSatisfying</span> assertion</h4>
+
+   <p>Verifies that the actual value is an instance of the given type satisfying the given requirements expressed as a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html">Consumer</a>.</p>
+   <p>This is typically used when one knows the real type of the object under test and wants to perform strongly typed assertions without having to do an explicit cast.</p>
+
+   <p>Example : </p>
+   <pre><code class="java">// Build Jedi but declare them as Object (second parameter is the light saber color)
+Object yoda = new Jedi("Yoda", "Green");
+Object luke = new Jedi("Luke Skywalker", "Green");
+
+Consumer&lt;Jedi&gt; jediRequirements = jedi -&gt; {
+   assertThat(jedi.getLightSaberColor()).isEqualTo("Green");
+   assertThat(jedi.getName()).doesNotContain("Dark");
+};
+
+// assertions succeed:
+assertThat(yoda).isInstanceOfSatisfying(Jedi.class, jediRequirements);
+assertThat(luke).isInstanceOfSatisfying(Jedi.class, jediRequirements);</code></pre>
+
+
+   <h4 class="page-header"><span id="assertj-core-3.6.0-allSatisfy" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">allSatisfy</span> iterable/array assertion</h4>
+
+   <p>Verifies that all the elements satisfy given requirements expressed as a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html">Consumer</a>, this is typically used to perform a group of assertions on every elements of the iterable/array under test.</p>
+
+   <p>Example : </p>
+   <pre><code class="java">assertThat(myIcelanderFriends).extracting(Person::getAddress)
+                              .allSatisfy(person -&gt; {
+                                 assertThat(person.getCountry()).isEqualTo("Iceland");
+                                 assertThat(person.getPhoneCountryCode()).isEqualTo("+354");
+                              });</code></pre>
+
+
+   <h4 class="page-header"><span id="assertj-core-3.6.0-map-flatmap" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">map</span> and <span class="small-code">flatMap</span> to ease using optional assertions</h4>
+
+   <p>Call <span class="small-code">map</span>/<span class="small-code">flatMap</span> on the <span class="small-code">Optional</span> under test, assertions chained afterwards are performed on the Optional resulting from the <span class="small-code">map</span>/<span class="small-code">flatMap</span> call.</p>
+
+   <p>Example : </p>
+   <pre><code class="java">// map example
+assertThat(Optional.of("42")).contains("42")
+                             .map(String::length)
+                             .contains(2);
+
+// flatMap examples
+Function&lt;String, Optional&lt;String&gt;&gt; UPPER_CASE_OPTIONAL_STRING 
+          = s -&gt; s == null ? Optional.empty() : Optional.of(s.toUpperCase());
+ 
+assertThat(Optional.of("something")).contains("something")
+                                    .flatMap(UPPER_CASE_OPTIONAL_STRING)
+                                    .contains("SOMETHING");
+
+assertThat(Optional.&lt;String&gt; empty()).flatMap(UPPER_CASE_OPTIONAL_STRING)
+                                     .isEmpty();
+
+assertThat(Optional.&lt;String&gt; ofNullable(null)).flatMap(UPPER_CASE_OPTIONAL_STRING)
+                                              .isEmpty();</code></pre>
+
+  <h4 class="page-header"><span id="assertj-core-3.6.0-hasEntrySatisfying" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">hasEntrySatisfying(K, Consumer<? super V>)</span> map assertion</h4>
+
+  <p>Verifies that the actual <span class="small-code">Map</span> contains the value for given key that satisfy the given requirements expressed as a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html">Consumer</a>.</p>
+  <p>Example:</p>
+  <pre><code class="java">Map&lt;Ring, TolkienCharacter&gt; ringBearers = new HashMap&lt;&gt;();
+ringBearers.put(nenya, galadriel);
+ringBearers.put(narya, gandalf);
+ringBearers.put(vilya, elrond);
+ringBearers.put(oneRing, frodo);
+ 
+// this assertion will pass
+assertThat(ringBearers).hasEntrySatisfying(nenya, character -> {
+   assertThat(character.getName()).contains("driel");
+   assertThat(character.getRace()).isEqualTo(ELF);
+});
+
+// this assertion will fail
+assertThat(ringBearers).hasEntrySatisfying(oneRing, character -> {
+   assertThat(character.getRace()).isEqualTo(ELF);
+});</code></pre>
+
+  <h4 class="page-header"><span id="assertj-core-3.6.0-hasValueSatisfying" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">hasValueSatisfying</span></a> optional assertion</h4>
+
+  <p>Verifies that the actual <span class="small-code">Optional</span> contains a value which satisfies the given Condition.</p>
+  <p>Example:</p>
+  <pre><code class="java">Condition&lt;TolkienCharacter&gt; isAnElf = new Condition&lt;&gt;(character -> character.getRace() == ELF, "an elf"); 
+
+TolkienCharacter legolas = new TolkienCharacter("Legolas", 1000, ELF);
+TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
+
+// assertion succeeds
+assertThat(Optional.of(legolas)).hasValueSatisfying(isAnElf);
+</code></pre>
+
+  <h4 class="page-header"><span id="assertj-core-3.6.0-assertSoftly" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add static <span class="small-code">assertSoftly</span> method for soft assertions</h4>
+
+  <p>This is an alternative to <a href="http://joel-costigliola.github.io/assertj/assertj-core-features-highlight.html#JUnitSoftAssertions"><span class="small-code">JUnitSoftAssertions</a> and <a href="http://joel-costigliola.github.io/assertj/assertj-core-features-highlight.html#AutoCloseableSoftAssertions">AutoCloseableSoftAssertions</span></a> to avoid having to call assertAll manually.</p>
+  <p>Example:</p>
+  <pre><code class="java">@Test
+public void host_dinner_party_where_nobody_dies() {
+   Mansion mansion = new Mansion();
+   mansion.hostPotentiallyMurderousDinnerParty();
+   SoftAssertions.assertSoftly(softly -> {
+      softly.assertThat(mansion.guests()).as("Living Guests").isEqualTo(7);
+      softly.assertThat(mansion.kitchen()).as("Kitchen").isEqualTo("clean");
+      softly.assertThat(mansion.library()).as("Library").isEqualTo("clean");
+      softly.assertThat(mansion.revolverAmmo()).as("Revolver Ammo").isEqualTo(6);
+      softly.assertThat(mansion.candlestick()).as("Candlestick").isEqualTo("pristine");
+      softly.assertThat(mansion.colonel()).as("Colonel").isEqualTo("well kempt");
+      softly.assertThat(mansion.professor()).as("Professor").isEqualTo("well kempt");
+      // no need to call assertAll, it is done by assertSoftly.
+   });
+}</code></pre>
+
+
+  <h4 class="page-header"><span id="assertj-core-3.6.0-predicate-description" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow to pass a <span class="small-code">Predicate</span> description</a> to <span class="small-code">allMatch</span> iterable/array assertion</h4>
+
+  <p>Improves the <span class="small-code">allMatch</span> iterable/array assertion error message by passing a description of the given predicate.</p>
+  <p>Assertion error message example:</p>
+  <pre><code class="java">List&lt;TolkienCharacter&gt; hobbits = newArrayList(frodo, sam, pippin, sauron);
+
+// assertion fail (as expected) ... 
+assertThat(hobbits).allMatch(character -> character.getRace() == HOBBIT, "hobbits");</code></pre>
+
+<pre><code  class="C">//... giving this error message:
+java.lang.AssertionError: 
+Expecting all elements of:
+  &lt;[Frodo 33 years old Hobbit,
+    Sam 38 years old Hobbit,
+    Pippin 28 years old Hobbit,
+    Sauron 50000 years old Maia]&gt;
+to match 'hobbits' predicate but this element did not:
+  &lt;Sauron 50000 years old Maia&gt;</code></pre>
+
+
 
 <h3 class="page-header"><span id="assertj-core-2.6.0"></span>AssertJ Core 2.6.0 release : New and noteworthy</h3>
 
