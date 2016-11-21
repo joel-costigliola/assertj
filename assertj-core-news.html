@@ -170,8 +170,7 @@ assertThat(luke).isInstanceOfSatisfying(Jedi.class, jediRequirements);</code></p
    <p>Verifies that all the elements satisfy given requirements expressed as a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html">Consumer</a>, this is typically used to perform a group of assertions on every elements of the iterable/array under test.</p>
 
    <p>Example : </p>
-   <pre><code class="java">assertThat(myIcelanderFriends).extracting(Person::getAddress)
-                              .allSatisfy(person -&gt; {
+   <pre><code class="java">assertThat(myIcelanderFriends).allSatisfy(person -&gt; {
                                  assertThat(person.getCountry()).isEqualTo("Iceland");
                                  assertThat(person.getPhoneCountryCode()).isEqualTo("+354");
                               });</code></pre>
@@ -188,9 +187,9 @@ assertThat(Optional.of("42")).contains("42")
                              .contains(2);
 
 // flatMap examples
-Function&lt;String, Optional&lt;String&gt;&gt; UPPER_CASE_OPTIONAL_STRING 
+Function&lt;String, Optional&lt;String&gt;&gt; UPPER_CASE_OPTIONAL_STRING
           = s -&gt; s == null ? Optional.empty() : Optional.of(s.toUpperCase());
- 
+
 assertThat(Optional.of("something")).contains("something")
                                     .flatMap(UPPER_CASE_OPTIONAL_STRING)
                                     .contains("SOMETHING");
@@ -210,7 +209,7 @@ ringBearers.put(nenya, galadriel);
 ringBearers.put(narya, gandalf);
 ringBearers.put(vilya, elrond);
 ringBearers.put(oneRing, frodo);
- 
+
 // this assertion will pass
 assertThat(ringBearers).hasEntrySatisfying(nenya, character -> {
    assertThat(character.getName()).contains("driel");
@@ -226,7 +225,7 @@ assertThat(ringBearers).hasEntrySatisfying(oneRing, character -> {
 
   <p>Verifies that the actual <span class="small-code">Optional</span> contains a value which satisfies the given Condition.</p>
   <p>Example:</p>
-  <pre><code class="java">Condition&lt;TolkienCharacter&gt; isAnElf = new Condition&lt;&gt;(character -> character.getRace() == ELF, "an elf"); 
+  <pre><code class="java">Condition&lt;TolkienCharacter&gt; isAnElf = new Condition&lt;&gt;(character -> character.getRace() == ELF, "an elf");
 
 TolkienCharacter legolas = new TolkienCharacter("Legolas", 1000, ELF);
 TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
@@ -262,11 +261,11 @@ public void host_dinner_party_where_nobody_dies() {
   <p>Assertion error message example:</p>
   <pre><code class="java">List&lt;TolkienCharacter&gt; hobbits = newArrayList(frodo, sam, pippin, sauron);
 
-// assertion fails (as expected) ... 
+// assertion fails (as expected) ...
 assertThat(hobbits).allMatch(character -> character.getRace() == HOBBIT, "hobbits");</code></pre>
 
 <pre><code  class="C">//... giving this error message:
-java.lang.AssertionError: 
+java.lang.AssertionError:
 Expecting all elements of:
   &lt;[Frodo 33 years old Hobbit,
     Sam 38 years old Hobbit,
@@ -352,7 +351,7 @@ assertThat(new byte[] { 1, 2, 3 }).contains(1, 2);</code></pre>
   <p>Example with <span class="small-code">int</span> array :</p>
   <pre><code class="java">// this containsExactlyInAnyOrder assertion succeeds
 assertThat(new int[] { 1, 2, 1 }).containsExactlyInAnyOrder(1, 1, 2);
- 
+
 // whereas this containsExactly fails given the same input since the order of values is different:
 assertThat(new int[] { 1, 2, 1 }).containsExactly(1, 1, 2);</code></pre>
 
@@ -363,7 +362,7 @@ assertThat(new int[] { 1, 2, 1 }).containsExactly(1, 1, 2);</code></pre>
   <pre><code class="java">Throwable throwable = new Throwable();
 Throwable invalidArgException = new IllegalArgumentException("invalid argument");
 throwable.addSuppressed(invalidArgException);
- 
+
 // These assertions succeed:
 assertThat(throwable).hasSuppressedException(invalidArgException);
 assertThat(throwable).hasSuppressedException(new IllegalArgumentException("invalid argument"));
@@ -380,7 +379,7 @@ assertThat(throwable).hasSuppressedException(new NullPointerException());</code>
 
 // this assertion succeeds
 assertThat(new Throwable()).hasNoSuppressedExceptions();
- 
+
 // this one fails
 throwable.addSuppressed(new IllegalArgumentException());
 assertThat(throwable).hasNoSuppressedExceptions();</code></pre>
@@ -394,7 +393,7 @@ ringBearers.put(nenya, galadriel);
 ringBearers.put(narya, gandalf);
 ringBearers.put(vilya, elrond);
 ringBearers.put(oneRing, frodo);
- 
+
 Condition&lt;TolkienCharacter&gt; elfBearer = new Condition&lt;&gt;(tc -&gt; tc.getRace() == ELF, "an elf bearer");
 
 // this assertion will pass
@@ -412,10 +411,10 @@ ringBearers.put(nenya, galadriel);
 ringBearers.put(narya, gandalf);
 ringBearers.put(vilya, elrond);
 ringBearers.put(oneRing, frodo);
- 
+
 // assertion will pass
 assertThat(ringBearers).containsAnyOf(entry(oneRing, frodo), entry(oneRing, sauron));
- 
+
 // assertion will fail
 assertThat(ringBearers).containsAnyOf(entry(oneRing, gandalf), entry(oneRing, aragorn));</code></pre>
 
@@ -423,8 +422,8 @@ assertThat(ringBearers).containsAnyOf(entry(oneRing, gandalf), entry(oneRing, ar
 
   <p>Verifies that the actual number is not close to the given one by less than the given offset. If the difference is equal to the offset value, the assertion fails.</p>
   <p>Example with <span class="small-code">int</span>:</p>
-  <pre><code class="java">import static org.assertj.core.api.Assertions.byLessThan; 
-import static org.assertj.core.api.Assertions.withinPercentage; 
+  <pre><code class="java">import static org.assertj.core.api.Assertions.byLessThan;
+import static org.assertj.core.api.Assertions.withinPercentage;
 
 // assertions will pass:
 assertThat(5).isNotCloseTo(7, byLessThan(1));
@@ -446,14 +445,14 @@ assertThat(" ").isBlank();
 assertThat("     ").isBlank();
 assertThat("a").isNotBlank();
 assertThat(" b").isNotBlank();
-assertThat("").isNotBlank(); 
+assertThat("").isNotBlank();
 assertThat((String) null).isNotBlank();
 
 // these ones fail:
 assertThat("a").isBlank();
 assertThat(" b").isBlank();
-assertThat("").isBlank(); 
-assertThat((String) null).isBlank(); 
+assertThat("").isBlank();
+assertThat((String) null).isBlank();
 assertThat(" ").isNotBlank();
 assertThat("     ").isNotBlank();</code></pre>
 
@@ -593,7 +592,7 @@ assertThat(STANDARD_REPRESENTATION.toStringOf(longNumber)).isEqualTo("$123$");
 
 // The following assertion fails ...
 assertThat(123L).isEqualTo(456L);
-// ... with error : 
+// ... with error :
 expected:<$456$> but was:<$123$></code></pre>
 
   <h4 class="page-header"><span id="assertj-core-3.5.0-hasOnlyOneElementSatisfying" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">hasOnlyOneElementSatisfying</span> iterable/array assertions</h4>
@@ -711,7 +710,7 @@ assertThat(fellowshipOfTheRing).flatExtracting("name", "age", "race.name")
                                .contains("Boromir", 37, "Man",
                                          "Sam", 38, "Hobbit",
                                          "Legolas", 1000, "Elf");
-// classic extraction : 
+// classic extraction :
 // - needs a tuple to check values
 // - stricter assertion -> using tuple("Legolas", 38, "Hobbit") would fail
 assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name")
@@ -722,13 +721,13 @@ assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name")
   <h4 class="page-header"><span id="assertj-core-2.5.0-navigational-assertions-element" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Navigate and perform assertions on an <span class="small-code">Iterable</span>'s elements</h4>
 
   <p>The idea is to allow navigating to any <span class="small-code">Iterable</span> element in order to perform assertions on it, which are <span class="small-code">Object</span> assertions by default. If you want specific ones like <span class="small-code">String</span> assertions you will have to provide the corresponding <span class="small-code">Assert</span> class i.e. <span class="small-code">StringAssert</span> (the reason being Java generics limitations).</p>
-  <p>Possible navigations:</p>  
+  <p>Possible navigations:</p>
   <ul>
       <li>first()</li>
       <li>last()</li>
       <li>element(index)</li>
   </ul>
-  <p>Navigating back to the <span class="small-code">Iterable</span> is not supported.</p>  
+  <p>Navigating back to the <span class="small-code">Iterable</span> is not supported.</p>
 
   <p>Examples :</p>
   <pre><code class="java">Iterable&lt;String&gt; hobbitsNames = newArrayList("frodo", "sam", "pippin");
@@ -803,18 +802,18 @@ assertThat(ringBearers).size()
     <li>per assertion scope : <span class="small-code">assertThat(actual).withRepresentation(myRepresentation)</span></li>
   </ul>
   <p>Examples :</p>
-  <pre><code class="java">private class Example {} // dummy class 
+  <pre><code class="java">private class Example {} // dummy class
 
 private class CustomRepresentation extends StandardRepresentation {
- 
-  // override needed to hook non predefined type formatting  
+
+  // override needed to hook non predefined type formatting
   @Override
   public String toStringOf(Object o) {
     if (o instanceof Example) return "Example";
-    // fallback to default formatting.  
+    // fallback to default formatting.
     return super.toStringOf(o);
   }
-   
+
   // override a predefined type formatting : String
   @Override
   protected String toStringOf(String str) {
@@ -824,13 +823,13 @@ private class CustomRepresentation extends StandardRepresentation {
   <p>Global scope custom representation :</p>
   <pre><code class="java">// register CustomRepresentation only once
 Assertions.useRepresentation(new CustomRepresentation());
- 
-// this assertion fails ...  
+
+// this assertion fails ...
 assertThat(new Example()).isNull();
 // ... with error :
 expected:<[null]> but was:<[Example]>
- 
-// this one fails ... 
+
+// this one fails ...
 assertThat("foo").startsWith("bar");
 // ... with error :
 Expecting:
@@ -842,13 +841,13 @@ to start with:
   <pre><code class="java">// we need to register CustomRepresentation for each assertions
  Representation customRepresentation = new CustomRepresentation();
 
-// this assertion fails ...  
+// this assertion fails ...
 assertThat(new Example()).withRepresentation(customRepresentation)
                          .isNull();
 // ... with error :
 expected:<[null]> but was:<[Example]>
- 
-// this one fails ... 
+
+// this one fails ...
 assertThat("foo").withRepresentation(customRepresentation)
                  .startsWith("bar");
 // ... with error :
@@ -862,11 +861,11 @@ to start with:
   <p>Verifies that the actual object has no <span class="small-code">Null</span> fields or properties (inherited ones are taken into account) except the given ones (if any).</p>
 
   <p>Example :</p>
-  <pre><code class="java">// all TolkienCharacter fields are set 
+  <pre><code class="java">// all TolkienCharacter fields are set
 TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
 assertThat(frodo).hasNoNullFieldsOrProperties();
 
-// 'name' fields is not set 
+// 'name' fields is not set
 TolkienCharacter hobbitWithoutName = new TolkienCharacter(null, 38, HOBBIT);
 assertThat(hobbitWithoutName).hasNoNullFieldsOrPropertiesExcept("name");</code></pre>
 
@@ -935,14 +934,14 @@ assertThat(asList(jon, sam)).usingRecursiveFieldByFieldElementComparator()
   <h4 class="page-header"><span id="assertj-core-2.5.0-usingComparatorForElementFieldsWithType" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow to register a specific comparator for a <i>type</i> in field by field element of array/iterable comparisons</h4>
 
   <p>Allows to set a comparator to compare properties or fields of elements of an array/iterable with the given type.</p>
-  <p>Comparators need to be specified by <span class="small-code">usingComparatorForElementFieldsWithType</span> <b>before</b> calling any of:                   
-  <ul>                                                                                                        
-  <li><span class="small-code">usingFieldByFieldElementComparator</span></li>                                                        
-  <li><span class="small-code">usingElementComparatorOnFields</span></li>                                                            
-  <li><span class="small-code">usingElementComparatorIgnoringFields</span></li>                                                      
-  <li><span class="small-code">usingRecursiveFieldByFieldElementComparator</span></li>                                               
-  </ul>                                                                                                       
-  <p>Comparators specified by <a href="#assertj-core-2.5.0-usingComparatorForElementFieldsWithNames"><span class="small-code">usingComparatorForElementFieldsWithNames</span></a> have precedence over specified by this method.</p>  
+  <p>Comparators need to be specified by <span class="small-code">usingComparatorForElementFieldsWithType</span> <b>before</b> calling any of:
+  <ul>
+  <li><span class="small-code">usingFieldByFieldElementComparator</span></li>
+  <li><span class="small-code">usingElementComparatorOnFields</span></li>
+  <li><span class="small-code">usingElementComparatorIgnoringFields</span></li>
+  <li><span class="small-code">usingRecursiveFieldByFieldElementComparator</span></li>
+  </ul>
+  <p>Comparators specified by <a href="#assertj-core-2.5.0-usingComparatorForElementFieldsWithNames"><span class="small-code">usingComparatorForElementFieldsWithNames</span></a> have precedence over specified by this method.</p>
 
   <p>Example :</p>
   <pre><code class="java">// setter, getters and constructor omitted
@@ -955,7 +954,7 @@ Dude dude = new Dude("Frodo", 1.2);
 Dude tallerDude = new Dude("Frodo", 1.3);
 List&lt;Dude&gt; hobbits = asList(dude);
 
-// double are considered equals if they are close by less than 0.5 
+// double are considered equals if they are close by less than 0.5
 Comparator&lt;Double&gt; closeEnough = new AtPrecisionComparator&lt;&gt;(0.5);
 
 assertThat(hobbits).usingComparatorForElementFieldsWithType(closeEnough, Double.class)
@@ -983,14 +982,14 @@ assertThat(asList(dude)).usingComparatorForElementFieldsWithType(closeEnough, Do
   <h4 class="page-header"><span id="assertj-core-2.5.0-usingComparatorForElementFieldsWithNames" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow to register a specific comparator for a list of <i>fields</i> in field by field element of array/iterable comparisons</h4>
 
   <p>Allows to set a comparator to compare properties or fields of elements of an array/iterable with the given names.</p>
-  <p>Comparators need to be specified by <span class="small-code">usingComparatorForElementFieldsWithNames</span> <b>before</b> calling any of:                   
-  <ul>                                                                                                        
-  <li><span class="small-code">usingFieldByFieldElementComparator</span></li>                                                        
-  <li><span class="small-code">usingElementComparatorOnFields</span></li>                                                            
-  <li><span class="small-code">usingElementComparatorIgnoringFields</span></li>                                                      
-  <li><span class="small-code">usingRecursiveFieldByFieldElementComparator</span></li>                                               
-  </ul>                                                                                                       
-  <p>Comparators specified by this method have precedence over those by <a href="#assertj-core-2.5.0-usingComparatorForElementFieldsWithType"><span class="small-code">usingComparatorForElementFieldsWithType</span></a>.  
+  <p>Comparators need to be specified by <span class="small-code">usingComparatorForElementFieldsWithNames</span> <b>before</b> calling any of:
+  <ul>
+  <li><span class="small-code">usingFieldByFieldElementComparator</span></li>
+  <li><span class="small-code">usingElementComparatorOnFields</span></li>
+  <li><span class="small-code">usingElementComparatorIgnoringFields</span></li>
+  <li><span class="small-code">usingRecursiveFieldByFieldElementComparator</span></li>
+  </ul>
+  <p>Comparators specified by this method have precedence over those by <a href="#assertj-core-2.5.0-usingComparatorForElementFieldsWithType"><span class="small-code">usingComparatorForElementFieldsWithType</span></a>.
 
   <p>Example :</p>
   <pre><code class="java">// setter, getters and constructor omitted
@@ -1003,7 +1002,7 @@ Dude dude = new Dude("Frodo", 1.2);
 Dude tallerDude = new Dude("Frodo", 1.3);
 List&lt;Dude&gt; hobbits = asList(dude);
 
-// double are considered equals if they are close by less than 0.5 
+// double are considered equals if they are close by less than 0.5
 Comparator&lt;Double&gt; closeEnough = new AtPrecisionComparator&lt;&gt;(0.5);
 
 // assertions will pass
@@ -1128,7 +1127,7 @@ assertThat(Optional.empty()).isNotEmpty();</code></pre>
 
   <p><span class="small-code">withStackTraceContaining</span> is used when starting exception assertions with <span class="small-code">assertThatExceptionOfType</span>, it's an alternative of <span class="small-code">hasStackTraceContaining</span>.</p>
   <p>Example :</p>
-  <pre><code class="java">Throwable runtime = new RuntimeException("no way", 
+  <pre><code class="java">Throwable runtime = new RuntimeException("no way",
                                           new Exception("you shall not pass"));
  // assertion will pass
  assertThatExceptionOfType(RuntimeException.class)
@@ -1194,7 +1193,7 @@ public class Person {
   public double height;
   public Home home = new Home();
   public Person bestFriend;
-  // constructor with name and height omitted for brevity's sake 
+  // constructor with name and height omitted for brevity's sake
 }
 
 public class Home {
@@ -1211,7 +1210,7 @@ jack.home.address.number = 123;
 Person jackClone = new Person("Jack", 1.80);
 jackClone.home.address.number = 123;
 
-// cycle are handled in comparison  
+// cycle are handled in comparison
 jack.bestFriend = jackClone;
 jackClone.bestFriend = jack;
 
@@ -1221,19 +1220,19 @@ assertThat(jack).isEqualsTo(jackClone);
 // jack and jackClone are equals when doing a recursive field by field comparison
 assertThat(jack).isEqualToComparingFieldByFieldRecursively(jackClone);
 
-// any type/field can be compared with a a specific comparator. 
-// let's change  jack's height a little bit 
+// any type/field can be compared with a a specific comparator.
+// let's change  jack's height a little bit
 jack.height = 1.81;
 
-// assertion fails because of the height difference 
+// assertion fails because of the height difference
 // (the default precision comparison for double is 1.0E-15)
 assertThat(jack).isEqualToComparingFieldByFieldRecursively(jackClone);
 
-// use usingComparatorForType to specify how to compare the given type 
-// assertion succeeds because we allow a 0.5 tolerance on double 
+// use usingComparatorForType to specify how to compare the given type
+// assertion succeeds because we allow a 0.5 tolerance on double
 assertThat(jack).usingComparatorForType(new DoubleComparator(0.5), Double.class)
                 .isEqualToComparingFieldByFieldRecursively(jackClone);
-                
+
 // use usingComparatorForFields to specify how to compare some fields (nested fields are supported)
 assertThat(jack).usingComparatorForFields(new DoubleComparator(0.5), "height")
                 .isEqualToComparingFieldByFieldRecursively(jackClone);</code></pre>
@@ -1255,27 +1254,27 @@ Comparators specified by <span class="small-code">usingComparatorForFields</span
 TolkienCharacter frodo = new TolkienCharacter("Frodo", 1.2);
 TolkienCharacter tallerFrodo = new TolkienCharacter("Frodo", 1.3);
 TolkienCharacter reallyTallFrodo = new TolkienCharacter("Frodo", 2.0);
- 
+
 Comparator&lt;Double&gt; closeEnough = new Comparator&lt;Double&gt;() {
   double precision = 0.5;
   public int compare(Double d1, Double d2) {
     return Math.abs(d1 - d2) <= precision ? 0 : 1;
   }
 };
- 
+
 // assertions will pass
 assertThat(frodo).usingComparatorForType(closeEnough, Double.class)
                  .isEqualToComparingFieldByField(tallerFrodo);
-                  
+
 assertThat(frodo).usingComparatorForType(closeEnough, Double.class)
                  .isEqualToIgnoringNullFields(tallerFrodo);
-                  
+
 assertThat(frodo).usingComparatorForType(closeEnough, Double.class)
                  .isEqualToIgnoringGivenFields(tallerFrodo);
-                  
+
 assertThat(frodo).usingComparatorForType(closeEnough, Double.class)
                  .isEqualToComparingOnlyGivenFields(tallerFrodo);
-                  
+
 // assertion will fail
 assertThat(frodo).usingComparatorForType(closeEnough, Double.class)
                  .isEqualToComparingFieldByField(reallyTallFrodo);</code></pre>
@@ -1296,27 +1295,27 @@ Comparators specified by this method have precedence over comparators specified 
 TolkienCharacter frodo = new TolkienCharacter("Frodo", 1.2);
 TolkienCharacter tallerFrodo = new TolkienCharacter("Frodo", 1.3);
 TolkienCharacter reallyTallFrodo = new TolkienCharacter("Frodo", 2.0);
- 
+
 Comparator&lt;Double&gt; closeEnough = new Comparator&lt;Double&gt;() {
   double precision = 0.5;
   public int compare(Double d1, Double d2) {
     return Math.abs(d1 - d2) <= precision ? 0 : 1;
   }
 };
- 
+
 // assertions succeed (it is possible to specify multiple fields)
 assertThat(frodo).usingComparatorForFields(closeEnough, "height")
                  .isEqualToComparingFieldByField(tallerFrodo);
-                  
+
 assertThat(frodo).usingComparatorForFields(closeEnough, "height")
                  .isEqualToIgnoringNullFields(tallerFrodo);
-                  
+
 assertThat(frodo).usingComparatorForFields(closeEnough, "height")
                  .isEqualToIgnoringGivenFields(tallerFrodo);
-                  
+
 assertThat(frodo).usingComparatorForFields(closeEnough, "height")
                  .isEqualToComparingOnlyGivenFields(tallerFrodo);
-                  
+
 // assertion fails
 assertThat(frodo).usingComparatorForFields(closeEnough, "height")
                  .isEqualToComparingFieldByField(reallyTallFrodo);</code></pre>
@@ -1333,11 +1332,11 @@ assertThat(frodo).usingComparatorForFields(closeEnough, "height")
 Path utf8File = Files.write(Paths.get("actual"), lines, StandardCharsets.UTF_8);
 Charset turkishCharset = Charset.forName("windows-1254");
 Path turkishFile = Files.write(Paths.get("expected"), lines, turkishCharset);
- 
+
 // The following assertion succeeds:
 assertThat(utf8File).usingCharset(StandardCharsets.UTF_8)
                     .hasSameContentAs(turkishFile, turkishCharset);
- 
+
 // The following assertion fails:
 assertThat(utf8File).usingCharset(StandardCharsets.UTF_8)
                     .hasSameContentAs(turkishFile, StandardCharsets.UTF_8);</code></pre>
@@ -1389,11 +1388,11 @@ assertThat(elvesRings).containsOnly(nenya, vilya, narya);</code></pre>
 
    <h4 class="page-header"><span id="assertj-core-3.3.0-stream" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">Stream</span> assertions.</h4>
 
-   <p><span class="small-code">assertThat(myStream)</span> simply converts <span class="small-code">myStream</span> to a <span class="small-code">List</span> thus providing all <span class="small-code">List</span> assertions.<br/> 
+   <p><span class="small-code">assertThat(myStream)</span> simply converts <span class="small-code">myStream</span> to a <span class="small-code">List</span> thus providing all <span class="small-code">List</span> assertions.<br/>
       Please note that the <span class="small-code">Stream</span> is <b>consumed and cannot be used again</b> (unless you chain assertions).</p>
    <p>Example :</p>
-  <pre><code class="java">Stream&lt;TolkienCharacter&gt; fellowshipOfTheRing = Stream.of(frodo, sam, pippin, boromir, 
-                                                         legolas, gandalf, gimli);   
+  <pre><code class="java">Stream&lt;TolkienCharacter&gt; fellowshipOfTheRing = Stream.of(frodo, sam, pippin, boromir,
+                                                         legolas, gandalf, gimli);
 // all List assertion are available
 assertThat(fellowshipOfTheRing).contains(frodo)
                                .doesNotContain(sauron);
@@ -1403,42 +1402,42 @@ assertThat(fellowshipOfTheRing).contains(frodo)
 
 // WARNING : this assertion is not possible as fellowshipOfTheRing was already consumed.
 assertThat(fellowshipOfTheRing).contains(frodo);</code></pre>
-  
+
    <h4 class="page-header"><span id="assertj-core-3.3.0-allMatch" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">allMatch</span> to <span class="small-code">Iterable</span> and <span class="small-code">Object[]</span> assertions.</h4>
 
    <p>Verifies that all the elements of the actual <span class="small-code">Iterable</span> or <span class="small-code">Object[]</span> match the given <span class="small-code">Predicate</span>.</p>
    <p>Example :</p>
-  <pre><code class="java">// also works with hobbits defined as an Iterable&lt;TolkienCharacter&gt; 
-TolkienCharacter[] hobbits = { frodo, sam, pippin };   
+  <pre><code class="java">// also works with hobbits defined as an Iterable&lt;TolkienCharacter&gt;
+TolkienCharacter[] hobbits = { frodo, sam, pippin };
 
 assertThat(hobbits).allMatch(character -> character.getRace() == HOBBIT);</code></pre>
-  
+
    <h4 class="page-header"><span id="assertj-core-3.3.0-extracting" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">extracting</span> with lambdas functions to <span class="small-code">Object[]</span> assertions.</h4>
 
    <p>It was already possible to extract multiple values by name (using introspection), it is now possible to pass lambda functions to extract the values to check.</p>
    <p>Example :</p>
-  <pre><code class="java">TolkienCharacter[] fellowshipOfTheRing = { frodo, sam, pippin, boromir, legolas, gandalf, gimli };   
+  <pre><code class="java">TolkienCharacter[] fellowshipOfTheRing = { frodo, sam, pippin, boromir, legolas, gandalf, gimli };
 
 // TolkienCharacter age is public
-assertThat(fellowshipOfTheRingArray).extracting(TolkienCharacter::getName, 
+assertThat(fellowshipOfTheRingArray).extracting(TolkienCharacter::getName,
                                                 tolkienCharacter -> tolkienCharacter.age)
                                     .contains(tuple("Boromir", 37),
                                               tuple("Sam", 38),
                                               tuple("Legolas", 1000));</code></pre>
-  
+
    <h4 class="page-header"><span id="assertj-core-3.3.0-extracting" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">extracting</span> with lambdas functions to <span class="small-code">Object[]</span> assertions.</h4>
 
    <p>It was already possible to extract multiple values by name (using introspection), it is now possible to pass lambda functions to extract the values to check.</p>
    <p>Example :</p>
-  <pre><code class="java">TolkienCharacter[] fellowshipOfTheRing = { frodo, sam, pippin, boromir, legolas, gandalf, gimli };   
+  <pre><code class="java">TolkienCharacter[] fellowshipOfTheRing = { frodo, sam, pippin, boromir, legolas, gandalf, gimli };
 
 // TolkienCharacter age is public
-assertThat(fellowshipOfTheRingArray).extracting(TolkienCharacter::getName, 
+assertThat(fellowshipOfTheRingArray).extracting(TolkienCharacter::getName,
                                                 tolkienCharacter -> tolkienCharacter.age)
                                     .contains(tuple("Boromir", 37),
                                               tuple("Sam", 38),
                                               tuple("Legolas", 1000));</code></pre>
-  
+
    <h4 class="page-header"><span id="assertj-core-3.3.0-extracting-on-object" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">extracting</span> feature with lambdas functions to <span class="small-code">Object</span> assertions.</h4>
 
    <p>Using lamdas functions, extract values from the object under test into an array, this new array becoming the object under test. (similar to <a href="#assertj-core-2.3.0-extracting"><span class="small-code">extracting</span> taking fields/properties names</a>)</p>
@@ -1449,12 +1448,12 @@ assertThat(frodo).extracting(TolkienCharacter::getName,
                              character -> character.age,
                              character -> character.getRace().getName())
                  .containsExactly("Frodo", 33, "Hobbit");</code></pre>
-  
+
    <h4 class="page-header"><span id="assertj-core-3.3.0-hasValueSatisfying" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow performing multiple assertions on an <span class="small-code">Optional</span> value with <span class="small-code">hasValueSatisfying</span>.</h4>
 
    <p>Verifies that the actual <span class="small-code">Optional</span> contains a value and gives this value to the given <span class="small-code">Consumer</span> for further assertions allowing deeper assertions on the containing object.</p>
    <p>Example :</p>
-  <pre><code class="java">// one requirement 
+  <pre><code class="java">// one requirement
 assertThat(Optional.of(10)).hasValueSatisfying(i -> { assertThat(i).isGreaterThan(9); });
 
 // multiple requirements
@@ -1462,11 +1461,11 @@ assertThat(Optional.of("something")).hasValueSatisfying(s -> {
     assertThat(s).startsWith("some");
     assertThat(s).endsWith("thing");
     assertThat(s).isEqualTo("something");
-}); 
+});
 
 // failing assertion as the Optional does not have a value.
 assertThat(Optional.empty()).hasValueSatisfying(i -> { assertThat(i).isEqualTo("something"); });</code></pre>
-  
+
    <h4 class="page-header"><span id="assertj-core-3.3.0-isToday" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">isToday()</span> to  <span class="small-code">LocalDate</span> assertion.</h4>
 
    <p>Verifies that the actual <span class="small-code">LocalDate</span> is today, that is matching current year, month and day.</p>
@@ -1476,7 +1475,7 @@ assertThat(LocalDate.now()).isToday();
 
 // assertion will fail
 assertThat(theFellowshipOfTheRin ReleaseDate()).isToday();</code></pre>
-  
+
    <h4 class="page-header"><span id="assertj-core-3.3.0-withMessage" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> <span class="small-code">Throwable</span> assertion <span class="small-code">withMessage</span> now supports <span class="small-code">String#format</span> syntax.</h4>
 
    <p>Some users prefer <span class="small-code">assertThatExceptionOfType</span> over <span class="small-code">assertThatThrownBy</span> to check exceptions, it is now possible to check the exception message specifying the expected value using <span class="small-code">String#format</span> syntax.</p>
@@ -1484,7 +1483,7 @@ assertThat(theFellowshipOfTheRin ReleaseDate()).isToday();</code></pre>
    <pre><code class="java">assertThatExceptionOfType(IOException.class)
                  .isThrownBy(() -> { throw new Exception("boom !"); })
                  .withMessage("%s !", "boom");</code></pre>
-  
+
    <h4 class="page-header"><span id="assertj-core-3.3.0-optional-containsSame" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">containsSame</span> <span class="small-code">Optional</span>.</h4>
 
    <p>Allow to check that an <span class="small-code">Optional</span> value is the same as a given one.</p>
@@ -1492,7 +1491,7 @@ assertThat(theFellowshipOfTheRin ReleaseDate()).isToday();</code></pre>
    <pre><code class="java">Player ginobili = new Player("Manu Ginobili");
 assertThat(Optional.of(ginobili)).containsSame(ginobili);
 </code></pre>
-  
+
 
 <h3 class="page-header"><span id="assertj-core-2.3.0"></span>AssertJ Core 2.3.0 release : New and noteworthy</h3>
 
@@ -1547,7 +1546,7 @@ assertThat(Optional.of(ginobili)).containsSame(ginobili);
 
    <pre><code class="java">// Create frodo, setting its name, age and Race fields (Race having a name field)
 TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
- 
+
 // let's verify Frodo's name, age and race name:
 assertThat(frodo).extracting("name", "age", "race.name")
                  .containsExactly("Frodo", 33, "Hobbit");</code></pre>
@@ -1561,11 +1560,11 @@ assertThat(frodo).extracting("name", "age", "race.name")
 
    <pre><code class="java">// Create frodo, setting its name, age and Race fields (Race having a name field)
 TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
- 
+
 // let's verify Frodo's age and race name:
 assertThat(frodo).hasFieldOrProperty("age")
                  .hasFieldOrProperty("race.name")
-                 .hasFieldOrPropertyWithValue("age", 33) 
+                 .hasFieldOrPropertyWithValue("age", 33)
                  .hasFieldOrPropertyWithValue("race.name", "Hobbit");</code></pre>
 
    <h4 class="page-header"><span id="assertj-core-2.3.0-containsPattern" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">containsPattern(regex)</span> <span class="small-code">String</span> assertion</h4>
@@ -1581,7 +1580,7 @@ assertThat("Frodo").containsPattern(Pattern.compile("Fr.d"));</code></pre>
    <h4 class="page-header"><span id="assertj-core-2.3.0-containsAllEntriesOf" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">containsAllEntriesOf</span> <span class="small-code">Map</span> assertion</h4>
 
    <p>Verifies that the <span class="small-code">Map</span> under test contains all entries of the given <span class="small-code">Map</span>.</p>
- 
+
    <p>Example :</p>
 
    <pre><code class="java">Map&lt;Ring, TolkienCharacter&gt; ringBearers = new HashMap&lt;&gt;();
@@ -1594,20 +1593,20 @@ Map&lt;Ring, TolkienCharacter&gt; elvesRingBearers = new HashMap&lt;&gt;();
 elvesRingBearers.put(nenya, galadriel);
 elvesRingBearers.put(narya, gandalf);
 elvesRingBearers.put(vilya, elrond);
- 
+
 // assertion succeeds
 assertThat(ringBearers).containsAllEntriesOf(elvesRingBearers);</code></pre>
 
    <h4 class="page-header"><span id="assertj-core-2.3.0-real-numbers-array-precision" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> <span class="small-code">double[]</span> and <span class="small-code">float[]</span> assertions with precision comparison</h4>
 
    <p>All <span class="small-code">double[]</span> and <span class="small-code">float[]</span> assertions can now be performed with a given precision to compare numbers.</p>
- 
+
    <p>Example with <span class="small-code">contains</span> assertion for <span class="small-code">double[]</span>:</p>
 
-   <pre><code class="java">import static org.assertj.core.api.Assertions.withPrecision; 
+   <pre><code class="java">import static org.assertj.core.api.Assertions.withPrecision;
 
 double[] values = new double[] { 1.0, 2.0, 3.0 };
- 
+
 // assertion succeeds
 assertThat(values).contains(new double[] {1.01, 3.01, 2.0}, withPrecision(0.02));
 
@@ -1617,7 +1616,7 @@ assertThat(values).contains(new double[] {1.0, 4.0}, withPrecision(0.5));</code>
    <p>Note that you can also use <span class="small-code">usingComparatorWithPrecision</span> to achieve the same result:</p>
 
 <pre><code class="java">double[] values = new double[] { 1.0, 2.0, 3.0 };
- 
+
 // assertion succeeds
 assertThat(values).usingComparatorWithPrecision(0.5)
                   .contains(1.1, 2.1);</code></pre>
@@ -1625,7 +1624,7 @@ assertThat(values).usingComparatorWithPrecision(0.5)
    <h4 class="page-header"><span id="assertj-core-2.3.0-isSubsetOf" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> <span class="small-code">isSubsetOf</span> now supports array/varargs parameters</h4>
 
    <p>Verifies that the <span class="small-code">Iterable</span> under test contains a subset of the given values.</p>
- 
+
    <p>Example :</p>
 
    <pre><code class="java">List&lt;Ring&gt; elvesRings = newArrayList(vilya, nenya, narya);
@@ -1636,7 +1635,7 @@ assertThat(elvesRings).isSubsetOf(oneRing, vilya, nenya, narya);</code></pre>
    <h4 class="page-header"><span id="assertj-core-2.3.0-hasMessage" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">String#format</span> syntax support to <span class="small-code">hasMessage</span> <span class="small-code">Throwable</span> assertion</h4>
 
    <p>Verifies the message of an <span class="small-code">Exception</span> using <span class="small-code">String#format</span> syntax.</p>
- 
+
    <p>Example :</p>
 
    <pre><code class="java">try {
@@ -1650,7 +1649,7 @@ assertThat(elvesRings).isSubsetOf(oneRing, vilya, nenya, narya);</code></pre>
    <h4 class="page-header"><span id="assertj-core-2.3.0-diff" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Better diff when comparing text content</h4>
 
    <p>Files (or InputStreams) content comparison is smarter, much like version control diff thanks to <a href="https://code.google.com/p/java-diff-utils/">java-diff-utils</a>.</p>
- 
+
    <p>Example :</p>
 
    <pre><code class="java">// writeFile takes file name and file content parameters
@@ -1746,13 +1745,13 @@ futureExplosion.completeExceptionally(new RuntimeException("boom !"));
 assertThat(futureExplosion).isCompletedExceptionally()
                            .isDone();
 
-// failed future = isCompletedExceptionally() + isNotCancelled() 
+// failed future = isCompletedExceptionally() + isNotCancelled()
 assertThat(futureExplosion).hasFailed()
                            .hasFailedWithThrowableThat() // allow to chain exception assertions
                                .isInstanceOf(RuntimeException.class)
                                .hasMessage("boom !");
 </code></pre>
-  
+
    <h4 class="page-header"><span id="assertj-core-3.2.0-optional-hasValue" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">hasValue</span> <span class="small-code">Optional</span> assertion (alias of <span class="small-code">contains</span>).</h4>
 
    <p>Provide like <span class="small-code">contains</span> a way to check <span class="small-code">Optional</span> value.</p>
@@ -1760,7 +1759,7 @@ assertThat(futureExplosion).hasFailed()
    <pre><code class="java">assertThat(Optional.of("Yoda")).hasValue("Yoda");
 // same assertion using contains
 assertThat(Optional.of("Yoda")).contains("Yoda");</code></pre>
-  
+
    <h4 class="page-header"><span id="assertj-core-3.2.0-optional-value-comparator" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow using a specific comparator for <span class="small-code">Optional</span> value.</h4>
 
    <p>Provide a way to check <span class="small-code">Optional</span> value with a specific comparator.</p>
@@ -1769,9 +1768,9 @@ assertThat(Optional.of("Yoda")).contains("Yoda");</code></pre>
 Comparator&lt;String&gt; caseInsensitiveStringComparator = ...;
 
 assertThat(Optional.of("YODA")).usingValueComparator(caseInsensitiveStringComparator)
-                               .hasValue("yoda");                               
+                               .hasValue("yoda");
 </code></pre>
-  
+
    <h4 class="page-header"><span id="assertj-core-3.2.0-optional-containsSame" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">containsSame</span> <span class="small-code">Optional</span>.</h4>
 
    <p>Allow to check that an <span class="small-code">Optional</span> value is the same as a given one.</p>
@@ -1779,7 +1778,7 @@ assertThat(Optional.of("YODA")).usingValueComparator(caseInsensitiveStringCompar
    <pre><code class="java">Player ginobili = new Player("Manu Ginobili");
 assertThat(Optional.of(ginobili)).containsSame(ginobili);
 </code></pre>
-  
+
 <h3 class="page-header"><span id="assertj-core-2.2.0"></span>AssertJ Core 2.2.0 release : New and noteworthy</h3>
 
    <p>Release date : 2015-09-03</p>
@@ -1841,13 +1840,13 @@ assertThat(Optional.of(ginobili)).containsSame(ginobili);
    <p>Example :</p>
    <pre><code class="java">assertThat(fellowshipOfTheRing).filteredOn( character -> character.getName().contains("o") )
                                .containsOnly(aragorn, frodo, legolas, boromir);</code></pre>
-  
+
    <h4 class="page-header"><span id="assertj-core-3.1.0-offset-date-time-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> New <span class="small-code">OffsetDateTime</span> assertions.</h4>
 
    <p>Provide assertions for <span class="small-code">OffsetDateTime</span>. Most of the assertions come with a String based parameter equivalent that will be parsed into a <span class="small-code">OffsetDateTime</span>, the examples shown below use this possiblity for brevity sake's.</p>
    <p>Examples :</p>
    <pre><code class="java">OffsetDateTime firstOfJanuary2000InUTC = OffsetDateTime.parse("2000-01-01T00:00:00Z");
-      
+
 assertThat(firstOfJanuary2000InUTC).isEqualTo(OffsetDateTime.parse("2000-01-01T00:00:00Z"));
 // same assertion but AssertJ takes care of expected String to OffsetDateTime conversion
 assertThat(firstOfJanuary2000InUTC).isEqualTo("2000-01-01T00:00:00Z");
@@ -1873,7 +1872,7 @@ assertThat(offsetDateTime1).isEqualToIgnoringHours(offsetDateTime2);
 assertThat(offsetDateTime1).isEqualToIgnoringMinutes(offsetDateTime3);
 assertThat(offsetDateTime1).isEqualToIgnoringSeconds(offsetDateTime4);
 assertThat(offsetDateTime1).isEqualToIgnoringNanos(offsetDateTime5);</code></pre>
-  
+
    <h4 class="page-header"><span id="assertj-core-3.1.0-offset-time-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> New <span class="small-code">OffsetTime</span> assertions.</h4>
 
    <p>Provide assertions for <span class="small-code">OffsetTime</span>. Most of the assertions come with a String based parameter equivalent that will be parsed into a <span class="small-code">OffsetTime</span>, the examples shown below use this possiblity for brevity sake's.</p>
@@ -1890,7 +1889,7 @@ assertThat(oneAm).isBefore("02:00:00+02:00")
                  .isBeforeOrEqualTo("02:00:00+02:00")
                  .isBeforeOrEqualTo("01:00:00+02:00");
 </code></pre>
-  
+
    <h4 class="page-header"><span id="assertj-core-3.1.0-primitive-optional-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Primitives <span class="small-code">Optional</span> assertions</h4>
 
    <p>Add assertions for <span class="small-code">OptionalInt</span>, <span class="small-code">OptionalLong</span> and <span class="small-code">OptionalDouble</span>.</p>
@@ -1962,9 +1961,9 @@ assertThat(optional).containsInstanceOf(String.class);</code></pre>
    <h4 class="page-header"><span id="assertj-core-2.1.0-fiteredOn" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow fluent filtering of iterable/array elements in iterable/array assertion flow</h4>
 
    <p>It was already possible to filter iterable/array but not in current assertion flow, it is now possible to combine iterable/array assertion and filtering in a fluent way.</p>
-   <p>You can filter on a property/field or using a <a href="assertj-core-conditions.html"><span class="small-code">Condition</span></a>.</p> 
+   <p>You can filter on a property/field or using a <a href="assertj-core-conditions.html"><span class="small-code">Condition</span></a>.</p>
 
-   <p class="list-section">Filtering on a property or a field</p> 
+   <p class="list-section">Filtering on a property or a field</p>
    <p>You specify first the property/field name to filter on and its expected value.  The filter first tries to get the value from a property, then from a field. Reading private fields is supported by default, this can be globally disabled by calling <span class="small-code">Assertions.setAllowExtractingPrivateFields(false)</span>.</p>
    <p>Filters supports reading nested property/field, not that if an intermediate value is null the whole nested property/field is considered to be null, thus reading <span class="small-code">"address.street.name"</span> value will return null if <span class="small-code">"address.street"</span> value is null.</p>
    <p>Filters support basic operation : <span class="small-code">not</span>, <span class="small-code">in</span>, <span class="small-code">notIn</span></p>
@@ -1973,7 +1972,7 @@ assertThat(optional).containsInstanceOf(String.class);</code></pre>
    <pre><code class="java">Employee yoda   = new Employee(1L, new Name("Yoda"), 800);
 Employee obiwan = new Employee(2L, new Name("Obiwan"), 800);
 Employee luke   = new Employee(3L, new Name("Luke", "Skywalker"), 26);
- 
+
 List&lt;Employee&gt; employees = newArrayList(yoda, luke, obiwan);
 
 // filter employees before performing an assertion
@@ -1997,28 +1996,28 @@ import static org.assertj.core.api.Assertions.notIn;
 
 assertThat(employees).filteredOn("age", not(800))
                      .containsOnly(luke);
- 
-// Name is bean class with 'first' and 'last' String properties 
+
+// Name is bean class with 'first' and 'last' String properties
 assertThat(employees).filteredOn("name.first", in("Yoda", "Luke"))
                      .containsOnly(yoda, luke);
- 
+
 assertThat(employees).filteredOn("name.first", notIn("Yoda", "Luke"))
                      .containsOnly(obiwan);</code></pre>
 
    <p>You can chain filters :</p>
 
    <pre><code class="java">// fellowshipOfTheRing is a list of TolkienCharacter having race and name fields
-// 'not' filter is statically imported from Assertions.not  
+// 'not' filter is statically imported from Assertions.not
 assertThat(fellowshipOfTheRing).filteredOn("race.name", "Man")
                                .filteredOn("name", not("Boromir"))
                                .containsOnly(aragorn);</code></pre>
 
-   <p class="list-section">Filtering with a <span class="small-code">Condition</span></p> 
+   <p class="list-section">Filtering with a <span class="small-code">Condition</span></p>
    <p>Filter the iterable/array under test keeping only elements matching the given <a href="assertj-core-conditions.html"><span class="small-code">Condition</span></a>. </p>
    <p>As an example, let's check all employees whose age > 100 :</p>
 
    <pre><code class="java">// old employee condition, "old employees" describes the condition in error message
-// you just have to implement a 'matches' method 
+// you just have to implement a 'matches' method
 Condition&lt;Employee&gt; oldEmployees = new Condition&lt;Employee&gt;("old employees") {
       @Override
       public boolean matches(Employee employee) {
@@ -2105,9 +2104,9 @@ assertThat(new BigDecimal(1.0)).isNotEqualByComparingTo(new BigDecimal(2.0));</c
 
    <pre><code class="java">CartoonCaracter homer = new CartoonCaracter("Homer");
 
-// Instead of writing ...  
+// Instead of writing ...
 assertThat(homer.toString()).isEqualTo("Homer");
-// ... you can simply write: 
+// ... you can simply write:
 assertThat(homer).hasToString("Homer");</code></pre>
 
    <h4 class="page-header"><span id="assertj-core-2.1.0-hasSameTimeAs" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">hasSameTimeAs</span> to <span class="small-code">Date</span> assertions</h4>
@@ -2196,7 +2195,7 @@ assertThat(" my\tfoo bar ").isEqualToIgnoringWhitespace(" my foobar");</code></p
    <p>You can set the line maxlength threshold with <span class="small-code">Assertions.setMaxLengthForSingleLineDescription</span></p>
    <p>Example :</p>
 
-   <pre><code class="java">// this array ... 
+   <pre><code class="java">// this array ...
 String[] greatBooks = array("A Game of Thrones", "The Lord of the Rings", "Assassin's Apprentice");
 // ... is formatted on one line:
 ["A Game of Thrones", "The Lord of the Rings", "Assassin's Apprentice"]
@@ -2306,7 +2305,7 @@ assertThat(Throwable.class).isNotFinal();</code></pre>
 
    <pre><code class="java">LocalDateTime localDateTimeA = LocalDateTime.of(2000, 1, 1, 23, 50, 00, 000);
 LocalDateTime localDateTimeB = LocalDateTime.of(2000, 1, 1, 23, 49, 59, 999999999);
-// assertion fails as minute fields differ even if time difference is only 1ns 
+// assertion fails as minute fields differ even if time difference is only 1ns
 assertThat(localDateTimeA).isEqualToIgnoringSeconds(localDateTimeB);</code></pre>
 
    <p><span class="small-code">LocalDate</span> examples :</p>
@@ -2323,7 +2322,7 @@ assertThat(firstOfJanuary2000).isBefore("2000-01-02")
                               .isBeforeOrEqualTo("2000-01-02")
                               .isBeforeOrEqualTo("2000-01-01");
 </code></pre>
-  
+
    <p><span class="small-code">LocalTime</span> examples :</p>
    <pre><code class="java">LocalTime oneAm = LocalTime.parse("01:00:00");
 
@@ -2338,7 +2337,7 @@ assertThat(oneAm).isBefore("02:00:00")
                  .isBeforeOrEqualTo("02:00:00")
                  .isBeforeOrEqualTo("01:00:00");
 </code></pre>
-  
+
    <p><span class="small-code">LocalDateTime</span> examples :</p>
    <pre><code class="java">LocalDateTime firstOfJanuary2000 = LocalDateTime.parse("2000-01-01T00:00:00");
 
@@ -2371,7 +2370,7 @@ localDateTime1 = LocalDateTime.of(2000, 1, 1, 23, 59, 59, 999);
 localDateTime2 = LocalDateTime.of(2000, 1, 1, 00, 00, 00, 000);
 assertThat(localDateTime1).isEqualToIgnoringHours(localDateTime2);
 </code></pre>
-  
+
    <p><span class="small-code">ZonedDateTime</span> examples :</p>
    <pre><code class="java">ZonedDateTime firstOfJanuary2000InUTC = ZonedDateTime.parse("2000-01-01T00:00:00Z");
 
@@ -2448,10 +2447,10 @@ assertThat(emptyOptional).isEmpty();</code></pre>
    <p>Example :</p>
 
    <pre><code class="java">TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
-// actual refers to frodo 
+// actual refers to frodo
 assertThat(frodo).matches(actual -> actual.age > 30 && actual.getRace() == HOBBIT);</code></pre>
 
-   
+
    <h4 class="page-header"><span id="assertj-core-3.0.0-primitive-approximation-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Extends primitive approximation assertions to <span class="small-code">int</span>, <span class="small-code">long</span>, <span class="small-code">short</span> and <span class="small-code">byte</span></h4>
 
    <p>It was already possible to compare <span class="small-code">float</span>, <span class="small-code">double</span> and  <span class="small-code">BigDecimal</span> with a margin error, it's now possible to do the same thing with <span class="small-code">int</span>, <span class="small-code">long</span>, <span class="small-code">short</span> and <span class="small-code">byte</span>.</p>
@@ -2469,7 +2468,7 @@ assertThat((byte)5).isCloseTo((byte)7, within((byte)3));</code></pre>
    <p>Example :</p>
 
    <pre><code class="java">// build a Condition with a Predicate
-Condition&lt;String&gt; fairyTale = new Condition&lt;String&gt;(s -> s.startsWith("Once upon a time"), 
+Condition&lt;String&gt; fairyTale = new Condition&lt;String&gt;(s -> s.startsWith("Once upon a time"),
                                                     "a %s tale", "fairy");
 String littleRedCap = "Once upon a time there was a dear little girl ...";
 assertThat(littleRedCap).is(fairyTale);
@@ -2527,7 +2526,7 @@ assertThat(littleRedCap).is(fairyTale);
    <h4 class="page-header"><span id="assertj-core-2.0.0-path-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> <span class="small-code">Path</span> assertions</h4>
 
    <p>Assertions for <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/file/Path.html"><span class="small-code">Path</span></a>, it provides the assertions that were defined for File and add some new ones specific to <span class="small-code">Path</span>.</p>
-   <p>Note that some assertions have two versions: a normal one and a "raw" one (for instance, <span class="small-code">hasParent()</span> and <span class="small-code">hasParentRaw()</span>). 
+   <p>Note that some assertions have two versions: a normal one and a "raw" one (for instance, <span class="small-code">hasParent()</span> and <span class="small-code">hasParentRaw()</span>).
       The difference is that normal assertions will <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/file/Path.html?is-external=true#toRealPath%28java.nio.file.LinkOption...%29">canonicalize</a> or <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/file/Path.html?is-external=true#normalize%28%29">normalize</a> the tested path and, where applicable, the path argument, before performing the actual test. Canonicalization includes normalization.
    </p>
    <p>Canonicalization may lead to an I/O error if a path does not exist, in which case the given assertions will fail with a PathsException. Also note that symbolic links will be followed if the filesystem supports them. Finally, if a path is not <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/file/Path.html#isAbsolute%28%29">absolute</a>, canonicalization will resolve the path against the process' current working directory. .</p>
@@ -2583,7 +2582,7 @@ public void path_assertions() throws Exception {
    assertThat(existingFile).hasFileName("somefile.txt");
    assertThat(symlinkToExistingFile).hasFileName("symlink-to-somefile.txt");
 
-   // Unix specific assertions 
+   // Unix specific assertions
    assertThat(Paths.get("/foo/bar")).isAbsolute();
    assertThat(Paths.get("foo/bar")).isRelative();
    assertThat(Paths.get("/usr/lib")).isNormalized();
@@ -2627,12 +2626,12 @@ public void path_assertions() throws Exception {
    <p>Java 7 example :</p>
 
    <pre><code class="java">assertThatThrownBy(new ThrowingCallable()
- 
+
    @Override
    public void call() throws Exception {
      throw new Exception("boom!");
    }
-   
+
  }).isInstanceOf(Exception.class)
    .hasMessageContaining("boom");</code></pre>
 
@@ -2651,12 +2650,12 @@ public void testException() {
 public void testException() {
    // when
    Throwable thrown = catchThrowable(new ThrowingCallable()
-   
+
       @Override
       public void call() throws Exception {
          throw new Exception("boom!");
       }
-     
+
    });
    // then
    assertThat(thrown).isInstanceOf(Exception.class)
@@ -2736,7 +2735,7 @@ assertThat(ringBearers).doesNotContainKeys(oneRing, someManRing);
    <pre><code class="java">Object listAsObject = Arrays.asList(1, 2, 3);
 
 // DOES NOT COMPILE as isSorted() is not an Object assertions
-assertThat(listAsObject).isSorted(); 
+assertThat(listAsObject).isSorted();
 
 // works as we have switched to List assertions
 assertThat(listAsObject).asList().isSorted();
@@ -2762,33 +2761,33 @@ assertThat(stringAsObject).asString().contains("hello");
       <pre><code class="java"> Employee yoda = new Employee(1L, new Name("Yoda"), 800);
  Employee luke = new Employee(2L, new Name("Luke"), 22);
  Employee han = new Employee(3L, new Name("Han"), 31);
- 
+
  // build two maps
  Map&lt;String, Employee&gt; map1 = new HashMap&lt;&gt;();
  map1.put("key1", yoda);
  map1.put("key2", luke);
- 
+
  Map&lt;String, Employee> map2 = new HashMap&lt;&gt;();
  map2.put("key1", yoda);
  map2.put("key2", han);
- 
- // instead of a list of objects, we have a list of maps 
+
+ // instead of a list of objects, we have a list of maps
  List&lt;Map&lt;String, Employee&gt;&gt; maps = asList(map1, map2);
- 
+
  // extracting a property in that case = get values from maps using property as a key
  assertThat(maps).extracting("key2").containsExactly(luke, han);
  assertThat(maps).extracting("key1").containsExactly(yoda, yoda);
- 
+
  // it works with several keys, extracted values being wrapped in a Tuple
  assertThat(maps).extracting("key1", "key2").containsExactly(tuple(yoda, luke), tuple(yoda, han));
- 
+
  // unknown keys leads to null (map behavior)
  assertThat(maps).extracting("bad key").containsExactly(null, null);</code></pre>
 
    <h4 class="page-header"><span id="assertj-core-2.0.0-bdd-soft-assertions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> BDD soft assertions</h4>
 
    <p>BDD soft assertions are like sot assertions but use <span class="small-code">then()</span> instead of <span class="small-code">assertThat()</span> to start assertions.</p>
-   <p>Note that <span class="small-code">JUnitBDDSoftAssertions</span> and <span class="small-code">AutoCloseableSoftAssertions</span> are also available, <span class="small-code">assertAll()</span> being automatically called respectively by a JUnit rule or the implicit <span class="small-code">close</span> method in a <span class="small-code">try-with-resources</span> statement.</p> 
+   <p>Note that <span class="small-code">JUnitBDDSoftAssertions</span> and <span class="small-code">AutoCloseableSoftAssertions</span> are also available, <span class="small-code">assertAll()</span> being automatically called respectively by a JUnit rule or the implicit <span class="small-code">close</span> method in a <span class="small-code">try-with-resources</span> statement.</p>
    <p>Example:</p>
       <pre><code class="java">@Test
 public void host_dinner_party_where_nobody_dies() {
@@ -2806,7 +2805,7 @@ public void host_dinner_party_where_nobody_dies() {
    softly.assertAll();
 }</code></pre>
 
-   <p>Now upon running the test our JUnit exception message is far more detailed:</p> 
+   <p>Now upon running the test our JUnit exception message is far more detailed:</p>
 
       <pre><code class="java">org.assertj.core.api.SoftAssertionError: The following 4 assertions failed:
  1) [Living Guests] expected:&lt;[7]:&gt; but was::&lt;[6]&gt;
@@ -2820,33 +2819,33 @@ public void host_dinner_party_where_nobody_dies() {
    Example:</p>
    <pre><code class="java">assertThat("Messi").withThreadDumpOnError().isEqualTo("Ronaldo");</code></pre>
 
-   <p>will print the thread dump, something looking like:</p> 
+   <p>will print the thread dump, something looking like:</p>
 
       <pre><code class="java">"JDWP Command Reader"
         java.lang.Thread.State: RUNNABLE
- 
+
 "JDWP Event Helper Thread"
         java.lang.Thread.State: RUNNABLE
- 
+
 "JDWP Transport Listener: dt_socket"
         java.lang.Thread.State: RUNNABLE
- 
+
 "Signal Dispatcher"
         java.lang.Thread.State: RUNNABLE
- 
+
 "Finalizer"
         java.lang.Thread.State: WAITING
                 at java.lang.Object.wait(Native Method)
                 at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:135)
                 at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:151)
                 at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:189)
- 
+
 "Reference Handler"
         java.lang.Thread.State: WAITING
                 at java.lang.Object.wait(Native Method)
                 at java.lang.Object.wait(Object.java:503)
                 at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:133)
- 
+
 "main"
         java.lang.Thread.State: RUNNABLE
                 at sun.management.ThreadImpl.dumpThreads0(Native Method)
@@ -2881,7 +2880,7 @@ assertThat(throwable).hasCause(null); // prefer hasNoCause()</code></pre>
   <p>Example :</p>
    <pre><code class="java">// note we use a bounded wildcard list
 List&lt;? extends BasketBallPlayer&gt; bulls = newArrayList(rose, noah);
-  
+
 // did not compile in 1.7.0 but works in 1.7.1+
 assertThat(bulls).contains(rose, noah);</code></pre>
 
@@ -2937,7 +2936,7 @@ assertThat(fellowshipOfTheRing).extracting(age()).contains(33, 38, 36);
 assertThat(fellowshipOfTheRing).extracting(race()).contains(HOBBIT, ELF)
                                                   .doesNotContain(ORC);
 // extract 'name' and 'age' values.
-assertThat(fellowshipOfTheRing).extracting(ageAndRace()).contains(tuple(33, HOBBIT), 
+assertThat(fellowshipOfTheRing).extracting(ageAndRace()).contains(tuple(33, HOBBIT),
                                                                   tuple(38, HOBBIT),
                                                                   tuple(1000, ELF));
 </code></pre>
@@ -2952,7 +2951,7 @@ assertThat(fellowshipOfTheRing).extracting(ageAndRace()).contains(tuple(33, HOBB
 
    public static Extractor&lt;TolkienCharacter, Tuple&gt; ageAndRace() {
       return new TolkienCharacterAgeAndRaceExtractor();
-   }   
+   }
 }
 </code></pre>
 
@@ -2962,11 +2961,11 @@ assertThat(fellowshipOfTheRing).extracting(ageAndRace()).contains(tuple(33, HOBB
 BasketBallPlayer noah =  ... // initialized with Derrick Rose and Pau Gasol as teamates
 BasketBallPlayer james =  ... // initialized with Kevin Love and Kyrie Irving as teamates
 
-// extract team mates and "flatten" them to a single BasketBallPlayer collection 
+// extract team mates and "flatten" them to a single BasketBallPlayer collection
 assertThat(asList(noah, james)).flatExtracting(teammates()).contains(gasol, love, irving, rose);
 
 // teammates() extractor
-public class BasketBallTeammatesExtractor 
+public class BasketBallTeammatesExtractor
        implements Extractor&lt;BasketBallPlayer, List&lt;BasketBallPlayer&gt;&gt; {
 
    @Override
@@ -2975,7 +2974,7 @@ public class BasketBallTeammatesExtractor
    }
 
    public static Extractor&lt;BasketBallPlayer, List&lt;BasketBallPlayer&gt;&gt; teammates() {
-      return new BasketBallTeammatesExtractor();  
+      return new BasketBallTeammatesExtractor();
    }
 }
 </code></pre>
@@ -2991,7 +2990,7 @@ public class BasketBallTeammatesExtractor
 // assertion will pass
 assertThat(ringBearers).containsOnlyKeys(nenya, narya, vilya, oneRing);
 
-// assertion will fail because of two missing keys and an unexpected one (dwarfRing) 
+// assertion will fail because of two missing keys and an unexpected one (dwarfRing)
 assertThat(ringBearers).containsOnlyKeys(oneRing, nenya, dwarfRing);
 </code></pre>
 
@@ -3128,7 +3127,7 @@ TolkienCharacter sam = new TolkienCharacter("Sam", 38, HOBBIT);
 // frodo and sam both are hobbits -> they are equals when comparing only race (worked before 1.7.0)
 assertThat(newArrayList(frodo)).usingElementComparatorOnFields("race").contains(sam);
 
-// Before 1.7.0, this basic assertion would not work as element comparison semantics 
+// Before 1.7.0, this basic assertion would not work as element comparison semantics
 // were only honoured in IterableAssert/Array specific assertions, but now it works !
 assertThat(newArrayList(frodo)).usingElementComparatorOnFields("race").isEqualTo(newArrayList(sam));
 </code></pre>
