@@ -192,7 +192,7 @@ public void host_dinner_party_where_nobody_dies() {
   <p>Assertion error message example:</p>
   <pre><code class="java">List&lt;TolkienCharacter&gt; hobbits = newArrayList(frodo, sam, pippin, sauron);
 
-// assertion fail (as expected) ... 
+// assertion fails (as expected) ... 
 assertThat(hobbits).allMatch(character -> character.getRace() == HOBBIT, "hobbits");</code></pre>
 
 <pre><code  class="C">//... giving this error message:
@@ -232,15 +232,15 @@ to match 'hobbits' predicate but this element did not:
       <li>Static fields should be ignored in field by field comparisons. <span class="contributor">(Mike Wilkes and Kseniya Panasyuk)</span></li>
       <li>Add <span class="small-code">byLessThan</span> as an alias of <span class="small-code">within</span>/<span class="small-code">offset</span> for number assertions.</li>
       <li><span class="small-code">usingComparatorForType</span> now accepts registered type subclasses instead of only an exact type match. (<span class="contributor">Filip Hrisafov</span>)</li>
-      <li>Limit to 1000 the number of elements from an iterable/array/map that are printed in an error message. (<span class="contributor">Filip Hrisafov</span>)</li>
+      <li>Limit the number of elements from an iterable/array/map that are printed in error messages to 1000. (<span class="contributor">Filip Hrisafov</span>)</li>
       <li>Add many missing tests. (<span class="contributor">Filip Hrisafov</span>)</li>
-      <li>Provide @SafeVarargs for <span class="small-code">ListAssert</span> and <span class="small-code">IterableAssert</span> (<span class="contributor">Gaël Lhez</span>)</li>
+      <li>Provide @SafeVarargs for <span class="small-code">ListAssert</span> and <span class="small-code">IterableAssert</span>. (<span class="contributor">Gaël Lhez</span>)</li>
       <li>Remove usage of <span class="small-code">java.beans.Introspection</span> to improve android compatibility. (<span class="contributor">Pascal Schumacher</span>)</li>
       <li>Javadoc improvements ! (<span class="contributor">mainly by Pascal Schumacher</span>)</li>
    </ul>
    <div class="release-section-category">Fixed Bugs :</div>
    <ul>
-      <li>Fixed issue on manifest generation removing maven-bundle-plugin duplicated execution. <span class="contributor">(Cristiano Gavião)</span></li>
+      <li>OSGI manifest contains unnecassary import and export packages.<span class="contributor">(Cristiano Gavião)</span></li>
       <li>Increase priority of custom comparators in <span class="small-code">isEqualToComparingFieldByFieldRecursively</span> so that custom comparators can be used for collection types and maps. <span class="contributor">(Pascal Schumacher)</span></li>
       <li><span class="small-code">containsExactly</span> was broken when the used comparison strategy found duplicate elements.</li>
    </ul>
@@ -278,7 +278,7 @@ assertThat(new byte[] { 1, 2, 3 }).contains(1, 2);</code></pre>
 
   <h4 class="page-header"><span id="assertj-core-2.6.0-containsExactlyInAnyOrder" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">containsExactlyInAnyOrder</span> for primitive arrays</h4>
 
-  <p><span class="small-code">containsExactlyInAnyOrder</span> was initially added for iterable/object arrays, it is now available for primitive array, it verifies that the actual array contains exactly the given values and nothing else, in any order.</p>
+  <p><span class="small-code">containsExactlyInAnyOrder</span> was initially added for iterable/object arrays, it is now available for primitive arrays. It verifies that the actual array contains exactly the given values and nothing else, in any order.</p>
   <p>Example with <span class="small-code">int</span> array :</p>
   <pre><code class="java">// this containsExactlyInAnyOrder assertion succeeds
 assertThat(new int[] { 1, 2, 1 }).containsExactlyInAnyOrder(1, 1, 2);
@@ -288,7 +288,7 @@ assertThat(new int[] { 1, 2, 1 }).containsExactly(1, 1, 2);</code></pre>
 
   <h4 class="page-header"><span id="assertj-core-2.6.0-hasSuppressedException" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">hasSuppressedException</span> throwable assertion</h4>
 
-  <p>Verifies that the actual <span class="small-code">Throwable</span> has a suppressed exception similar to the given one, that is with same type and message (no use of <span class="small-code">equals</span> method).</p>
+  <p>Verifies that the actual <span class="small-code">Throwable</span> has a suppressed exception similar to the given one, that is with the same type and message (no use of the <span class="small-code">equals</span> method).</p>
   <p>Example:</p>
   <pre><code class="java">Throwable throwable = new Throwable();
 Throwable invalidArgException = new IllegalArgumentException("invalid argument");
@@ -304,7 +304,7 @@ assertThat(throwable).hasSuppressedException(new NullPointerException());</code>
 
   <h4 class="page-header"><span id="assertj-core-2.6.0-hasNoSuppressedExceptions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">hasNoSuppressedExceptions</span> throwable assertion</h4>
 
-  <p>Verifies that the actual <span class="small-code">Throwable</span> has the given exception in its suppressed exceptions.</p>
+  <p>Verifies that the actual <span class="small-code">Throwable</span> has the no suppressed exceptions.</p>
   <p>Example:</p>
   <pre><code class="java">Throwable throwable = new Throwable();
 
@@ -333,7 +333,7 @@ assertThat(ringBearers).hasEntrySatisfying(nenya, elfBearer);
 // this assertion will fail
 assertThat(ringBearers).hasEntrySatisfying(oneRing, elfBearer);</code></pre>
 
-  <h4 class="page-header"><span id="assertj-core-2.6.0-containsAnyOf" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">containsAnyOf(entries>)</span> map assertion</h4>
+  <h4 class="page-header"><span id="assertj-core-2.6.0-containsAnyOf" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">containsAnyOf(entries)</span> map assertion</h4>
 
   <p>Verifies that the actual <span class="small-code">map</span> contains at least one of the given entries.</p>
   <p>Example:</p>
@@ -343,10 +343,10 @@ ringBearers.put(narya, gandalf);
 ringBearers.put(vilya, elrond);
 ringBearers.put(oneRing, frodo);
  
-// assertions will pass
+// assertion will pass
 assertThat(ringBearers).containsAnyOf(entry(oneRing, frodo), entry(oneRing, sauron));
  
-// assertions will fail
+// assertion will fail
 assertThat(ringBearers).containsAnyOf(entry(oneRing, gandalf), entry(oneRing, aragorn));</code></pre>
 
   <h4 class="page-header"><span id="assertj-core-2.6.0-isNotCloseTo" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">isNotCloseTo</span> number assertion</h4>
@@ -368,7 +368,7 @@ assertThat(11).isNotCloseTo(10, withinPercentage(20));</code></pre>
 
   <h4 class="page-header"><span id="assertj-core-2.6.0-isBlank" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">isBlank</span>/<span class="small-code">isNotBlank</span> string assertions</h4>
 
-  <p>Verifies that the actual <span class="small-code">CharSequence</span> is blank, i.e. that it contains only whitespace characters, there are two variations of this assertion: <span class="small-code">isJavaBlank</span> with whitespace defined by java <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Character.html?is-external=true#isWhitespace(char)">Character#isWhitespace(char)</a> and <span class="small-code">isBlank</span> with whitespace defined according to the latest Unicode standard.</p>
+  <p>Verifies that the actual <span class="small-code">CharSequence</span> is blank, i.e. that it contains only whitespace characters. There are two variations of this assertion: <span class="small-code">isJavaBlank</span> with whitespace defined by java <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Character.html?is-external=true#isWhitespace(char)">Character#isWhitespace(char)</a> and <span class="small-code">isBlank</span> with whitespace defined according to the latest Unicode standard.</p>
   <p><span class="small-code">isNotBlank</span> is (obviously) the opposite assertion of <span class="small-code">isBlank</span>.</p>
   <p>Examples:</p>
   <pre><code class="java"> // these assertions succeed:
