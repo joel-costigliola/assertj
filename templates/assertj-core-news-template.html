@@ -113,7 +113,7 @@ assertThat(luke).isInstanceOfSatisfying(Jedi.class, jediRequirements);</code></p
 
    <h4 class="page-header"><span id="assertj-core-3.6.0-allSatisfy" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">allSatisfy</span> iterable/array assertion</h4>
 
-   <p>Verifies that all the elements satisfy given requirements expressed as a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html">Consumer</a>, this is typically used to perform a group of assertions on every elements of the iterable/array under test.</p>
+   <p>Verifies that all elements satisfy the given requirements expressed as a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html">Consumer</a>. This is typically used to perform a group of assertions on every element of the iterable/array under test.</p>
 
    <p>Example : </p>
    <pre><code class="java">assertThat(myIcelanderFriends).allSatisfy(person -&gt; {
@@ -148,7 +148,7 @@ assertThat(Optional.&lt;String&gt; ofNullable(null)).flatMap(UPPER_CASE_OPTIONAL
 
   <h4 class="page-header"><span id="assertj-core-3.6.0-hasEntrySatisfying" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">hasEntrySatisfying(K, Consumer<? super V>)</span> map assertion</h4>
 
-  <p>Verifies that the actual <span class="small-code">Map</span> contains the value for given key that satisfy the given requirements expressed as a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html">Consumer</a>.</p>
+  <p>Verifies that the actual <span class="small-code">Map</span> contains the given key and that its value satisfies the given requirements expressed as a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html">Consumer</a>.</p>
   <p>Example:</p>
   <pre><code class="java">Map&lt;Ring, TolkienCharacter&gt; ringBearers = new HashMap&lt;&gt;();
 ringBearers.put(nenya, galadriel);
@@ -298,7 +298,7 @@ assertThat(new byte[] { 1, 2, 3 }).contains(1, 2);</code></pre>
   <pre><code class="java">// this containsExactlyInAnyOrder assertion succeeds
 assertThat(new int[] { 1, 2, 1 }).containsExactlyInAnyOrder(1, 1, 2);
 
-// whereas this containsExactly fails given the same input since the order of values is different:
+// whereas containsExactly fails given the same input as the order of values is different:
 assertThat(new int[] { 1, 2, 1 }).containsExactly(1, 1, 2);</code></pre>
 
   <h4 class="page-header"><span id="assertj-core-2.6.0-hasSuppressedException" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">hasSuppressedException</span> throwable assertion</h4>
@@ -319,7 +319,7 @@ assertThat(throwable).hasSuppressedException(new NullPointerException());</code>
 
   <h4 class="page-header"><span id="assertj-core-2.6.0-hasNoSuppressedExceptions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">hasNoSuppressedExceptions</span> throwable assertion</h4>
 
-  <p>Verifies that the actual <span class="small-code">Throwable</span> has the no suppressed exceptions.</p>
+  <p>Verifies that the actual <span class="small-code">Throwable</span> has no suppressed exceptions.</p>
   <p>Example:</p>
   <pre><code class="java">Throwable throwable = new Throwable();
 
@@ -1351,7 +1351,7 @@ assertThat(fellowshipOfTheRing).contains(frodo);</code></pre>
 
    <h4 class="page-header"><span id="assertj-core-3.3.0-allMatch" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">allMatch</span> to <span class="small-code">Iterable</span> and <span class="small-code">Object[]</span> assertions.</h4>
 
-   <p>Verifies that all the elements of the actual <span class="small-code">Iterable</span> or <span class="small-code">Object[]</span> match the given <span class="small-code">Predicate</span>.</p>
+   <p>Verifies that all  elements of the actual <span class="small-code">Iterable</span> or <span class="small-code">Object[]</span> match the given <span class="small-code">Predicate</span>.</p>
    <p>Example :</p>
   <pre><code class="java">// also works with hobbits defined as an Iterable&lt;TolkienCharacter&gt;
 TolkienCharacter[] hobbits = { frodo, sam, pippin };
