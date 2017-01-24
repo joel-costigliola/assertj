@@ -365,7 +365,7 @@ public void host_dinner_party_where_nobody_dies() {
      3) [Candlestick] expected:<'[pristine]'> but was:<'[bent]'>
      4) [Professor] expected:<'[well kempt]'> but was:<'[bloodied and dishevelled]'></code></pre>
 
-      <p>AssertJ also provides a few ways to avoid to have to call <span class="small-code">softly.assertAll()</span> manually:</p>
+      <p>AssertJ also provides a few ways to avoid having to call <span class="small-code">softly.assertAll()</span> manually:</p>
       <ul>
          <li><a href="#JUnitSoftAssertions"><span class="small-code">JUnitSoftAssertions</span> with a JUnit rule</a></li>
          <li><a href="#AutoCloseableSoftAssertions"><span class="small-code">AutoCloseableSoftAssertions</span> </a></li>
@@ -432,7 +432,7 @@ public void host_dinner_party_where_nobody_dies() {
 
       <h3 class="page-header"><span id="file-content-string-assertions"></span><i class="fa fa-star"></i> Using String assertions on the content of a file</h3>
 
-      <p>File assertions are rather poor when it comes to check the file content, so we had the idea to reuse AssertJ String assertions on the content of a file.<br>
+      <p>File assertions are rather poor for checking the file content, so we had the idea to reuse AssertJ String assertions on the content of a file.<br>
          See the example below :</p>
 
 <pre><code class="java">File xFile = writeFile("xFile", "The Truth Is Out There");
@@ -564,7 +564,7 @@ assertThat(fellowshipOfTheRing).usingElementComparator(raceComparator).contains(
          </ul>
       </p>
 
-      <p>Except <span class="small-code">isEqualToComparingFieldByFieldRecursively</span>, the comparison performed is not recursive, i.e. if one of the field is an <span class="small-code">Object</span>, it will be compared to the other field using its <span class="small-code">equals</span> method (whether <span class="small-code">equals</span> has been overriden or not), on the other hand <span class="small-code">isEqualToComparingFieldByFieldRecursively</span> compares <span class="small-code">Object</span> fields with a field by field strategy unless it has a custom <span class="small-code">equals</span> implementation (i.e. the overriden <span class="small-code">equals</span> method will be used instead of a field by field comparison).</p>
+      <p>Except <span class="small-code">isEqualToComparingFieldByFieldRecursively</span>, the comparison performed is not recursive, i.e. if one of the field is an <span class="small-code">Object</span>, it will be compared to the other field using its <span class="small-code">equals</span> method (whether <span class="small-code">equals</span> has been overriden or not). On the other hand <span class="small-code">isEqualToComparingFieldByFieldRecursively</span> compares <span class="small-code">Object</span> fields with a field by field strategy unless it has a custom <span class="small-code">equals</span> implementation (i.e. the overriden <span class="small-code">equals</span> method will be used instead of a field by field comparison).</p>
 
       <p>You can specify a custom comparison strategy by <a href="assertj-core-news.html#assertj-core-2.4.0-usingComparatorForType">field type</a> or for a given <a href="assertj-core-news.html#assertj-core-2.4.0-usingComparatorForFields">group of fields</a>, this is useful when comparing doubles or floats as shown at the end of <span class="small-code">isEqualToComparingFieldByFieldRecursively</span> <a href="#field-by-field-recursive">example</a>.</p>
 
