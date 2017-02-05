@@ -103,11 +103,13 @@ $menu
                <li><a href="#faq-incorrect-api-usage">FindBugs <span class="small-code">CheckReturnValue</span> error</a></li>
             </ul>
 
-            <h4 class="page-header"><span id="android" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i>Android Support</h4>
+            <h4 class="page-header"><span id="android" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Android Support</h4>
 
-            <p>Android does not support the <span class="small-code">java.nio.file.Path</span> class, so the regular AssertJ 3.x/2.x entry point classes can not be used.
-            Instead you can use the <span class="small-code">Java6XAssertions</span> classes e.g. use <span class="small-code">org.assertj.core.api.Java6Assertions</span> instead of <span class="small-code">org.assertj.core.api.Assertions</span>.</p>
+            <p>Android does not support the <span class="small-code">java.nio.file.Path</span> class, so the 'regular' AssertJ 3.x/2.x entry point classes can not be used.
+            Instead you can use the <span class="small-code">Java6XAssertions</span> classes. For example use <span class="small-code">org.assertj.core.api.Java6Assertions</span> instead of <span class="small-code">org.assertj.core.api.Assertions</span>.</p>
 
+            <p>The following listing contains 'regular' import statements and their android alternative:</p>
+            
             <pre><code class="java">// 'regular' assertj
 import static org.assertj.core.api.Assertion.*
 // assertj on android 
