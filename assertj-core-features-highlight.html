@@ -90,7 +90,7 @@
 
       <p>Basic tips :</p>
       <ul>
-         <li>Java 8 assertions, see release notes : <a href="assertj-core-news.html#assertj-core-3.5.0">3.5.0</a> / <a href="assertj-core-news.html#assertj-core-3.4.0">3.4.0</a> / <a href="assertj-core-news.html#assertj-core-3.3.0">3.3.0</a> /<a href="assertj-core-news.html#assertj-core-3.2.0">3.2.0</a> / <a href="assertj-core-news.html#assertj-core-3.1.0">3.1.0</a> / <a href="assertj-core-news.html#assertj-core-3.0.0">3.0.0</a> </li>
+         <li>Java 8 assertions, see release notes : <a href="assertj-core-news.html#assertj-core-3.6.0">3.6.0</a> / <a href="assertj-core-news.html#assertj-core-3.5.0">3.5.0</a> / <a href="assertj-core-news.html#assertj-core-3.4.0">3.4.0</a> / <a href="assertj-core-news.html#assertj-core-3.3.0">3.3.0</a> /<a href="assertj-core-news.html#assertj-core-3.2.0">3.2.0</a> / <a href="assertj-core-news.html#assertj-core-3.1.0">3.1.0</a> / <a href="assertj-core-news.html#assertj-core-3.0.0">3.0.0</a> </li>
          <li><a href="#ide-automatic-static-import">IDE configuration to directly get <span class="small-code">assertThat</span> in code completion</a></li>
          <li><a href="#describe-assertion">Describe you assertion using <span class="small-code">as(String description, Object... args)</span></a></li>
          <li><a href="#exception-assertion">Exception assertions guide</a></li>
@@ -120,7 +120,7 @@
 
       <p class="list-section">Eclipse configuration</p>
       <ol>
-         <li>Go to : preferences &gt; Java &gt; Editor &gt; Content assist &gt; Favorites &gt; New Type</li>
+         <li>Go to : Window &gt; Preferences &gt; Java &gt; Editor &gt; Content Assist &gt; Favorites &gt; New Type</li>
          <li>Enter : <span class="small-code">org.assertj.core.api.Assertions</span></li>
          <li>You should see : <span class="small-code">org.assertj.core.api.Assertions.*</span> in a the list.</li>
       </ol>
@@ -488,7 +488,7 @@ public void testException() {
 }</code></pre>
 
       <p class="list-section">With Java 7 (AssertJ 2.x) :</p>
-      <p>Asserting on exception is not as nice compared to the Java 8 way, this is how you would do it in AssertJ 2.x :</p>
+      <p>Asserting on exceptions is not as nice compared to the Java 8 way, this is how you would do it in AssertJ 2.x :</p>
       <ol>
          <li>Put the code to should throw in a try-catch.</li>
          <li>Call <span class="small-code">fail</span> method immediately after the code that should throw the exception, so that if it is not thrown, the test fails.</li>
