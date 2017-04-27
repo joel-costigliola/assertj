@@ -19,7 +19,7 @@ $assertj_core_side_menu
 
       <p>Basic tips :</p>
       <ul>
-         <li>Java 8 assertions, see release notes : <a href="assertj-core-news.html#assertj-core-3.6.0">3.6.0</a> / <a href="assertj-core-news.html#assertj-core-3.5.0">3.5.0</a> / <a href="assertj-core-news.html#assertj-core-3.4.0">3.4.0</a> / <a href="assertj-core-news.html#assertj-core-3.3.0">3.3.0</a> /<a href="assertj-core-news.html#assertj-core-3.2.0">3.2.0</a> / <a href="assertj-core-news.html#assertj-core-3.1.0">3.1.0</a> / <a href="assertj-core-news.html#assertj-core-3.0.0">3.0.0</a> </li>
+         <li>Java 8 assertions, see release notes : <a href="assertj-core-news.html#assertj-core-3.7.0">3.7.0</a> / <a href="assertj-core-news.html#assertj-core-3.6.0">3.6.0</a> / <a href="assertj-core-news.html#assertj-core-3.5.0">3.5.0</a> / <a href="assertj-core-news.html#assertj-core-3.4.0">3.4.0</a> / <a href="assertj-core-news.html#assertj-core-3.3.0">3.3.0</a> /<a href="assertj-core-news.html#assertj-core-3.2.0">3.2.0</a> / <a href="assertj-core-news.html#assertj-core-3.1.0">3.1.0</a> / <a href="assertj-core-news.html#assertj-core-3.0.0">3.0.0</a> </li>
          <li><a href="#ide-automatic-static-import">IDE configuration to directly get <span class="small-code">assertThat</span> in code completion</a></li>
          <li><a href="#describe-assertion">Describe you assertion using <span class="small-code">as(String description, Object... args)</span></a></li>
          <li><a href="#exception-assertion">Exception assertions guide</a></li>
@@ -85,13 +85,13 @@ $assertj_core_side_menu
 
       <p>Let's see both options in some examples taken from <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/FilterExamples.java">FilterExamples.java</a> of the <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project.</p>
 
-   <p class="list-section">Filtering with a <span class="small-code">Predicate</span></p> 
+   <p class="list-section">Filtering with a <span class="small-code">Predicate</span></p>
    <p>You specify the filter condition using simple predicate, best expressed with a lambda.</p>
    <p>Example :</p>
-   <pre><code class="java">assertThat(fellowshipOfTheRing).filteredOn( character -> character.getName().contains("o") )
+   <pre><code class="java">assertThat(fellowshipOfTheRing).filteredOn( character -&gt; character.getName().contains("o") )
                                .containsOnly(aragorn, frodo, legolas, boromir);</code></pre>
-                               
-   <p class="list-section">Filtering on a property or a field</p> 
+
+   <p class="list-section">Filtering on a property or a field</p>
    <p>First you specify the property/field name to filter on and then its expected value. The filter first tries to get the value from a property, then from a field. Reading private fields is supported by default, but can be disabled globally by calling <span class="small-code">Assertions.setAllowExtractingPrivateFields(false)</span>.</p>
    <p>Filters support reading nested properties/fields. Note that if an intermediate value is null the whole nested property/field is considered to be null. Thus reading <span class="small-code">"address.street.name"</span> will return null if <span class="small-code">"address.street"</span> is null.</p>
    <p>Filters support these basic operations : <span class="small-code">not</span>, <span class="small-code">in</span>, <span class="small-code">notIn</span></p>
@@ -135,14 +135,14 @@ assertThat(fellowshipOfTheRing).filteredOn("race", MAN)
 Condition&lt;Player&gt; mvpStats= new Condition&lt;Player&gt;() {
   @Override
   public boolean matches(Player player) {
-    return player.pointsPerGame() > 20 && (player.assistsPerGame() >= 8 || player.reboundsPerGame() >= 8);
+    return player.pointsPerGame() > 20 &amp;&amp; (player.assistsPerGame() >= 8 || player.reboundsPerGame() >= 8);
   }
 };
 
 List&lt;Player&gt; players;
-players.add(rose); // Derrick Rose : 25 ppg - 8 assists - 5 rebounds 
-players.add(lebron); // Lebron James : 27 ppg - 6 assists - 9 rebounds 
-players.add(noah); // Joachim Noah : 8 ppg - 5 assists - 11 rebounds 
+players.add(rose); // Derrick Rose : 25 ppg - 8 assists - 5 rebounds
+players.add(lebron); // Lebron James : 27 ppg - 6 assists - 9 rebounds
+players.add(noah); // Joachim Noah : 8 ppg - 5 assists - 11 rebounds
 
 // noah does not have more than 20 ppg
 assertThat(players).filteredOn(mvpStats)
@@ -208,7 +208,7 @@ assertThat(fellowshipOfTheRing).extracting("name", String.class)
 
 <pre><code class="java">Player jordan = ... // initialized with Pippen and Kukoc team mates
 Player magic = ... // initialized with Jabbar and Worthy team mates
-List&lt;Player&gt; reallyGoodPlayers = list(jordan, magic); 
+List&lt;Player&gt; reallyGoodPlayers = list(jordan, magic);
 
 // check all team mates by specifying the teamMates property (Player has a getTeamMates() method):
 assertThat(reallyGoodPlayers).flatExtracting("teamMates")
@@ -346,7 +346,7 @@ public void host_dinner_party_where_nobody_dies() {
 public void host_dinner_party_where_nobody_dies() {
    Mansion mansion = new Mansion();
    mansion.hostPotentiallyMurderousDinnerParty();
-   SoftAssertions.assertSoftly(softly -> {
+   SoftAssertions.assertSoftly(softly -&gt; {
       softly.assertThat(mansion.guests()).as("Living Guests").isEqualTo(7);
       softly.assertThat(mansion.kitchen()).as("Kitchen").isEqualTo("clean");
       softly.assertThat(mansion.library()).as("Library").isEqualTo("clean");
@@ -387,7 +387,7 @@ assertThat(contentOf(xFile)).startsWith("The Truth").contains("Is Out").endsWith
 
    <pre><code class="java">@Test
 public void testException() {
-   assertThatThrownBy(() -> { throw new Exception("boom!"); }).isInstanceOf(Exception.class)
+   assertThatThrownBy(() -&gt; { throw new Exception("boom!"); }).isInstanceOf(Exception.class)
                                                              .hasMessageContaining("boom");
 }</code></pre>
 
@@ -395,11 +395,35 @@ public void testException() {
 
    <pre><code class="java">@Test
 public void testException() {
-   assertThatExceptionOfType(IOException.class).isThrownBy(() -> { throw new IOException("boom!"); })
+   assertThatExceptionOfType(IOException.class).isThrownBy(() -&gt; { throw new IOException("boom!"); })
                                                .withMessage("%s!", "boom")
                                                .withMessageContaining("boom")
-                                               .withNoCause(); 
+                                               .withNoCause();
 }</code></pre>
+
+<p>This later syntax has been enriched for common exceptions :</p>
+<ul>
+  <li><span class="small-code">assertThatNullPointerException</span></li>
+  <li><span class="small-code">assertThatIllegalArgumentException</span></li>
+  <li><span class="small-code">assertThatIllegalStateException</span></li>
+  <li><span class="small-code">assertThatIOException</span></li>
+</ul>
+
+<p>The previous test can be rewritten as:</p>
+   <pre><code class="java">@Test
+public void testException() {
+   assertThatIOException().isThrownBy(() -&gt; { throw new IOException("boom!"); })
+                          .withMessage("%s!", "boom")
+                          .withMessageContaining("boom")
+                          .withNoCause();
+}</code></pre>
+
+<p>You can test that a piece of code does not throw any exception:</p>
+<pre><code class="java">assertThatCode(() -&gt; {
+  // code that should throw an exception
+  ...
+}).doesNotThrowAnyException();
+</code></pre>
 
    <p>Finally, BDD aficionados can separate <i>when</i> and <i>then</i> steps by using <span class="small-code">catchThrowable(ThrowingCallable)</span> to capture the throwable and then perform assertions.</p>
    <p>Example :</p>
@@ -409,7 +433,7 @@ public void testException() {
    // given some preconditions
 
    // when
-   Throwable thrown = catchThrowable(() -> { throw new Exception("boom!"); });
+   Throwable thrown = catchThrowable(() -&gt; { throw new Exception("boom!"); });
 
    // then
    assertThat(thrown).isInstanceOf(Exception.class)
@@ -531,7 +555,7 @@ TolkienCharacter sam = new TolkienCharacter("Sam", 38, HOBBIT);
 
 // frodo and sam are equals when ignoring name and age as the only remaining field is race
 assertThat(frodo).isEqualToIgnoringGivenFields(sam, "name", "age"); // OK both are HOBBIT
- 
+
 // ... but they are not equals if only age is ignored as their names differ.
 assertThat(frodo).isEqualToIgnoringGivenFields(sam, "age"); // FAIL</code></pre>
 
@@ -541,7 +565,7 @@ TolkienCharacter mysteriousHobbit = new TolkienCharacter(null, 33, HOBBIT);
 
 // Null fields in expected object are ignored, mysteriousHobbit has a null name thus it's ignored
 assertThat(frodo).isEqualToIgnoringNullFields(mysteriousHobbit); // OK
- 
+
 // ... but this is not reversible !
 assertThat(mysteriousHobbit).isEqualToIgnoringNullFields(frodo); // FAIL</code></pre>
 
@@ -551,7 +575,7 @@ assertThat(mysteriousHobbit).isEqualToIgnoringNullFields(frodo); // FAIL</code><
   public double height;
   public Home home = new Home();
   public Person bestFriend;
-  // constructor with name and height omitted for brevity's sake 
+  // constructor with name and height omitted for brevity's sake
 }
 
 public class Home {
@@ -568,7 +592,7 @@ jack.home.address.number = 123;
 Person jackClone = new Person("Jack", 1.80);
 jackClone.home.address.number = 123;
 
-// cycle are handled in comparison  
+// cycle are handled in comparison
 jack.bestFriend = jackClone;
 jackClone.bestFriend = jack;
 
@@ -578,19 +602,19 @@ assertThat(jack).isEqualsTo(jackClone);
 // jack and jackClone are equals when doing a recursive field by field comparison
 assertThat(jack).isEqualToComparingFieldByFieldRecursively(jackClone);
 
-// any type/field can be compared with a a specific comparator. 
-// let's change  jack's height a little bit 
+// any type/field can be compared with a a specific comparator.
+// let's change  jack's height a little bit
 jack.height = 1.81;
 
-// assertion fails because of the height difference 
+// assertion fails because of the height difference
 // (the default precision comparison for double is 1.0E-15)
 assertThat(jack).isEqualToComparingFieldByFieldRecursively(jackClone);
 
-// use usingComparatorForType to specify how to compare the given type 
-// assertion succeeds because we allow a 0.5 tolerance on double 
+// use usingComparatorForType to specify how to compare the given type
+// assertion succeeds because we allow a 0.5 tolerance on double
 assertThat(jack).usingComparatorForType(new DoubleComparator(0.5), Double.class)
                 .isEqualToComparingFieldByFieldRecursively(jackClone);
-                
+
 // use usingComparatorForFields to specify how to compare some fields (nested fields are supported)
 assertThat(jack).usingComparatorForFields(new DoubleComparator(0.5), "height")
                 .isEqualToComparingFieldByFieldRecursively(jackClone);</code></pre>
