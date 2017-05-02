@@ -217,21 +217,15 @@ import static org.assertj.core.api.Java6JUnitBDDSoftAssertions.*
             <p>The following example shows an incorrect AssertJ API usage:</p>
 
             <pre><code class="java">// BAD USAGE : DON'T DO THIS ! It does not assert anything
-assertThat(a1.equals(b1));
-assertThat(a2.equals(b2));
-assertThat(a3.equals(b3));
+assertThat(actual.equals(expected));
 
 // DO THIS :
-assertThat(a1).isEqualTo(b1);
-assertThat(a2).isEqualTo(b2);
-assertThat(a3).isEqualTo(b3);
+assertThat(actual).isEqualTo(expected);
 
 // OR THIS (less classy but ok):
-assertThat(a1.equals(b1)).isTrue();
-assertThat(a2.equals(b2)).isTrue();
-assertThat(a3.equals(b3)).isTrue();</code></pre>
+assertThat(actual.equals(expected)).isTrue();</code></pre>
 
-            <p>FindBugs can now detect such problems thanks to the <a href="https://github.com/joel-costigliola/assertj-core/pull/695"><span class="small-code">CheckReturnValue</span></a> annotation introduced in 2.5.+ / 3.5.+.</p>
+            <p>Static code analysis tools like FindBugs can now detect such problems thanks to the <a href="https://github.com/joel-costigliola/assertj-core/pull/695"><span class="small-code">CheckReturnValue</span></a> annotation introduced in 2.5+ / 3.5+.</p>
 
          <h3 class="page-header"><span id="code"/></span>Code and issue tracker</h3>
 
