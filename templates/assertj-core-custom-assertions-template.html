@@ -218,9 +218,9 @@ softly.assertAll();</code></pre>
       <h3 class="page-header">Generating specific assertions with AssertJ assertions generator</h3>
 
       <p>If you have a lot of classes and want custom assertions for all of them, it can be a lot of work !<br>
-         In that case, you can generate custom assertions with <a href="assertj-assertions-generator.html">AssertJ assertions generator</a> which comes with a <a href="assertj-assertions-generator-maven-plugin.html">maven plugin</a>, it takes classes or packages as input and generates the corresponding specific assertions classes (for all classes of specified packages and subpackages).</p>
+         In that case, you can generate custom assertions with <a href="assertj-assertions-generator.html">AssertJ assertions generator</a> which comes with a <a href="assertj-assertions-generator-maven-plugin.html">maven plugin</a>. It takes classes or packages as input and generates the corresponding specific assertions classes (for all classes of the specified packages and subpackages).</p>
 
-      <p>The assertions generator looks for properties to know what to generate. For example, if you have a <span class="small-code">Person</span> class with an <span class="small-code">address</span> property, it will generate <span class="small-code">hasAddress</span> assertion as part of <span class="small-code">PersonAssert</span> assertion class.<br>
+      <p>The assertions generator looks for properties to know what to generate. For example, if you have a <span class="small-code">Person</span> class with an <span class="small-code">address</span> property, it will generate a <span class="small-code">hasAddress</span> assertion as part of a <span class="small-code">PersonAssert</span> assertion class.<br>
       Once assertions classes are generated, you can put them in source control and enrich them with new assertions.</p>
 
       <p>AssertJ assertions generator will also generate entry point classes for your custom assertions !</p>
