@@ -7,8 +7,8 @@ def content_of(filename):
     with open("./template-data/" + filename) as file_to_read:
         return file_to_read.read()
 
-print " "
-print "Generate assertj HTML files"
+print (" ")
+print ("Generate assertj HTML files")
 
 # stores it into a map for later substitution
 template_data_map = {
@@ -37,7 +37,7 @@ os.chdir(templates_dir)
 
 for template_file_name in glob.glob("*-template.html"):
     target_file_name = '../' + template_file_name.replace('-template.html', '.html')
-    print "-- generate " + target_file_name + " from " + template_file_name
+    print ("-- generate " + target_file_name + " from " + template_file_name)
     # open the file and read content
     template_file_path = os.path.join(os.path.dirname(__file__), template_file_name)
     with open(template_file_path) as index_template_file:
