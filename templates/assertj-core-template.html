@@ -153,9 +153,21 @@ assertThat(actual.equals(expected));
 assertThat(actual).isEqualTo(expected);
 
 // OR THIS (less classy but ok):
-assertThat(actual.equals(expected)).isTrue();</code></pre>
+assertThat(actual.equals(expected)).isTrue();
 
-            <p>Static code analysis tools like FindBugs can now detect such problems thanks to the <a href="https://github.com/joel-costigliola/assertj-core/pull/695"><span class="small-code">CheckReturnValue</span></a> annotation introduced in 2.5+ / 3.5+.</p>
+// BAD USAGE : DON'T DO THIS ! describedAs has no effect
+assertThat(actual).isEqualTo(expected).describedAs("description");
+
+// DO THIS :
+assertThat(actual).describedAs("description").isEqualTo(expected);
+
+// BAD USAGE : DON'T DO THIS ! Comparator is not used
+assertThat(actual).isEqualTo(expected).usingComparator(new CustomComparator());
+
+// DO THIS :
+assertThat(actual).usingComparator(new CustomComparator()).isEqualTo("a");</code></pre>
+
+         <p>Static code analysis tools like FindBugs can now detect such problems thanks to the <a href="https://github.com/joel-costigliola/assertj-core/pull/695"><span class="small-code">CheckReturnValue</span></a> annotation introduced in 2.5+ / 3.5+ and improved in 2.7+ / 3.7+.</p>
 
          <h3 class="page-header"><span id="code"/></span>Code and issue tracker</h3>
 
