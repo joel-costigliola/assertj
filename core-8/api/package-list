@@ -11,6 +11,7 @@ org.assertj.core.error.uri
 org.assertj.core.extractor
 org.assertj.core.groups
 org.assertj.core.internal
+org.assertj.core.matcher
 org.assertj.core.presentation
 org.assertj.core.util
 org.assertj.core.util.diff
