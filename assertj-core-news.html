@@ -138,6 +138,7 @@
 </ul>
 <div class="release-section-category">Improvements :</div>
 <ul>
+  <li>AssertJ is compatible with Java 9. <span class="contributor">(Pascal Schumacher)</span></li>
   <li><span class="small-code">extracting</span> and <span class="small-code">flatExtracting</span> now accept <a href="assertj-core-news.html#assertj-core-3.7.0-throwingExtractor">extractor functions throwing checked exceptions</a>. <span class="contributor">(epeee)</span></li>
   <li><span class="small-code">allMatch</span> assertion now prints all the non matching elements if it fails. <span class="contributor">(Maurício Aniche)</span></li>
   <li>Add <span class="small-code">@CheckReturnValue</span> for findbugs integration in <span class="small-code">WithAssertions</span>. <span class="contributor">(Pascal Schumacher)</span></li>
@@ -299,13 +300,12 @@ assertThat(fellowshipOfTheRing).flatExtracting(nameAndRaceExtractor)
 <h3 class="page-header"><span id="assertj-core-2.7.0"></span>AssertJ Core 2.7.0 release : New and noteworthy</h3>
 
 <p>Release date : 2017-05-07</p>
-<p>This release includes all changes from <a href="#assertj-core-2.7.0">AssertJ core 2.7.0</a> and adds the following that are Java 8 specific.</p>
 
-<p>Thanks to <span class="contributor">Pascal Schumacher</span>, <span class="contributor">epeee</span>, <span class="contributor">Kseniya Panasyuk</span>, <span class="contributor">Drummond Dawson</span>,
-<span class="contributor">Dmitrii Nikitin</span>, <span class="contributor">Julian Honnen</span>, <span class="contributor">Maurício Aniche</span>, <span class="contributor">Tomasz Kalkosiński</span>
+<p>Thanks to <span class="contributor">Pascal Schumacher</span>, <span class="contributor">epeee</span>, <span class="contributor">Kseniya Panasyuk</span>, <span class="contributor">Filip Hrisafov</span>, <span class="contributor">Drummond Dawson</span>,
+<span class="contributor">Dmitrii Nikitin</span>, <span class="contributor">Julian Honnen</span>, <span class="contributor">Maurício Aniche</span>, <span class="contributor">Tomasz Kalkosiński</span>, <span class="contributor">Joey Bratton</span> 
 , <span class="contributor">Martin Winandy</span>, <span class="contributor">Christopher Arnott</span>, <span class="contributor">Michał Szkutnik</span> and <span class="contributor">Antoine Dessaigne</span> for their contributions.</p>
 
-<p>I would like to specially thank again <span class="contributor">epeee</span> and <span class="contributor">Kseniya Panasyuk</span> for their many contributions, awesome guys !</p>
+<p>I would like to specially thank (again) <span class="contributor">epeee</span> and <span class="contributor">Kseniya Panasyuk</span> for their many contributions, awesome guys !</p>
 
 <h4 class="page-header"> Release notes</h4>
 <div class="release-section-category">Deprecation :</div>
@@ -317,8 +317,8 @@ assertThat(fellowshipOfTheRing).flatExtracting(nameAndRaceExtractor)
    <li>Add <a href="assertj-core-news.html#assertj-core-2.7.0-future"><span class="small-code">Future</span> assertions</a>. <span class="contributor">(Pascal Schumacher)</span></li>
    <li>Add <a href="assertj-core-news.html#assertj-core-2.7.0-atomic">atomic classes assertions</a>. <span class="contributor">(epeee)</span></li>
    <li>Add <a href="assertj-core-news.html#assertj-core-2.7.0-bigInteger"><span class="small-code">BigInteger</span> assertions</a>. <span class="contributor">(epeee)</span></li>
-   <li>Add <a href="assertj-core-news.html#assertj-core-2.7.0-fields-methods">fields/methods</a> <span class="small-code">Class</span> assertions.</li>
-   <li>Add <span class="small-code">Class</span> <a href="assertj-core-news.html#assertj-core-2.7.0-class-visibility">visibility</a> assertions.</li>
+   <li>Add <a href="assertj-core-news.html#assertj-core-2.7.0-fields-methods">fields/methods</a> <span class="small-code">Class</span> assertions. <span class="contributor">(epeee, Filip Hrisafov)</span></li>
+   <li>Add <span class="small-code">Class</span> <a href="assertj-core-news.html#assertj-core-2.7.0-class-visibility">visibility</a> assertions. <span class="contributor">(epeee)</span></li>
    <li>Add <span class="small-code">isOne</span> number assertion. <span class="contributor">(Drummond Dawson)</span></li>
    <li>Add <a href="assertj-core-news.html#assertj-core-2.7.0-normalizing-equals"><span class="small-code">isEqualToNormalizingNewlines</span></a> to verify that two strings are equals after normalizing newlines. <span class="contributor">(Maurício Aniche)</span></li>
    <li>Add a <a href="assertj-core-news.html#assertj-core-2.7.0-hamcrest-matcher">Hamcrest Matcher</a> that reuses AssertJ assertions. <span class="contributor">(Tomasz Kalkosiński)</span></li>
@@ -332,9 +332,11 @@ assertThat(fellowshipOfTheRing).flatExtracting(nameAndRaceExtractor)
 </ul>
 <div class="release-section-category">Improvements :</div>
 <ul>
+   <li>AssertJ is compatible with Java 9. <span class="contributor">(Pascal Schumacher)</span></li>
    <li><span class="small-code">containsSequence</span> and <span class="small-code">containsSubSequence</span> can now take a <span class="small-code">List</span> parameter. <span class="contributor">(Christopher Arnott)</span></li>
    <li>Provide a description of extracted fields unless one has already been given. <span class="contributor">(Pascal Schumacher)</span></li>
-   <li><span class="small-code">isEqualToComparingFieldByFieldRecursively</span> comparison improvements for unordered sets comparison.</span></li>
+   <li>Enable static code analysis tools (e.g. Findbugs) to detect incorrect API usage of &quot;non-asserting&quot; methods like describedAs, usingX. (<span class="contributor">Pascal Schumacher</span>)</li>
+   <li><span class="small-code">isEqualToComparingFieldByFieldRecursively</span> comparison improvements for unordered sets comparison.</span> <span class="contributor">(Kseniya Panasyuk)</span></li>
    <li>Disambiguate field description in <span class="small-code">isEqualToComparingFieldByFieldRecursively</span> error message.</span></li>
    <li>Expose <span class="small-code">extracting</span> for <span class="small-code">Map</span> assertion.</span></li>
    <li>Replace null description by an empty one.</span></li>
@@ -350,7 +352,7 @@ assertThat(fellowshipOfTheRing).flatExtracting(nameAndRaceExtractor)
   <li>Fix field by field comparison that was ignoring field and type comparators when one of the field to compare was null.</li>
   <li>Fix <span class="small-code">isZero</span> that should pass for negative double/float zero (and <span class="small-code">isNotZero</span> should fail).</li>
   <li>Fix extracting properties implemented by default interface methods. <span class="contributor">(Pascal Schumacher)</span></li>
-  <li>Fix <span class="small-code">ShouldHaveCause</span> exception error message that was inverting actual and expected causes.</li>
+  <li>Fix <span class="small-code">ShouldHaveCause</span> exception error message that was inverting actual and expected causes. <span class="contributor">(Dmitrii Nikitin)</span></li>
   <li>Fix a NPE in detailed <span class="small-code">ShouldBeEqual</span> error message for null values. <span class="contributor">(Julian Honnen)</span></li>
   <li>Fix <span class="small-code">containsExactly</span> that was not honoring custom element comparator.</li>
 </ul>
