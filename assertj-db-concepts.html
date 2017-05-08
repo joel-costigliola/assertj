@@ -85,13 +85,13 @@
             <ul>
               <li><a href="#datasource">DataSource</a></li>
               <li><a href="#source">Source</a></li>
-              <li><a href="#datasourcewithlettercase">DataSource with LetterCase</a> <small><i>(since 1.1.0)</i></small></li>
-              <li><a href="#sourcewithlettercase">Source with LetterCase</a> <small><i>(since 1.1.0)</i></small></li>
+              <li><a href="#datasourcewithlettercase">DataSource with LetterCase</a> <small><i>(since <a href="assertj-db-news.html#assertj-db-1.1.0">1.1.0</a>)</i></small></li>
+              <li><a href="#sourcewithlettercase">Source with LetterCase</a> <small><i>(since <a href="assertj-db-news.html#assertj-db-1.1.0">1.1.0</a>)</i></small></li>
             </ul>
          </li>
          <li><a href="#elements">Elements of the database</a>
             <ul>
-              <li><a href="#table">Table</a></li>
+              <li><a href="#table">Table</a> <small><i>(modified in <a href="assertj-db-news.html#assertj-db-1.2.0">1.2.0</a>)</i></small></li>
               <li><a href="#request">Request</a></li>
               <li><a href="#changes">Changes</a></li>
               <li><a href="#change">Change</a></li>
@@ -105,6 +105,7 @@
               <li><a href="#datatype">DataType</a></li>
               <li><a href="#changetype">ChangeType</a></li>
               <li><a href="#valuetype">ValueType</a></li>
+              <li><a href="#ordertype">OrderType</a> <small><i>(since <a href="assertj-db-news.html#assertj-db-1.2.0">1.2.0</a>)</i></small></li>
             </ul>
          </li>
          <li><a href="#navigation">Navigation</a>
@@ -115,21 +116,21 @@
          </li>
          <li><a href="#datevalue-timevalue-datetimevalue">DateValue, TimeValue and DateTimeValue</a></li>
          <li><a href="#default-description">Default description</a></li>
-         <li><a href="#dblettercase">Letter Case of the database</a> <small><i>(since 1.1.0)</i></small>
+         <li><a href="#dblettercase">Letter Case of the database</a> <small><i>(since <a href="assertj-db-news.html#assertj-db-1.1.0">1.1.0</a>)</i></small>
             <ul>
               <li><a href="#caseconversion">CaseConversion</a></li>
               <li><a href="#casecomparison">CaseComparison</a></li>
               <li><a href="#lettercase">LetterCase</a></li>
             </ul>
          </li>
-         <li><a href="#output">Output</a> <small><i>(since 1.1.0)</i></small>
+         <li><a href="#output">Output</a> <small><i>(since <a href="assertj-db-news.html#assertj-db-1.1.0">1.1.0</a>)</i></small>
             <ul>
               <li><a href="#typeoutput">Type of output</a></li>
               <li><a href="#destination">Destination</a></li>
             </ul>
          </li>
       </ul>
-      <p>For the examples below, suppose that the database contains these two tables :</p>
+      <p>For the examples below, suppose that the database contains these three tables :</p>
 
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">MEMBERS</caption>
@@ -309,6 +310,24 @@
         </tr>
       </table>
 
+      <br/>
+
+      <table border="1" cellspacing="0" cellpadding="2">
+      <caption style="font-size:70%">GROUP</caption>
+        <tr>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">NAME</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'U2'</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">2</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Coldplay'</td>
+        </tr>
+      </table>
+
 
       <h3 class="page-header" ><span id="connection"></span>Connection to the database</h3>
       <p>To make assertions on a database, it is necessary to connect. For that, either to use a <code class="java">DataSource</code>
@@ -326,7 +345,7 @@
 
 
       <h4 class="page-header" ><span id="datasourcewithlettercase"></span>DataSource with LetterCase</h4>
-      <p><i>Since 1.1.0</i></p>
+      <p><i>Since <a href="assertj-db-news.html#assertj-db-1.1.0">1.1.0</a></i></p>
       <p>A <a href="db/current/api/org/assertj/db/type/DataSourceWithLetterCase.html">DataSourceWithLetterCase</a> is a 
       <a href="http://docs.oracle.com/javase/6/docs/api/javax/sql/DataSource.html">DataSource</a> which allows to indicate the
       <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> 
@@ -337,7 +356,7 @@
                                              pkLetterCase);</code></pre>
       <p>For more information, see the <a href="#dblettercase">paragraph on LetterCase</a>.</p>
       <h4 class="page-header" ><span id="sourcewithlettercase"></span>Source with LetterCase</h4>
-      <p><i>Since 1.1.0</i></p>
+      <p><i>Since <a href="assertj-db-news.html#assertj-db-1.1.0">1.1.0</a></i></p>
       <p>A <a href="db/current/api/org/assertj/db/type/SourceWithLetterCase.html">SourceWithLetterCase</a> is a 
       <a href="db/current/api/org/assertj/db/type/Source.html">Source</a> which allows to indicate the
       <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> 
@@ -506,6 +525,85 @@ Table table5 = new Table(source, &quot;members&quot;, new String[] { &quot;id&qu
         </tr>
       </table>
 </div>
+
+      <br/>
+
+      <p><i>Since version <a href="assertj-db-news.html#assertj-db-1.2.0">1.2.0</a></i>, there are the possibility to indicate delimiters (start delimiter and end delimiter) and <code class="java"><a href="db/current/api/org/assertj/db/type/Table.Order.html">Order</a></code>.</p>
+      <p>The delimiters are usefull when the table name or column name is a reserved word or contains special characters (like space or '%').
+      <code class="java"><a href="db/current/api/org/assertj/db/type/Table.Order.html">Order</a></code> allows to choose the order of the <code class="java">Row</code>.
+      </p>
+      <pre><code class="java">// The line code below throws SQLException because &quot;group&quot; is SQL reserved word 
+Table table6 = new Table(source, &quot;group&quot;);
+// Get the data of the &quot;group&quot; table by using &quot;`&quot; delimiter
+// That generates a request
+Table table7 = new Table(source, &quot;group&quot;, '`', '`');
+
+// Get the data from &quot;members&quot; table and order on &quot;name&quot; column in ascending order
+Table table8 = new Table(source, &quot;members&quot;, new Order[] {
+                                                        Order.asc(&quot;name&quot;)
+                                                      });</code></pre>
+
+<div>
+      <table border="1" cellspacing="0" cellpadding="2" style="border: 0px solid black;display: inline;">
+      <caption style="font-size:70%">Representation of "table7"</caption>
+        <tr>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">NAME</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'U2'</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">2</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Colplay'</td>
+        </tr>
+      </table>
+      <table border="1" cellspacing="0" cellpadding="2" style="border: 0px solid black;display: inline;">
+      <caption style="font-size:70%">Representation of "table8"</caption>
+        <tr>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">ID</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">NAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">FIRSTNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SURNAME</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">BIRTHDATE</th>
+        <th style="text-align:center;font-family:courier;font-size:90%;background-color:white;">SIZE</th>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">3</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Clayton'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Adam'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">03-13-60</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.78</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">2</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Evans'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'David Howell'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'The Edge'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">08-08-61</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.77</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Hewson'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Paul David'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Bono'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">05-10-60</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.75</td>
+        </tr>
+        <tr>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">4</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Mullen'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">'Larry'</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">&nbsp;</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">10-31-61</td>
+        <td style="text-align:center;font-family:courier;font-size:80%;background-color:white;">1.70</td>
+        </tr>
+      </table>
+</div>
+
       <h4 class="page-header" ><span id="request"></span>Request</h4>
       <p>A <a href="db/current/api/org/assertj/db/type/Request.html">Request</a> represents
       a SQL request on the database.</p>
@@ -1553,7 +1651,7 @@ of "changes3"
 
 
       <h3 class="page-header" ><span id="type"></span>Type</h3>
-      <h4 class="page-header" ><span id="datatype"></span>DataType</h4>
+      <h4 class="page-header" ><span id="datatype"></span>Data Type</h4>
       <p>As see above there are three root elements of database, but only <a href="db/current/api/org/assertj/db/type/Table.html">Table</a>
       and <a href="db/current/api/org/assertj/db/type/Request.html">Request</a> are data elements.<br/> 
       All the possible types of data are contained in 
@@ -1561,41 +1659,53 @@ of "changes3"
       The type of the data can be :
       </p>
       <ul>
-        <li><code class="java">TABLE</code></li>
-        <li><code class="java">REQUEST</code></li>
+        <li><code class="java"><a href="db/current/api/org/assertj/db/type/DataType.html#TABLE">TABLE</a></code></li>
+        <li><code class="java"><a href="db/current/api/org/assertj/db/type/DataType.html#REQUEST">REQUEST</a></code></li>
       </ul>
-      <h4 class="page-header" ><span id="changetype"></span>ChangeType</h4>
+      <h4 class="page-header" ><span id="changetype"></span>Change Type</h4>
       <p>The change can be a creation, a modification or a deletion.<br/> 
       All the possible types of change are contained in 
       the <a href="db/current/api/org/assertj/db/type/ChangeType.html">ChangeType</a> enumeration.<br/>
       The type of the change depends of operation on database :
       </p>
       <ul>
-        <li><code class="java">CREATION</code> for a <code class="sql">insert</code> sql request</li>
-        <li><code class="java">MODIFICATION</code> for a <code class="sql">update</code> sql request</li>
-        <li><code class="java">DELETION</code> for a <code class="sql">delete</code> sql request</li>
+        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ChangeType.html#CREATION">CREATION</a></code> for a <code class="sql">insert</code> sql request</li>
+        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ChangeType.html#MODIFICATION">MODIFICATION</a></code> for a <code class="sql">update</code> sql request</li>
+        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ChangeType.html#DELETION">DELETION</a></code> for a <code class="sql">delete</code> sql request</li>
       </ul>
-      <h4 class="page-header" ><span id="valuetype"></span>ValueType</h4>
+      <h4 class="page-header" ><span id="valuetype"></span>Value Type</h4>
       <p>The value can be a date, a boolean or a text for example.<br/> 
       All the possible types of value are contained in 
       the <a href="db/current/api/org/assertj/db/type/ValueType.html">ValueType</a> enumeration.<br/>
       The type of the value depends of class of the object given by <code class="java">java.sql</code> when the data are got from database :
       </p>
       <ul>
-        <li><code class="java">BYTES</code> for a array of bytes (<code class="java">byte[]</code>)</li>
-        <li><code class="java">BOOLEAN</code> for a <code class="java">java.lang.Boolean</code></li>
-        <li><code class="java">TEXT</code> for a <code class="java">java.lang.String</code></li>
-        <li><code class="java">DATE</code> for a <code class="java">java.sql.Date</code></li>
-        <li><code class="java">TIME</code> for a <code class="java">java.sql.Time</code></li>
-        <li><code class="java">DATE_TIME</code> for a <code class="java">java.sql.Timestamp</code></li>
-        <li><code class="java">UUID</code> for a <code class="java">java.util.UUID</code> <small><i>(since 1.1.0)</i></small></li>
-        <li><code class="java">NUMBER</code> for a <code class="java">java.lang.Byte</code>, 
+        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ValueType.html#BYTES">BYTES</a></code> for a array of bytes (<code class="java">byte[]</code>)</li>
+        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ValueType.html#BOOLEAN">BOOLEAN</a></code> for a <code class="java">java.lang.Boolean</code></li>
+        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ValueType.html#TEXT">TEXT</a></code> for a <code class="java">java.lang.String</code></li>
+        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ValueType.html#DATE">DATE</a></code> for a <code class="java">java.sql.Date</code></li>
+        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ValueType.html#TIME">TIME</a></code> for a <code class="java">java.sql.Time</code></li>
+        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ValueType.html#DATE_TIME">DATE_TIME</a></code> for a <code class="java">java.sql.Timestamp</code></li>
+        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ValueType.html#UUID">UUID</a></code> for a <code class="java">java.util.UUID</code> <small><i>(since <a href="assertj-db-news.html#assertj-db-1.1.0">1.1.0</a>)</i></small></li>
+        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ValueType.html#NUMBER">NUMBER</a></code> for a <code class="java">java.lang.Byte</code>, 
         <code class="java">java.lang.Short</code>, 
         <code class="java">java.lang.Integer</code>, 
         <code class="java">java.lang.Long</code>, 
+        <code class="java">java.lang.Double</code>, 
         <code class="java">java.lang.Float</code> or 
         <code class="java">java.math.BigDecimal</code></li>
-        <li><code class="java">NOT_IDENTIFIED</code> for other cases (for example when the value is <code class="java">null</code>)</li>
+        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ValueType.html#NOT_IDENTIFIED">NOT_IDENTIFIED</a></code> for other cases (for example when the value is <code class="java">null</code>)</li>
+      </ul>
+      <h4 class="page-header" ><span id="ordertype"></span>Order Type</h4>
+      <p><i>Since <a href="assertj-db-news.html#assertj-db-1.2.0">1.2.0</a></i></p>
+      <p>The order can be a ascending or descending.<br/> 
+      All the possible types of order are contained in 
+      the <a href="db/current/api/org/assertj/db/type/Table.Order.OrderType.html">Table.Order.OrderType</a> enumeration.<br/>
+      The type of the order can be :
+      </p>
+      <ul>
+        <li><code class="java"><a href="db/current/api/org/assertj/db/type/Table.Order.OrderType.html#ASC">ASC</a></code> for an ascending order</li>
+        <li><code class="java"><a href="db/current/api/org/assertj/db/type/Table.Order.OrderType.html#DESC">DESC</a></code> for a descending order</li>
       </ul>
 
 
@@ -1674,7 +1784,7 @@ DateTimeValue dateTimeValue2 = DateTimeValue.of(dateValue, timeValue1);</code></
       (<code class="java">java.sql.Date</code>, 
       <code class="java">java.sql.Time</code> and 
       <code class="java">java.sql.Timestamp</code>)
-      or a <code class="java">java.util.Calendar</code> <small><i>(since version 1.1.0)</i></small> 
+      or a <code class="java">java.util.Calendar</code> <small><i>(since version <a href="assertj-db-news.html#assertj-db-1.1.0">1.1.0</a>)</i></small> 
       <pre><code class="java">Date date = Date.valueOf("2007-12-23");
 DateValue dateValue = DateValue.from(date);
 
@@ -1710,7 +1820,7 @@ DateTimeValue dateTimeValue2 = DateTimeValue.parse("2007-12-23T09:01:06");
 // With date and time (nanoseconds additional)
 DateTimeValue dateTimeValue2 = DateTimeValue.parse("2007-12-23T09:01:06.000000003");</code></pre>
       </li>
-      <li><code class="java">now</code> <small><i>(since version 1.1.0)</i></small> which create an instance corresponding to the current moment. 
+      <li><code class="java">now</code> <small><i>(since version <a href="assertj-db-news.html#assertj-db-1.1.0">1.1.0</a>)</i></small> which create an instance corresponding to the current moment. 
       <pre><code class="java">DateValue dateValue = DateValue.now();                   // The current date
 TimeValue timeValue = TimeValue.now();                   // The current time
 DateTimeValue dateTimeValue = DateTimeValue.now();       // The current date/time</code></pre>
@@ -1747,7 +1857,7 @@ DateTimeValue dateTimeValue = DateTimeValue.now();       // The current date/tim
       <p>This default description can be replaced by the choice of the tester by using the methods of <a href="core/api/org/assertj/core/api/Descriptable.html">Descriptable</a>.
       </p>
       <h3 class="page-header" ><span id="dblettercase"></span>Letter Case of the database</h3>
-      <p><i>Since 1.1.0</i></p>
+      <p><i>Since <a href="assertj-db-news.html#assertj-db-1.1.0">1.1.0</a></i></p>
       <p>Databases have different letter cases for the name of the elements. For example, the name of the table can
       be upper case either the name is inputed in upper case or not. So this concept (and feature too) is here to
       manage these shades.</p>
@@ -1860,7 +1970,7 @@ Table tableWithLC = new Table(dataSourceWithLC, "members");</code></pre>
       So this is not limited to the implementations in the corresponding enumerations.
       </p>
       <h3 class="page-header" ><span id="output"></span>Output</h3>
-      <p><i>Since 1.1.0</i></p>
+      <p><i>Since <a href="assertj-db-news.html#assertj-db-1.1.0">1.1.0</a></i></p>
       <p>It can be interesting to view the values on which an assertion is made (for example for debugging).
       The output allows that. This is a simple example :</p>
       <pre><code class="java">import static org.assertj.db.output.Outputs.output;
