@@ -52,7 +52,7 @@ $menu
 <p>Release date : 2017-05-07</p>
 <p>This release includes all changes from <a href="#assertj-core-2.7.0">AssertJ core 2.7.0</a> and adds the following that are Java 8 specific.</p>
 
-<p>Thanks to <span class="contributor">Pascal Schumacher</span>, <span class="contributor">Eirik Lygre</span>, <span class="contributor">epeee</span>, <span class="contributor">Kseniya Panasyuk</span>, <span class="contributor">Gaël Lhez</span>, <span class="contributor">Brice Dutheil</span>, <span class="contributor">Takuya "Mura-Mi" Murakami,</span> and <span class="contributor">Maurício Aniche</span> for their contributions.</p>
+<p>Thanks to <span class="contributor">Pascal Schumacher</span>, <span class="contributor">Eirik Lygre</span>, <span class="contributor">epeee</span>, <span class="contributor">Kseniya Panasyuk</span>, <span class="contributor">Gaël Lhez</span>, <span class="contributor">Brice Dutheil</span>, <span class="contributor">Takuya "Mura-Mi" Murakami</span> and <span class="contributor">Maurício Aniche</span> for their contributions.</p>
 
 <h4 class="page-header"> Release notes</h4>
 <div class="release-section-category">New features :</div>
@@ -69,7 +69,7 @@ $menu
 <ul>
   <li>AssertJ is compatible with Java 9. <span class="contributor">(Pascal Schumacher)</span></li>
   <li><span class="small-code">extracting</span> and <span class="small-code">flatExtracting</span> now accept <a href="assertj-core-news.html#assertj-core-3.7.0-throwingExtractor">extractor functions throwing checked exceptions</a>. <span class="contributor">(epeee)</span></li>
-  <li><span class="small-code">allMatch</span> assertion now prints all the non matching elements if it fails. <span class="contributor">(Maurício Aniche)</span></li>
+  <li><span class="small-code">allMatch</span> assertion now prints all non matching elements if it fails. <span class="contributor">(Maurício Aniche)</span></li>
   <li>Add <span class="small-code">@CheckReturnValue</span> for findbugs integration in <span class="small-code">WithAssertions</span>. <span class="contributor">(Pascal Schumacher)</span></li>
   <li>Improve error message of <span class="small-code">containsInstanceOf</span> <span class="small-code">Optional</span> assertion. <span class="contributor">(Eirik Lygre)</span></li>
   <li>Code refactoring and cleanup. <span class="contributor">(Pascal Schumacher, epeee)</span></li>
@@ -124,7 +124,7 @@ assertThat(_07_10).isCloseTo(_07_42, within(10, ChronoUnit.SECONDS));</code></pr
 <p>Verifies that at least one element satisfies the given requirements expressed as a <span class="small-code">Consumer</span>. </p>
 <p>If the iterable/array to assert is empty, the assertion will fail.</p>
 <p>Example: </p>
-<pre><code class="java">// assume that one of myIcelanderFriends has a name finishing by 'son' (highly probable indeed)
+<pre><code class="java">// assume that one of myIcelanderFriends has a name ending with 'son' (highly probable indeed)
 assertThat(myIcelanderFriends).anySatisfy(person -&gt; {
                                  assertThat(person.getCountry()).isEqualTo("Iceland");
                                  assertThat(person.getName()).endsWith("son");
@@ -149,7 +149,7 @@ assertThat(DoubleStream.of(1, 2, 3)).hasSize(3)
 
 <h4 class="page-header"><span id="assertj-core-3.7.0-doesNotThrowAnyException" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add doesNotThrowAnyException assertion</h4>
 
-<p>Verify that a code block <b>does not</b> raise an exception, this allows to have a finer control over statement(s) that should or should not raise an exception.</p>
+<p>Verify that a code block <b>does not</b> raise an exception. This allows finer control over statement(s) that should or should not raise an exception.</p>
 <p>Example: </p>
 <pre><code class="java">assertThatCode(() -> {}).doesNotThrowAnyException();</code></pre>
 
@@ -177,7 +177,7 @@ assertThatIOException().isThrownBy(() -> { throw new IOException("boom!"); })
 
 <h4 class="page-header"><span id="assertj-core-3.7.0-returns" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add returns Object assertion</h4>
 
-<p>Verify that the object under test returns the given expected value from the given method expressed as a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html"><span class="small-code">Function</span></a>, a typical usage is to pass a method reference to assert object's property.</p>
+<p>Verify that the object under test returns the given expected value from the given method expressed as a <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html"><span class="small-code">Function</span></a>. A typical usage is to pass a method reference to assert an object's property.</p>
 <p>Wrapping the given <span class="small-code">Function</span> with <span class="small-code">Assertions.from</span> makes the assertion more readable.</p>
 <p>Examples: </p>
 <pre><code class="java">import static org.assertj.core.api.Assertions.from;
@@ -227,8 +227,8 @@ assertThat(fellowshipOfTheRing).flatExtracting(nameAndRaceExtractor)
 <p>Release date : 2017-05-07</p>
 
 <p>Thanks to <span class="contributor">Pascal Schumacher</span>, <span class="contributor">epeee</span>, <span class="contributor">Kseniya Panasyuk</span>, <span class="contributor">Filip Hrisafov</span>, <span class="contributor">Drummond Dawson</span>,
-<span class="contributor">Dmitrii Nikitin</span>, <span class="contributor">Julian Honnen</span>, <span class="contributor">Maurício Aniche</span>, <span class="contributor">Tomasz Kalkosiński</span>, <span class="contributor">Joey Bratton</span> 
-, <span class="contributor">Martin Winandy</span>, <span class="contributor">Christopher Arnott</span>, <span class="contributor">Michał Szkutnik</span> and <span class="contributor">Antoine Dessaigne</span> for their contributions.</p>
+<span class="contributor">Dmitrii Nikitin</span>, <span class="contributor">Julian Honnen</span>, <span class="contributor">Maurício Aniche</span>, <span class="contributor">Tomasz Kalkosiński</span>, <span class="contributor">Joey Bratton</span>,
+<span class="contributor">Martin Winandy</span>, <span class="contributor">Christopher Arnott</span>, <span class="contributor">Ruben Dijkstra</span>, <span class="contributor">Michał Szkutnik</span> and <span class="contributor">Antoine Dessaigne</span> for their contributions.</p>
 
 <p>I would like to specially thank (again) <span class="contributor">epeee</span> and <span class="contributor">Kseniya Panasyuk</span> for their many contributions, awesome guys !</p>
 
@@ -239,7 +239,7 @@ assertThat(fellowshipOfTheRing).flatExtracting(nameAndRaceExtractor)
 </ul>
 <div class="release-section-category">New features :</div>
 <ul>
-   <li>Add <a href="assertj-core-news.html#assertj-core-2.7.0-future"><span class="small-code">Future</span> assertions</a>. <span class="contributor">(Pascal Schumacher)</span></li>
+   <li>Add <a href="assertj-core-news.html#assertj-core-2.7.0-future"><span class="small-code">Future</span> assertions</a>. <span class="contributor">(Ruben Dijkstra)</span></li>
    <li>Add <a href="assertj-core-news.html#assertj-core-2.7.0-atomic">atomic classes assertions</a>. <span class="contributor">(epeee)</span></li>
    <li>Add <a href="assertj-core-news.html#assertj-core-2.7.0-bigInteger"><span class="small-code">BigInteger</span> assertions</a>. <span class="contributor">(epeee)</span></li>
    <li>Add <a href="assertj-core-news.html#assertj-core-2.7.0-fields-methods">fields/methods</a> <span class="small-code">Class</span> assertions. <span class="contributor">(epeee, Filip Hrisafov)</span></li>
@@ -336,7 +336,7 @@ assertThat(future).isCancelled();</code></pre>
   <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/atomic/AtomicStampedReference.html">AtomicStampedReference</a></li>
 </ul>
 
-<p>Atomic assertions follow their non atomic counterpart, for example <span class="small-code">AtomicLong</span> follows <span class="small-code">Long</span> assertions.</p>
+<p>Atomic assertions are similar to their non atomic counterparts. For example the <span class="small-code">AtomicLong</span> assertion has the same methods as the <span class="small-code">Long</span> assertion.</p>
 
 <p>Example : </p>
 <pre><code class="java">import static org.assertj.core.api.Assertions.within;
@@ -401,7 +401,7 @@ assertThat(BigInteger.ONE).isOne();</code></pre>
 
 <h4 class="page-header"><span id="assertj-core-2.7.0-fields-methods" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add fields/methods Class assertions</h4>
 
-<p>Add assertions to verify <span class="small-code">Class</span> fields and methods.</p>
+<p>Add assertions to verify the existence and visibility of the fields and methods of a <span class="small-code">class</span>.</p>
 <p>Examples: </p>
 <pre><code class="java">class MySuperClass {
   public void superMethod() {}
@@ -431,7 +431,7 @@ assertThat(MyClass.class).hasMethods("methodOne", "methodTwo", "superMethod", "p
 
 <h4 class="page-header"><span id="assertj-core-2.7.0-class-visibility" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add Class visibility assertions</h4>
 
-<p>Verifies <span class="small-code">Class</span> visibility.</p>
+<p>Verifies the visibility of a <span class="small-code">class</span>.</p>
 <p>Examples: </p>
 <pre><code class="java">assertThat(String.class).isPublic();
 
@@ -442,7 +442,7 @@ assertThat(MyClass.class).isProtected();</code></pre>
 
 <h4 class="page-header"><span id="assertj-core-2.7.0-normalizing-equals" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Assert that two strings are equals after normalizing newlines</h4>
 
-<p>Verifies that two Strings are equal ignoring newlines difference, that is considering <span class="small-code">'\r\n'</span> to be equal to <span class="small-code">'\n'</span>.</p>
+<p>Verifies that two Strings are equal ignoring newline differences, that is considering <span class="small-code">'\r\n'</span> to be equal to <span class="small-code">'\n'</span>.</p>
 <p>Examples: </p>
 <pre><code class="java">String bookName = "Lord of the Rings\r\n";
 assertThat(bookName).isEqualToNormalizingNewlines("Lord of the Rings\n");
@@ -452,14 +452,14 @@ assertThat("\n").isEqualToNormalizingNewlines("");</code></pre>
 
 <h4 class="page-header"><span id="assertj-core-2.7.0-hamcrest-matcher" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add a Hamcrest Matcher that reuses AssertJ assertions</h4>
 
-<p>Express a custom Hamcrest Matcher with AssertJ assertions by extending <span class="small-code">AssertionMatcher</span>.</p>
+<p>Use AssertJ assertions as a Hamcrest Matcher by extending <span class="small-code">AssertionMatcher</span>.</p>
 
-<p>Overriding classes should only implement <span class="small-code">assertion(T)</span> method as <span class="small-code">Matcher.matches(T)</span> and <span class="small-code">SelfDescribing.describeTo(Description)</span> are provided.
-<br/>If the matcher fails, the description will contain the stacktrace of the first failed assertion.</p>
+<p>Overriding classes should only implement the <span class="small-code">assertion(T)</span> method as <span class="small-code">Matcher.matches(T)</span> and <span class="small-code">SelfDescribing.describeTo(Description)</span> are provided.</p>
+<p>If the matcher fails, the description will contain the stacktrace of the first failed assertion.</p>
 <p>Example with Mockito: </p>
 <pre><code class="java">verify(customerRepository).save(argThat(new AssertionMatcher&lt;Customer&gt;() {
    @Override
-   public void assertion(Customer actual) throws AssertionError {
+   public void assertion(Customer actual) {
      assertThat(actual).hasName("John")
                        .hasAge(30);
    }
@@ -498,13 +498,13 @@ Condition&lt;Ring&gt; oneRingBearer = new Condition&lt;Ring&gt;("One ring bearer
   }
 };
 
-// assertion fails
+// assertions fail
 assertThat(ringBearers).hasEntrySatisfying(oneRingManBearer);
 assertThat(ringBearers).hasEntrySatisfying(isMan, oneRingBearer);
 
 ringBearers.put(isildur, oneRing);
 
-// now assertion succeeds since we have added isildur
+// now assertions succeed since we have added isildur
 assertThat(ringBearers).hasEntrySatisfying(oneRingManBearer);
 assertThat(ringBearers).hasEntrySatisfying(isMan, oneRingBearer);</code></pre>
 
@@ -581,7 +581,7 @@ assertThat(objects).hasOnlyElementsOfTypes(String.class);</code></pre>
 
 <h4 class="page-header"><span id="assertj-core-2.7.0-doesNotContainSequence" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add iterable/array doesNotContainSequence assertion</h4>
 
-<p>Verifies that the actual iterable/array does not contain the given sequence, a sequence is defined by an ordered group of values <b>without extra values between them</b>.</p>
+<p>Verifies that the actual iterable/array does not contain the given sequence. A sequence is defined as an ordered group of values <b>without extra values between them</b>.</p>
 <p>Example: </p>
 <pre><code class="java">Iterable&lt;Ring&gt; elvesRings = newArrayList(vilya, nenya, narya);
 
@@ -595,7 +595,7 @@ assertThat(elvesRings).doesNotContainSequence(nenya, narya);</code></pre>
 
 <h4 class="page-header"><span id="assertj-core-2.7.0-doesNotContainSubsequence" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add iterable/array doesNotContainSubsequence assertion</h4>
 
-<p>Verifies that the actual group does not contain the given subsequence, a subsequence is defined by an ordered group of values <b>with possibly extra values between them</b>.</p>
+<p>Verifies that the actual group does not contain the given subsequence. A subsequence is defined as an ordered group of values <b>with possibly extra values between them</b>.</p>
 <p>Example: </p>
 <pre><code class="java">Iterable&lt;Ring&gt; elvesRings = newArrayList(vilya, nenya, narya);
 
@@ -612,12 +612,12 @@ assertThat(elvesRings).doesNotContainSubsequence(vilya, narya);</code></pre>
 <p>Verifies that the actual <span class="small-code">String</span> does not contain the given regular expression expressed either as a <span class="small-code">Pattern</span> or a <span class="small-code">String</span>.</p>
 <p>Examples: </p>
 <pre><code class="java">// assertions will pass
-assertThat("Frodo").doesNotContainPattern(Pattern.compile("Fr.ud"))
-                   .doesNotContainPattern("Fr.ud");
+assertThat("Frodo").doesNotContainPattern(Pattern.compile("Fr.ud"));
+assertThat("Frodo").doesNotContainPattern("Fr.ud");
 
 // assertions will fail
-assertThat("Freud").doesNotContainPattern("Fr.ud");
-assertThat("Freud").doesNotContainPattern(Pattern.compile("Fr.ud"));</code></pre>
+assertThat("Freud").doesNotContainPattern(Pattern.compile("Fr.ud"));
+assertThat("Freud").doesNotContainPattern("Fr.ud");</code></pre>
 
 <h3 class="page-header"><span id="assertj-core-3.6.2"></span>AssertJ Core 3.6.2 bugfix release</h3>
    <p>Release date : 2017-01-21</p>
