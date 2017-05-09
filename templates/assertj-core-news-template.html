@@ -612,11 +612,11 @@ assertThat(elvesRings).doesNotContainSubsequence(vilya, narya);</code></pre>
 <p>Verifies that the actual <span class="small-code">String</span> does not contain the given regular expression expressed either as a <span class="small-code">Pattern</span> or a <span class="small-code">String</span>.</p>
 <p>Examples: </p>
 <pre><code class="java">// assertions will pass
-assertThat("Frodo").doesNotContainPattern(Pattern.compile("Fr.ud"))
+assertThat("Frodo").doesNotContainPattern(Pattern.compile("Fr.ud"));
 assertThat("Frodo").doesNotContainPattern("Fr.ud");
 
 // assertions will fail
-assertThat("Freud").doesNotContainPattern(Pattern.compile("Fr.ud"))
+assertThat("Freud").doesNotContainPattern(Pattern.compile("Fr.ud"));
 assertThat("Freud").doesNotContainPattern("Fr.ud");</code></pre>
 
 <h3 class="page-header"><span id="assertj-core-3.6.2"></span>AssertJ Core 3.6.2 bugfix release</h3>
