@@ -86,8 +86,10 @@
    <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
       <h1 class="page-header">AssertJ Core latest news</h1>
       <ul>
-        <li><a href="#assertj-core-3.7.0">AssertJ core 3.7.0 release</a> (requires Java 8)</li>
-        <li><a href="#assertj-core-2.7.0">AssertJ core 2.7.0 release</a></li>
+         <li><a href="#assertj-core-3.8.0">AssertJ core 3.8.0 release</a> (requires Java 8)</li>
+         <li><a href="#assertj-core-2.8.0">AssertJ core 2.8.0 release</a></li>
+         <li><a href="#assertj-core-3.7.0">AssertJ core 3.7.0 release</a> (requires Java 8)</li>
+         <li><a href="#assertj-core-2.7.0">AssertJ core 2.7.0 release</a></li>
          <li><a href="#assertj-core-3.6.2">AssertJ core 3.6.2 release</a> (bugfix)</li>
          <li><a href="#assertj-core-3.6.1">AssertJ core 3.6.1 release</a> (bugfix)</li>
          <li><a href="#assertj-core-3.6.0">AssertJ core 3.6.0 release</a></li>
@@ -117,6 +119,127 @@
          <li><a href="#assertj-core-1.1.0">AssertJ core 1.1.0 release</a></li>
          <li><a href="#assertj-core-1.0.0">AssertJ core 1.0.0 release</a></li>
       </ul>
+
+<h3 class="page-header"><span id="assertj-core-3.8.0"></span>AssertJ Core 3.8.0 release : New and noteworthy</h3>
+
+<p>Release date : 2017-05-21</p>
+<p>This release includes all changes from <a href="#assertj-core-2.8.0">AssertJ core 2.8.0</a> and adds the following that are Java 8 specific.</p>
+
+<h4 class="page-header"> Release notes</h4>
+<div class="release-section-category">New features :</div>
+<ul>
+   <li>Add <a href="assertj-core-news.html#assertj-core-3.8.0-isBetween"><span class="small-code">isBetween</span></a> to all <span class="small-code">Temporal</span> assertions.</li>
+   <li>Add <a href="assertj-core-news.html#assertj-core-3.8.0-isStrictlyBetween"><span class="small-code">isStrictlyBetween</span></a> to all <span class="small-code">Temporal</span> assertions.</li>
+</ul>
+<div class="release-section-category">Fixed bugs:</div>
+<ul>
+  <li>New <span class="small-code">Instant</span> assertions was missing <span class="small-code">isBetween</span> assertion which was available in <span class="small-code">Comparable</span> assertions. </li>
+  <li>New <span class="small-code">Instant</span> assertions was missing <span class="small-code">isStriclyBetween</span> assertion which was available in <span class="small-code">Comparable</span> assertions. </li>
+</ul>
+
+<h4 class="page-header"><span id="assertj-core-3.8.0-isBetween" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">isBetween</span> to all <span class="small-code">Temporal</span> assertions</h4>
+
+<p>Verifies that the actual <span class="small-code">Temporal</span>  is in the [start, end] period (start and end included).</p>
+<p><span class="small-code">Temporal</span> includes <span class="small-code">Instant</span>, <span class="small-code">LocalDate</span>, <span class="small-code">LocalDateTime</span>, <span class="small-code">LocalTime</span>, <span class="small-code">OffsetTime</span>, <span class="small-code">OffsetDateTime</span> and <span class="small-code">ZonedDateTime</span>.</p>
+<p>Examples with <span class="small-code">Instant</span> : </p>
+<pre><code class="java">Instant instant = Instant.now();
+
+// assertions succeed
+assertThat(instant).isBetween(instant.minusSeconds(1), instant.plusSeconds(1))
+                   .isBetween(instant, instant.plusSeconds(1))
+                   .isBetween(instant.minusSeconds(1), instant)
+                   .isBetween(instant, instant);</code></pre>
+
+<h4 class="page-header"><span id="assertj-core-3.8.0-isStrictlyBetween" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">isStrictlyBetween</span> to all <span class="small-code">Temporal</span> assertions</h4>
+
+<p>Verifies that the actual <span class="small-code">Temporal</span>  is in the ]start, end[ period (start and end excluded).</p>
+<p><span class="small-code">Temporal</span> includes <span class="small-code">Instant</span>, <span class="small-code">LocalDate</span>, <span class="small-code">LocalDateTime</span>, <span class="small-code">LocalTime</span>, <span class="small-code">OffsetTime</span>, <span class="small-code">OffsetDateTime</span> and <span class="small-code">ZonedDateTime</span>.</p>
+<p>Examples with <span class="small-code">Instant</span> : </p>
+<pre><code class="java">Instant instant = Instant.now();
+
+// assertion succeeds
+assertThat(instant).isStrictlyBetween(instant.minusSeconds(1), instant.plusSeconds(1));
+
+// assertions fail
+assertThat(instant).isStrictlyBetween(instant.plusSeconds(1), instant.plusSeconds(10));
+assertThat(instant).isStrictlyBetween(instant, instant.plusSeconds(1));
+assertThat(instant).isStrictlyBetween(instant.minusSeconds(1), instant);</code></pre>
+
+<h3 class="page-header"><span id="assertj-core-2.8.0"></span>AssertJ Core 2.8.0 release : New and noteworthy</h3>
+
+<p>Release date : 2017-05-21</p>
+
+<p>Thanks to <span class="contributor">Pascal Schumacher</span> for its contributions.</p>
+
+<h4 class="page-header"> Release notes</h4>
+<div class="release-section-category"> Breaking changes</div>
+<ul>
+  <li><a href="assertj-core-news.html#assertj-core-2.8.0-isEqualToIgnoringWhitespace"><span class="small-code">isEqualToIgnoringWhitespace</span></a> behavior has been changed to really ignore all whitespaces, the old behavior has been kept in the better named <a href="assertj-core-news.html#assertj-core-2.8.0-isEqualToNormalizingWhitespace"><span class="small-code">isEqualToNormalizingWhitespace</span></a> assertion.. <span class="contributor">(Pascal Schumacher)</span></li>
+</ul>
+<div class="release-section-category">Fixed bugs:</div>
+<ul>
+  <li><span class="small-code">isCloseTo</span>/<span class="small-code">isNotCloseTo</span> assertions now handle NaN and infinity correctly. <span class="contributor">(Pascal Schumacher)</span></li>
+</ul>
+
+<h4 class="page-header"><span id="assertj-core-2.8.0-isEqualToIgnoringWhitespace" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Change <span class="small-code">isEqualToIgnoringWhitespace</span> behavior to really ignore all whitespaces</h4>
+
+<p>Verifies that the actual <span class="small-code">String</span> is equal to the given one, reallyignoring whitespace differences.</p>
+<p>In the old behavior <span class="small-code">Strings</span> were compared after normalizing their whitespaces but not truly ignoring them (see <a href="assertj-core-news.html#assertj-core-2.8.0-isEqualToNormalizingWhitespace"><span class="small-code">isEqualToNormalizingWhitespace</span></a>).</p>
+<p>Examples:</p>
+<pre><code class="java">// assertions succeed
+assertThat("my      foo bar").isEqualToIgnoringWhitespace("my foo bar");
+assertThat("  my foo bar  ").isEqualToIgnoringWhitespace("my foo bar");
+assertThat(" my     foo bar ").isEqualToIgnoringWhitespace("my foo bar");
+assertThat(" my\tfoo bar ").isEqualToIgnoringWhitespace(" my foo bar");
+assertThat("my foo bar").isEqualToIgnoringWhitespace("   my foo bar   ");
+
+// this one succeeds but would have failed with the old behavior
+assertThat("my foo bar").isEqualToIgnoringWhitespace("myfoobar");
+
+// assertion fails:
+assertThat("my  foo  bar").isEqualToIgnoringWhitespace("my  foo");</code></pre>
+
+<h4 class="page-header"><span id="assertj-core-2.8.0-isEqualToNormalizingWhitespace" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">isEqualToNormalizingWhitespace</span> to <span class="small-code">String</span> assertions</h4>
+
+<p>This assertion behaves like the <b>old</b> <span class="small-code">isEqualToIgnoringWhitespace</span>, it verifies that the actual <span class="small-code">String</span>  is equal to the given one, after the whitespace of both strings has been normalized.</p>
+<p>To be precise, the following whitespace rules are applied:</p>
+<ul>
+   <li>all leading and trailing whitespace of both actual and expected strings are ignored</li>
+   <li>any remaining whitespace, appearing within either string, is collapsed to a single space before comparison</li>
+</ul>
+<p>Example :</p>
+
+<pre><code class="java">// assertions will pass
+assertThat("  my foo bar  ").isEqualToIgnoringWhitespace("my foo bar");
+assertThat("my      foo bar").isEqualToIgnoringWhitespace("my foo bar");
+assertThat(" my     foo bar ").isEqualToIgnoringWhitespace("my foo bar");
+assertThat(" my\tfoo bar ").isEqualToIgnoringWhitespace(" my foo bar");
+assertThat("my foo bar").isEqualToIgnoringWhitespace("   my foo bar   ");
+
+// assertion will fail due to the space between foo and bar
+assertThat(" my foo bar ").isEqualToIgnoringWhitespace(" my foobar");</code></pre>
+
+
+
+<h4 class="page-header"><span id="assertj-core-2.8.0-instant" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add Instant assertions</h4>
+
+<p>Expose assertions for the <a href="https://docs.oracle.com/javase/8/docs/api/java/time/Instant.html"><span class="small-code">Instant</span></a> type from the new Date / Time API introduced in Java 8.</p>
+<p>Examples: </p>
+<pre><code class="java">import static org.assertj.core.api.Assertions.within;
+import static org.assertj.core.api.Assertions.byLessThan;
+
+Instant firstOfJanuary2000 = Instant.parse("2000-01-01T00:00:00.00Z");
+
+// if you pass a String, AssertJ parses it to an Instant
+assertThat(firstOfJanuary2000).isEqualTo("2000-01-01T00:00:00.00Z")
+                              .isAfter("1999-12-31T23:59:59.99Z")
+                              .isAfter(firstOfJanuary2000.minusSeconds(1))
+                              .isAfterOrEqualTo("2000-01-01T00:00:00.00Z")
+                              .isBefore(firstOfJanuary2000.plusSeconds(1))
+                              .isBefore("2000-01-01T00:00:00.01Z")
+                              .isCloseTo("1999-12-31T23:59:59.99Z", within(10, ChronoUnit.MILLIS))
+                              .isCloseTo("1999-12-31T23:59:59.99Z", byLessThan(11, ChronoUnit.MILLIS));</code></pre>
+
 
 <h3 class="page-header"><span id="assertj-core-3.7.0"></span>AssertJ Core 3.7.0 release : New and noteworthy</h3>
 
