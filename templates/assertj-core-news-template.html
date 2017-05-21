@@ -62,8 +62,8 @@ $menu
 </ul>
 <div class="release-section-category">Fixed bugs:</div>
 <ul>
-  <li>New <span class="small-code">Instant</span> assertions was missing <span class="small-code">isBetween</span> assertion which was available in <span class="small-code">Comparable</span> assertions. </li>
-  <li>New <span class="small-code">Instant</span> assertions was missing <span class="small-code">isStriclyBetween</span> assertion which was available in <span class="small-code">Comparable</span> assertions. </li>
+  <li>New <span class="small-code">Instant</span> assertions were missing the <span class="small-code">isBetween</span> assertion which was available in <span class="small-code">Comparable</span> assertions. </li>
+  <li>New <span class="small-code">Instant</span> assertions were missing the <span class="small-code">isStriclyBetween</span> assertion which was available in <span class="small-code">Comparable</span> assertions. </li>
 </ul>
 
 <h4 class="page-header"><span id="assertj-core-3.8.0-isBetween" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">isBetween</span> to all <span class="small-code">Temporal</span> assertions</h4>
@@ -98,19 +98,19 @@ assertThat(instant).isStrictlyBetween(instant.minusSeconds(1), instant);</code><
 
 <p>Release date : 2017-05-21</p>
 
-<p>Thanks to <span class="contributor">Pascal Schumacher</span> for its contributions.</p>
+<p>Thanks to <span class="contributor">Pascal Schumacher</span> for his contributions.</p>
 
 <h4 class="page-header"> Release notes</h4>
 <div class="release-section-category"> Breaking change:</div>
 <ul>
-  <li><a href="assertj-core-news.html#assertj-core-2.8.0-isEqualToIgnoringWhitespace"><span class="small-code">isEqualToIgnoringWhitespace</span></a> behavior has been changed to really ignore all whitespaces, the old behavior has been kept in the better named <a href="assertj-core-news.html#assertj-core-2.8.0-isEqualToNormalizingWhitespace"><span class="small-code">isEqualToNormalizingWhitespace</span></a> assertion. <span class="contributor">(Pascal Schumacher)</span></li>
+  <li><a href="assertj-core-news.html#assertj-core-2.8.0-isEqualToIgnoringWhitespace"><span class="small-code">isEqualToIgnoringWhitespace</span></a> behavior has been changed to really ignore all whitespace, the old behavior has been kept in the better named <a href="assertj-core-news.html#assertj-core-2.8.0-isEqualToNormalizingWhitespace"><span class="small-code">isEqualToNormalizingWhitespace</span></a> assertion. <span class="contributor">(Pascal Schumacher)</span></li>
 </ul>
 <div class="release-section-category">Fixed bugs:</div>
 <ul>
   <li><span class="small-code">isCloseTo</span>/<span class="small-code">isNotCloseTo</span> assertions now handle NaN and infinity correctly. <span class="contributor">(Pascal Schumacher)</span></li>
 </ul>
 
-<h4 class="page-header"><span id="assertj-core-2.8.0-isEqualToIgnoringWhitespace" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Change <span class="small-code">isEqualToIgnoringWhitespace</span> behavior to really ignore all whitespaces</h4>
+<h4 class="page-header"><span id="assertj-core-2.8.0-isEqualToIgnoringWhitespace" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Change <span class="small-code">isEqualToIgnoringWhitespace</span> behavior to really ignore all whitespace</h4>
 
 <p>Verifies that the actual <span class="small-code">String</span> is equal to the given one, ignoring whitespace differences.</p>
 <p>In the old behavior <span class="small-code">Strings</span> were compared after normalizing their whitespaces but not truly ignoring them (see <a href="assertj-core-news.html#assertj-core-2.8.0-isEqualToNormalizingWhitespace"><span class="small-code">isEqualToNormalizingWhitespace</span></a>).</p>
@@ -128,7 +128,7 @@ assertThat("Game of Thrones").isEqualToIgnoringWhitespace("GameofThrones");</cod
 
 <h4 class="page-header"><span id="assertj-core-2.8.0-isEqualToNormalizingWhitespace" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">isEqualToNormalizingWhitespace</span> to <span class="small-code">String</span> assertions</h4>
 
-<p>This assertion behaves like the <b>old</b> <span class="small-code">isEqualToIgnoringWhitespace</span>, it verifies that the actual <span class="small-code">String</span>  is equal to the given one, after the whitespace of both strings has been normalized.</p>
+<p>This assertion behaves like the <b>old</b> <span class="small-code">isEqualToIgnoringWhitespace</span>. It verifies that the actual <span class="small-code">String</span>  is equal to the given one, after the whitespace of both strings has been normalized.</p>
 <p>To be precise, the following whitespace rules are applied:</p>
 <ul>
    <li>all leading and trailing whitespace of both actual and expected strings are ignored</li>
@@ -145,7 +145,7 @@ assertThat("Game of Thrones").isEqualToNormalizingWhitespace("Game   of   Throne
                              .isEqualToNormalizingWhitespace("Game of\tThrones")
                              .isEqualToNormalizingWhitespace("Game of Thrones");
 
-// assertions will fail, after normalization we have whitespace differences.
+// assertions will fail, after normalization we have whitespace differences
 assertThat("Game of Thrones").isEqualToNormalizingWhitespace("GameofThrones");
 assertThat("Game of Thrones").isEqualToNormalizingWhitespace("Gameof Thrones");
 assertThat("Game of Thrones").isEqualToNormalizingWhitespace("Gameo fThrones");</code></pre>
