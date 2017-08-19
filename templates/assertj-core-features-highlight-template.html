@@ -39,6 +39,7 @@ $assertj_core_side_menu
          <li><a href="#soft-assertions">Gather all errors message with soft assertions</a></li>
          <li><a href="#custom-comparison-strategy">Using a custom comparison strategy in assertions</a></li>
          <li><a href="#field-by-field-comparison">Field by field comparisons</a></li>
+         <li><a href="#custom-representation">Using a custom representation in assertions</a></li>
          <li><a href="assertj-core-conditions.html">Extending assertions with conditions</a></li>
          <li><a href="assertj-core-custom-assertions.html">Creating assertions for your domain</a></li>
       </ul>
@@ -618,6 +619,122 @@ assertThat(jack).usingComparatorForType(new DoubleComparator(0.5), Double.class)
 // use usingComparatorForFields to specify how to compare some fields (nested fields are supported)
 assertThat(jack).usingComparatorForFields(new DoubleComparator(0.5), "height")
                 .isEqualToComparingFieldByFieldRecursively(jackClone);</code></pre>
+
+       <h3 class="page-header"><span id="custom-representation"></span><i class="fa fa-star"></i> Using a custom
+           representation in assertions</h3>
+       <p>
+           Assertions error messages use a <span class="small-code">Representation</span> to format different types
+           involved.
+           There are multiple ways of registering a custom representation for assertions:
+       </p>
+       <ul>
+           <li>
+               global scope (default on startup): Since 2.9.0 / 3.9.0, one can register an implementation of <span class="small-code">Representation</span>
+               via a Service Provider Interface (SPI). This will cause AssertJ to use that assertion per default all the time.
+               There won't be a need to call <span class="small-code">Assertions.useRepresentation(myRepresentation)</span>.
+               And calling <span class="small-code">Assertions.useDefaultRepresentation()</span> will actually use the SPI registered <span class="small-code">Representation</span>
+           </li>
+           <li>
+               global scope (after calling): <span class="small-code">Assertions.useRepresentation(myRepresentation)</span>
+               - After this call AssertJ will use the implemented <span class="small-code">myRepresentation</span> globally
+           </li>
+           <li>
+               per assertion scope: <span class="small-code">assertThat(actual).withRepresentation(myRepresentation)</span>
+               - This will cause AssertJ to use to passed representation only during the scope of that particular assertion
+           </li>
+       </ul>
+       <p>
+           Examples:
+       </p>
+       <pre><code class="java">private class Example {} // dummy class
+
+public class CustomRepresentation extends StandardRepresentation {
+
+  // override needed to hook non predefined type formatting
+  @Override
+  public String fallbackToStringOf(Object o) {
+    if (o instanceof Example) return "Example";
+    // fallback to default formatting.
+    return super.fallbackToStringOf(o);
+  }
+
+  // override a predefined type formatting : String
+  @Override
+  protected String toStringOf(String str) {
+    return "$" + str + "$";
+  }
+}</code></pre>
+       <p>Global scope custom representation (default on startup) :</p>
+       <p>
+           You will need to register your <span class="small-code">Representation</span> as an SPI. You need to do the following for that:
+       </p>
+       <ul>
+           <li>
+               Create a file named <span class="small-code">org.assertj.core.presentation.Representation</span>
+               in the <span class="small-code">META-INF/services</span> directory
+           </li>
+           <li>
+               Put the fully qualified class name of your <span class="small-code">Representation</span> in it
+           </li>
+           <li>
+               Make sure <span class="small-code">META-INF/services/org.assertj.core.presentation.Representation</span>
+               is in the runtime classpath, usually putting it in <span class="small-code">src/test/resources</span> is enough
+           </li>
+           <li>
+               We recommend that you extend from the <span class="small-code">StandardRepresentation</span> and override the
+               <span class="small-code">fallbackToStringOf(Object)</span> method. By doing this all the defaults of AssertJ
+               would be applied and you can apply your own customization in there.
+           </li>
+       </ul>
+       <pre><code class="java">//You don't need to do anything, AssertJ will pick up the Representation automatically
+
+// this assertion fails ...
+assertThat(new Example()).isNull();
+// ... with error :
+expected:<[null]> but was:<[Example]>
+
+// this one fails ...
+assertThat("foo").startsWith("bar");
+// ... with error :
+Expecting:
+  <$foo$>
+to start with:
+  <$bar$></code></pre>
+       <p>Global scope custom representation (after call) :</p>
+       <pre><code class="java">// register CustomRepresentation only once. However, all tests before calling this would use the default one
+Assertions.useRepresentation(new CustomRepresentation());
+
+// this assertion fails ...
+assertThat(new Example()).isNull();
+// ... with error :
+expected:<[null]> but was:<[Example]>
+
+// this one fails ...
+assertThat("foo").startsWith("bar");
+// ... with error :
+Expecting:
+  <$foo$>
+to start with:
+  <$bar$></code></pre>
+
+       <p>Per assertion scope custom representation :</p>
+       <pre><code class="java">// we need to register CustomRepresentation for each assertions
+ Representation customRepresentation = new CustomRepresentation();
+
+// this assertion fails ...
+assertThat(new Example()).withRepresentation(customRepresentation)
+                         .isNull();
+// ... with error :
+expected:<[null]> but was:<[Example]>
+
+// this one fails ...
+assertThat("foo").withRepresentation(customRepresentation)
+                 .startsWith("bar");
+// ... with error :
+Expecting:
+  <$foo$>
+to start with:
+  <$bar$></code></pre>
 
    </div>
 </div>
