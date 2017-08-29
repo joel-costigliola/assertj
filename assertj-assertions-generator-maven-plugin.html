@@ -270,12 +270,12 @@ BDD Assertions entry point class has been generated in file:
 <pre><code class="xml">&lt;configuration&gt;
     &lt;packages&gt;
         &lt;param&gt;com.google.common.net&lt;/param&gt;
-        &lt;excludes&gt;
-            &lt;param&gt;.*google.*HostSpecifier&lt;/param&gt;
-            &lt;param&gt;.*google.*Headers&lt;/param&gt;
-            &lt;param&gt;.*google.*Escaper.*&lt;/param&gt;
-        &lt;/excludes&gt;
     &lt;/packages&gt;
+    &lt;excludes&gt;
+        &lt;param&gt;.*google.*HostSpecifier&lt;/param&gt;
+        &lt;param&gt;.*google.*Headers&lt;/param&gt;
+        &lt;param&gt;.*google.*Escaper.*&lt;/param&gt;
+    &lt;/excludes&gt;
 &lt;/configuration&gt;</code></pre>
 
          <p>From the specified packages, it might be easier to <b>restrict</b> the classes you want to generate assertions for. You can do this by including them using regular expressions. Only classes from the specified packages matching at least one of the given regular expressions will have assertions generated for. In the example below, assertions will only be generated for DTO and Model classes :</p>
@@ -283,11 +283,11 @@ BDD Assertions entry point class has been generated in file:
 <pre><code class="xml">&lt;configuration&gt;
     &lt;packages&gt;
         &lt;param&gt;com.my.project&lt;/param&gt;
-        &lt;includes&gt;
-            &lt;param&gt;.*DTO&lt;/param&gt;
-            &lt;param&gt;.*Model&lt;/param&gt;
-        &lt;/includes&gt;
     &lt;/packages&gt;
+    &lt;includes&gt;
+        &lt;param&gt;.*DTO&lt;/param&gt;
+        &lt;param&gt;.*Model&lt;/param&gt;
+    &lt;/includes&gt;
 &lt;/configuration&gt;</code></pre>
 
          <h4 class="page-header"><i class="fa fa-caret-right">&nbsp;</i>Generated classes destination directory</h4>
