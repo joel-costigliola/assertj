@@ -92,7 +92,7 @@
       <ul>
          <li>Java 8 assertions, see release notes : <a href="assertj-core-news.html#assertj-core-3.7.0">3.7.0</a> / <a href="assertj-core-news.html#assertj-core-3.6.0">3.6.0</a> / <a href="assertj-core-news.html#assertj-core-3.5.0">3.5.0</a> / <a href="assertj-core-news.html#assertj-core-3.4.0">3.4.0</a> / <a href="assertj-core-news.html#assertj-core-3.3.0">3.3.0</a> /<a href="assertj-core-news.html#assertj-core-3.2.0">3.2.0</a> / <a href="assertj-core-news.html#assertj-core-3.1.0">3.1.0</a> / <a href="assertj-core-news.html#assertj-core-3.0.0">3.0.0</a> </li>
          <li><a href="#ide-automatic-static-import">IDE configuration to directly get <span class="small-code">assertThat</span> in code completion</a></li>
-         <li><a href="#describe-assertion">Describe you assertion using <span class="small-code">as(String description, Object... args)</span></a></li>
+         <li><a href="#describe-assertion">Describe your assertion using <span class="small-code">as(String description, Object... args)</span></a></li>
          <li><a href="#exception-assertion">Exception assertions guide</a></li>
          <li><a href="#file-content-string-assertions">Using String assertions on the content of a file</a></li>
       </ul>
@@ -130,7 +130,7 @@
          <li>No special configuration, just start typing <span class="small-code">assertThat</span> and then invoke completion (Ctrl-Space) twice.</li>
       </ul>
 
-      <h3 class="page-header"><span id="describe-assertion"></span><i class="fa fa-star"></i> Describe you assertion with as(String description, Object... args)</h3>
+      <h3 class="page-header"><span id="describe-assertion"></span><i class="fa fa-star"></i> Describe your assertion with as(String description, Object... args)</h3>
 
       <p>It is often valuable to describe the assertion performed, especially for boolean assertion where the default error message just complains that it got <span class="small-code">false</span> instead of <span class="small-code">true</span> (or vice versa).</p>
       <p>You can set such a description with <span class="small-code">as(String description, Object... args)</span> but remember to do it <b>before</b> calling the assertion. Otherwise it is simply ignored as a failing assertion breaks the following chained calls.</p>
