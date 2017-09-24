@@ -29,8 +29,8 @@ $menu
 <pre><code class="xml">&lt;dependency&gt;
     &lt;groupId&gt;org.assertj&lt;/groupId&gt;
     &lt;artifactId&gt;assertj-core&lt;/artifactId&gt;
-    &lt;!-- use version 2.0.0 or higher --&gt;
-    &lt;version&gt;2.0.0&lt;/version&gt;
+    &lt;!-- use version 2.1.0 or higher --&gt;
+    &lt;version&gt;2.1.0&lt;/version&gt;
     &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 
@@ -41,7 +41,7 @@ $menu
 <pre><code class="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.assertj&lt;/groupId&gt;
     &lt;artifactId&gt;assertj-assertions-generator-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;2.0.0&lt;/version&gt;
+    &lt;version&gt;2.1.0&lt;/version&gt;
     &lt;configuration&gt;
         &lt;packages&gt;
             &lt;param&gt;your.first.package&lt;/param&gt;
@@ -126,9 +126,9 @@ BDD Assertions entry point class has been generated in file:
 <pre><code class="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.assertj&lt;/groupId&gt;
   &lt;artifactId&gt;assertj-assertions-generator-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;2.0.0&lt;/version&gt;
+  &lt;version&gt;2.1.0&lt;/version&gt;
   
-  &lt;!-- generate assertions at every build --&gt;
+  &lt;!-- Generate assertions at every build --&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;goals&gt;
@@ -139,31 +139,37 @@ BDD Assertions entry point class has been generated in file:
 
   &lt;configuration&gt;
 
-    &lt;!-- list the package whose classes you want to generate assertions for --&gt;
+    &lt;!-- List the package of classes you want to generate assertions for --&gt;
     &lt;packages&gt;
       &lt;param&gt;org.assertj.examples.rpg&lt;/param&gt;
       &lt;param&gt;org.assertj.examples.data&lt;/param&gt;
       &lt;param&gt;com.google.common.net&lt;/param&gt;
     &lt;/packages&gt;
 
-    &lt;!-- list the classes you want to generate assertions for --&gt;
+    &lt;!-- List the classes you want to generate assertions for --&gt;
     &lt;classes&gt;
       &lt;param&gt;java.nio.file.Path&lt;/param&gt;
       &lt;param&gt;com.fake.UnknownClass&lt;/param&gt;
     &lt;/classes&gt;
 
-    &lt;!-- whether generated assertions classes can be inherited with consistent assertion chaining --&gt;
+    &lt;!-- Whether generated assertions classes can be inherited with consistent assertion chaining --&gt;
     &lt;hierarchical&gt;true&lt;/hierarchical&gt;
 
-    &lt;!-- where to generate assertions entry point classes --&gt;
+    &lt;!-- 
+      If true, generate assertions for all fields whatever their visibility is (including private).
+      Default to false which means assertions are only generated for public fields.
+    --&gt;
+    &lt;generateAssertionsForAllFields&gt;true&lt;/generateAssertionsForAllFields&gt;
+    
+    &lt;!-- Where to generate assertions entry point classes --&gt;
     &lt;entryPointClassPackage&gt;org.assertj&lt;/entryPointClassPackage&gt;
 
-    &lt;!-- restrict classes to generate assertions for with regex --&gt;
+    &lt;!-- Restrict classes to generate assertions for with regex --&gt;
     &lt;includes&gt; 
       &lt;param&gt;org\.assertj\.examples\.rpg.*&lt;/param&gt; 
     &lt;/includes&gt;
 
-    &lt;!-- excludes with regex classes from generation --&gt;
+    &lt;!-- Exclude classes matching the regex from generation --&gt;
     &lt;excludes&gt;
       &lt;param&gt;.*google.*HostSpecifier&lt;/param&gt;
       &lt;param&gt;.*google.*Headers&lt;/param&gt;
@@ -172,14 +178,45 @@ BDD Assertions entry point class has been generated in file:
       &lt;param&gt;.*Examples.*&lt;/param&gt;
     &lt;/excludes&gt;
 
-    &lt;!-- base directory where to generate assertions --&gt;
+    &lt;!-- Sets the base directory where to generate assertions --&gt;
     &lt;targetDir&gt;src/test/generated-assertions&lt;/targetDir&gt;
+    
+    &lt;!-- If true, all files in targetDir are removed before generating new ones (default to false) --&gt;
+    &lt;cleanTargetDir&gt;true&lt;/cleanTargetDir&gt;
 
-    &lt;!-- select which assertions entry point classes to generate --&gt;
+    &lt;!-- 
+      Set the package where assertion classes are generated, combine it with targetDir to
+      get the path to assertions classes.       
+      Ex: com.nba.Player -> src/test/generated-assertions/my/assertions/PlayerAssert 
+
+      If not set, each assertion class is generated in the package of the class to assert.
+      Ex: com.nba.Player -> src/test/generated-assertions/com/nba/PlayerAssert 
+    --&gt;
+    &lt;generateAssertionsInPackage&gt;my.assertions&lt;/generateAssertionsInPackage&gt;
+
+    &lt;!-- Select which assertions entry point classes to generate --&gt;
     &lt;generateAssertions&gt;true&lt;/generateAssertions&gt;
     &lt;generateBddAssertions&gt;true&lt;/generateBddAssertions&gt;
     &lt;generateSoftAssertions&gt;true&lt;/generateSoftAssertions&gt;
     &lt;generateJUnitSoftAssertions&gt;true&lt;/generateJUnitSoftAssertions&gt;
+
+    &lt;!-- 
+      Set the scope of generated sources when added to the maven build.
+      Value must be 'test' or 'compile' to and defaults to 'test'.
+    --&gt;
+    &lt;generatedSourcesScope&gt;compile&lt;/generatedSourcesScope&gt;
+
+    &lt;!-- If true, the plugin does not produce any logs (default to false) --&gt;
+    &lt;quiet&gt;true&lt;/quiet&gt;
+
+    &lt;!-- 
+      The generated assertions report is written to the given file.
+      The base directory containing the report file is where the plugin is executed. 
+    --&gt;
+    &lt;writeReportInFile&gt;assertions-generation-report.txt&lt;/writeReportInFile&gt;
+
+    &lt;!-- If true, do not generate assertions, it's a way to disable the plugin --&gt;
+    &lt;skip&gt;true&lt;/skip&gt;
 
   &lt;/configuration&gt;
 &lt;/plugin&gt;</code></pre>          
@@ -427,7 +464,7 @@ BDD Assertions entry point class has been generated in file:
 <pre><code class="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.assertj&lt;/groupId&gt;
     &lt;artifactId&gt;assertj-assertions-generator-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;2.0.0&lt;/version&gt;
+    &lt;version&gt;2.1.0&lt;/version&gt;
     &lt;executions&gt;
         &lt;execution&gt;
             &lt;goals&gt;
@@ -448,6 +485,23 @@ BDD Assertions entry point class has been generated in file:
 
          <p>To disable assertions generation, set <span class="small-code">assertj.skip</span> to <span class="small-code">true</span>:
          <pre><code class="bash">mvn assertj:generate-assertions -Dassertj.skip=true</code></pre></p>
+
+         <h3 class="page-header"><span id="news"></span><span id="2.1.0"></span>Assertions generator maven plugin 2.1.0 release</h3>
+         <p>Release date : 2017-10-01</p>
+
+         <div class="release-section-category">Release notes:</div>
+         <ul>
+            <li>Uses <a href="assertj-assertions-generator.html#2.1.0">assertj-assertions-generator 2.1.0</a>.</li>            
+            <li><b>Breaking change</b>: Generates hierarchical assertions by default (set <span class="small-code">hierarchical</span> to false to keep the old behaviour)</li>
+            <li>Add <span class="small-code">cleanTargetDir</span> flag to clean the directory where assertions are generated before generating new ones.</li>
+            <li>Add <span class="small-code">quiet</span> flag to quiet the plugin (no output logs).</li>
+            <li>Add <span class="small-code">writeReportInFile</span> option to wrote plugin output to the given file.</li>
+            <li>Add <span class="small-code">generatedSourcesScope</span> option to set the scope of generated sources (default to <span class="small-code">test</span>).</li>
+            <li>Add <span class="small-code">generateAssertionsForAllFields</span> flag to generate assertions for all fields whatever their visibility.</li>
+            <li>Add <span class="small-code">generateAssertionsInPackage</span> to specify in which package assertions are generated (if not set, assertions are generated in the same package as the class to assert).</li>
+         </ul>
+
+         For all new configuration elements, see the plugin <a href="#configuration">configuration example</a>.
 
          <h3 class="page-header"><span id="news"></span><span id="2.0.0"></span>Assertions generator maven plugin 2.0.0 release</h3>
          <p>Release date : 2015-08-16</p>
