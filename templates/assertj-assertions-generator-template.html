@@ -600,24 +600,24 @@ public PlayerAssert hasName(String name) {
 
          <div class="release-section-category">Release notes:</div>
          <ul>
-            <li>Allow to generate assertions for all fields whatever their visibility are.</li>
+            <li>Allow to generate assertions for all fields whatever their visibility is.</li>
             <li>Generate BDD Soft assertions.</li>
             <li>Generate JUnit BDD Soft assertions.</li>
-            <li>Generate Generate <span class="small-code">AutoCloseableSoftAssertions</span>.</li>
-            <li>For iterable properties, generate <span class="small-code">hasXXXs</span>, <span class="small-code">hasOnlyXXXs</span> and <span class="small-code">doesNotHaveXXXs</span>  taking a collection argument. 
+            <li>Generate <span class="small-code">AutoCloseableSoftAssertions</span>.</li>
+            <li>For iterable properties, generate <span class="small-code">hasXXXs</span>, <span class="small-code">hasOnlyXXXs</span> and <span class="small-code">doesNotHaveXXXs</span> taking a collection argument. 
             <li>Allow to set in which package assertions are generated.</li>
             <li>Allow to generate assertions for annotated methods or classes with <span class="small-code">GenerateAssertion</span>.</li>
             <li>Add <span class="small-code">@javax.annotation.Generated</span> to generated classes.</li>
             <li>Generated assertions now extend <span class="small-code">AbstractObjectAssert</span> providing common object assertions.</li>
             <li>Make generated assertions extend <span class="small-code">AbstractComparableAssert</span> when possible providing comparable assertions.</li>
-            <li>Generate assertions method with <span class="small-code">@CheckReturnValue</span> to detect incorrect usage.</li>
+            <li>Generate assertions methods with <span class="small-code">@CheckReturnValue</span> to detect incorrect usage.</li>
             <li>Play more friendly with post instrumentalization tool like jacoco.</li>
             <li>Fix : avoid potential clash with offset parameter by renaming it to assertjOffset.</li>
             <li>Fix : generate correct file name when assertions entry point template class name is changed.</li>
             <li>Fix : could not find predicate methods that collide.</li>
             <li>Fix : some javadoc tags were not correct.</li>
             <li>Fix : parent class import was missing when it was not in same package as its child.</li>
-            <li>Fix : explicitely exclude <span class="small-code">package-info</span> classes from being processed for assertion generation.</li>
+            <li>Fix : explicitly exclude <span class="small-code">package-info</span> classes from being processed for assertion generation.</li>
             <li>Fix : consistently avoid generating assertions for non public classes.</li>
          </ul>
 
