@@ -66,7 +66,7 @@
                <li><a href="assertj-neo4j.html#latest-release">Releases</a></li>
                <li><a href="http://joel-costigliola.github.io/assertj/neo4j/api/index.html" target="_blank">Javadoc</a></li>
                <li><a href="assertj-neo4j.html#mailing-list">Mailing list</a></li>
-               <li><a href="assertj-neo4j.html#code">Code & issues <i class="fa fa-github"></i></a></li>
+               <li><a href="assertj-neo4j.html#code">Code &amp; issues <i class="fa fa-github"></i></a></li>
                <li><a href="assertj-neo4j.html#contributing">Contributing</a></li>
             </ul>
          </div>
@@ -76,9 +76,9 @@
       <div class="col-lg-10 col-md-10 col-sm-10 text-left">
          <h1 class="page-header">AssertJ Neo4j assertions</h1>
 
-         <p>Provides assertions for <a href="http://www.neo4j.org/">Neo4j</a> 2 or higher.</p>
+         <p>Provides assertions for <a href="http://www.neo4j.org/">Neo4j</a> 3 or higher.</p>
 
-         <p>This module have been written by <span class="contributor">Florent Biville</span>, huge thanks to him ! Great Work !<br>
+         <p>This module have been written by <span class="contributor">Florent Biville</span>, huge thanks to him! Great Work!<br>
             If you need additional assertions, just fill a ticket in <a href="https://github.com/joel-costigliola/assertj-neo4j/issues?labels=&milestone=&page=1&state=open">AssertJ Neo4j issue tracker</a>.</p>
 
          <p>AssertJ Neo4j is hosted on github : <a href="https://github.com/joel-costigliola/assertj-neo4j">https://github.com/joel-costigliola/assertj-neo4j</a>.</p>
@@ -92,36 +92,88 @@
 <pre><code class="xml">&lt;dependency&gt;
   &lt;groupId&gt;org.assertj&lt;/groupId&gt;
   &lt;artifactId&gt;assertj-neo4j&lt;/artifactId&gt;
-  &lt;version&gt;1.0.0&lt;/version&gt;
+  &lt;version&gt;2.0.1&lt;/version&gt;
   &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 
-         <p>You also need to provide Neo4j 2+ dependencies.</p>
-         <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-neo4j|1.0.0|bundle">assertj dependency declaration</a> for your tool.</p>
+         <p>You also need to provide Neo4j 3+ dependencies.</p>
+         <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-neo4j|2.0.1|bundle">assertj dependency declaration</a> for your tool.</p>
 
          <h4 class="page-header">2 - Statically import <span class="small-code">org.assertj.neo4j.api.Assertions.assertThat</span> ...</h4>
          <p>... and use your preferred IDE code completion after <span class="small-code">assertThat.</span></p>
 
-         <p>Example from <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/neo4j/PathAssertionExamples.java">PathAssertionExamples.java</a> :</p>
+         <p>Example from <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/neo4j/PathAssertionExamples.java">PathAssertionExamples.java</a> and <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/neo4j/ResultAssertionExamples.java">ResultAssertionExamples.java</a>:</p>
 
 <pre><code class="java">import static org.assertj.neo4j.api.Assertions.assertThat;
 
-// initialization omitted for brevity ...
-Path bulmaToMasterRoshiPath = dragonBallGraph.findShortestPathBetween("Bulma", "Master Roshi");
+try (Transaction ignored = graphDatabaseService.beginTx()) {
+   // path assertion example
+   Node tienShinhan = dragonBallGraph.findUniqueCharacter("Tien Shinhan");
+   Node doctorGero = dragonBallGraph.findUniqueCharacter("Dr. Gero");
+   Node bulmaNode = dragonBallGraph.findUniqueCharacter("Bulma");
+   Node masterRoshiNode = dragonBallGraph.findCharacter("Master Roshi");
+   Relationship masterShenTraining = dragonBallGraph.findUniqueTraining("Master Shen");
+   Relationship trainingFromSonGoku = dragonBallGraph.findUniqueTraining("Son Goku");
 
-Node bulmaNode = dragonBallGraph.findCharacter("Bulma");
-Node masterRoshiNode = dragonBallGraph.findCharacter("Master Roshi");
-Relationship trainingFromSonGoku = dragonBallGraph.findTrainingFrom("Son Goku");
+   Path bulmaToMasterRoshiPath = dragonBallGraph.findShortestPathBetween(
+                                    "Bulma",
+                                    "Master Roshi");
 
-// you can test several Path properties such as length, start/end node and last relationship
-assertThat(bulmaToMasterRoshiPath).hasLength(3)
-                                  .startsWithNode(bulmaNode)
-                                  .endsWithNode(masterRoshiNode)
-                                  .endsWithRelationship(trainingFromSonGoku);</code></pre>
+   /*
+    * You can test several Path properties such as:
+    *  - length
+    *  - start/end node
+    *  - last relationship
+    */
+   assertThat(bulmaToMasterRoshiPath).hasLength(3)
+                                     .startsWithNode(bulmaNode)
+                                     .endsWithNode(masterRoshiNode)
+                                     .endsWithRelationship(trainingFromSonGoku)
+                                     .doesNotStartWithNode(doctorGero)
+                                     .doesNotEndWithNode(tienShinhan)
+                                     .doesNotEndWithRelationship(masterShenTraining);
+
+   /*
+    * Cypher execution result (of Result type) is just an iterable of Map&lt;String, Object&gt;
+    * ResultAssertion is just a convenient wrapper of the usual Map assertions :)
+    */
+   Result result = graphDatabaseService.execute(
+          "MATCH (character:Character) " +
+          "WHERE character.name =~ 'Master.*' " +
+          "RETURN character.name AS name ORDER BY name ASC");
+
+   assertThat(result).hasSize(3)
+                     .doesNotContainNull()
+                     .containsExactly(Maps.newHashMap("name", "Master Mutaito"),
+                                      Maps.newHashMap("name", "Master Roshi"),
+                                      Maps.newHashMap("name", "Master Shen"));
+}</code></pre>
 
          <p><span class="small-code">assertThat</span> and <span class="small-code">entry</span> are static imports from the <span class="small-code">Assertions</span> class.</p>
 
          <p>Note that you can find more working examples in <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/neo4j">neo4j package</a> of <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project.</p>
+
+         <h3 class="page-header"><span id="latest-release"/></span>Neo4j assertions 2.0.0 and 2.0.1 release</h3>
+         <p>Release date : 2017-10-05</p>
+         <p><strong>Neo4j required minimum version is now 3.0.0!</strong></p>
+
+         <div class="release-section-category">New assertions:</div>
+         <ul>
+            <li>Path assertions
+               <ul>
+                  <li>doesNotStartWithNode</li>
+                  <li>doesNotEndWithNode</li>
+                  <li>doesNotEndWithRelationship</li>
+               </ul>
+            </li>
+            <li>Relationship assertions
+               <ul>
+                  <li>doesNotStartWithNode</li>
+                  <li>doesNotEndWithNode</li>
+               </ul>
+            </li>
+            <li>Result assertions</li>
+         </ul>
 
          <h3 class="page-header"><span id="latest-release"/></span>Neo4j assertions 1.0.0 release</h3>
          <p>Release date : 2014-01-02</p>
@@ -140,7 +192,7 @@ assertThat(bulmaToMasterRoshiPath).hasLength(3)
 
          <h3 class="page-header"><span id="core-and-neo4j-assertions"/></span>Using both AssertJ <a href="https://github.com/joel-costigliola/assertj-core">Core assertions</a> and Neo4j assertions</h3>
 
-         <p>You will have to make two static import : one for <span class="small-code">org.assertj.core.api.Assertions.assertThat</span>
+         <p>You will have to make two static imports: one for <span class="small-code">org.assertj.core.api.Assertions.assertThat</span>
             to get core assertions and one <span class="small-code">org.assertj.neo4j.api.Assertions.assertThat</span> for neo4j assertions.</p>
 
 <pre><code class="java">import static org.assertj.core.api.Assertions.assertThat;
@@ -171,7 +223,7 @@ assertThat("hello world").startsWith("hello");</code></pre>
 
          <h3 class="page-header"><span id="contributing"/></span>Contributing</h3>
 
-         <p>Thanks for your interest ! Please check our <a href="https://github.com/joel-costigliola/assertj-neo4j/blob/master/CONTRIBUTING.md#contributing">contributor's guidelines</a>.</p>
+         <p>Thanks for your interest! Please check our <a href="https://github.com/joel-costigliola/assertj-neo4j/blob/master/CONTRIBUTING.md#contributing">contributor's guidelines</a>.</p>
 
          <p>Special thanks to <span class="contributor">Florent Biville</span> AssertJ Neo4j main contributor.</p>
 
