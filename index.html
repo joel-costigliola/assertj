@@ -105,7 +105,7 @@ assertThat(fellowshipOfTheRing).extracting("name", "age", "race.name")
                                          tuple("Sam", 38, "Hobbit"),
                                          tuple("Legolas", 1000, "Elf"));
 
-// filtering a collection before asserting in Java 7 ... 
+// filtering a collection before asserting in Java 7 ...
 assertThat(fellowshipOfTheRing).filteredOn("race", HOBBIT)
                                .containsOnly(sam, frodo, pippin, merry);
 // ... or in Java 8
@@ -125,8 +125,8 @@ assertThat(fellowshipOfTheRing).filteredOn(character -> character.getName().cont
         <h3>AssertJ is IDE friendly, use code completion to discover assertions :</h3>
             <br/>
         <img src="images/ide-completion.png" alt="Screenshot of IDE completion">
-<h3>Javadoc of assertion methods contains helpful examples, e.g. <a href="http://joel-costigliola.github.io/assertj/core-8/api/org/assertj/core/api/AbstractCharSequenceAssert.html#containsOnlyDigits--">containsOnlyDigits</a>
-      </h3>      
+<h3>Javadoc of assertion methods contains helpful examples, e.g. <a href="http://joel-costigliola.github.io/assertj/core/api/org/assertj/core/api/AbstractCharSequenceAssert.html#containsOnlyDigits--">containsOnlyDigits</a>
+      </h3>
    </div>
    </div>
 </div>
