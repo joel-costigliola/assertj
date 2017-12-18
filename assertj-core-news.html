@@ -86,6 +86,8 @@
    <div class="col-lg-10 col-md-10 col-sm-10 text-left" >
       <h1 class="page-header">AssertJ Core latest news</h1>
       <ul>
+         <li><a href="#assertj-core-3.9.0">AssertJ core 3.9.0 release</a> (requires Java 8)</li>
+         <li><a href="#assertj-core-2.9.0">AssertJ core 2.9.0 release</a></li>
          <li><a href="#assertj-core-3.8.0">AssertJ core 3.8.0 release</a> (requires Java 8)</li>
          <li><a href="#assertj-core-2.8.0">AssertJ core 2.8.0 release</a></li>
          <li><a href="#assertj-core-3.7.0">AssertJ core 3.7.0 release</a> (requires Java 8)</li>
@@ -120,6 +122,584 @@
          <li><a href="#assertj-core-1.0.0">AssertJ core 1.0.0 release</a></li>
       </ul>
 
+<h3 class="page-header"><span id="assertj-core-3.9.0"></span>AssertJ Core 3.9.0 release : New and noteworthy</h3>
+
+<p>Release date : 2018-01-02</p>
+<p>This release includes all changes from <a href="#assertj-core-2.9.0">AssertJ core 2.9.0</a> and adds the following that are Java 8 specific.</p>
+
+<p>Thanks to <span class="contributor">Pascal Schumacher</span>, 
+             <span class="contributor">Rudi Klassen</span>, 
+             <span class="contributor">Kseniya Panasyuk</span>, 
+             <span class="contributor">Filip Hrisafov</span>, 
+             <span class="contributor">Michael Keppler</span>, 
+             <span class="contributor">Jeremy Landis</span>, 
+             <span class="contributor">Pontus Alexander</span>, 
+             <span class="contributor">Alberto Scotto</span>, 
+             <span class="contributor">Fr Jeremy Krieg</span>, 
+             <span class="contributor">Mike Kobit</span>, 
+         and <span class="contributor"></span> for their contributions.</p>
+
+<h4 class="page-header"> Release notes</h4>
+<div class="release-section-category">New features :</div>
+<ul>
+  <li>Add <a href="#assertj-core-3.9.0-anyMatch"><span class="small-code">anyMatch</span></a> to iterable/array assertions.</li>
+  <li>Add <a href="#assertj-core-3.9.0-noneMatch"><span class="small-code">noneMatch</span></a> to iterable/array assertions.</li>
+  <li>Add <a href="#assertj-core-3.9.0-allSatisfyForMap"><span class="small-code">allSatisfy</span></a> map assertion. </li>
+  <li>Add <a href="#assertj-core-3.9.0-zipSatisfy"><span class="small-code">zipSatisfy</span></a> assertion to check pairs built from two group of objects. </li>
+  <li>Add <a href="#assertj-core-3.9.0-catchThrowableOfType"><span class="small-code">catchThrowableOfType</span></a> to perform assertion on the caught throwable cast to the given type. <span class="contributor">(Fr Jeremy Krieg)</span></li>
+  <li>Allow performing <span class="small-code">Object</span> assertion on the <span class="small-code">Optional</span> value after calling <a href="#assertj-core-3.9.0-optional-get"><span class="small-code">get()</span></a>. <span class="contributor">(Filip Hrisafov)</span></li>
+  <li>Add <a href="#assertj-core-2.9.0-assumptions">assumptions</a> for Java 8 types to skip tests with they are not met.</li>
+  <li>Allow to set a description in <a href="#assertj-core-3.9.0-describe-assertThatThrownBy">assertThatThrownBy</a>.</li>
+  <li>Add a factory method to return <span class="small-code">CompletableFuture</span> assertion from a <span class="small-code">CompletionStage</span>.</li>
+</ul>
+<div class="release-section-category">Improvements :</div>
+<ul>
+  <li>Allow to <a href="#assertj-core-3.9.0-describe-assertThatExceptionOfType">use a description</a> after <span class="small-code">assertThatExceptionOfType</span> like assertions. <span class="contributor">(Kseniya Panasyuk)</span></li>
+  <li>Align <span class="small-code">assertThat</span> methods between <span class="small-code">Assertions</span> and  <span class="small-code">WithAssertions</span>. <span class="contributor">(Filip Hrisafov)</span></li>
+  <li>add missing <span class="small-code">thenCode</span> BDD assertion. </li>
+  <li>Print stack trace information for when doesNotThrowAnyException fails. <span class="contributor">Mike Kobit</span> </li>
+  <li>Warn users that the future state displayed in error messages might be different from the one at the time when the assertion was performed.</li>
+  <li>Javadoc improvements. <span class="contributor">(Pascal Schumacher)</span></li>
+  <li>Contributor guide improvements. <span class="contributor">(Rudi Klassen)</span></li>
+  <li>Java 9 build. <span class="contributor">(Pascal Schumacher)</span></li>
+  <li>Add openjdk8 build. <span class="contributor">(Jeremy Landis)</span></li>
+  <li>Maven build updates. <span class="contributor">(Jeremy Landis)</span></li>
+  <li>README.md improvements. <span class="contributor">(Michael Keppler)</span></li>
+  <li>Javadoc: clarify <span class="small-code">assertThatThrownBy</span> and <span class="small-code">assertThatCode</span> behavior.</li>
+  <li>Javadoc: fix typo in <span class="small-code">isEqualTo</span> code example. <span class="contributor">(Pontus Alexander)</span></li>
+  <li><span class="small-code">ShouldContainCharSequenceOnlyOnce</span> refactoring. <span class="contributor">(Alberto Scotto)</span></li>
+</ul>
+<div class="release-section-category">Fixed :</div>
+<ul>
+  <li>Fix a compiler error since 3.7.0 on <span class="small-code">assertThat(Stream)</span> when given an upper bounded <span class="small-code">Stream</span> (#1046).</li>
+</ul>
+
+<h4 class="page-header"><span id="assertj-core-3.9.0-anyMatch" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">anyMatch</span> to iterable/array assertions</h4>
+<p>Verifies whether any iterable/array elements match the provided <span class="small-code">Predicate</span>.</p>
+<p>Example:</p>
+<pre><code class='java'>Iterable&lt;String&gt; abcc = newArrayList("a", "b", "cc");
+
+// assertion will pass
+assertThat(abcc).noneMatch(s -&gt; s.isEmpty());
+
+// assertion will fail
+assertThat(abcc).noneMatch(s -&gt; s.length() == 2);</code></pre>
+  
+<p>Note that you can achieve the same result with <span class="small-code">areNot(Condition)</span>/<span class="small-code">doNotHave(Condition)</span>.</p>
+
+<h4 class="page-header"><span id="assertj-core-3.9.0-noneMatch" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">noneMatch</span> to iterable/array assertions</h4>
+<p>Verifies that no iterable/array elements match the provided <span class="small-code">Predicate</span>.</p>
+<p>Example:</p>
+<pre><code class='java'>Iterable&lt;String&gt; abcc = newArrayList("a", "b", "cc");
+
+// assertion will pass
+assertThat(abcc).anyMatch(s -&gt; s.length() == 2);
+
+// assertion will fail
+assertThat(abcc).anyMatch(s -&gt; s.length() &gt; 2);</code></pre>
+  
+<p>Note that you can achieve the same result with <span class="small-code">areAtLeastOne(Condition)</span>/<span class="small-code">haveAtLeastOne(Condition)</span>.</p>
+
+<h4 class="page-header"><span id="assertj-core-3.9.0-allSatisfyForMap" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">allSatisfy</span> map assertion</h4>
+
+<p>Verifies that all the actual map entries satisfy the given entry requirements.</p>
+<p>If the actual map is empty <span class="small-code">allSatisfy</span> succeeds as there is nothing to check.</p>
+<p>Example:</p>
+<pre><code class='java'>Map&lt;TolkienCharacter, Ring&gt; elvesRingBearers = new HashMap&lt;&gt;();
+elvesRingBearers.put(galadriel, nenya);                       
+elvesRingBearers.put(gandalf, narya);                         
+elvesRingBearers.put(elrond, vilya);                          
+                                                              
+// this assertion succeeds
+assertThat(elvesRingBearers).allSatisfy((character, ring) -&gt; {
+  assertThat(character.getRace()).isIn(ELF, MAIA);            
+  assertThat(ring).isIn(nenya, narya, vilya);                 
+});  
+
+// this assertion fails as Gandalf is a maia and not an elf
+assertThat(elvesRingBearers).allSatisfy((character, ring) -&gt; {  
+  assertThat(character.getRace()).isEqualTo(ELF);                
+  assertThat(ring).isIn(nenya, narya, vilya);                            
+});</code></pre>
+
+<h4 class="page-header"><span id="assertj-core-3.9.0-zipSatisfy" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">zipSatisfy</span> assertion to check pairs built from two group of objects</h4>
+<p>Verifies that the zipped pairs of actual and other elements, i.e: (actual 1st element, other 1st element), (actual 2nd element, other 2nd element), ... all satisfy the given requirements.</p>
+<p>This assertion assumes that actual and other have the same size but they can contain different type of elements making it handy to compare objects converted to another type, for example Domain and View/DTO objects.</p>
+<p>Example:</p>
+<pre><code class='java'>List&lt;Adress&gt; addressModels = findGoodRestaurants();
+List&lt;AdressView&gt; addressViews = convertToView(addressModels);
+
+// compare addressViews and addressModels respective paired elements. 
+assertThat(addressViews).zipSatisfy(addressModels, (AdressView view, Adress model) -&gt; {
+  assertThat(view.getZipcode() + ' ' + view.getCity()).isEqualTo(model.getCityLine());
+  assertThat(view.getStreet()).isEqualTo(model.getStreet().toUpperCase());
+});</code></pre>
+
+<h4 class="page-header"><span id="assertj-core-3.9.0-catchThrowableOfType" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">catchThrowableOfType</span> to perform assertion on the caught throwable cast to the given type</h4>
+
+<p><span class="small-code">catchThrowableOfType</span> allows catching a <span class="small-code">Throwable</span> of a specific type <span class="small-code">T</span>, 
+if no exception is thrown it returns <span class="small-code">null</span> otherwise it checks that the caught Throwable is of type <span class="small-code">T</span> and casts it making it convenient to perform subtype-specific assertions on the throwable of type <span class="small-code">T</span>.</p>
+<p>Example:</p>
+<pre><code class='java'> class CustomParseException extends Exception {
+  int line;
+  int column;
+  
+  public CustomParseException(String msg, int l, int c) {
+    super(msg);
+    line = l;
+    column = c;
+  }
+}
+
+CustomParseException e = catchThrowableOfType(() -&gt; { throw new CustomParseException("boom!", 1, 5); },
+                                              CustomParseException.class);
+// assertions pass
+assertThat(e).hasMessageContaining("boom");
+assertThat(e.line).isEqualTo(1);
+assertThat(e.column).isEqualTo(5);
+
+ // succeeds as catchThrowableOfType returns null when the code does not thrown any exceptions 
+assertThat(catchThrowableOfType(() -&gt; {}, Exception.class)).isNull();
+
+// fails as CustomParseException is not a RuntimeException
+catchThrowableOfType(() -&gt; { throw new CustomParseException("boom!", 1, 5); }, 
+                     RuntimeException.class);</code></pre>
+
+<h4 class="page-header"><span id="assertj-core-3.9.0-optional-get" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow performing <span class="small-code">Object</span> assertion on the <span class="small-code">Optional</span> value after calling <span class="small-code">get()</span>.</h4>
+
+<p>Verifies that the <span class="small-code">Optional</span> under test is not null and not empty, then returns an <span class="small-code">Object</span> assertion to allow chaining of (Object only) assertions on the optional value.</p>
+<p>Note that it is only possible to return <span class="small-code">Object</span> assertions after calling this method due to java generics limitations.</p>
+<p>Example:</p>
+<pre><code class="java">TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
+
+// Use get() to navigate to perform assertions on frodo.
+assertThat(Optional.of(frodo)).get().isEqualTo(frodo);
+
+// fails since the API does not allow navigating to a null value.
+assertThat(Optional.empty()).get();</code></pre>
+
+<h4 class="page-header"><span id="assertj-core-3.9.0-describe-assertThatThrownBy" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow  to set a description in <span class="small-code">assertThatThrownBy</span>.</h4>
+
+<p>A variant of <span class="small-code">assertThatThrownBy</span> which accepts a description has been added.</p>
+<p>Example:</p>
+<pre><code class="java">// this assertion fails ... 
+assertThatThrownBy(() -> { throw new IOException("bam!"); }, "Test explosive code")
+          .isInstanceOf(IOException.class)
+          .hasMessageContaining("boom!");
+// ... with the following error message:
+
+java.lang.AssertionError: [check explosion] 
+Expecting message:
+ &lt;&quot;bam !&quot;&gt;
+but was:
+ &lt;&quot;boom !&quot;&gt;</code></pre>
+
+<h4 class="page-header"><span id="assertj-core-3.9.0-describe-assertThatExceptionOfType" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow to use a description after <span class="small-code">assertThatExceptionOfType</span> like assertions.</h4>
+
+<p>Allow to set a description assertions initialized with:
+<ul>
+  <li><span class="small-code">assertThatExceptionOfType</span></li>
+  <li><span class="small-code">assertThatIllegalStateException</span></li>
+  <li><span class="small-code">assertThatNullPointerException</span></li>
+  <li><span class="small-code">assertThatIOException</span></li>
+  <li><span class="small-code">assertThatIllegalArgumentException</span></li>
+</ul>
+<p>Examples:</p>
+<pre><code class="java">// assertions succeeds
+assertThatExceptionOfType(RuntimeException.class)
+                         .as("check explosion")
+                         .isThrownBy(() -> {throw new RuntimeException("boom !");})
+                         .withMessage("boom !");
+
+assertThatNullPointerException()
+                        .as("null check")
+                        .isThrownBy(() -> {throw new NullPointerException("null !");})
+                        .withMessage("null !");
+
+// assertion fails ... 
+assertThatExceptionOfType(RuntimeException.class)
+                         .as("check explosion")
+                         .isThrownBy(() -> {throw new RuntimeException("boom !");})
+                         .withMessage("bam !");
+// ... with the error below (note the description):
+java.lang.AssertionError: [check explosion] 
+  Expecting message:
+  &lt;&quot;bam !&quot;&gt;
+  but was:
+  &lt;&quot;boom !&quot;&gt;</code></pre>                  
+
+<h3 class="page-header"><span id="assertj-core-2.9.0"></span>AssertJ Core 2.9.0 release : New and noteworthy</h3>
+
+<p>Release date : 2018-01-02</p>
+
+<p><b>This is the last release with new features for Java 7, the next 2.x releases will be bugfixes releases.</b></p>
+
+<p>Thanks to <span class="contributor">Pascal Schumacher</span>, 
+             <span class="contributor">Marko Bekhta</span>, 
+             <span class="contributor">epeee</span>, 
+             <span class="contributor">Kseniya Panasyuk</span>, 
+             <span class="contributor">Filip Hrisafov</span>, 
+             <span class="contributor">Marco Leichsenring</span>, 
+             <span class="contributor">João Delgado</span>, 
+             <span class="contributor">Florent Biville</span>, 
+             <span class="contributor">BillyYccc</span>, 
+             <span class="contributor">Rudi Klassen</span>, 
+             <span class="contributor">Daniel Weber</span>, 
+             <span class="contributor">Chris Arnott</span>, 
+         and <span class="contributor">cal101</span> for their contributions.</p>
+
+
+<h4 class="page-header"> Release notes</h4>
+<div class="release-section-category"> Breaking changes:</div>
+<ul>
+  <li><a href="#assertj-core-2.9.0-containsSequence"><span class="small-code">containsSequence</span></a> String assertion now fails if it finds values between the given sequence, use <a href="#assertj-core-2.9.0-containsSubsequence"><span class="small-code">containsSubsequence</span></a> to get the old behavior.</li>
+  <li><a href="#assertj-core-2.9.0-isBlank"><span class="small-code">isBlank</span></a> String assertion now considers null or empty as blank, use <a href="#assertj-core-2.9.0-containsOnlyWhitespaces"><span class="small-code">containsOnlyWhitespaces</span></a> to get the old behavior.</li>
+  <li><a href="#assertj-core-2.9.0-isCloseTo"><span class="small-code">assertThat(x).isCloseTo(y, byLessThan(delta))</span></a> number assertion is now strict and fails when |x-y|=delta.</li>
+  <li>Compare <span class="small-code">double</span> with a precision of <span class="small-code">1e-15</span> and <span class="small-code">float</span> with <span class="small-code">1e-6f</span> in element by element comparison.</li>
+  <li>Do not check actual or expected for null before comparing them with a custom comparator (i.e. the comparator should take care of that).</li>
+</ul>
+<div class="release-section-category"> Deprecation:</div>
+<ul>
+  <li><span class="small-code">isJavaBlank</span></a> String assertion, use <a href="#assertj-core-2.9.0-isBlank"><span class="small-code">isBlank</span></a> or <a href="#assertj-core-2.9.0-containsOnlyWhitespaces"><span class="small-code">containsOnlyWhitespaces</span></a> instead.</li>
+</ul>
+<div class="release-section-category">New features :</div>
+<ul>
+  <li>Allow to skip tests with <a href="#assertj-core-2.9.0-assumptions">assumptions</a> not met. <span class="contributor">(Kseniya Panasyuk)</span></li>
+  <li>Add <a href="#assertj-core-2.9.0-doesNotHaveAnyElementsOfTypes"><span class="small-code">doesNotHaveAnyElementsOfTypes</span></a> iterable/array assertions. <span class="contributor">(cal101)</span></li>
+  <li>Add <a href="#assertj-core-2.9.0-containsExactlyInAnyOrderElementsOf"><span class="small-code">containsExactlyInAnyOrderElementsOf</span></a> to iterable/array assertions. <span class="contributor">(Filip Hrisafov)</span></li>
+  <li>Add <a href="#assertj-core-2.9.0-assertContainsOnlyNulls"><span class="small-code">assertContainsOnlyNulls</span></a> to iterable/array assertions. <span class="contributor">(BillyYccc)</span></li>
+  <li>Add <a href="#assertj-core-2.9.0-containsAnyOf"><span class="small-code">containsAnyOf</span></a> to iterable/array assertions. <span class="contributor">(Marko Bekhta)</span></li>
+  <li>Support converting an <a href="#assertj-core-2.9.0-hamcrestMatcherAsCondition">Hamcrest Matcher to an AssertJ Condition</a>. <span class="contributor">(Pascal Schumacher)</span></li>
+  <li>Provide an SPI to <a href="#assertj-core-2.9.0-registerSpi">register a custom Representation</a>. <span class="contributor">(Filip Hrisafov)</span></li>
+  <li>Add <a href="#assertj-core-2.9.0-hasSameHashCodeAs"><span class="small-code">hasSameHashCodeAs</span></a> assertion. <span class="contributor">(Rudi Klassen)</span></li>
+  <li>Add <a href="#assertj-core-2.9.0-usingComparatorForType"><span class="small-code">usingComparatorForType</span></a> to iterable/array assertions. <span class="contributor">(Kseniya Panasyuk)</span></li>
+  <li>Add <a href="#assertj-core-2.9.0-isEqualToIgnoringNewLines"><span class="small-code">isEqualToIgnoringNewLines</span></a> to string assertions. <span class="contributor">(Daniel Weber)</span></li>
+  <li>Add <a href="#assertj-core-2.9.0-flatExtractingForMap"><span class="small-code">flatExtracting</span></a> for map assertions. <span class="contributor">(Daniel Weber)</span></li>
+  <li>Add <a href="#assertj-core-2.9.0-containsSubsequence"><span class="small-code">containsSubsequence</span></a> to string assertions. <span class="contributor">(BillyYccc)</span></li>
+  <li>Add <a href="#assertj-core-2.9.0-containsOnlyWhitespaces"><span class="small-code">containsOnlyWhitespaces</span></a> to string assertions. <span class="contributor">(Chris Arnott)</span></li>
+</ul>
+<div class="release-section-category">Improvements :</div>
+<ul>
+  <li><span class="small-code">doesNotContain</span> string assertion now accepts varargs. <span class="contributor">(BillyYccc)</span></li>
+  <li>When failing because arrays/iterables have different sizes <span class="small-code">containsExactly</span> error shows arrays/iterables differences. </li>
+  <li>Class based navigable assert: do not swallow reflection problems. <span class="contributor">(cal101)</span></li>
+  <li>Add cause description to soft assertion error (if any). </li>
+  <li>Better description of comparators used in element by element comparison. </li>
+  <li>Float and Double comparators now handle null values as always less than any other values. <span class="contributor">(Kseniya Panasyuk)</span></li>
+  <li>Throw an AssertionError when using the extracting feature on a null object. <span class="contributor">(Marco Leichsenring)</span></li>
+  <li>Add missing <span class="small-code">@CheckReturnValue</span> annotations.</li>
+  <li><span class="small-code">usingComparatorForType</span> now accept comparators taking a superclass of the type to compare.</li>
+  <li>Add AssertJ Java 9 builds (with the classpath).<span class="contributor">(Pascal Schumacher)</span></li>
+  <li><span class="small-code">endsWith(T[])</span> now succeeds when given an empty array.<span class="contributor">(Florent Biville)</span></li>
+  <li>Use <span class="small-code">AssertionFailedError</span> from opentest4j if available on the classpath.<span class="contributor">(Filip Hrisafov)</span></li>
+  <li>Code and tests refactoring. <span class="contributor">(João Delgado, Bojan Trajkovski, Filip Hrisafov)</span></li>
+  <li>Add "provided" scope for hamcrest dependency to exclude it from the assertj-core shaded jar.<span class="contributor">(Pascal Schumacher)</span></li>
+  <li>A bunch of javadoc improvements. <span class="contributor">(Pascal Schumacher, epeee, Bojan Trajkovski)</span></li>
+  <li>Make configurable whether <span class="small-code">AbstractAssert#equals</span> throws an exception for 3rd party libraries integrating AssertJ. <span class="contributor">(Günther Grill)</span></li>
+</ul>
+<div class="release-section-category">Fixed :</div>
+<ul>
+  <li>Fix <span class="small-code">isBetween</span> and <span class="small-code">isStrictlyBetween</span> javadoc. <span class="contributor">(Chris Arnott)</span></li>
+  <li>When comparing objects field by field recursively and one of the field was a <span class="small-code">String</span> containing <span class="small-code">%</span>, AssertJ failed to build the error message. <span class="contributor">(Chris Arnott)</span></li>
+  <li>Fix <span class="small-code">FieldSupport.fieldValue</span> which was failing to extract a field when specified as primitive type.</li>
+  <li>Fix <span class="small-code">containsExactly</span> which did not handled correctly duplicate elements. <span class="contributor">(BillyYccc)</span></li>
+</ul>
+
+<h4 class="page-header"><span id="assertj-core-2.9.0-assumptions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow to skip tests with unmet assumptions</h4>
+
+<p>Use <span class="small-code">assumeThat</span> methods to express the assumptions to be met in order to allow tests execution. 
+All the AssertJ assertions can be reused to express assumptions. Assumptions support both JUnit and TestNG.</p>
+<p>All tests with unmet assumptions are skipped (provided you express assumptions before the test content).</p>
+<p>Example with met assumptions:</p>
+<pre><code class="java">import static org.assertj.core.api.Assumptions.assumeThat;
+// since this assumption is true ...
+assumeThat(frodo.getRace()).isEqualTo(HOBBIT);
+// ... this assertion is performed.
+assertThat(fellowshipOfTheRing).doesNotContain(sauron);</code></pre>
+
+<p>Example with unmet assumptions:</p>
+<pre><code class="java">import static org.assertj.core.api.Assumptions.assumeThat;
+// since this assumption is obviously false ...
+assumeThat(frodo.getRace()).isEqualTo(ORC);
+// ... this assertion is not performed and the test is skipped.
+assertThat(fellowshipOfTheRing).contains(sauron);</code></pre>
+
+
+<h4 class="page-header"><span id="assertj-core-2.9.0-doesNotHaveAnyElementsOfTypes" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">doesNotHaveAnyElementsOfTypes</span> to iterable/array assertions</h4>
+
+<p>Verifies that all elements in the actual <code>Iterable</code> do not have the specified types (including subclasses).</p>
+<p>Example:</p>
+<pre><code class="java">List&lt;Number&gt; numbers = new ArrayList&lt;&gt;();
+numbers.add(1);
+numbers.add(2);
+numbers.add(3.0);
+
+// successful assertions:
+assertThat(numbers).doesNotHaveAnyElementsOfTypes(Long.class, Float.class);
+
+// assertion failure:
+assertThat(numbers).doesNotHaveAnyElementsOfTypes(Long.class, Integer.class);</code></pre>
+
+<h4 class="page-header"><span id="assertj-core-2.9.0-containsExactlyInAnyOrderElementsOf" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">containsExactlyInAnyOrderElementsOf</span> to iterable/array assertions</h4>
+
+<p>Verifies that the actual iterable/array contains exactly the given iterable elements and nothing else, in any order.</p>
+<p>Example:</p>
+<pre><code class="java">// an Iterable is used in the example but this also works with arrays
+Iterable<Ring> elvesRings = list(vilya, nenya, narya, vilya);
+Iterable<Ring> elvesRingsDifferentOrder = list(nenya, narya, vilya, vilya);
+  
+// assertion succeeds
+assertThat(elvesRings).containsExactlyInAnyOrder(elvesRingsDifferentOrder);
+  
+// assertion fails as vilya is contained twice in elvesRings
+assertThat(elvesRings).containsExactlyInAnyOrder(list(vilya, nenya, narya));</code></pre>
+
+<h4 class="page-header"><span id="assertj-core-2.9.0-assertContainsOnlyNulls" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">assertContainsOnlyNulls</span> to iterable/array assertions</h4>
+
+<p>Verifies that the actual group contains only null elements and nothing else.</p>
+<p>Example:</p>
+<pre><code class="java">// assertion succeeds
+Iterable&lt;String&gt; items = Arrays.asList(null, null, null);
+assertThat(items).containsOnlyNulls();
+
+// assertion fails because items2 contains a not null element
+Iterable&lt;String&gt; items2 = Arrays.asList(null, null, "notNull");
+assertThat(items2).containsOnlyNulls();
+
+// assertion fails since an empty iterable does not contain anything and therefore not null
+Iterable&lt;String&gt; empty = new ArrayList&lt;&gt;();
+assertThat(empty).containsOnlyNulls();</code></pre>
+
+<h4 class="page-header"><span id="assertj-core-2.9.0-containsAnyOf" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">containsAnyOf</span> to iterable/array assertions</h4>
+
+<p>Verifies that the actual iterable/array contains at least one of the given values.</p>
+<p>Example:</p>
+<pre><code class="java">Iterable&lt;String&gt; abc = Arrays.asList("a", "b", "c");
+
+// assertions succeeds
+assertThat(abc).containsAnyOf("b")
+               .containsAnyOf("b", "c")
+               .containsAnyOf("a", "b", "c")
+               .containsAnyOf("a", "b", "c", "d")
+               .containsAnyOf("e", "f", "g", "b");
+
+// assertions fail
+assertThat(abc).containsAnyOf("d");
+assertThat(abc).containsAnyOf("d", "e", "f", "g");</code></pre>
+
+<h4 class="page-header"><span id="assertj-core-2.9.0-hamcrestMatcherAsCondition" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Convert an Hamcrest Matcher to a Condition</h4>
+
+<p>Allows to reuse Hamcrest matchers as Conditions.</p>
+<p>Example:</p>
+<pre><code class="java">import static org.hamcrest.core.StringContains.containsString;
+
+Condition&lt;String&gt; aStringContaining123 = new HamcrestCondition&lt;&gt;(containsString("123"));
+
+// assertions succeed
+assertThat("abc123").is(aStringContaining123);
+assertThat("def456").isNot(aStringContaining123);</code></pre>
+
+<h4 class="page-header"><span id="assertj-core-2.9.0-registerSpi" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Provide an SPI to register a custom Representation</h4>
+
+<p>Allow to register a representation as a service discovered at program startup. 
+ The advantage of registering a representation is that you don't need to do anything in your tests, 
+ the java runtime will discover it and AssertJ will use it but it requires a bit more work than a simple call to <span class="small-code">Assertions.useRepresentation(Representation)</span>.</p>
+
+<p>To register a Representation, you need to do several things:</p>
+<ul>
+   <li>create a file named <span class="small-code">org.assertj.core.presentation.Representation</span> file in the <span class="small-code">META-INF/services</span> directory</li>
+   <li>put the fully qualified class name of your custom <span class="small-code">Representation</span> in it</li>
+   <li>make sure <span class="small-code">META-INF/services/org.assertj.core.presentation.Representation</span> is in the runtime classpath.</li>
+</ul>
+
+<p>We recommend that you extend <span class="small-code">StandardRepresentation</span> and override <span class="small-code">fallbackToStringOf(Object)</span>. 
+By doing this all the defaults of AssertJ would be applied and you can apply your own customization.</p>
+<p>Placing <span class="small-code">META-INF/services/org.assertj.core.presentation.Representation</span> in <span class="small-code">src/test/resources</span> should be enough to put it in the classpath.</p>    
+The <a href="https://github.com/joel-costigliola/assertj-examples/tree/master/assertions-examples">assertj-examples</a> project provides a working example, see:
+<ul>
+    <li>the <a href="https://github.com/joel-costigliola/assertj-examples/tree/master/assertions-examples/src/test/resources/META-INF/services"><span class="small-code">META-INF/services</span></a> directory content</li>
+    <li>the <a href="https://github.com/joel-costigliola/assertj-examples/tree/master/assertions-examples/src/test/resources/META-INF/services/org.assertj.core.presentation.Representation"><span class="small-code">org.assertj.core.presentation.Representation</span></a> file</li>
+    <li>the <a href="https://github.com/joel-costigliola/assertj-examples/tree/master/assertions-examples/src/test/java/org/assertj/examples/UseRegisteredRepresentationExample.java"><span class="small-code">UseRegisteredRepresentationExample</span></a> test example</li>
+</ul>
+
+<h4 class="page-header"><span id="assertj-core-2.9.0-hasSameHashCodeAs" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">hasSameHashCodeAs</span> assertion</h4>
+
+<p>Verifies that the actual object has the same hashCode as the given object.</p>
+<p>Example:</p>
+<pre><code class='java'> // assertions will pass
+assertThat(42L).hasSameHashCodeAs(42L);
+assertThat(&quot;The Force&quot;).hasSameHashCodeAs(&quot;The Force&quot;);
+assertThat(new Jedi(&quot;Yoda&quot;, &quot;Blue&quot;)).hasSameHashCodeAs(new Jedi(&quot;Yoda&quot;, &quot;Blue&quot;));
+
+// assertions will fail
+assertThat(42L).hasSameHashCodeAs(2501L);
+assertThat(null).hasSameHashCodeAs(&quot;The Force&quot;);
+assertThat(&quot;The Force&quot;).hasSameHashCodeAs(null);</code></pre>
+
+<h4 class="page-header"><span id="assertj-core-2.9.0-usingComparatorForType" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">usingComparatorForType</span> to iterable/array assertions</h4>
+
+<p>Allows to set a specific comparator for the given type of elements or their fields. It extends <span class="small-code">usingComparatorForElementFieldsWithType</span> by applying the provided comparator to elements themselves, not only to their fields.<p>
+<p>Usage of this method affects comparators set by next methods:</p>
+<ul>
+  <li><span class="small-code">usingFieldByFieldElementComparator}</span></li>
+  <li><span class="small-code">usingElementComparatorOnFields}</span></li>
+  <li><span class="small-code">usingElementComparatorIgnoringFields}</span></li>
+  <li><span class="small-code">usingRecursiveFieldByFieldElementComparator}</span></li>
+</ul>
+<p>Example:</p>
+<pre><code class='java'>
+// assertion will pass as BigDecimal comnparator 1.0 is equalto to 1.00
+assertThat(asList("some", new BigDecimal("4.2")))
+      .usingComparatorForType(BIG_DECIMAL_COMPARATOR, BigDecimal.class)
+      .contains(new BigDecimal("4.20"));
+</code></pre>
+
+<h4 class="page-header"><span id="assertj-core-2.9.0-isEqualToIgnoringNewLines" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">isEqualToIgnoringNewLines</span> to string assertions</h4>
+
+<p>Verifies that the actual <span class="small-code">String</span> is equal to the given one after both strings new lines (\n, \r\n) have been removed.</p>
+<p>Example:</p>
+<pre><code class='java'>// assertions succeed
+assertThat("Some text\nWith new lines").isEqualToIgnoringNewLines("Some textWith new lines")
+                                       .isEqualToIgnoringNewLines("Some text\nWith new lines")
+                                       .isEqualToIgnoringNewLines("Some text\r\nWith new lines")
+                                       .isEqualToIgnoringNewLines("Some text\n\nWith new lines");
+// assertion fails
+assertThat("Some text\nWith new lines").isEqualToIgnoringNewLines("Some text With new lines");</code></pre>
+
+<h4 class="page-header"><span id="assertj-core-2.9.0-flatExtractingForMap" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">flatExtracting</span> to map assertions</h4>
+
+<p>Flatten the values of the given keys from the actual map under test into a new array, this new array becoming the object under test. 
+The order of values in the resulting array is the order of the map keys iteration then key values</p>
+<p>If a given key is not present in the map under test, a null value is extracted.</p>
+<p>If a given key value is not an <span class="small-code">Iterable</span> or an array, it is simply extracted but (obviously) not flattened.</p>
+<p>If a given key value is not an <span class="small-code">Iterable</span> or an array, it is simply extracted but (obviously) not flattened.</p>
+<p>Example:</p>
+<pre><code class='java'>List&lt;String&gt; names = asList("Dave", "Jeff");                          
+LinkedHashSet&lt;String&gt; jobs = newLinkedHashSet("Plumber", "Builder");  
+Iterable&lt;String&gt; cities = asList("Dover", "Boston", "Paris");
+int[] ranks = { 1, 2, 3 };
+
+Map&lt;String, Object&gt; map = new LinkedHashMap&lt;&gt;();                                    
+map.put("name", names);                                         
+map.put("job", jobs);                                           
+map.put("city", cities);                                        
+map.put("rank", ranks);                                        
+
+assertThat(map).flatExtracting("name","job","city", "rank")
+               .containsExactly("Dave", "Jeff", 
+                                "Plumber", "Builder", 
+                                "Dover", "Boston", "Paris"
+                                1, 2, 3);
+               
+// the order of values in the resulting array is the order of map keys then key values:                
+assertThat(map).flatExtracting("city", "job", "name")                
+               .containsExactly("Dover", "Boston", "Paris", 
+                                "Plumber", "Builder", 
+                                "Dave", "Jeff");
+                       
+// contains exactly null twice (one for each unknown keys)
+assertThat(map).flatExtracting("foo", "name", "bar")
+               .containsExactly(null, "Dave", "Jeff", null);
+               
+// if the key value is not an iterable/array, it will be simply extracted but not flattened.
+map.put("year", 2017));
+assertThat(map).flatExtracting("name","job","year")
+               .containsExactly("Dave", "Jeff", "Plumber", "Builder", "Dover", 2017);</code></pre>
+
+<h4 class="page-header"><span id="assertj-core-2.9.0-containsSequence" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Breaking change: <span class="small-code">containsSequence</span> string assertion</h4>
+
+<p>Verifies that the actual <span class="small-code">String</span> contains the given sequence of values in the given order and since 2.9.0/3.9.0 <b>without any other values between them</b>.</p>
+<p>This behavior is consistent with iterable/array <span class="small-code">containsSequence</span> assertion.</p>
+<p>If you need the old behavior, simply use the <a href="#assertj-core-2.9.0-containsSubsequence"><span class="small-code">containsSubsequence</span></a> assertion instead.</p>
+<p>Example:</p>
+<pre><code class='java'>String book = "{ 'title':'A Game of Thrones', 'author':'George Martin'}";
+
+// this assertions succeed, you can use a varargs or an iterable to provide the sequence
+assertThat(book).containsSequence("'title'", ":", "'A Game of Thrones'");
+assertThat(book).containsSequence(Arrays.asList("'title'", ":", "'A Game of Thrones'"));
+
+// this assertion will fail because there are values between the expected sequence (e.g "'title':'")
+// this used to pass before 2.9.0/3.9.0
+assertThat(book).containsSequence("{", "A Game of Thrones", "George Martin", "}");
+
+// this one fails as ":" must come after "'title'"
+assertThat(book).containsSequence(":", "'title'", "'A Game of Thrones'");</code></pre>
+
+<h4 class="page-header"><span id="assertj-core-2.9.0-containsSubsequence" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">containsSubsequence</span> to string assertions</h4>
+
+<p>Verifies that the actual <span class="small-code">String</span> contains the given values in the given order, <b>possibly with other values between them</b>.</p>
+<p>Example:</p>
+<pre><code class='java'>String book = &quot;{ 'title':'A Game of Thrones', 'author':'George Martin'}&quot;;
+
+// this assertions succeed, you can use a varargs or an iterable to provide the subsequence
+assertThat(book).containsSubsequence(&quot;'title'&quot;, &quot;:&quot;, &quot;'A Game of Thrones'&quot;);
+assertThat(book).containsSubsequence(Arrays.asList(&quot;'title'&quot;, &quot;:&quot;, &quot;'A Game of Thrones'&quot;);
+
+// this one too even if there are values between the expected sequence (e.g &quot;'title':'&quot;)
+assertThat(book).containsSubsequence(&quot;{&quot;, &quot;A Game of Thrones&quot;, &quot;George Martin&quot;, &quot;}&quot;);
+
+// this one fails as &quot;author&quot; must come after &quot;A Game of Thrones&quot;
+assertThat(book).containsSubsequence(&quot;{&quot;, &quot;author&quot;, &quot;A Game of Thrones&quot;, &quot;}&quot;);</code></pre>
+
+<h4 class="page-header"><span id="assertj-core-2.9.0-isBlank" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Breaking change: <span class="small-code">isBlank</span> string assertion </h4>
+
+<p>Verifies that the actual <span class="small-code">String</span>  is blank, i.e. is null, empty or consists of one or more whitespace characters (according to  <span class="small-code"><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true#isWhitespace-char-">Character.isWhitespace(char)</a></span>).</p>
+<p> The definition of "blank" has changed, the old behaviour is now under <a href="#assertj-core-2.9.0-containsOnlyWhitespaces"><span class="small-code">containsOnlyWhitespaces</span></a>.</p>
+<p>Example:</p>
+<pre><code class='java'>// these assertions succeed:
+assertThat(" ").isBlank();
+assertThat("").isBlank();
+assertThat("    ").isBlank();
+String nullString = null;
+assertThat(nullString).isBlank();
+
+// these assertions fail:
+assertThat("a").isBlank();
+assertThat(" b").isBlank();
+assertThat(" c ").isBlank();</code></pre>
+  
+<h4 class="page-header"><span id="assertj-core-2.9.0-containsOnlyWhitespaces" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">containsOnlyWhitespaces</span> to string assertions</h4>
+
+<p>Verifies that the actual <span class="small-code">String</span> consists of one or more whitespace characters (according to <span class="small-code"><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Character.html?is-external=true#isWhitespace-char-">Character.isWhitespace(char)</a></span>).</p>
+<p>Example:</p>
+<pre><code class='java'>// these assertions succeed:
+assertThat(" ").containsOnlyWhitespaces();
+assertThat("    ").containsOnlyWhitespaces();
+
+// these assertions fail:
+assertThat("a").containsOnlyWhitespaces();
+assertThat("").containsOnlyWhitespaces();
+assertThat(" b").containsOnlyWhitespaces();
+assertThat(" c ").containsOnlyWhitespaces();
+String nullString = null;
+assertThat(nullString).containsOnlyWhitespaces();</code></pre>
+  
+<h4 class="page-header"><span id="assertj-core-2.9.0-isCloseTo" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Breaking change: <span class="small-code">isCloseTo</span> number assertion when used with <span class="small-code">byLessThan</span></h4>
+
+<p>Verifies that the actual number is close to the given one within the given offset value.</p>
+<p>When <span class="small-code">abs(actual - expected) == offset</span> value, the assertion:</p> 
+<ul>
+   <li>succeeds when using <span class="small-code">Assertions.within(Integer)</span>.</li>
+   <li>fails when using <span class="small-code">Assertions.byLessThan(Integer)</span> or <span class="small-code">Offset.strictOffset(Number)</span>.</li>
+</ul>
+<p><b>Breaking change since 2.9.0/3.9.0:</b> using <span class="small-code">Assertions.byLessThan(Integer)</span> implies a strict comparison, use <span class="small-code">Assertions.within(Integer)</span> to get the old behavior.</p>
+<p>Example:</p>
+<pre><code class='java'>// assertions succeed:
+assertThat(5).isCloseTo(7, within(3));
+assertThat(5).isCloseTo(7, byLessThan(3));
+
+// if difference is exactly equals to the offset, it's ok ... 
+assertThat(5).isCloseTo(7, within(2));
+// ... but not with byLessThan which implies a strict comparison
+assertThat(5).isCloseTo(7, byLessThan(2)); // FAIL
+
+// assertions fail
+assertThat(5).isCloseTo(7, within(1));
+assertThat(5).isCloseTo(7, byLessThan(1));
+assertThat(5).isCloseTo(7, byLessThan(2));</code></pre>
+  
+<!-- ================================================================================================================= -->
+
 <h3 class="page-header"><span id="assertj-core-3.8.0"></span>AssertJ Core 3.8.0 release : New and noteworthy</h3>
 
 <p>Release date : 2017-05-21</p>
@@ -131,7 +711,7 @@
    <li>Add <a href="assertj-core-news.html#assertj-core-3.8.0-isBetween"><span class="small-code">isBetween</span></a> to all <span class="small-code">Temporal</span> assertions.</li>
    <li>Add <a href="assertj-core-news.html#assertj-core-3.8.0-isStrictlyBetween"><span class="small-code">isStrictlyBetween</span></a> to all <span class="small-code">Temporal</span> assertions.</li>
 </ul>
-<div class="release-section-category">Fixed bugs:</div>
+<div class="release-section-category">Fixed :</div>
 <ul>
   <li>New <span class="small-code">Instant</span> assertions were missing the <span class="small-code">isBetween</span> assertion which was available in <span class="small-code">Comparable</span> assertions. </li>
   <li>New <span class="small-code">Instant</span> assertions were missing the <span class="small-code">isStriclyBetween</span> assertion which was available in <span class="small-code">Comparable</span> assertions. </li>
@@ -172,11 +752,11 @@ assertThat(instant).isStrictlyBetween(instant.minusSeconds(1), instant);</code><
 <p>Thanks to <span class="contributor">Pascal Schumacher</span> for his contributions.</p>
 
 <h4 class="page-header"> Release notes</h4>
-<div class="release-section-category"> Breaking change:</div>
+<div class="release-section-category"> Breaking changes:</div>
 <ul>
   <li><a href="assertj-core-news.html#assertj-core-2.8.0-isEqualToIgnoringWhitespace"><span class="small-code">isEqualToIgnoringWhitespace</span></a> behavior has been changed to really ignore all whitespace, the old behavior has been kept in the better named <a href="assertj-core-news.html#assertj-core-2.8.0-isEqualToNormalizingWhitespace"><span class="small-code">isEqualToNormalizingWhitespace</span></a> assertion. <span class="contributor">(Pascal Schumacher)</span></li>
 </ul>
-<div class="release-section-category">Fixed bugs:</div>
+<div class="release-section-category">Fixed :</div>
 <ul>
   <li><span class="small-code">isCloseTo</span>/<span class="small-code">isNotCloseTo</span> assertions now handle NaN and infinity correctly. <span class="contributor">(Pascal Schumacher)</span></li>
 </ul>
