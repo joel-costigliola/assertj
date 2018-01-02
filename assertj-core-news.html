@@ -172,7 +172,7 @@
 </ul>
 <div class="release-section-category">Fixed :</div>
 <ul>
-  <li>Fix a compiler error since 3.7.0 on <span class="small-code">assertThat(Stream)</span> when given an upper bounded <span class="small-code">Stream</span> (#1046).</li>
+  <li>Fix a compiler error since 3.7.0 on <span class="small-code">assertThat(Stream)</span> when given an upper bounded <span class="small-code">Stream</span>.</li>
 </ul>
 
 <h4 class="page-header"><span id="assertj-core-3.9.0-anyMatch" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">anyMatch</span> to iterable/array assertions</h4>
@@ -238,8 +238,8 @@ assertThat(addressViews).zipSatisfy(addressModels, (AdressView view, Adress mode
 
 <h4 class="page-header"><span id="assertj-core-3.9.0-catchThrowableOfType" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">catchThrowableOfType</span> to perform assertion on the caught throwable cast to the given type</h4>
 
-<p><span class="small-code">catchThrowableOfType</span> allows catching a <span class="small-code">Throwable</span> of a specific type <span class="small-code">T</span>, 
-if no exception is thrown it returns <span class="small-code">null</span> otherwise it checks that the caught Throwable is of type <span class="small-code">T</span> and casts it making it convenient to perform subtype-specific assertions on the throwable of type <span class="small-code">T</span>.</p>
+<p><span class="small-code">catchThrowableOfType</span> allows catching a <span class="small-code">Throwable</span> of a specific type <span class="small-code">T</span>. 
+If no exception is thrown it returns <span class="small-code">null</span> otherwise it checks that the caught Throwable is of type <span class="small-code">T</span> and casts it making it convenient to perform subtype-specific assertions on the throwable of type <span class="small-code">T</span>.</p>
 <p>Example:</p>
 <pre><code class='java'> class CustomParseException extends Exception {
   int line;
