@@ -180,10 +180,10 @@
 <pre><code class='java'>Iterable&lt;String&gt; abcc = newArrayList("a", "b", "cc");
 
 // assertion will pass
-assertThat(abcc).noneMatch(s -&gt; s.isEmpty());
+assertThat(abcc).anyMatch(s -&gt; s.length() == 2);
 
 // assertion will fail
-assertThat(abcc).noneMatch(s -&gt; s.length() == 2);</code></pre>
+assertThat(abcc).anyMatch(s -&gt; s.length() &gt; 2);</code></pre>
   
 <p>Note that you can achieve the same result with <span class="small-code">areNot(Condition)</span>/<span class="small-code">doNotHave(Condition)</span>.</p>
 
@@ -193,10 +193,10 @@ assertThat(abcc).noneMatch(s -&gt; s.length() == 2);</code></pre>
 <pre><code class='java'>Iterable&lt;String&gt; abcc = newArrayList("a", "b", "cc");
 
 // assertion will pass
-assertThat(abcc).anyMatch(s -&gt; s.length() == 2);
+assertThat(abcc).noneMatch(s -&gt; s.isEmpty());
 
 // assertion will fail
-assertThat(abcc).anyMatch(s -&gt; s.length() &gt; 2);</code></pre>
+assertThat(abcc).noneMatch(s -&gt; s.length() == 2);</code></pre>
   
 <p>Note that you can achieve the same result with <span class="small-code">areAtLeastOne(Condition)</span>/<span class="small-code">haveAtLeastOne(Condition)</span>.</p>
 
