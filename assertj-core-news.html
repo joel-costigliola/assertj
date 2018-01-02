@@ -134,30 +134,31 @@
              <span class="contributor">Michael Keppler</span>, 
              <span class="contributor">Jeremy Landis</span>, 
              <span class="contributor">Pontus Alexander</span>, 
+             <span class="contributor">Jean-Noël Rouvignac</span>, 
              <span class="contributor">Alberto Scotto</span>, 
              <span class="contributor">Fr Jeremy Krieg</span>, 
              <span class="contributor">Mike Kobit</span>, 
-         and <span class="contributor"></span> for their contributions.</p>
+         and <span class="contributor">Thibault Kruse</span> for their contributions.</p>
 
 <h4 class="page-header"> Release notes</h4>
 <div class="release-section-category">New features :</div>
 <ul>
-  <li>Add <a href="#assertj-core-3.9.0-anyMatch"><span class="small-code">anyMatch</span></a> to iterable/array assertions.</li>
-  <li>Add <a href="#assertj-core-3.9.0-noneMatch"><span class="small-code">noneMatch</span></a> to iterable/array assertions.</li>
-  <li>Add <a href="#assertj-core-3.9.0-allSatisfyForMap"><span class="small-code">allSatisfy</span></a> map assertion. </li>
-  <li>Add <a href="#assertj-core-3.9.0-zipSatisfy"><span class="small-code">zipSatisfy</span></a> assertion to check pairs built from two group of objects. </li>
+  <li>Add <a href="#assertj-core-3.9.0-anyMatch"><span class="small-code">anyMatch</span></a> to iterable/array assertions. <span class="contributor">(Jean-Noël Rouvignac)</span></li>
+  <li>Add <a href="#assertj-core-3.9.0-noneMatch"><span class="small-code">noneMatch</span></a> to iterable/array assertions. <span class="contributor">(Jean-Noël Rouvignac)</span></li>
+  <li>Add <a href="#assertj-core-3.9.0-allSatisfyForMap"><span class="small-code">allSatisfy</span></a> map assertion.</li>
+  <li>Add <a href="#assertj-core-3.9.0-zipSatisfy"><span class="small-code">zipSatisfy</span></a> assertion to check pairs built from two group of objects.</li>
   <li>Add <a href="#assertj-core-3.9.0-catchThrowableOfType"><span class="small-code">catchThrowableOfType</span></a> to perform assertion on the caught throwable cast to the given type. <span class="contributor">(Fr Jeremy Krieg)</span></li>
   <li>Allow performing <span class="small-code">Object</span> assertion on the <span class="small-code">Optional</span> value after calling <a href="#assertj-core-3.9.0-optional-get"><span class="small-code">get()</span></a>. <span class="contributor">(Filip Hrisafov)</span></li>
   <li>Add <a href="#assertj-core-2.9.0-assumptions">assumptions</a> for Java 8 types to skip tests with they are not met.</li>
   <li>Allow to set a description in <a href="#assertj-core-3.9.0-describe-assertThatThrownBy">assertThatThrownBy</a>.</li>
-  <li>Add a factory method to return <span class="small-code">CompletableFuture</span> assertion from a <span class="small-code">CompletionStage</span>.</li>
+  <li>Add a factory method to return <span class="small-code">CompletableFuture</span> assertion from a <span class="small-code">CompletionStage</span>. <span class="contributor">(Thibault Kruse)</span></li>
 </ul>
 <div class="release-section-category">Improvements :</div>
 <ul>
   <li>Allow to <a href="#assertj-core-3.9.0-describe-assertThatExceptionOfType">use a description</a> after <span class="small-code">assertThatExceptionOfType</span> like assertions. <span class="contributor">(Kseniya Panasyuk)</span></li>
-  <li>Align <span class="small-code">assertThat</span> methods between <span class="small-code">Assertions</span> and  <span class="small-code">WithAssertions</span>. <span class="contributor">(Filip Hrisafov)</span></li>
-  <li>add missing <span class="small-code">thenCode</span> BDD assertion. </li>
-  <li>Print stack trace information for when doesNotThrowAnyException fails. <span class="contributor">Mike Kobit</span> </li>
+  <li>Align <span class="small-code">assertThat</span> methods between <span class="small-code">Assertions</span> and <span class="small-code">WithAssertions</span>. <span class="contributor">(Filip Hrisafov)</span></li>
+  <li>add missing <span class="small-code">thenCode</span> BDD assertion.</li>
+  <li>Print stack trace information for when doesNotThrowAnyException fails. <span class="contributor">(Mike Kobit)</span> </li>
   <li>Warn users that the future state displayed in error messages might be different from the one at the time when the assertion was performed.</li>
   <li>Javadoc improvements. <span class="contributor">(Pascal Schumacher)</span></li>
   <li>Contributor guide improvements. <span class="contributor">(Rudi Klassen)</span></li>
@@ -346,6 +347,7 @@ java.lang.AssertionError: [check explosion]
              <span class="contributor">Rudi Klassen</span>, 
              <span class="contributor">Daniel Weber</span>, 
              <span class="contributor">Chris Arnott</span>, 
+             <span class="contributor">Bojan Trajkovski</span>, 
          and <span class="contributor">cal101</span> for their contributions.</p>
 
 
