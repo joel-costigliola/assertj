@@ -3,6 +3,7 @@ org.assertj.core.api.exception
 org.assertj.core.api.filter
 org.assertj.core.api.iterable
 org.assertj.core.condition
+org.assertj.core.configuration
 org.assertj.core.data
 org.assertj.core.description
 org.assertj.core.error
