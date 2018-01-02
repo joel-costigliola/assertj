@@ -318,11 +318,11 @@ java.lang.AssertionError: [check explosion]
   <li>Throw an AssertionError when using the extracting feature on a null object. <span class="contributor">(Marco Leichsenring)</span></li>
   <li>Add missing <span class="small-code">@CheckReturnValue</span> annotations.</li>
   <li><span class="small-code">usingComparatorForType</span> now accept comparators taking a superclass of the type to compare.</li>
-  <li>Add AssertJ Java 9 builds (with the classpath).<span class="contributor">(Pascal Schumacher)</span></li>
-  <li><span class="small-code">endsWith(T[])</span> now succeeds when given an empty array.<span class="contributor">(Florent Biville)</span></li>
-  <li>Use <span class="small-code">AssertionFailedError</span> from opentest4j if available on the classpath.<span class="contributor">(Filip Hrisafov)</span></li>
+  <li>Add AssertJ Java 9 builds (with the classpath). <span class="contributor">(Pascal Schumacher)</span></li>
+  <li><span class="small-code">endsWith(T[])</span> now succeeds when given an empty array. <span class="contributor">(Florent Biville)</span></li>
+  <li>Use <span class="small-code">AssertionFailedError</span> from opentest4j if available on the classpath. <span class="contributor">(Filip Hrisafov)</span></li>
   <li>Code and tests refactoring. <span class="contributor">(João Delgado, Bojan Trajkovski, Filip Hrisafov)</span></li>
-  <li>Add "provided" scope for hamcrest dependency to exclude it from the assertj-core shaded jar.<span class="contributor">(Pascal Schumacher)</span></li>
+  <li>Add "provided" scope for hamcrest dependency to exclude it from the assertj-core shaded jar. <span class="contributor">(Pascal Schumacher)</span></li>
   <li>A bunch of javadoc improvements. <span class="contributor">(Pascal Schumacher, epeee, Bojan Trajkovski)</span></li>
   <li>Make configurable whether <span class="small-code">AbstractAssert#equals</span> throws an exception for 3rd party libraries integrating AssertJ. <span class="contributor">(Günther Grill)</span></li>
 </ul>
@@ -331,13 +331,13 @@ java.lang.AssertionError: [check explosion]
   <li>Fix <span class="small-code">isBetween</span> and <span class="small-code">isStrictlyBetween</span> javadoc. <span class="contributor">(Chris Arnott)</span></li>
   <li>When comparing objects field by field recursively and one of the field was a <span class="small-code">String</span> containing <span class="small-code">%</span>, AssertJ failed to build the error message. <span class="contributor">(Chris Arnott)</span></li>
   <li>Fix <span class="small-code">FieldSupport.fieldValue</span> which was failing to extract a field when specified as primitive type.</li>
-  <li>Fix <span class="small-code">containsExactly</span> which did not handled correctly duplicate elements. <span class="contributor">(BillyYccc)</span></li>
+  <li>Fix <span class="small-code">containsExactly</span> which did not correctly handle duplicate elements. <span class="contributor">(BillyYccc)</span></li>
 </ul>
 
 <h4 class="page-header"><span id="assertj-core-2.9.0-assumptions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow to skip tests with unmet assumptions</h4>
 
 <p>Use <span class="small-code">assumeThat</span> methods to express the assumptions to be met in order to allow tests execution. 
-All the AssertJ assertions can be reused to express assumptions. Assumptions support both JUnit and TestNG.</p>
+All AssertJ assertions can be reused to express assumptions. Assumptions support both JUnit and TestNG.</p>
 <p>All tests with unmet assumptions are skipped (provided you express assumptions before the test content).</p>
 <p>Example with met assumptions:</p>
 <pre><code class="java">import static org.assertj.core.api.Assumptions.assumeThat;
@@ -363,7 +363,7 @@ numbers.add(1);
 numbers.add(2);
 numbers.add(3.0);
 
-// successful assertions:
+// successful assertion:
 assertThat(numbers).doesNotHaveAnyElementsOfTypes(Long.class, Float.class);
 
 // assertion failure:
