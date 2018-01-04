@@ -79,8 +79,8 @@ $menu
   <li>Add <a href="#assertj-core-3.9.0-catchThrowableOfType"><span class="small-code">catchThrowableOfType</span></a> to perform assertion on the caught throwable cast to the given type. <span class="contributor">(Fr Jeremy Krieg)</span></li>
   <li>Allow performing <span class="small-code">Object</span> assertion on the <span class="small-code">Optional</span> value after calling <a href="#assertj-core-3.9.0-optional-get"><span class="small-code">get()</span></a>. <span class="contributor">(Filip Hrisafov)</span></li>
   <li>Add <a href="#assertj-core-2.9.0-assumptions">Assumptions</a> for Java 8 types to skip tests when preconditions are not satisfied.</li>
-  <li>Allow to set a description in <a href="#assertj-core-3.9.0-describe-assertThatThrownBy">assertThatThrownBy</a>.</li>
-  <li>Add a factory method to return <span class="small-code">CompletableFuture</span> assertion from a <span class="small-code">CompletionStage</span>. <span class="contributor">(Thibault Kruse)</span></li>
+  <li>Allow to set a description for <a href="#assertj-core-3.9.0-describe-assertThatThrownBy">assertThatThrownBy</a>.</li>
+  <li>Add a factory method to return a <span class="small-code">CompletableFuture</span> assertion from a <span class="small-code">CompletionStage</span>. <span class="contributor">(Thibault Kruse)</span></li>
 </ul>
 <div class="release-section-category">Improvements :</div>
 <ul>
@@ -151,7 +151,7 @@ assertThat(elvesRingBearers).allSatisfy((character, ring) -&gt; {
 
 <h4 class="page-header"><span id="assertj-core-3.9.0-zipSatisfy" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">zipSatisfy</span> assertion to check pairs built from two group of objects</h4>
 <p>Verifies that the zipped pairs of actual and expected elements, i.e: (actual 1st element, expected 1st element), (actual 2nd element, expected 2nd element), ... all satisfy the given requirements.</p>
-<p>This assertion assumes that actual and expected have the same size but they can contain different type of elements making it handy to compare objects converted to another type, for example Domain and View/DTO objects.</p>
+<p>This assertion assumes that actual and expected have the same size but they can contain different types of elements making it handy to compare objects converted to another type, for example Domain and View/DTO objects.</p>
 <p>Example:</p>
 <pre><code class='java'>List&lt;Adress&gt; addressModels = findGoodRestaurants();
 List&lt;AdressView&gt; addressViews = convertToView(addressModels);
@@ -223,7 +223,7 @@ but was:
 
 <h4 class="page-header"><span id="assertj-core-3.9.0-describe-assertThatExceptionOfType" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow to use a description after <span class="small-code">assertThatExceptionOfType</span> like assertions.</h4>
 
-<p>Allow to set a description assertions initialized with:
+<p>Allow to set a description for assertions initialized with:
 <ul>
   <li><span class="small-code">assertThatExceptionOfType</span></li>
   <li><span class="small-code">assertThatIllegalStateException</span></li>
@@ -282,7 +282,7 @@ java.lang.AssertionError: [check explosion]
 <ul>
   <li><a href="#assertj-core-2.9.0-containsSequence"><span class="small-code">containsSequence</span></a> String assertion now fails if it finds values between the given sequence, use <a href="#assertj-core-2.9.0-containsSubsequence"><span class="small-code">containsSubsequence</span></a> to get the old behavior.</li>
   <li><a href="#assertj-core-2.9.0-isBlank"><span class="small-code">isBlank</span></a> String assertion now considers null or empty as blank, use <a href="#assertj-core-2.9.0-containsOnlyWhitespaces"><span class="small-code">containsOnlyWhitespaces</span></a> to get the old behavior.</li>
-  <li><a href="#assertj-core-2.9.0-isCloseTo"><span class="small-code">assertThat(x).isCloseTo(y, byLessThan(delta))</span></a> number assertion is now strict and fails when |x-y|=delta.</li>
+  <li><a href="#assertj-core-2.9.0-isCloseTo"><span class="small-code">assertThat(x).isCloseTo(y, byLessThan(delta))</span></a> Number assertion is now strict and fails when |x-y|=delta.</li>
   <li>Compare <span class="small-code">double</span> with a precision of <span class="small-code">1e-15</span> and <span class="small-code">float</span> with <span class="small-code">1e-6f</span> in element by element comparison.</li>
   <li>Do not check actual or expected for null before comparing them with a custom comparator (i.e. the comparator should take care of that).</li>
 </ul>
@@ -334,7 +334,7 @@ java.lang.AssertionError: [check explosion]
 
 <h4 class="page-header"><span id="assertj-core-2.9.0-assumptions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow to skip tests with unmet assumptions</h4>
 
-<p>Use <span class="small-code">assumeThat</span> methods to express preconditions for tests execution. 
+<p>Use <span class="small-code">assumeThat</span> methods to express preconditions for test execution. 
 All AssertJ assertions can be reused to express assumptions. Assumptions support both JUnit and TestNG.</p>
 <p>All tests with unmet assumptions are skipped (provided you express assumptions before the test content).</p>
 <p>Example with met assumptions:</p>
