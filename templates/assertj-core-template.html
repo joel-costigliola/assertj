@@ -16,102 +16,127 @@ $menu
          <h1 class="page-header">AssertJ Core overview</h1>
 
          <p>AssertJ core is a Java library that provides a fluent interface for writing assertions. Its main goal is to
-            improve test code readability and make maintenance of tests easier.</p>
-            <p>AssertJ core provides assertions for JDK standard types and can be used with JUnit or TestNG.</p>
-            <p>Different AssertJ major versions depend on different Java versions :</p>
-            <ul>
-               <li>AssertJ 3.x requires Java 8 or higher (use the <span class="small-code">org.assertj.core.api.Java6Assertions</span> entry point on Android)</li>
-               <li>AssertJ 2.x requires Java 7 or higher (use the <span class="small-code">org.assertj.core.api.Java6Assertions</span> entry point on Android)</li>
-               <li>AssertJ 1.x requires Java 6 or higher</li>
-            </ul>
-            <p>Note that AssertJ 3.x includes all AssertJ 2.x features and adds Java 8 specific ones (like <a href="assertj-core-features-highlight.html#exception-assertion">exception assertions with lambdas</a>).</p>
-         </p>
+         improve test code readability and make maintenance of tests easier.</p>
+
+         <p>AssertJ core provides assertions for JDK standard types and can be used with JUnit or TestNG.</p>
+         <p>Different AssertJ major versions depend on different Java versions :</p>
+         <ul>
+            <li>AssertJ 3.x requires Java 8 or higher (use the <span class="small-code">org.assertj.core.api.Java6Assertions</span> entry point on Android)</li>
+            <li>AssertJ 2.x requires Java 7 or higher (use the <span class="small-code">org.assertj.core.api.Java6Assertions</span> entry point on Android)</li>
+            <li>AssertJ 1.x requires Java 6 or higher</li>
+         </ul>
+         <p>Note that AssertJ 3.x includes all AssertJ 2.x features and adds Java 8 specific ones (like <a href="assertj-core-features-highlight.html#exception-assertion">exception assertions with lambdas</a>).</p>
 
          <p>AssertJ core <a href="https://github.com/joel-costigliola/assertj-core">code</a> and
-            <a href="https://github.com/joel-costigliola/assertj-core/issues?state=open">issue tracker</a> are hosted on github.
-         </p>
+            <a href="https://github.com/joel-costigliola/assertj-core/issues?state=open">issue tracker</a> are hosted on github.</p>
+         <p>AssertJ is a fork of FEST Assert, a great project I have contributed to for 3 years, <b>many thanks to Alex Ruiz Fest Assert creator!</b></p>
 
-         <h3 class="page-header">Getting started</h3>
+         <h3 class="page-header"><span id="fork"></span>Project philosophy</h3>
 
-         <p>For a quick start, have a look at our
-            <a href="assertj-core-quick-start.html">one minute getting started guide</a>.
-         </p>
+         <p>We are trying hard to make AssertJ a community driven project that is listening to users and trying to help them. It turns out that most of the new features and improvements ideas come from users 
+         and that's great because it means it is providing value. If you have an idea to improve AssertJ, please don't hesitate to <a href="https://github.com/joel-costigliola/assertj-core/issues?state=open">create an issue</a> to let us know.</p>
 
-         <p>Convert existing JUnit assertions to AssertJ ones : we have a <a href="assertj-core-converting-junit-assertions-to-assertj.html">guide</a> to easily
-            convert JUnit assertions to AssertJ.
-         </p>
+         <p>AssertJ is not a complex project so don't be afraid to <a href="#contributing">contribute</a>, we will be here to help you especially if it is your first open source contribution. Documentation improvements are welcome, we value them a lot.</p>
 
-         <p>If you have any questions, please use
-            <a href="https://stackoverflow.com/search?tab=relevance&q=assertj">stack overflow</a> or the <a href="https://groups.google.com/forum/?fromgroups=#!forum/assertj">AssertJ google group</a> (with a preference for stack overflow).
-          </p>
-
-         <p>You are more than welcome to
-            <a href="https://github.com/joel-costigliola/assertj-core/issues?state=open">raise an issue</a> if you need new assertions or see potential improvements.
-         </p>
-
-         <h3 class="page-header">Working with AssertJ core</h3>
-
-         <h5>Working with AssertJ on a daily basis</h5>
-         <ul>
-            <li><a href="assertj-core-quick-start.html">Quick start guide</a></li>
-            <li><a href="assertj-core-features-highlight.html">Features highlight</a></li>
-            <li><a href="assertj-core-news.html">New and noteworthy in AssertJ core</a></li>
-         </ul>
-
-         <h5>Extending AssertJ</h5>
-         <ul>
-            <li><a href="assertj-core-conditions.html">Extending assertions with conditions</a></li>
-            <li><a href="assertj-core-custom-assertions.html">Creating your own specific assertions</a></li>
-         </ul>
-
-         <p>You can see assertions in action with the <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/">assertj examples tests</a> of the <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project.</p>
-
-         <p>Although AssertJ Core can be used with Android, I suggest using
-            <a href="http://square.github.io/assertj-android/">AssertJ-Android</a>, a useful extension specifically for Android.
-         </p>
-
-         <h3 class="page-header"><span id="fork"></span>Why fork Fest Assert ?</h3>
-
-         <p>AssertJ is a fork of FEST Assert, a great project I have contributed to for 3 years. So why did I fork it ?</p>
-
-         <p>There are two main reasons :</p>
-         <ul>
-            <li>FEST 2.0 will only provide a limited set of assertions, far less than Fest 2.0M10 and even less than
-               FEST 1.x.
-            </li>
-            <li>FEST is not open enough to users demands and contributions.</li>
-         </ul>
-
-         <p>On the contrary
-            <em>AssertJs goal is to provide a rich set of assertions</em> and any reasonable request to enrich AssertJ assertions is welcome. AssertJ is
-            <em>community driven</em>, we listen to our users since AssertJ is built for them.</p>
-
-         <p>If you feel that some assertion is missing, please <a href="https://github.com/joel-costigliola/assertj-core/issues?state=open">fill a ticket</a>
-            or even better make a contribution !
-         </p>
+         <p>AssertJ is built on our spare time, although we are doing our best to give quick feedback sometimes we won't be able to, be patient, be nice, be cool, we all have life to live, families to take care of and time consuming hobbies (pen and paper RPG and basketball for me!).</p>
 
          <i>Joel Costigliola (AssertJ creator)</i>
 
-         <h3 class="page-header"><span id="mailing-list"/></span>Mailing list</h3>
+        <h3 class="page-header">Getting started</h3>
 
-         You can ask questions and make suggestions on the <a
-            href="https://groups.google.com/forum/?fromgroups=#!forum/assertj">AssertJ google group</a>.
+          <p>For a quick start, have a look at our
+              <a href="assertj-core-quick-start.html">one minute getting started guide</a>.
+          </p>
 
-         <h3 class="page-header"><span id="FAQ"/></span>F.A.Q</h3>
+          <p>Convert existing JUnit assertions to AssertJ ones : we have a <a href="assertj-core-converting-junit-assertions-to-assertj.html">guide</a> to easily
+              convert JUnit assertions to AssertJ.
+          </p>
 
-            <ul>
-               <li><a href="#android">Android Support</a></li>
-               <li><a href="#faq-incorrect-api-usage">FindBugs <span class="small-code">CheckReturnValue</span> error</a></li>
-            </ul>
+          <p>If you have any questions, please use
+              <a href="https://stackoverflow.com/search?tab=relevance&q=assertj">stack overflow</a> or the <a href="https://groups.google.com/forum/?fromgroups=#!forum/assertj">AssertJ google group</a> (with a preference for stack overflow).
+            </p>
 
-            <h4 class="page-header"><span id="android" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Android Support</h4>
+          <p>You are more than welcome to
+              <a href="https://github.com/joel-costigliola/assertj-core/issues?state=open">raise an issue</a> if you need new assertions or see potential improvements.
+          </p>
 
-            <p>Android does not support the <span class="small-code">java.nio.file.Path</span> class, so the 'regular' AssertJ 3.x/2.x entry point classes can not be used.
-            Instead you can use the <span class="small-code">Java6XAssertions</span> classes. For example use <span class="small-code">org.assertj.core.api.Java6Assertions</span> instead of <span class="small-code">org.assertj.core.api.Assertions</span>.</p>
+        <h3 class="page-header">Working with AssertJ core</h3>
 
-            <p>The following listing contains 'regular' import statements and their android alternative:</p>
+          <h5>Working with AssertJ on a daily basis</h5>
+          <ul>
+              <li><a href="assertj-core-quick-start.html">Quick start guide</a></li>
+              <li><a href="assertj-core-features-highlight.html">Features highlight</a></li>
+              <li><a href="assertj-core-news.html">New and noteworthy in AssertJ core</a></li>
+          </ul>
 
-            <pre><code class="java">// 'regular' assertj
+          <h5>Extending AssertJ</h5>
+          <ul>
+              <li><a href="assertj-core-conditions.html">Extending assertions with conditions</a></li>
+              <li><a href="assertj-core-custom-assertions.html">Creating your own specific assertions</a></li>
+          </ul>
+
+          <p>You can see assertions in action with the <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/">assertj examples tests</a> of the <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project.</p>
+
+          <p>Although AssertJ Core can be used with Android, I suggest using
+              <a href="http://square.github.io/assertj-android/">AssertJ-Android</a>, a useful extension specifically for Android.
+          </p>
+
+        <h3 class="page-header"><span id="help"/></span>Help &amp; F.A.Q</h3>
+
+          <p>The best way to get help is to ask your question on <a href="https://stackoverflow.com/questions/tagged/assertj?mixed=1">stackoverflow (assertj tag)</a>.</p>
+          
+          <u><p>F.A.Q:</p></u>
+          <ul>
+            <li><a href="#faq-incorrect-api-usage">AssertJ incorrect usage (and how to detect some of them with FindBugs)</li>
+            <li><a href="#android">Android Support</a></li>
+          </ul>
+
+          <h4 class="page-header"><span id="faq-incorrect-api-usage" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> AssertJ incorrect usage and FindBugs</h4>
+
+          <p>The following examples show incorrect AssertJ API usages:</p>
+
+<pre><code class="java">// BAD USAGE: DON'T DO THIS ! It does not assert anything
+assertThat(actual.equals(expected));
+
+// DO THIS:
+assertThat(actual).isEqualTo(expected);
+
+// OR THIS (less classy but ok):
+assertThat(actual.equals(expected)).isTrue();</code></pre>
+
+<pre><code class="java">// BAD USAGE: DON'T DO THIS ! It does not assert anything and passes
+assertThat(1 == 2);
+
+// DO THIS: (fails as expected)
+assertThat(1).isEqualTo(2);
+
+// OR THIS (less classy but ok):
+assertThat(1 == 2).isTrue();</code></pre>
+
+<pre><code class="java">// BAD USAGE: DON'T DO THIS ! as/describedAs has no effect after the assertion
+assertThat(actual).isEqualTo(expected).as("description");
+assertThat(actual).isEqualTo(expected).describedAs("description");
+
+// DO THIS: use as/describedAs before the assertion
+assertThat(actual).as("description").isEqualTo(expected);
+assertThat(actual).describedAs("description").isEqualTo(expected);</code></pre>
+
+<pre><code class="java">// BAD USAGE: DON'T DO THIS ! Comparator is not used
+assertThat(actual).isEqualTo(expected).usingComparator(new CustomComparator());
+
+// DO THIS:
+assertThat(actual).usingComparator(new CustomComparator()).isEqualTo("a");</code></pre>
+
+          <p>Static code analysis tools like FindBugs can now detect such problems thanks to the <a href="https://github.com/joel-costigliola/assertj-core/pull/695"><span class="small-code">CheckReturnValue</span></a> annotation introduced in 2.5+ / 3.5+ and improved in 2.7+ / 3.7+.</p>
+            
+          <h4 class="page-header"><span id="android" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Android Support</h4>
+
+          <p>Android does not support the <span class="small-code">java.nio.file.Path</span> class, so the 'regular' AssertJ 3.x/2.x entry point classes can not be used.
+          Instead you can use the <span class="small-code">Java6XAssertions</span> classes. For example use <span class="small-code">org.assertj.core.api.Java6Assertions</span> instead of <span class="small-code">org.assertj.core.api.Assertions</span>.</p>
+
+          <p>The following listing contains 'regular' import statements and their android alternative:</p>
+
+          <pre><code class="java">// 'regular' assertj
 import static org.assertj.core.api.Assertions.*
 // assertj on android
 import static org.assertj.core.api.Java6Assertions.*
@@ -142,59 +167,31 @@ import static org.assertj.core.api.JUnitBDDSoftAssertions.*
 import static org.assertj.core.api.Java6JUnitBDDSoftAssertions.*
 </code></pre>
 
-            <h4 class="page-header"><span id="faq-incorrect-api-usage" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> FindBugs <span class="small-code">CheckReturnValue</span> error</h4>
+        <h3 class="page-header"><span id="code"/></span>Code and issue tracker</h3>
 
-            <p>The following examples show incorrect AssertJ API usages:</p>
+          <p>AssertJ Core is hosted on github : <a href="https://github.com/joel-costigliola/assertj-core">https://github.com/joel-costigliola/assertj-core</a>.</p>
 
-            <pre><code class="java">// BAD USAGE : DON'T DO THIS ! It does not assert anything
-assertThat(actual.equals(expected));
+          <p>Please report bugs or missing features in the <a href="https://github.com/joel-costigliola/assertj-core/issues?labels=&milestone=&page=1&state=open">AssertJ Core issue tracker</a>.</p>
 
-// DO THIS :
-assertThat(actual).isEqualTo(expected);
+        <h3 class="page-header"><span id="team"/></span>AssertJ Core Team</h3>
 
-// OR THIS (less classy but ok):
-assertThat(actual.equals(expected)).isTrue();
+          <h4 class="page-header"><span id="creating-condition"></span>Joel Costigliola</h4>
 
-// BAD USAGE : DON'T DO THIS ! describedAs has no effect
-assertThat(actual).isEqualTo(expected).describedAs("description");
+          <p>AssertJ's Vetinari (ok, maybe not as Machiavellian), enjoy playing basket ball, love Terry Pratchett's disc world (surprised ?), work with linux.</p>
 
-// DO THIS :
-assertThat(actual).describedAs("description").isEqualTo(expected);
+          <h4 class="page-header"><span id="creating-condition"></span>Pascal Schumacher</h4>
 
-// BAD USAGE : DON'T DO THIS ! Comparator is not used
-assertThat(actual).isEqualTo(expected).usingComparator(new CustomComparator());
+          <p>AssertJ collaborator, who loves books, history and books about history.</p>
 
-// DO THIS :
-assertThat(actual).usingComparator(new CustomComparator()).isEqualTo("a");</code></pre>
+        <h3 class="page-header"><span id="contributing"/></span>Contributing to AssertJ</h3>
 
-         <p>Static code analysis tools like FindBugs can now detect such problems thanks to the <a href="https://github.com/joel-costigliola/assertj-core/pull/695"><span class="small-code">CheckReturnValue</span></a> annotation introduced in 2.5+ / 3.5+ and improved in 2.7+ / 3.7+.</p>
-
-         <h3 class="page-header"><span id="code"/></span>Code and issue tracker</h3>
-
-         <p>AssertJ Core is hosted on github : <a href="https://github.com/joel-costigliola/assertj-core">https://github.com/joel-costigliola/assertj-core</a>.</p>
-
-         <p>Please report bugs or missing features in the <a href="https://github.com/joel-costigliola/assertj-core/issues?labels=&milestone=&page=1&state=open">AssertJ Core issue tracker</a>.</p>
-
-         <h3 class="page-header"><span id="team"/></span>AssertJ Core Team</h3>
-
-
-            <h4 class="page-header"><span id="creating-condition"></span>Joel Costigliola</h4>
-
-            <p>AssertJ's Vetinari (ok, maybe not as Machiavellian), enjoy playing basket ball, love Terry Pratchett's disc world (surprised ?), work with linux.</p>
-
-            <h4 class="page-header"><span id="creating-condition"></span>Pascal Schumacher</h4>
-
-            <p>AssertJ collaborator, who loves books, history and books about history.</p>
-
-         <h3 class="page-header"><span id="contributing"/></span>Contributing to AssertJ</h3>
-
-         <p>You are very welcome to contribute, we want to offer the richest and easiest to use assertion API,
+          <p>You are very welcome to contribute, we want to offer the richest and easiest to use assertion API,
             so ideas from our users are very appreciated.</p>
 
-         <p>Contributing is easy and we try to help people contributing. Have a look at the <a
-               href="https://github.com/joel-costigliola/assertj-core/blob/master/CONTRIBUTING.md">contributor guidelines</a>
+          <p>Contributing is easy and we try to help people contributing. Have a look at the <a
+                href="https://github.com/joel-costigliola/assertj-core/blob/master/CONTRIBUTING.md">contributor guidelines</a>
             (these are the same guidelines shown when you create a new issue).
-         </p>
+          </p>
 
          <p>Special thanks assertj-core contributors :
 
