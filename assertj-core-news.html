@@ -148,7 +148,7 @@
   <li>Add <a href="#assertj-core-3.9.0-zipSatisfy"><span class="small-code">zipSatisfy</span></a> assertion to check pairs built from two group of objects.</li>
   <li>Add <a href="#assertj-core-3.9.0-catchThrowableOfType"><span class="small-code">catchThrowableOfType</span></a> to perform assertion on the caught throwable cast to the given type. <span class="contributor">(Fr Jeremy Krieg)</span></li>
   <li>Allow performing <span class="small-code">Object</span> assertion on the <span class="small-code">Optional</span> value after calling <a href="#assertj-core-3.9.0-optional-get"><span class="small-code">get()</span></a>. <span class="contributor">(Filip Hrisafov)</span></li>
-  <li>Add <a href="#assertj-core-2.9.0-assumptions">assumptions</a> for Java 8 types to skip tests with they are not met.</li>
+  <li>Add <a href="#assertj-core-2.9.0-assumptions">Assumptions</a> for Java 8 types to skip tests when preconditions are not satisfied.</li>
   <li>Allow to set a description in <a href="#assertj-core-3.9.0-describe-assertThatThrownBy">assertThatThrownBy</a>.</li>
   <li>Add a factory method to return <span class="small-code">CompletableFuture</span> assertion from a <span class="small-code">CompletionStage</span>. <span class="contributor">(Thibault Kruse)</span></li>
 </ul>
@@ -157,15 +157,13 @@
   <li>Allow to <a href="#assertj-core-3.9.0-describe-assertThatExceptionOfType">use a description</a> after <span class="small-code">assertThatExceptionOfType</span> like assertions. <span class="contributor">(Kseniya Panasyuk)</span></li>
   <li>Align <span class="small-code">assertThat</span> methods between <span class="small-code">Assertions</span> and <span class="small-code">WithAssertions</span>. <span class="contributor">(Filip Hrisafov)</span></li>
   <li>Add missing <span class="small-code">thenCode</span> BDD assertion.</li>
-  <li>Print stack trace information when doesNotThrowAnyException fails. <span class="contributor">(Mike Kobit)</span> </li>
-  <li>Warn users that the future state displayed in error messages might be different from the one at the time when the assertion was performed.</li>
-  <li>Javadoc improvements. <span class="contributor">(Pascal Schumacher)</span></li>
+  <li>Print stack trace information when <span class="small-code">doesNotThrowAnyException</span> fails. <span class="contributor">(Mike Kobit)</span> </li>
+  <li>Warn users that the <span class="small-code">Future</span> state displayed in error messages might be different from the one at the time when the assertion was performed.</li>
+  <li>Javadoc improvements. <span class="contributor">(Pontus Alexander, Pascal Schumacher)</span></li>
   <li>Contributor guide improvements. <span class="contributor">(Rudi Klassen)</span></li>
   <li>Add openjdk8 build. <span class="contributor">(Jeremy Landis)</span></li>
   <li>Maven build updates. <span class="contributor">(Jeremy Landis)</span></li>
   <li>README.md improvements. <span class="contributor">(Michael Keppler)</span></li>
-  <li>Javadoc: clarify <span class="small-code">assertThatThrownBy</span> and <span class="small-code">assertThatCode</span> behavior.</li>
-  <li>Javadoc: fix typo in <span class="small-code">isEqualTo</span> code example. <span class="contributor">(Pontus Alexander)</span></li>
   <li><span class="small-code">ShouldContainCharSequenceOnlyOnce</span> refactoring. <span class="contributor">(Alberto Scotto)</span></li>
 </ul>
 <div class="release-section-category">Fixed :</div>
@@ -222,8 +220,8 @@ assertThat(elvesRingBearers).allSatisfy((character, ring) -&gt; {
 });</code></pre>
 
 <h4 class="page-header"><span id="assertj-core-3.9.0-zipSatisfy" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">zipSatisfy</span> assertion to check pairs built from two group of objects</h4>
-<p>Verifies that the zipped pairs of actual and other elements, i.e: (actual 1st element, other 1st element), (actual 2nd element, other 2nd element), ... all satisfy the given requirements.</p>
-<p>This assertion assumes that actual and other have the same size but they can contain different type of elements making it handy to compare objects converted to another type, for example Domain and View/DTO objects.</p>
+<p>Verifies that the zipped pairs of actual and expected elements, i.e: (actual 1st element, expected 1st element), (actual 2nd element, expected 2nd element), ... all satisfy the given requirements.</p>
+<p>This assertion assumes that actual and expected have the same size but they can contain different type of elements making it handy to compare objects converted to another type, for example Domain and View/DTO objects.</p>
 <p>Example:</p>
 <pre><code class='java'>List&lt;Adress&gt; addressModels = findGoodRestaurants();
 List&lt;AdressView&gt; addressViews = convertToView(addressModels);
@@ -364,7 +362,7 @@ java.lang.AssertionError: [check explosion]
 </ul>
 <div class="release-section-category">New features :</div>
 <ul>
-  <li>Allow to skip tests with <a href="#assertj-core-2.9.0-assumptions">assumptions</a> not met. <span class="contributor">(Kseniya Panasyuk)</span></li>
+  <li>Allow to skip tests when <a href="#assertj-core-2.9.0-assumptions">Assumptions</a> are not met. <span class="contributor">(Kseniya Panasyuk)</span></li>
   <li>Add <a href="#assertj-core-2.9.0-doesNotHaveAnyElementsOfTypes"><span class="small-code">doesNotHaveAnyElementsOfTypes</span></a> iterable/array assertions. <span class="contributor">(cal101)</span></li>
   <li>Add <a href="#assertj-core-2.9.0-containsExactlyInAnyOrderElementsOf"><span class="small-code">containsExactlyInAnyOrderElementsOf</span></a> to iterable/array assertions. <span class="contributor">(Filip Hrisafov)</span></li>
   <li>Add <a href="#assertj-core-2.9.0-assertContainsOnlyNulls"><span class="small-code">assertContainsOnlyNulls</span></a> to iterable/array assertions. <span class="contributor">(BillyYccc)</span></li>
@@ -406,7 +404,7 @@ java.lang.AssertionError: [check explosion]
 
 <h4 class="page-header"><span id="assertj-core-2.9.0-assumptions" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow to skip tests with unmet assumptions</h4>
 
-<p>Use <span class="small-code">assumeThat</span> methods to express the assumptions to be met in order to allow tests execution. 
+<p>Use <span class="small-code">assumeThat</span> methods to express preconditions for tests execution. 
 All AssertJ assertions can be reused to express assumptions. Assumptions support both JUnit and TestNG.</p>
 <p>All tests with unmet assumptions are skipped (provided you express assumptions before the test content).</p>
 <p>Example with met assumptions:</p>
