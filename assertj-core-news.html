@@ -571,37 +571,37 @@ The order of values in the resulting array is the order of the map keys iteratio
 <p>If a given key value is not an <span class="small-code">Iterable</span> or an array, it is simply extracted but (obviously) not flattened.</p>
 <p>If a given key value is an <span class="small-code">Iterable</span> or an array, it is flattened.</p>
 <p>Example:</p>
-<pre><code class='java'>List&lt;String&gt; names = asList("Dave", "Jeff");                          
-LinkedHashSet&lt;String&gt; jobs = newLinkedHashSet("Plumber", "Builder");  
+<pre><code class='java'>List&lt;String&gt; names = asList("Dave", "Jeff");
+LinkedHashSet&lt;String&gt; jobs = newLinkedHashSet("Plumber", "Builder");
 Iterable&lt;String&gt; cities = asList("Dover", "Boston", "Paris");
 int[] ranks = { 1, 2, 3 };
 
-Map&lt;String, Object&gt; map = new LinkedHashMap&lt;&gt;();                                    
-map.put("name", names);                                         
-map.put("job", jobs);                                           
-map.put("city", cities);                                        
-map.put("rank", ranks);                                        
+Map&lt;String, Object&gt; map = new LinkedHashMap&lt;&gt;();
+map.put("name", names);
+map.put("job", jobs);
+map.put("city", cities);
+map.put("rank", ranks);
 
-assertThat(map).flatExtracting("name","job","city", "rank")
-               .containsExactly("Dave", "Jeff", 
-                                "Plumber", "Builder", 
-                                "Dover", "Boston", "Paris", 
+assertThat(map).flatExtracting("name", "job", "city", "rank")
+               .containsExactly("Dave", "Jeff",
+                                "Plumber", "Builder",
+                                "Dover", "Boston", "Paris",
                                 1, 2, 3);
-               
-// the order of values in the resulting array is the order of map keys then key values:                
-assertThat(map).flatExtracting("city", "job", "name")                
-               .containsExactly("Dover", "Boston", "Paris", 
-                                "Plumber", "Builder", 
+
+// the order of values in the resulting array is the order of map keys then key values:
+assertThat(map).flatExtracting("city", "job", "name")
+               .containsExactly("Dover", "Boston", "Paris",
+                                "Plumber", "Builder",
                                 "Dave", "Jeff");
-                       
+
 // contains exactly null twice (one for each unknown keys)
 assertThat(map).flatExtracting("foo", "name", "bar")
                .containsExactly(null, "Dave", "Jeff", null);
-               
+
 // if the key value is not an iterable/array, it will be simply extracted but not flattened:
-map.put("year", 2017));
-assertThat(map).flatExtracting("name","job","year")
-               .containsExactly("Dave", "Jeff", "Plumber", "Builder", "Dover", 2017);</code></pre>
+map.put("year", 2017);
+assertThat(map).flatExtracting("name", "job", "year")
+               .containsExactly("Dave", "Jeff", "Plumber", "Builder", 2017);</code></pre>
 
 <h4 class="page-header"><span id="assertj-core-2.9.0-containsSequence" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Breaking change: <span class="small-code">containsSequence</span> string assertion</h4>
 
