@@ -566,10 +566,10 @@ assertThat("Some text\nWith new lines").isEqualToIgnoringNewLines("Some text Wit
 <h4 class="page-header"><span id="assertj-core-2.9.0-flatExtractingForMap" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Add <span class="small-code">flatExtracting</span> to map assertions</h4>
 
 <p>Flatten the values of the given keys from the actual map under test into a new array, this new array becoming the object under test. 
-The order of values in the resulting array is the order of the map keys iteration then key values</p>
+The order of values in the resulting array is the order of the map keys iteration then key values.</p>
 <p>If a given key is not present in the map under test, a null value is extracted.</p>
 <p>If a given key value is not an <span class="small-code">Iterable</span> or an array, it is simply extracted but (obviously) not flattened.</p>
-<p>If a given key value is not an <span class="small-code">Iterable</span> or an array, it is simply extracted but (obviously) not flattened.</p>
+<p>If a given key value is an <span class="small-code">Iterable</span> or an array, it is flattened.</p>
 <p>Example:</p>
 <pre><code class='java'>List&lt;String&gt; names = asList("Dave", "Jeff");                          
 LinkedHashSet&lt;String&gt; jobs = newLinkedHashSet("Plumber", "Builder");  
@@ -585,7 +585,7 @@ map.put("rank", ranks);
 assertThat(map).flatExtracting("name","job","city", "rank")
                .containsExactly("Dave", "Jeff", 
                                 "Plumber", "Builder", 
-                                "Dover", "Boston", "Paris"
+                                "Dover", "Boston", "Paris", 
                                 1, 2, 3);
                
 // the order of values in the resulting array is the order of map keys then key values:                
@@ -598,7 +598,7 @@ assertThat(map).flatExtracting("city", "job", "name")
 assertThat(map).flatExtracting("foo", "name", "bar")
                .containsExactly(null, "Dave", "Jeff", null);
                
-// if the key value is not an iterable/array, it will be simply extracted but not flattened.
+// if the key value is not an iterable/array, it will be simply extracted but not flattened:
 map.put("year", 2017));
 assertThat(map).flatExtracting("name","job","year")
                .containsExactly("Dave", "Jeff", "Plumber", "Builder", "Dover", 2017);</code></pre>
