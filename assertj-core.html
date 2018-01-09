@@ -157,9 +157,46 @@
           
           <u><p>F.A.Q:</p></u>
           <ul>
-            <li><a href="#faq-incorrect-api-usage">AssertJ incorrect usage (and how to detect some of them with FindBugs)</li>
+            <li><a href="#ambiguous-compilation-error">compilation error: reference to <span class="small-code">assertThat</span> is ambiguous</a></li>
+            <li><a href="#faq-incorrect-api-usage">AssertJ incorrect usage (and how to detect some of them with FindBugs)</a></li>
             <li><a href="#android">Android Support</a></li>
           </ul>
+
+          <h4 class="page-header"><span id="ambiguous-compilation-error" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Compilation error: reference to <span class="small-code">assertThat</span> is ambiguous</h4>
+
+          <p>The erroneous code probably looks like this:</p>
+<pre><code class="java">protected static <T extends Date> T getDate() {
+  return (T) new Date();
+}
+
+@Test public void doesNotCompile()
+  // Error: reference to assertThat is ambiguous
+  Assertions.assertThat(getDate()).isEqualTo(getDate());
+}</code></pre>
+
+<p>The error is due to a combination of things:</p>
+<ul>
+  <li><span class="small-code">T</span> could implement an interface, let's say <span class="small-code">I</span></li>
+  <li><span class="small-code">assertThat(I)</span> method is in <span class="small-code">Assertions</span></li>
+  <li>you are using <span class="small-code">Assertions</span> as an entry point for <span class="small-code">assertThat</span> methods</li>
+</ul>
+<p>This makes the compiler confused whether to use <span class="small-code">assertThat(Date)</span> or <span class="small-code">assertThat(I)</span>. </p>
+<p>A complete explanation is given <a href="https://stackoverflow.com/questions/29499847/ambiguous-method-in-java-8-why">here</a>.</p>
+
+<p><u>Workaround 1:</u></p>
+<p>Cast the object to a concrete type:</p>
+<pre><code class="java">@Test public void doesCompile()
+  Assertions.assertThat((Date) getDate()).isEqualTo(getDate());
+}</code></pre>
+
+
+<p><u>Workaround 2:</u></p>
+<p>For any AssertJ 3.x version <b>except 3.9.0</b> (sigh), use <span class="small-code">AssertionsForClassTypes.assertThat</span> as it does not provide any <span class="small-code">assertThat</span> methods taking an interface.</p>
+<pre><code class="java">@Test public void doesCompile()
+  AssertionsForClassTypes.assertThat((Date) getDate()).isEqualTo(getDate());
+}</code></pre>
+
+<p><b>AssertJ 3.9.0</b>: Unfortunately you <b>can't</b> use this workaround since we wrongly added <span class="small-code">assertThat(CompletionStage)</span> in <span class="small-code">AssertionsForClassTypes</span> (<span class="small-code">CompletionStage</span> being an interface). This will be fixed in a future versions.</p>
 
           <h4 class="page-header"><span id="faq-incorrect-api-usage" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> AssertJ incorrect usage and FindBugs</h4>
 
