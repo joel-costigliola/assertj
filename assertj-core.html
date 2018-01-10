@@ -180,8 +180,7 @@
   <li><span class="small-code">assertThat(I)</span> method is in <span class="small-code">Assertions</span></li>
   <li>you are using <span class="small-code">Assertions</span> as an entry point for <span class="small-code">assertThat</span> methods</li>
 </ul>
-<p>This makes the compiler confused whether to use <span class="small-code">assertThat(Date)</span> or <span class="small-code">assertThat(I)</span>. </p>
-<p>A complete explanation is given <a href="https://stackoverflow.com/questions/29499847/ambiguous-method-in-java-8-why">here</a>.</p>
+<p>This makes the compiler confused whether to use <span class="small-code">assertThat(Date)</span> or <span class="small-code">assertThat(I)</span>, a complete explanation is given <a href="https://stackoverflow.com/questions/29499847/ambiguous-method-in-java-8-why">here</a>.</p>
 
 <p><u>Workaround 1:</u></p>
 <p>Cast the object to a concrete type:</p>
@@ -196,7 +195,8 @@
   AssertionsForClassTypes.assertThat((Date) getDate()).isEqualTo(getDate());
 }</code></pre>
 
-<p><b>AssertJ 3.9.0</b>: Unfortunately you <b>can't</b> use this workaround since we wrongly added <span class="small-code">assertThat(CompletionStage)</span> in <span class="small-code">AssertionsForClassTypes</span> (<span class="small-code">CompletionStage</span> being an interface). This will be fixed in a future versions.</p>
+<p><b>AssertJ 3.9.0</b>: Unfortunately you <b>can't</b> use this workaround since we wrongly added <span class="small-code">assertThat(CompletionStage)</span> in <span class="small-code">AssertionsForClassTypes</span> (<span class="small-code">CompletionStage</span> is an interface). 
+  This will be fixed in the next version.</p>
 
           <h4 class="page-header"><span id="faq-incorrect-api-usage" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> AssertJ incorrect usage and FindBugs</h4>
 
