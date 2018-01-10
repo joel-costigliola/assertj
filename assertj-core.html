@@ -165,7 +165,7 @@
           <h4 class="page-header"><span id="ambiguous-compilation-error" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Compilation error: reference to <span class="small-code">assertThat</span> is ambiguous</h4>
 
           <p>The erroneous code probably looks like this:</p>
-<pre><code class="java">protected static <T extends Date> T getDate() {
+<pre><code class="java">protected static &lt;T extends Date&gt; T getDate() {
   return (T) new Date();
 }
 
