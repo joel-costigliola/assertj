@@ -134,6 +134,8 @@
              <span class="contributor">Erhard Pointl</span>, 
              <span class="contributor">Filip Hrisafov</span>, 
              <span class="contributor">Sebastien Arod</span>, 
+             <span class="contributor">Simon Dudley</span>, 
+             <span class="contributor">Gerard Szczepański</span>, 
          and <span class="contributor">Piotr Swiatowski</span> for their contributions.</p>
 
 <p>Special thanks to <span class="contributor"><b>Rafael Winterhalter</b></span> (<a href="http://bytebuddy.net/#/">byte buddy</a> creator) for his help to migrate to byte buddy.</p>
@@ -145,27 +147,27 @@
 </ul>
 <div class="release-section-category">Improvements :</div>
 <ul>
-  <li>Replace cglib by <a href="http://bytebuddy.net/#/">byte buddy</a>. <span class="contributor">(Filip Hrisafov, Rafael Winterhalter)</span></li>
+  <li>Replace cglib with <a href="http://bytebuddy.net/#/">byte buddy</a>. <span class="contributor">(Filip Hrisafov, Rafael Winterhalter)</span></li>
   <li>Javadoc improvements. <span class="contributor">(Erhard Pointl, Pascal Schumacher)</span></li>
   <li>Bump internal dependencies. <span class="contributor">(Pascal Schumacher, Erhard Pointl)</span></li>
   <li>Remove unnecessary optional ASM dependency. <span class="contributor">(Pascal Schumacher)</span></li>
 </ul>
 <div class="release-section-category">Fixed :</div>
 <ul>
-  <li>Fix soft assertions and assumption that were not properly supporting methods changing the object under, including:</li>
+  <li>Fix soft assertions and assumptions that were not properly supporting methods changing the object under test, including:</li>
     <ul>
       <li><span class="small-code">extracting</span>, <span class="small-code">flatExtracting</span>, <span class="small-code">extractingResultOf</span>, <span class="small-code">filteredOn</span>, <span class="small-code">map</span>, <span class="small-code">flatMap</span></li>
-      <li>navigation assertions: <span class="small-code">size()</span>, <span class="small-code">first()</span>, <span class="small-code">element(index) </span>, <span class="small-code">last()</span></li>
+      <li>navigation assertions: <span class="small-code">size()</span>, <span class="small-code">first()</span>, <span class="small-code">element(index)</span>, <span class="small-code">last()</span></li>
       <li>straight conversion: <span class="small-code">asString()</span> and <span class="small-code">asList()</span></li>
     </ul>
-  <li>Fix <i>reference to assertThat is ambiguous</i> error introduced by moving <span class="small-code">assertThat(CompletionStage)</span> to <span class="small-code">AssertionsForInterfaceTypes</span>  - <a href="https://github.com/joel-costigliola/assertj-core/issues/839">#839</a>.</li>
-  <li>Fix <span class="small-code">containsAnyOf</span> that only worked with comparable elements.</li>
-  <li>Fix <span class="small-code">ClassNotFoundError</span> on OSGI when using soft aAssertions</span>. <span class="contributor">(Sebastien Arod)</span></li>
+  <li>Fix <i>reference to assertThat is ambiguous</i> error introduced in 3.9.0 by moving <span class="small-code">assertThat(CompletionStage)</span> to <span class="small-code">AssertionsForInterfaceTypes</span>  - <a href="https://github.com/joel-costigliola/assertj-core/issues/839">#839</a>.</li>
+  <li>Fix <span class="small-code">containsAnyOf</span> that only worked with comparable elements - <a href="https://github.com/joel-costigliola/assertj-core/issues/1154">#1154</a>.</li>
+  <li>Fix <span class="small-code">ClassNotFoundError</span> on OSGI when using soft assertions - <a href="https://github.com/joel-costigliola/assertj-core/issues/1160">#1160</a>. <span class="contributor">(Sebastien Arod)</span></li>
   <li>Handle <span class="small-code">null</span> correctly in <span class="small-code">ZonedDateTimeAssert</span> <span class="small-code">isEqualTo</span> and <span class="small-code">isNotEqualTo</span> assertions - <a href="https://github.com/joel-costigliola/assertj-core/issues/1164">#1164</a>. <span class="contributor">(Piotr Swiatowski)</span></li>
-  <li>Fix (hopefully) all warning like: <i>A generic array of XXX is created for a varargs parameter</i></span></li>
-  <li>Fix a regression in field by field recursive comparison where we stopped displaying an helpful error message - <a href="https://github.com/joel-costigliola/assertj-core/issues/1158">#1158</a>.</span></li>
-  <li>Fix a <span class="small-code">NullPointerException</span> in field by field recursive comparison when comparing null values - <a href="https://github.com/joel-costigliola/assertj-core/issues/1145">#1145</a>.</span></li>
-  <li>Fix <span class="small-code">BigDecimal.isBetween</span> assertion that was failing when given the same start and end but with different scale - <a href="https://github.com/joel-costigliola/assertj-core/issues/1177">#1177</a>.</span></li>
+  <li>Fix (hopefully) all warning like: <i>A generic array of XXX is created for a varargs parameter</i> - <a href="https://github.com/joel-costigliola/assertj-core/issues/1157">#1157</a>.</li>
+  <li>Fix a regression in field by field recursive comparison where we stopped displaying an helpful error message - <a href="https://github.com/joel-costigliola/assertj-core/issues/1158">#1158</a>.</li>
+  <li>Fix a <span class="small-code">NullPointerException</span> in field by field recursive comparison when comparing null values - <a href="https://github.com/joel-costigliola/assertj-core/issues/1145">#1145</a>. <span class="contributor">(Simon Dudley)</span></li>
+  <li>Fix <span class="small-code">BigDecimal.isBetween</span> assertion that was failing when given the same start and end but with different scale - <a href="https://github.com/joel-costigliola/assertj-core/issues/1177">#1177</a>.</li>
 </ul>
 
 
