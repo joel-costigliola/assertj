@@ -234,7 +234,7 @@ assertThat(actual).usingComparator(new CustomComparator()).isEqualTo("a");</code
             
           <h4 class="page-header"><span id="android" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Android Support</h4>
 
-          <p>Android does not support the <span class="small-code">java.nio.file.Path</span> class, so the 'regular' AssertJ 3.x/2.x entry point classes can not be used.
+          <p>Android versions before 8.0.0 (API level 26) do not support the <span class="small-code">java.nio.file.Path</span> class, so the 'regular' AssertJ 3.x/2.x entry point classes can not be used.
           Instead you can use the <span class="small-code">Java6XAssertions</span> classes. For example use <span class="small-code">org.assertj.core.api.Java6Assertions</span> instead of <span class="small-code">org.assertj.core.api.Assertions</span>.</p>
 
           <p>The following listing contains 'regular' import statements and their android alternative:</p>
