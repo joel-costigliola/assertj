@@ -260,7 +260,7 @@ assertThat(Optional.empty()).get();</code></pre>
 <p>A variant of <span class="small-code">assertThatThrownBy</span> which accepts a description has been added.</p>
 <p>Example:</p>
 <pre><code class="java">// this assertion fails ... 
-assertThatThrownBy(() -> { throw new IOException("bam!"); }, "Test explosive code")
+assertThatThrownBy(() -> { throw new IOException("bam!"); }, "check explosion")
           .isInstanceOf(IOException.class)
           .hasMessageContaining("boom!");
 // ... with the following error message:
