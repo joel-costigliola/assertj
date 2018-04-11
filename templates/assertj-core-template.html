@@ -146,13 +146,21 @@ assertThat(1).isEqualTo(2);
 // OR THIS (less classy but ok):
 assertThat(1 == 2).isTrue();</code></pre>
 
-<pre><code class="java">// BAD USAGE: DON'T DO THIS ! as/describedAs has no effect after the assertion
+<pre><code class="java">// BAD USAGE: DON'T DO THIS ! as/describedAs have no effect after the assertion
 assertThat(actual).isEqualTo(expected).as("description");
 assertThat(actual).isEqualTo(expected).describedAs("description");
 
 // DO THIS: use as/describedAs before the assertion
 assertThat(actual).as("description").isEqualTo(expected);
 assertThat(actual).describedAs("description").isEqualTo(expected);</code></pre>
+
+<pre><code class="java">// BAD USAGE: DON'T DO THIS ! overridingErrorMessage/withFailMessage have no effect after the assertion
+assertThat(actual).isEqualTo(expected).overridingErrorMessage("custom error message");
+assertThat(actual).isEqualTo(expected).withFailMessage("custom error message");
+
+// DO THIS: use overridingErrorMessage/withFailMessage before the assertion
+assertThat(actual).overridingErrorMessage("custom error message").isEqualTo(expected);
+assertThat(actual).withFailMessage("custom error message").isEqualTo(expected);</code></pre>
 
 <pre><code class="java">// BAD USAGE: DON'T DO THIS ! Comparator is not used
 assertThat(actual).isEqualTo(expected).usingComparator(new CustomComparator());
