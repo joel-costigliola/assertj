@@ -29,11 +29,11 @@ $menu
   &lt;groupId&gt;org.assertj&lt;/groupId&gt;
   &lt;artifactId&gt;assertj-guava&lt;/artifactId&gt;
   &lt;!-- Use 2.x version if you rely on Java 7 / AssertJ Core 2.x --&gt;
-  &lt;version&gt;3.1.0&lt;/version&gt;
+  &lt;version&gt;3.2.0&lt;/version&gt;
   &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 
-         <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-guava|3.1.0|bundle">assertj-guava dependency declaration</a> for your tool.</p>
+         <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-guava|3.2.0|bundle">assertj-guava dependency declaration</a> for your tool.</p>
 
          <h4 class="page-header">2 - Statically import <span class="small-code">org.assertj.guava.api.Assertions.assertThat</span> ...</h4>
          <p>... and use your preferred IDE code completion after <span class="small-code">assertThat.</span></p>
@@ -91,6 +91,20 @@ assertThat(optional).isPresent().contains("Test");</code></pre>
          <p><span class="small-code">assertThat</span> and <span class="small-code">entry</span> are static imports from the <span class="small-code">Assertions</span> class.</p>
 
          <p>Note that you can find more working examples in the <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/guava">guava package</a> of the <a href="https://github.com/joel-costigliola/assertj-examples/">assertj-examples</a> project.</p>
+
+         <h3 class="page-header"><span id="3.2.0"/></span><span id="latest-release"/></span>Guava assertions 3.2.0 release</h3>
+         <p>Release date : 2018-04-30</p>
+
+         <p>AssertJ Guava 3.2.0 requires Java 8 and AssertJ Core 3.x.</p>
+
+         <div class="release-section-category">Release notes:</div>
+         <ul>
+            <li>Use Guava 21+ which is java 8 compatible</li>
+            <li>Can be used with assertj-core 3.9.1+</li>
+            <li>Set Guava dependency as provided</li>
+            <li>Javadoc improvements</li>
+         </ul>
+
 
          <h3 class="page-header"><span id="3.1.0"/></span><span id="latest-release"/></span>Guava assertions 3.1.0 release</h3>
          <p>Release date : 2016-10-24</p>
