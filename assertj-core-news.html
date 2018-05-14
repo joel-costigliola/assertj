@@ -140,12 +140,13 @@
              <span class="contributor">Andrew Auclair</span>, 
              <span class="contributor">valery1707</span>, 
              <span class="contributor">Bernd Farka</span>, 
-         and <span class="contributor">Piotr Swiatowski</span>, thanks guys!</p>
+             <span class="contributor">nebehr</span>, 
+         and <span class="contributor">Piotr Swiatowski</span>. Thanks guys!</p>
 
 <h4 class="page-header"> Release notes</h4>
 <div class="release-section-category">New features :</div>
 <ul>
-  <li>Add <span class="small-code">isUpperCase/isLowerCase</span> to <span class="small-code">String/CharSequence</span> assertions. <span class="contributor">( Marcel Overdijk)</span></li>
+  <li>Add <span class="small-code">isUpperCase/isLowerCase</span> to <span class="small-code">String/CharSequence</span> assertions. <span class="contributor">(Marcel Overdijk)</span></li>
   <li>Add <a href="#assertj-core-3.10.0-satisfies_for_list"><span class="small-code">satisfies(consumer, index)</span></a> to list assertions. <span class="contributor">(Jacek Jackowiak)</span></li>
   <li>Add <a href="#assertj-core-3.10.0-noneSatisfy"><span class="small-code">noneSatisfy(consumer)</span></a> to iterable/array assertions. <span class="contributor">(Bernd Farka)</span></li>
 </ul>
@@ -160,11 +161,11 @@
   <li>Exclude proxied class from SoftAssertions line number (in error stacktrace).</span></li>
   <li><span class="small-code">zipSatisfy</span> now returns all zipped pairs not meeting the given requirements (instead of the first one).</span></li>
   <li>Fix varargs warning on Map assertion <span class="small-code">extracting</span>.</li>
-  <li>CompletableFuture representation now displays stacktrace when completed exceptionnaly. <span class="contributor">(Piotr Swiatowski)</span></li>
+  <li>CompletableFuture representation now displays stacktrace when completed exceptionally. <span class="contributor">(Piotr Swiatowski)</span></li>
   <li>Improve <span class="small-code">TypeComparators</span> initialization resolving a performance degradation introduced in 3.9.1.</li>
-  <li>Allow overriding collected errors list modification.</li>
-  <li>Close stream after lazy init list assertions from stream. <span class="contributor">(f4lco)</span></li>
-  <li>Adding <span class="small-code">org.assertj.core</span> as Automatic-Module-Name in Manifest file. <span class="contributor">(Andrew Auclair)</span></li>
+  <li>Allow overriding collected errors list modification.</li> <span class="contributor">(nebehr)</span></li>
+  <li>Close stream after lazy init of list assertions from stream. <span class="contributor">(f4lco)</span></li>
+  <li>Add <span class="small-code">org.assertj.core</span> as Automatic-Module-Name in Manifest file. <span class="contributor">(Andrew Auclair)</span></li>
   <li>Make constructors of <span class="small-code">ThrowableAssertAlternative</span> and <span class="small-code">ThrowableTypeAssert</span> public and <span class="small-code">ThrowableTypeAssert</span> fields protected for better extensibility.</li>
   <li>Internal code improvements. <span class="contributor">(Pascal Schumacher)</span></li>
   <li>Javadoc improvements. <span class="contributor">(Pascal Schumacher)</span>, <span class="contributor">(valery1707)</span></li>
@@ -172,8 +173,8 @@
 </ul>
 <div class="release-section-category">Fixed :</div>
 <ul>
-  <li>SortedSet assertions now honors the <span class="small-code">SortedSet</span> comparator.</li>
-  <li>Fix Map assertion <span class="small-code">extracting</span> that was limited to extract values from String keys, it now accepts any Object keys.</li>
+  <li>SortedSet assertions now honor the <span class="small-code">SortedSet</span> comparator.</li>
+  <li>Fix Map assertion <span class="small-code">extracting</span> that was limited to extracting values from String keys, it now accepts any Object keys.</li>
   <li>Fix <span class="small-code">asList()</span> that was not honoring the given description. <span class="contributor">(Andrey Kuzmin)</span></li>
   <li>Fix soft assertions that did not handle correctly formatting error messages with double <span class="small-code">%</span>.</li>
   <li>Strongly typed navigation assertions were not supported after <span class="small-code">filteredOn</span> operations.</li>
