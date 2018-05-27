@@ -29,11 +29,11 @@ $menu
   &lt;groupId&gt;org.assertj&lt;/groupId&gt;
   &lt;artifactId&gt;assertj-joda-time&lt;/artifactId&gt;
   &lt;!-- use 1.1.0 for Java 7 projects --&gt;
-  &lt;version&gt;2.0.0&lt;/version&gt;
+  &lt;version&gt;2.1.0&lt;/version&gt;
   &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 
-         <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-joda-time|2.0.0|bundle">assertj-joda-time dependency declaration</a> for your tool.</p>
+         <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-joda-time|2.1.0|bundle">assertj-joda-time dependency declaration</a> for your tool.</p>
 
          <h4 class="page-header">2 - Statically import <span class="small-code">org.assertj.jodatime.api.Assertions.assertThat</span> ...</h4>
          <p>... and use your preferred IDEs code completion after <span class="small-code">assertThat.</span></p>
@@ -92,7 +92,39 @@ dateTime2 = new DateTime(2000, 1, 1, 23, 50, 10, 456, UTC);
 // ignore seconds and milliseconds in the comparison
 assertThat(dateTime1).isEqualToIgnoringSeconds(dateTime2);</code></pre>
 
-         <h3 class="page-header"><span id="latest-release"/></span><span id="assertj-joda-time-2.0.0"/></span>Joda-Time assertions 2.0.0 release</h3>
+         <h3 class="page-header"><span id="latest-release"/></span><span id="assertj-joda-time-2.1.0"/></span>Joda-Time assertions 2.1.0 release</h3>
+         <p>Release date : 2018-05-27</p>
+
+         <p>Thanks to <span class="contributor">John Killmer</span> for its contributions.</p>
+
+         <div class="release-section-category">Release notes:</div>
+         <ul>
+            <li>Add the following <span class="small-code">DateTime</span> and <span class="small-code">LocalDateTime</span> assertions (<span class="contributor">John Killmer</span>): </li>
+              <ul>
+                <li><span class="small-code">hasYear</span></li>
+                <li><span class="small-code">hasMonthOfYear</span></li>
+                <li><span class="small-code">hasDayOfMonth</span></li>
+                <li><span class="small-code">hasHourOfDay</span></li>
+                <li><span class="small-code">hasMinuteOfHour</span></li>
+                <li><span class="small-code">hasSecondOfMinute</span></li>
+                <li><span class="small-code">hasMillisOfSecond</span></li>
+              </ul>
+            <li>Javadoc improvements.</li>
+         </ul>
+
+<h4 class="page-header"><i class="fa fa-arrow-circle-right"></i> New assertions examples</h4>
+<pre><code class='java'>DateTime dateTime = new DateTime(1999, 12, 31, 23, 59, 59, 999, DateTimeZone.UTC);
+
+assertThat(dateTime).hasYear(1999)                                                
+                    .hasMonthOfYear(12)                                           
+                    .hasDayOfMonth(31)                                            
+                    .hasHourOfDay(23)                                             
+                    .hasMinuteOfHour(59)                                          
+                    .hasSecondOfMinute(59)                                        
+                    .hasMillisOfSecond(999);</code></pre>
+
+
+         <h3 class="page-header"><span id="assertj-joda-time-2.0.0"/></span>Joda-Time assertions 2.0.0 release</h3>
          <p>Release date : 2016-04-10</p>
          <p>AssertJ Joda Time 2.0.0 requires Java 8 as it relies on AssertJ Core 3.x, use 1.1.0 version if you are still using Java 7.</p>
 
