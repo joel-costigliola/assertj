@@ -29,11 +29,11 @@ $menu
   &lt;groupId&gt;org.assertj&lt;/groupId&gt;
   &lt;artifactId&gt;assertj-joda-time&lt;/artifactId&gt;
   &lt;!-- use 1.1.0 for Java 7 projects --&gt;
-  &lt;version&gt;2.1.0&lt;/version&gt;
+  &lt;version&gt;2.2.0&lt;/version&gt;
   &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 
-         <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-joda-time|2.1.0|bundle">assertj-joda-time dependency declaration</a> for your tool.</p>
+         <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-joda-time|2.2.0|bundle">assertj-joda-time dependency declaration</a> for your tool.</p>
 
          <h4 class="page-header">2 - Statically import <span class="small-code">org.assertj.jodatime.api.Assertions.assertThat</span> ...</h4>
          <p>... and use your preferred IDEs code completion after <span class="small-code">assertThat.</span></p>
@@ -92,10 +92,62 @@ dateTime2 = new DateTime(2000, 1, 1, 23, 50, 10, 456, UTC);
 // ignore seconds and milliseconds in the comparison
 assertThat(dateTime1).isEqualToIgnoringSeconds(dateTime2);</code></pre>
 
+         <h3 class="page-header"><span id="latest-release"/></span><span id="assertj-joda-time-2.2.0"/></span>Joda-Time assertions 2.2.0 release</h3>
+         <p>Release date : 2018-06-15</p>
+
+         <p>Thanks to <span class="contributor">Eugene Strepetov</span> for his contributions.</p>
+
+         <div class="release-section-category">Release notes:</div>
+         <ul>
+            <li>Add <span class="small-code">LocalDate</span> assertions providing the following ones (<span class="contributor">Eugene Strepetov</span>): </li>
+              <ul>
+                <li><span class="small-code">hasYear</span></li>
+                <li><span class="small-code">hasMonthOfYear</span></li>
+                <li><span class="small-code">hasDayOfMonth</span></li>
+                <li><span class="small-code">isBefore</span></li>
+                <li><span class="small-code">isBeforeOrEqualTo</span></li>
+                <li><span class="small-code">isEqualTo</span></li>
+                <li><span class="small-code">isAfter</span></li>
+                <li><span class="small-code">isAfterOrEqualTo</span></li>
+                <li><span class="small-code">isIn</span></li>
+                <li><span class="small-code">isNotEqualTo</span></li>
+                <li><span class="small-code">isNotIn</span></li>
+              </ul>
+            <li>Javadoc improvements.</li>
+         </ul>
+
+<h4 class="page-header"><i class="fa fa-arrow-circle-right"></i> <span class="small-code">LocalDate</span> assertions examples</h4>
+<pre><code class='java'>LocalDate localDate = new LocalDate(2000, 1, 1);
+
+assertThat(localDate).hasYear(2000)
+                     .hasMonthOfYear(1)
+                     .hasDayOfMonth(1)
+                     .isBefore(new LocalDate(2000, 1, 2))
+                     .isBefore("2000-01-02")
+                     .isBeforeOrEqualTo(new LocalDate(2000, 1, 1))
+                     .isBeforeOrEqualTo("2000-01-01")
+                     .isBeforeOrEqualTo(new LocalDate(2000, 1, 2))
+                     .isBeforeOrEqualTo("2000-01-02")
+                     .isEqualTo(new LocalDate(2000, 1, 1))
+                     .isEqualTo("2000-01-01")
+                     .isAfterOrEqualTo(new LocalDate(2000, 1, 1))
+                     .isAfterOrEqualTo("2000-01-01")
+                     .isAfterOrEqualTo(new LocalDate(1999, 12, 31))
+                     .isAfterOrEqualTo("1999-12-31")
+                     .isAfter(new LocalDate(1999, 12, 31))
+                     .isAfter("1999-12-31")
+                     .isNotEqualTo("2000-01-15")
+                     .isNotEqualTo(new LocalDate(2000, 1, 15))
+                     .isIn(new LocalDate(1999, 12, 31), new LocalDate(2000, 1, 1))
+                     .isIn("1999-12-31", "2000-01-01")
+                     .isNotIn(new LocalDate(1999, 12, 31), new LocalDate(2000, 1, 2))
+                     .isNotIn("1999-12-31", "2000-01-02");
+</code></pre>
+
          <h3 class="page-header"><span id="latest-release"/></span><span id="assertj-joda-time-2.1.0"/></span>Joda-Time assertions 2.1.0 release</h3>
          <p>Release date : 2018-05-27</p>
 
-         <p>Thanks to <span class="contributor">John Killmer</span> for its contributions.</p>
+         <p>Thanks to <span class="contributor">John Killmer</span> for his contributions.</p>
 
          <div class="release-section-category">Release notes:</div>
          <ul>
