@@ -116,7 +116,7 @@
                <pre><code class="java">testCompile("org.assertj:assertj-core:2.9.1")</code></pre>
             </div>
             <div class="col-md-12">
-               <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-core|3.10.0|bundle">assertj dependency declaration</a> for your tool.</p>
+               <p>If you use another dependency management tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-core|3.10.0|bundle">assertj dependency declaration</a>.</p>
             </div>
 
          </div>
@@ -136,7 +136,7 @@ import static org.assertj.core.api.Assertions.filter; // for Iterable/Array asse
 import static org.assertj.core.api.Assertions.offset; // for floating number assertions
 import static org.assertj.core.api.Assertions.anyOf; // use with Condition
 import static org.assertj.core.api.Assertions.contentOf; // use with File assertions</code></pre>
-         <p>On Android use this static import :</p>
+         <p>On Android (API Level &lt; 26) use this static import :</p>
          <pre><code class="language-java">import static org.assertj.core.api.Java6Assertions.*;</code></pre>
          <p>You can even configure your IDE, so that when you type <span class="small-code">as</span> and trigger code completion, it will suggest <span class="small-code">assertThat</span>, see <a href="assertj-core-features-highlight.html#ide-automatic-static-import">this tip</a>.</p>
 
