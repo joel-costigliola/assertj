@@ -85,8 +85,12 @@
 
          <p>To quickly start using Guava assertions, follow the steps below.</p>
 
-         <h4 class="page-header">1 - Add assertj-guava dependency to your project pom.xml</h4>
+         <h4 class="page-header">1 - Add assertj-guava dependency to your project</h4>
 
+<div class="row">
+  <div class="col-md-6 portfolio-item">
+    <h3 class="quickstart">Maven</h3>
+    <p>AssertJ artifacts are in the Maven central repository.</p>
 <pre><code class="xml">&lt;dependency&gt;
   &lt;groupId&gt;org.assertj&lt;/groupId&gt;
   &lt;artifactId&gt;assertj-guava&lt;/artifactId&gt;
@@ -94,8 +98,22 @@
   &lt;version&gt;3.2.0&lt;/version&gt;
   &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
+    </div>
 
-         <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-guava|3.2.0|bundle">assertj-guava dependency declaration</a> for your tool.</p>
+    <div class="col-md-6 portfolio-item">
+       <h3 class="quickstart">Gradle</h3>
+       <p>For Gradle users (using the Maven Central Repository)</p>
+       <pre><code class="java">testCompile("org.assertj:assertj-guava:3.2.0")</code></pre>
+       <p>Or version 2.0.1 for Java 7 projects</p>
+        <pre><code class="java">testCompile("org.assertj:assertj-guava:2.0.1")</code></pre>
+
+
+    </div>
+    <div class="col-md-12">
+        <p>If you use another dependency tool, please check this page to find the relevant <a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-guava|3.2.0|bundle">assertj-guava dependency declaration</a> for your tool.</p>
+    </div>
+
+</div>
 
          <h4 class="page-header">2 - Statically import <span class="small-code">org.assertj.guava.api.Assertions.assertThat</span> ...</h4>
          <p>... and use your preferred IDE code completion after <span class="small-code">assertThat.</span></p>
@@ -114,9 +132,9 @@ assertThat(actual).containsKeys("Lakers", "Spurs");
 assertThat(actual).contains(entry("Lakers", "Kobe Bryant"), entry("Spurs", "Tim Duncan"));
 
 // Multiset assertions
-Multiset&lt;String&gt; actual = HashMultiset.create();   
+Multiset&lt;String&gt; actual = HashMultiset.create();
 actual.add("shoes", 2);
-             
+
 assertThat(actual).contains(2, "shoes");
 assertThat(actual).containsAtLeast(1, "shoes");
 assertThat(actual).containsAtMost(3, "shoes");
@@ -129,7 +147,7 @@ assertThat(range).isNotEmpty()
                  .hasClosedLowerBound()
                  .hasLowerEndpointEqualTo(10)
                  .hasUpperEndpointEqualTo(12);
- 
+
 // Table assertions
 Table&lt;Integer, String, String&gt; bestMovies = HashBasedTable.create();
 
@@ -193,12 +211,12 @@ assertThat(optional).isPresent().contains("Test");</code></pre>
 
              <p>Allow to check the content of Multisets.</p>
              <p>Example :</p>
-             <pre><code class="java"> Multiset&lt;String&gt; actual = HashMultiset.create();   
+             <pre><code class="java"> Multiset&lt;String&gt; actual = HashMultiset.create();
  actual.add("shoes", 2);
-             
+
  assertThat(actual).contains(2, "shoes");
  assertThat(actual).containsAtLeast(1, "shoes");
- assertThat(actual).containsAtMost(3, "shoes");</code></pre>         
+ assertThat(actual).containsAtMost(3, "shoes");</code></pre>
 
          <h3 class="page-header"><span id="3.0.0"/></span>Guava assertions 3.0.0 release</h3>
          <p>Release date : 2015-12-19</p>
@@ -243,7 +261,7 @@ setMultimap.putAll("Bulls", newHashSet("Michael Jordan", "Scottie Pippen", "Derr
 assertThat(listMultimap).hasSameEntriesAs(setMultimap);
 
 // this assertion FAILS even though both multimaps have the same content
-assertThat(listMultimap).isEqualTo(setMultimap);</code></pre>         
+assertThat(listMultimap).isEqualTo(setMultimap);</code></pre>
 
 <h4 class="page-header"><span id="2.0.0-containsAllEntriesOf" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> New Multimap assertion : <span class="small-code">containsAllEntriesOf(Multimap other)</span>.</h4>
 
@@ -261,7 +279,7 @@ other.putAll("Bulls", newHashSet("Michael Jordan", "Scottie Pippen"));
 assertThat(actual).containsAllEntriesOf(other);
 
 // this assertion FAILS as other does not contain "Spurs -> "Manu Ginobili" and "Bulls" -> "Derrick Rose"
-assertThat(other).containsAllEntriesOf(actual);</code></pre>   
+assertThat(other).containsAllEntriesOf(actual);</code></pre>
 
 <h4 class="page-header"><span id="2.0.0-extractingValue" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Allow to run assertions on Optional value with <span class="small-code">extractingValue()</span>.</h4>
 
@@ -271,19 +289,19 @@ assertThat(other).containsAllEntriesOf(actual);</code></pre>
 assertThat(optional).extractingValue()
                     .isInstanceOf(Long.class)
                     .isEqualTo(12L);
-</code></pre>         
+</code></pre>
    <p>There is a special support for  <span class="small-code">String</span> values with <span class="small-code">extractingCharSequence()</span>.</p>
    <p>Example :</p>
    <pre><code class="java">Optional&lt;String&gt; optional = Optional.of("Bill");
 // extractingCharSequence allows to chain String specific assertions
 assertThat(optional).extractingCharSequence()
-                    .startsWith("Bi");</code></pre>         
+                    .startsWith("Bi");</code></pre>
 
          <h3 class="page-header"><span id="1.3.1"/></span></span>Guava assertions 1.3.1 release</h3>
          <p>Release date : 2015-01-21</p>
 
          <p>Bugfix release fixing <span class="small-code">hasUpperEndpointEqual</span> assertion error message (thanks <span class="contributor">László Balázs-Csíki</span> for reporting it).</p>
-         
+
          <h3 class="page-header"><span id="1.3.0"/></span>Guava assertions 1.3.0 release</h3>
          <p>Release date : 2014-10-27</p>
 
@@ -295,7 +313,7 @@ assertThat(optional).extractingCharSequence()
             <li>Javadoc code syntax highlighting.</li>
             <li>Javadoc fix. <span class="contributor">(Jochen Kupperschmidt)</span></li>
          </ul>
-         
+
          <h3 class="page-header"><span id="1.2.0"/></span><span id="1.2.0"/></span>Guava assertions 1.2.0 release</h3>
          <p>Release date : 2014-05-25</p>
 
@@ -307,7 +325,7 @@ assertThat(optional).extractingCharSequence()
             <li>New Table assertions <span class="contributor">(David Harris)</span></li>
             <li>Javadoc improvements</li>
          </ul>
-         
+
          <h3 class="page-header"><span id="1.1.0"/></span>Guava assertions 1.1.0 release</h3>
          <p>Release date : 2013-12-27</p>
 
