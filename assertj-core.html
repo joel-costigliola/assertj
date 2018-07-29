@@ -155,6 +155,7 @@
           <ul>
             <li><a href="#ambiguous-compilation-error">compilation error: reference to <span class="small-code">assertThat</span> is ambiguous</a></li>
             <li><a href="#faq-incorrect-api-usage">AssertJ incorrect API usage (and how to detect it with static code analysis)</a></li>
+            <li><a href="#java9-reflection-error">InaccessibleObjectException in Java 9+</a></li>
             <li><a href="#android">Android Support</a></li>
           </ul>
 
@@ -238,8 +239,22 @@ assertThat(actual).isEqualTo(expected).usingComparator(new CustomComparator());
 // DO THIS:
 assertThat(actual).usingComparator(new CustomComparator()).isEqualTo("a");</code></pre>
 
-          <p>Static code analysis tools like SpotBugs/FindBugs/ErrorProne can now detect such problems thanks to the <a href="https://github.com/joel-costigliola/assertj-core/pull/695"><span class="small-code">CheckReturnValue</span></a> annotation introduced in 2.5+ / 3.5+ and improved in 2.7+ / 3.7+.</p>
-            
+          <h4 class="page-header"><span id="java9-reflection-error" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> InaccessibleObjectException in Java 9+</h4>
+
+          <p>You can encounter errors similar to the one below when using AssertJ features requiring private fields introspection in <b>Java 9+</b>:</p>
+
+<pre><code class="xml">java.lang.reflect.InaccessibleObjectException: 
+   Unable to make field private transient long java.util.Date.fastTime accessible: 
+     module java.base does not "opens java.util" to unnamed module @66b72664</code></pre>
+
+          <p>Java 9 is much more restrictive concerning reflective access to non-public fields/methods, you need to open all required packages for AssertJ as follows (in particular it opens <span class="small-code">java.util</span>):</p>
+          <pre><code class="bash">--add-opens java.base&#x2F;java.lang=ALL-UNNAMED 
+--add-opens java.base&#x2F;java.util=ALL-UNNAMED 
+--add-opens java.base&#x2F;java.io=ALL-UNNAMED 
+--add-opens java.base&#x2F;java.math=ALL-UNNAMED</code></pre>
+
+          <p>A nice article on the topic: <a href="https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/#Reflectively-Accessing-Internal-APIs-With--add-opens">https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/#Reflectively-Accessing-Internal-APIs-With--add-opens</a></p>
+
           <h4 class="page-header"><span id="android" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Android Support</h4>
 
           <p>Android versions before 8.0.0 (API level 26) do not support the <span class="small-code">java.nio.file.Path</span> class, so the 'regular' AssertJ 3.x/2.x entry point classes can not be used.
