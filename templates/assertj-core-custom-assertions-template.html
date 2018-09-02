@@ -188,7 +188,7 @@ public void ambiguous_assertThat_resolution() {
 
       <p>You may want to perform <a href="assertj-core-features-highlight.html#soft-assertions">soft assertions</a> using your custom assertions. However, the provided <span class="small-code">SoftAssertions</span> class does not know about your custom classes. For example:</p>
       
-      <pre><code class="java">SoftAssertion softly = new SoftAssertions();
+      <pre><code class="java">SoftAssertions softly = new SoftAssertions();
 softly.assertThat(frodo).hasName("frodo"); 
 // The previous line does not compile, as softly.assertThat(frodo) returns an ObjectAssert</code></pre>
 
