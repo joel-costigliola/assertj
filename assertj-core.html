@@ -96,6 +96,7 @@
             <li>AssertJ 1.x requires Java 6 or higher</li>
          </ul>
          <p>Note that AssertJ 3.x includes all AssertJ 2.x features and adds Java 8 specific ones (like <a href="assertj-core-features-highlight.html#exception-assertion">exception assertions with lambdas</a>).</p>
+         <p><b>Soft assertions are not supported in Android</b>, this is due the internal use of Byte Buddy that does not support Android.</p>
 
          <p>AssertJ core <a href="https://github.com/joel-costigliola/assertj-core">code</a> and
             <a href="https://github.com/joel-costigliola/assertj-core/issues?state=open">issue tracker</a> are hosted on github.</p>
@@ -260,6 +261,8 @@ assertThat(actual).usingComparator(new CustomComparator()).isEqualTo("a");</code
           <p>Android versions before 8.0.0 (API level 26) do not support the <span class="small-code">java.nio.file.Path</span> class, so the 'regular' AssertJ 3.x/2.x entry point classes can not be used.
           Instead you can use the <span class="small-code">Java6XAssertions</span> classes. For example use <span class="small-code">org.assertj.core.api.Java6Assertions</span> instead of <span class="small-code">org.assertj.core.api.Assertions</span>.</p>
 
+          <p>Please note that <b>soft assertions are not supported in Android</b>, this is due the internal use of Byte Buddy that does not support Android.</p>
+
           <p>The following listing contains 'regular' import statements and their android alternative:</p>
 
           <pre><code class="java">// 'regular' assertj
@@ -268,29 +271,9 @@ import static org.assertj.core.api.Assertions.*
 import static org.assertj.core.api.Java6Assertions.*
 
 // 'regular' assertj
-import static org.assertj.core.api.SoftAssertions.*
-// assertj on android
-import static org.assertj.core.api.Java6SoftAssertions.*
-
-// 'regular' assertj
-import static org.assertj.core.api.JUnitSoftAssertions.*
-// assertj on android
-import static org.assertj.core.api.Java6JUnitSoftAssertions.*
-
-// 'regular' assertj
 import static org.assertj.core.api.BDDAssertions.*
 // assertj on android
 import static org.assertj.core.api.Java6BDDAssertions.*
-
-// 'regular' assertj
-import static org.assertj.core.api.BDDSoftAssertions.*
-// assertj on android
-import static org.assertj.core.api.Java6BDDSoftAssertions.*
-
-// 'regular' assertj
-import static org.assertj.core.api.JUnitBDDSoftAssertions.*
-// assertj on android
-import static org.assertj.core.api.Java6JUnitBDDSoftAssertions.*
 </code></pre>
 
         <h3 class="page-header"><span id="code"/></span>Code and issue tracker</h3>
