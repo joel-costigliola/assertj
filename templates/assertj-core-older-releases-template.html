@@ -510,7 +510,7 @@ assertThat("Game of Thrones").isEqualToNormalizingWhitespace("Gameo fThrones");<
    <li>Add <a href="assertj-core-news.html#assertj-core-2.7.0-fields-methods">fields/methods</a> <span class="small-code">Class</span> assertions. <span class="contributor">(epeee, Filip Hrisafov)</span></li>
    <li>Add <span class="small-code">Class</span> <a href="assertj-core-news.html#assertj-core-2.7.0-class-visibility">visibility</a> assertions. <span class="contributor">(epeee)</span></li>
    <li>Add <span class="small-code">isOne</span> number assertion. <span class="contributor">(Drummond Dawson)</span></li>
-   <li>Add <a href="assertj-core-news.html#assertj-core-2.7.0-normalizing-equals"><span class="small-code">isEqualToNormalizingNewlines</span></a> to verify that two strings are equals after normalizing newlines. <span class="contributor">(Maurício Aniche)</span></li>
+   <li>Add <a href="assertj-core-news.html#assertj-core-2.7.0-normalizing-equals"><span class="small-code">isEqualToNormalizingNewlines</span></a> to verify that two strings are equal after normalizing newlines. <span class="contributor">(Maurício Aniche)</span></li>
    <li>Add a <a href="assertj-core-news.html#assertj-core-2.7.0-hamcrest-matcher">Hamcrest Matcher</a> that reuses AssertJ assertions. <span class="contributor">(Tomasz Kalkosiński)</span></li>
    <li>Add map <a href="assertj-core-news.html#assertj-core-2.7.0-hasEntrySatisfying">hasEntrySatisfying</a> condition assertion. <span class="contributor">(Kseniya Panasyuk)</span></li>
    <li>Add map <a href="assertj-core-news.html#assertj-core-2.7.0-hasKeySatisfying">hasKeySatisfying</a> condition assertion. <span class="contributor">(Kseniya Panasyuk)</span></li>
@@ -706,7 +706,7 @@ protected class MyClass {
 }
 assertThat(MyClass.class).isProtected();</code></pre>
 
-<h4 class="page-header"><span id="assertj-core-2.7.0-normalizing-equals" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Assert that two strings are equals after normalizing newlines</h4>
+<h4 class="page-header"><span id="assertj-core-2.7.0-normalizing-equals" class="adjustAnchor"></span><i class="fa fa-arrow-circle-right"></i> Assert that two strings are equal after normalizing newlines</h4>
 
 <p>Verifies that two Strings are equal ignoring newline differences, that is considering <span class="small-code">'\r\n'</span> to be equal to <span class="small-code">'\n'</span>.</p>
 <p>Examples: </p>
@@ -1627,7 +1627,7 @@ jackClone.bestFriend = jack;
 // will fail as equals compares object references
 assertThat(jack).isEqualsTo(jackClone);
 
-// jack and jackClone are equals when doing a recursive field by field comparison
+// jack and jackClone are equal when doing a recursive field by field comparison
 assertThat(jack).isEqualToComparingFieldByFieldRecursively(jackClone);
 
 // any type/field can be compared with a a specific comparator.
@@ -3534,7 +3534,7 @@ public class Rating implements Comparable<Rating> {
    <pre><code class="java">TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
 TolkienCharacter sam = new TolkienCharacter("Sam", 38, HOBBIT);
 
-// frodo and sam both are hobbits -> they are equals when comparing only race (worked before 1.7.0)
+// frodo and sam both are hobbits -> they are equal when comparing only race (worked before 1.7.0)
 assertThat(newArrayList(frodo)).usingElementComparatorOnFields("race").contains(sam);
 
 // Before 1.7.0, this basic assertion would not work as element comparison semantics
@@ -3635,7 +3635,7 @@ to contain:
    <pre><code class="java">TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
 TolkienCharacter sam = new TolkienCharacter("Sam", 38, HOBBIT);
 
-// frodo and sam both are hobbits, so they are equals when comparing only race
+// frodo and sam both are hobbits, so they are equal when comparing only race
 assertThat(newArrayList(frodo)).usingElementComparatorOnFields("race").contains(sam); // OK
 
 // ... but not when comparing both name and race
