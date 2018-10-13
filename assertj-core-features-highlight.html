@@ -604,14 +604,14 @@ TolkienCharacter frodoClone = new TolkienCharacter("Frodo", 33, HOBBIT);
 // Fail as equals compares object references
 assertThat(frodo).isEqualsTo(frodoClone);
 
-// frodo and frodoClone are equals when doing a field by field comparison.
+// frodo and frodoClone are equal when doing a field by field comparison.
 assertThat(frodo).isEqualToComparingFieldByField(frodoClone);</code></pre>
 
       <p><span id="field-by-field-only" class="small-code">isEqualToComparingOnlyGivenFields</span> :</p>
 <pre><code class="java">TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
 TolkienCharacter sam = new TolkienCharacter("Sam", 38, HOBBIT);
 
-// frodo and sam both are hobbits, so they are equals when comparing only race
+// frodo and sam both are hobbits, so they are equal when comparing only race
 assertThat(frodo).isEqualToComparingOnlyGivenFields(sam, "race"); // OK
 
 // they are also equals when comparing only race name (nested field).
@@ -624,7 +624,7 @@ assertThat(frodo).isEqualToComparingOnlyGivenFields(sam, "name", "race"); // FAI
 <pre><code class="java">TolkienCharacter frodo = new TolkienCharacter("Frodo", 33, HOBBIT);
 TolkienCharacter sam = new TolkienCharacter("Sam", 38, HOBBIT);
 
-// frodo and sam are equals when ignoring name and age as the only remaining field is race
+// frodo and sam are equal when ignoring name and age as the only remaining field is race
 assertThat(frodo).isEqualToIgnoringGivenFields(sam, "name", "age"); // OK both are HOBBIT
 
 // ... but they are not equals if only age is ignored as their names differ.
@@ -670,7 +670,7 @@ jackClone.bestFriend = jack;
 // will fail as equals compares object references
 assertThat(jack).isEqualsTo(jackClone);
 
-// jack and jackClone are equals when doing a recursive field by field comparison
+// jack and jackClone are equal when doing a recursive field by field comparison
 assertThat(jack).isEqualToComparingFieldByFieldRecursively(jackClone);
 
 // any type/field can be compared with a a specific comparator.
