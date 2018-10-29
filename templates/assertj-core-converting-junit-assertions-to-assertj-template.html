@@ -13,10 +13,12 @@ $menu
       $assertj_core_side_menu
 
       <div class="col-lg-10 col-md-10 col-sm-10 text-left">
-      <h1 class="page-header">Converting your JUnit assertions to AssertJ</h1>
+      <h1 class="page-header">Converting your JUnit 3 & 4 assertions to AssertJ</h1>
 
          <p>This page will help you converting your existing JUnit assertions to AssertJ ones. Note that both types of assertions can coexist, you don't have to migrate all at once.</p>
          <p>The idea is to convert code like :<pre><code class="java">assertEquals(expected, actual);</code></pre> to :</p><p><pre><code class="java">assertThat(actual).isEqualTo(expected);</code></pre> </p>
+          <p>If you use JUnit 5 then check the <a href="assertj-core-converting-junit5-assertions-to-assertj.html">JUnit 5 Assertions Migration Guide</a>.</p>
+
          <p>There are several ways to perform the conversion :</p>
          <ul>
             <li><a href="#automatic-conversion">automatically</a> with a shell script.</span></li>

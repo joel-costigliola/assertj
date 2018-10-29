@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="description" content="AssertJ site">
+   <meta name="author" content="Joel Costigliola">
+
+   <title>AssertJ / Fluent assertions for java</title>
+
+   <!-- CSS -->
+   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata|Source+Code+Pro|Open+Sans|Ubuntu|Varela+Round|Karla">
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+   <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+   <script src="highlight/highlight.pack.js"></script>
+   <link rel="stylesheet" href="highlight/styles/railscasts.css">
+   <script>hljs.initHighlightingOnLoad();</script>
+   <link href="css/assertj.min.css" rel="stylesheet">
+   <link rel="shortcut icon" href="favicon.png" />
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+   <div class="container">
+      <div class="navbar-header">
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+         </button>
+         <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
+         <a class="navbar-brand" href="index.html">AssertJ</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+         <ul class="nav navbar-nav navbar-right">
+            <li><a href="assertj-core-quick-start.html">Quick start</a></li>
+            <li><a href="assertj-news.html">News</a></li>
+            <li><a href="assertj-core.html">Core</a></li>
+            <li><a href="assertj-assertions-generator.html">Assertions generator</a></li>
+            <li><a href="assertj-guava.html">Guava</a></li>
+            <li><a href="assertj-joda-time.html">Joda-Time</a></li>
+            <li><a href="assertj-db.html">DB</a></li>
+            <li><a href="assertj-neo4j.html">Neo4j</a></li>
+            <li><a href="assertj-swing.html">Swing</a></li>
+            <li><a href="assertj-help.html">Help</a></li>
+         </ul>
+      </div>
+   </div>
+</nav>
+
+
+<div class="container">
+   <div class="row">
+
+            <div class="col-md-2 assertj-sidebar-menu">
+         <div class="bs-sidebar hidden-print affix-top" role="complementary">
+            <ul class="bs-sidenav nav ">
+               <li class="sidenav-header">Main</li>
+               <li><a href="assertj-core.html">Overview</a></li>
+               <li><a href="assertj-core-quick-start.html">Quick start</a></li>
+               <li><a href="assertj-core-news.html">News &amp; releases</a></li>
+               <li><a href="assertj-core-features-highlight.html">Features highlight</a></li>
+               <li><a href="assertj-core-conditions.html">Using conditions</a></li>
+               <li><a href="assertj-core-custom-assertions.html">Custom assertions</a></li>
+               <li><a href="http://joel-costigliola.github.io/assertj/core/api/index.html" target="_blank">Javadoc (2.x)</a></li>
+               <li><a href="http://joel-costigliola.github.io/assertj/core-8/api/index.html" target="_blank">Javadoc (3.x)</a></li>
+               <li><a href="assertj-core.html#help">Help &amp; F.A.Q</a></li>
+               <li><a href="assertj-core.html#code">Code &amp; issues <i class="fa fa-github"></i></a></li>
+               <li><a href="assertj-core.html#team">Team</a></li>
+               <li><a href="assertj-core.html#contributing">Contributing</a></li>
+               <li class="sidenav-header">Migrating</li>
+               <li><a href="assertj-core-converting-junit-assertions-to-assertj.html">JUnit 4 Assertions</a></li>
+               <li><a href="assertj-core-converting-junit5-assertions-to-assertj.html">JUnit 5 Assertions</a></li>
+               <li><a href="assertj-core-converting-testng-assertions-to-assertj.html">TestNG Assertions</a></li>
+               <li><a href="assertj-core-migrating-from-fest.html">Fest Assert</a></li>
+            </ul>
+         </div>
+      </div>
+
+
+      <div class="col-lg-10 col-md-10 col-sm-10 text-left">
+      <h1 class="page-header">Converting your JUnit 5 assertions to AssertJ</h1>
+
+         <p>This page provides a script which converts your existing JUnit 5 assertions to AssertJ ones. Note that both types of assertions can coexist, you don't have to migrate all at once.</p>
+         <p>The idea is to convert code like :<pre><code class="java">assertEquals(expected, actual);</code></pre> to :</p><p><pre><code class="java">assertThat(actual).isEqualTo(expected);</code></pre> </p>
+
+          <p>See the <a href="assertj-core-converting-junit-assertions-to-assertj.html">JUnit 4 Assertions Migration Guide</a> for more information. This script is a copy of JUnit 4 script with few necessary modifications.</p>
+
+
+          <p>Currently there is only OSX script available for JUnit 5 :</p>
+         <ul>
+            <li>osx : <a href="https://github.com/joel-costigliola/assertj-core/blob/master/src/main/scripts/convert-junit5-assertions-to-assertj-on-osx.sh">convert-junit5-assertions-to-assertj-on-osx.sh</a></span></li>
+         </ul>
+
+         <p>Usage : On OSX execute the script in the base directory containing the test files :</p>
+
+<pre><code class="bash"># in the directory containing the test files
+convert-junit5-assertions-to-assertj-on-osx.sh</code></pre>
+
+         <p>It is not perfect but should do most of the job. After executing it, you will need to : </p>
+         <ul>
+            <li>optimize imports with your IDE to remove unused imports.</span></li>
+            <li>if you were using <span class="small-code">assertEquals</span> with a delta to compare numbers, you will need to statically import <span class="small-code">org.assertj.core.api.Assertions.offset</span> which is how you express deltas in AssertJ (see the <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/NumberAssertionsExamples.java">number_assertions_with_offset_examples()</a> test at the end of NumberAssertionsExamples for an example).</li>
+         </ul>
+
+         <p>The script handles the cases where you use an assertion description, for example :<pre><code class="java">assertEquals("a", "a", "test context");</code></pre> will be replaced by :</p><p><pre><code class="java">assertThat("a").as("test context").isEqualTo("a");</code></pre> </p>
+
+      </div>
+   </div>
+</div>
+
+
+<br>
+<!--
+<div class="container">
+   <footer>
+      <div class="row">
+         <div class="col-lg-12">
+            <p>AssertJ - Licensed under the Apache License, Version 2.0.</p>
+         </div>
+      </div>
+   </footer>
+</div>
+-->
+
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/modern-business.js"></script>
+<script src="js/assertj.js"></script>
+
+</body>
+</html>
