@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+$head
+
+<body>
+
+$menu
+
+<div class="container">
+   <div class="row">
+
+      $assertj_core_side_menu
+
+      <div class="col-lg-10 col-md-10 col-sm-10 text-left">
+      <h1 class="page-header">Converting your JUnit 5 assertions to AssertJ</h1>
+
+         <p>This page provides a script which converts your existing JUnit 5 assertions to AssertJ ones. Note that both types of assertions can coexist, you don't have to migrate all at once.</p>
+         <p>The idea is to convert code like :<pre><code class="java">assertEquals(expected, actual);</code></pre> to :</p><p><pre><code class="java">assertThat(actual).isEqualTo(expected);</code></pre> </p>
+
+          <p>See the <a href="assertj-core-converting-junit-assertions-to-assertj.html">JUnit 4 Assertions Migration Guide</a> for more information. This script is a copy of JUnit 4 script with few necessary modifications.</p>
+
+
+          <p>Currently there is only OSX script available for JUnit 5 :</p>
+         <ul>
+            <li>osx : <a href="https://github.com/joel-costigliola/assertj-core/blob/master/src/main/scripts/convert-junit5-assertions-to-assertj-on-osx.sh">convert-junit5-assertions-to-assertj-on-osx.sh</a></span></li>
+         </ul>
+
+         <p>Usage : On OSX execute the script in the base directory containing the test files :</p>
+
+<pre><code class="bash"># in the directory containing the test files
+convert-junit5-assertions-to-assertj-on-osx.sh</code></pre>
+
+         <p>It is not perfect but should do most of the job. After executing it, you will need to : </p>
+         <ul>
+            <li>optimize imports with your IDE to remove unused imports.</span></li>
+            <li>if you were using <span class="small-code">assertEquals</span> with a delta to compare numbers, you will need to statically import <span class="small-code">org.assertj.core.api.Assertions.offset</span> which is how you express deltas in AssertJ (see the <a href="https://github.com/joel-costigliola/assertj-examples/blob/master/assertions-examples/src/test/java/org/assertj/examples/NumberAssertionsExamples.java">number_assertions_with_offset_examples()</a> test at the end of NumberAssertionsExamples for an example).</li>
+         </ul>
+
+         <p>The script handles the cases where you use an assertion description, for example :<pre><code class="java">assertEquals("a", "a", "test context");</code></pre> will be replaced by :</p><p><pre><code class="java">assertThat("a").as("test context").isEqualTo("a");</code></pre> </p>
+
+      </div>
+   </div>
+</div>
+
+
+$footer
+
+$javascript
+
+</body>
+</html>
