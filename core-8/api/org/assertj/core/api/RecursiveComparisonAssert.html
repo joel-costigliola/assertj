@@ -606,7 +606,7 @@ extends <a href="../../../../org/assertj/core/api/AbstractAssert.html" title="cl
  sherlock2.home.address.number = 221;
 
  // assertion succeeds but that's not what we expected since the home.address.street fields differ
- // but the equals implemenation in Address does not compare them.
+ // but the equals implementation in Address does not compare them.
  assertThat(sherlock).usingRecursiveComparison()
                      .isEqualTo(sherlock2);
 
