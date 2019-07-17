@@ -197,52 +197,40 @@ javax.swing.JTabbedPane[name='tabbedPane', selectedTabIndex=1, selectedTabTitle=
             extends <code>JButton</code>), you can extend an existing concrete AssertJ Swing fixture
             (<code>JButtonFixture</code> in our example).</p>
 
-         <p>If the custom GUI component does not extend any JDK Swig component, or if you prefer to create a
+         <p>If the custom GUI component does not extend any JDK Swing component, or if you prefer to create a
             AssertJ Swing fixture from scratch, please read the following</p>
          <ul>
-            <li>Extend ComponentFixture. This class provides all the necessary wiring of a GUI component to test and a
-                <code>Robot</code>. It also provides some very basic functionality and convenience methods.</li>
+            <li>Extend <a href="swing/api/org/assertj/swing/fixture/AbstractComponentFixture.html" target="_blank">AbstractComponentFixture</a>.
+              This class provides all the necessary wiring of a GUI component to test and a <code>Robot</code>. It also
+              provides some very basic functionality and convenience methods.</li>
             <li>If want to simulate a user right-clicking on your component and showing a <code>JPopupMenu</code>,
-                extend <code>JPopupMenuInvokerFixture</code>.</li>
-            <li>Implement any of the following interfaces if needed:
-               <ul>
-                  <li><code>CommonComponentFixture</code></li>
-                  <li><code>FocusableComponentFixture</code></li>
-                  <li><code>KeyboardInputSimulationFixture</code></li>
-                  <li><code>MouseInputSimulationFixture</code></li>
-                  <li><code>StateVerificationFixture</code></li>
-               </ul>
-            </li>
-            <li>You can also extend <code>GenericComponentFixture</code>, which extends <code>ComponentFixture</code>
-                and implements the interfaces mentioned in the previous point.</li>
+              extend <a href="swing/api/org/assertj/swing/fixture/AbstractJPopupMenuInvokerFixture.html" target="_blank">AbstractJPopupMenuInvokerFixture</a>.</li>
          </ul>
 
          <div class="panel panel-danger">
             <div class="panel-heading">Warning</div>
             <div class="panel-body">
-               To avoid unexpected side effects in your tests, you must access Swing components in the event dispatch
-               thread.
+               To avoid unexpected side effects in your tests, you must access Swing components in the event dispatch thread.
             </div>
          </div>
 
-         <h3>Create an extension for ContainerFixture</h3>
-         <p>By default, implementations of <code>ContainerFixture</code> provide shortcut methods to access the standard
-            Swing components (the ones that come in the JDK) in a Container. For example, the following code listing
-            shows shortcuts methods to access a <code>JLabel</code> and a <code>JTree</code> from a <code>JFrame</code>
-            being managed by a <code>FrameFixture</code>:</p>
+         <h3>Create an extension for AbstractContainerFixture</h3>
+         <p>By default, implementations of <a href="swing/api/org/assertj/swing/fixture/AbstractContainerFixture.html" target="_blank">AbstractContainerFixture</a>
+            provide shortcut methods to access the standard Swing components (the ones that come in the JDK) in a Container. For example, the following code listing
+            shows shortcuts methods to access a <code>JLabel</code> and a <code>JTree</code> from a <code>JFrame</code> being managed by a <code>FrameFixture</code>:</p>
          <pre><code class="language-java">FrameFixture frame = new FrameFixture(new MyFrame());
 frame.label("pathLabel").requireText("Path:");
 frame.tree("navigationTree").selectPath("c:/projects/fest");</code></pre>
 
          <p>If you have created a fixture for your custom GUI component, it is not possible to add a shortcut to
-            <code>Container</code> due to the lack of extension methods in Java. For example, let's assume you have
+            <code>AbstractContainerFixture</code> due to the lack of extension methods in Java. For example, let's assume you have
             created a custom GUI component called <code>MyCalendar</code> and a fixture to use this custom component in
             your GUI tests called <code>MyCalendarFixture</code>. It is not possible to add the shortcut method calendar
-            to <code>ContainerFixture</code> and have all its implementations look like this:</p>
+            to <code>AbstractContainerFixture</code> and have all its implementations look like this:</p>
          <pre><code class="language-java">frame.calendar("myCalendar").selectDate("10/18/08");</code></pre>
 
-         <p>To overcome this limitation, AssertJ Swing provides <code>ComponentFixtureExtension</code>. The following
-            code listing shows an extension to add a shortcut to a <code>MyCalendarFixture</code>. This extension looks up a
+         <p>To overcome this limitation, AssertJ Swing provides <a href="swing/api/org/assertj/swing/fixture/ComponentFixtureExtension.html" target="_blank">ComponentFixtureExtension</a>.
+            The following code listing shows an extension to add a shortcut to a <code>MyCalendarFixture</code>. This extension looks up a
             <code>MyCalendar</code> that has a matching name and is showing on the screen:</p>
          <pre class="pre-scrollable"><code class="language-java">public class MyCalendarFixtureExtension extends ComponentFixtureExtension<MyCalendar, MyCalendarFixture> {
 
@@ -265,7 +253,7 @@ frame.tree("navigationTree").selectPath("c:/projects/fest");</code></pre>
          <p>The only method that needs to be implemented is <code>createFixture(Robot, Container)</code>, which is
             responsible for creating our custom fixture. The static method <code>calendarWithName(String)</code> is just
             a convenience factory method, which we will use to connect our extension to any implementation of
-            <code>ContainerFixture</code>:</p>
+            <code>AbstractContainerFixture</code>:</p>
          <pre><code class="language-java">// import static org.assertj.swing.sample.MyCalendarFixtureExtension.calendarWithName;
 
 FrameFixture frame = new FrameFixture(new MyFrame());
