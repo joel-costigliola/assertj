@@ -3,14 +3,11 @@
     // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
-        {
-            "label": "gs",
-            "type": "shell",
-            "command": "./generate-html.sh",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        }
+      {
+        "label": "gs",
+        "type": "shell",
+        "command": "./generate-html.sh",
+        "group": "build"
+      }
     ]
 }
