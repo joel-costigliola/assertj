@@ -30,24 +30,24 @@ $menu
 <p>Javadoc&nbsp;: <a href="db/1.2.x/api/index.html">for versions 1.2.x</a>
 <div class="release-section-category">Improvements&nbsp;:</div>
 <ul>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/36">issue #36</a>&nbsp;: Add order on table (with <code>Order</code>)</span></li>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/41">issue #41</a>&nbsp;: Add <code class="java">BDDAssertions</code> so you can use <code class="java">then()</code> instead of <code class="java">assertThat()</code> <span class="contributor">(<a href="https://github.com/PascalSchumacher">Pascal Schumacher</a>)</span></li>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/43">issue #43</a>&nbsp;: Add <code class="java">isEqualTo(Character)</code> and <code class="java">isNotEqualTo(Character)</code> for values. Add <code class="java">hasValues(Character...)</code> and <code class="java">containsValues(Character...)</code> for columns. Add <code class="java">hasValues(Character)</code> and <code class="java">hasValues(Character, Character)</code> for columns of changes</span></li>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/45">issue #45</a>&nbsp;: Add support for testing that a row contains no Null values : <code class="java">hasOnlyNotNullValues()</code> assertion method <span class="contributor">(<a href="https://github.com/fiery-phoenix">fiery-phoenix</a>)</span></li>
+<li><a href="https://github.com/assertj/assertj-db/issues/36">issue #36</a>&nbsp;: Add order on table (with <code>Order</code>)</span></li>
+<li><a href="https://github.com/assertj/assertj-db/issues/41">issue #41</a>&nbsp;: Add <code class="java">BDDAssertions</code> so you can use <code class="java">then()</code> instead of <code class="java">assertThat()</code> <span class="contributor">(<a href="https://github.com/PascalSchumacher">Pascal Schumacher</a>)</span></li>
+<li><a href="https://github.com/assertj/assertj-db/issues/43">issue #43</a>&nbsp;: Add <code class="java">isEqualTo(Character)</code> and <code class="java">isNotEqualTo(Character)</code> for values. Add <code class="java">hasValues(Character...)</code> and <code class="java">containsValues(Character...)</code> for columns. Add <code class="java">hasValues(Character)</code> and <code class="java">hasValues(Character, Character)</code> for columns of changes</span></li>
+<li><a href="https://github.com/assertj/assertj-db/issues/45">issue #45</a>&nbsp;: Add support for testing that a row contains no Null values : <code class="java">hasOnlyNotNullValues()</code> assertion method <span class="contributor">(<a href="https://github.com/fiery-phoenix">fiery-phoenix</a>)</span></li>
 <li>Add <code class="java">isEmpty()</code> assertion method related to number of rows <span class="contributor">(<a href="https://github.com/fiery-phoenix">fiery-phoenix</a>)</span></li>
 </ul>
 <div class="release-section-category">Bug fixes&nbsp;:</div>
 <ul>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/39">issue #39</a>&nbsp;: Add start delimiter and end delimiter for table name and column name (used to generate the request) in <code class="java">Table</code></li>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/49">issue #49</a>&nbsp;: <code class="java">NullPointerException</code> while asserting no changes</li>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/52">issue #52</a>&nbsp;: Fix about the outputs with column name and value with %</li>
+<li><a href="https://github.com/assertj/assertj-db/issues/39">issue #39</a>&nbsp;: Add start delimiter and end delimiter for table name and column name (used to generate the request) in <code class="java">Table</code></li>
+<li><a href="https://github.com/assertj/assertj-db/issues/49">issue #49</a>&nbsp;: <code class="java">NullPointerException</code> while asserting no changes</li>
+<li><a href="https://github.com/assertj/assertj-db/issues/52">issue #52</a>&nbsp;: Fix about the outputs with column name and value with %</li>
 </ul>
 <h3 class="page-header" ><span id="assertj-db-1.1.1"></span>AssertJ-DB 1.1.1&nbsp;:</h3>
 <p>Release date : 2016-04-23 (<a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-db|1.1.1|bundle">dependency declaration</a>)</p>
 <p>Javadoc&nbsp;: <a href="db/1.1.x/api/index.html">for versions 1.1.x</a>
 <div class="release-section-category">Bug fixes&nbsp;:</div>
 <ul>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/37">issue #37</a>&nbsp;: assertj-db 1.1.0 does not work with java 7</li>
+<li><a href="https://github.com/assertj/assertj-db/issues/37">issue #37</a>&nbsp;: assertj-db 1.1.0 does not work with java 7</li>
 </ul>
 <h3 class="page-header" ><span id="assertj-db-1.1.0"></span>AssertJ-DB 1.1.0&nbsp;:</h3>
 <p>Release date : 2016-04-14 (<a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-db|1.1.0|bundle">dependency declaration</a>)</p>
@@ -55,29 +55,29 @@ $menu
 <div class="release-section-category">Improvements&nbsp;:</div>
 <ul>
 <li>Add <code class="java">from(Calendar)</code> and <code class="java">now()</code> methods to <code class="java">DateValue</code>, <code class="java">TimeValue</code> and <code class="java">DateTimeValue</code></li>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/9">issue #9</a>&nbsp;: Provide a way to view the data of a <code class="java">Table</code>, of a <code class="java">Request</code> or of <code class="java">Changes</code> with <code class="java">Outputs</code></span></li>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/15">issue #15</a>&nbsp;: Add support for <code class="java">UUID</code> type columns <span class="contributor">(Otoniel Isidoro)</span></li>
+<li><a href="https://github.com/assertj/assertj-db/issues/9">issue #9</a>&nbsp;: Provide a way to view the data of a <code class="java">Table</code>, of a <code class="java">Request</code> or of <code class="java">Changes</code> with <code class="java">Outputs</code></span></li>
+<li><a href="https://github.com/assertj/assertj-db/issues/15">issue #15</a>&nbsp;: Add support for <code class="java">UUID</code> type columns <span class="contributor">(Otoniel Isidoro)</span></li>
 <li>Add a <code class="java">isOfClass(Class)</code> assertion method for value and column</li>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/18">issue #18</a>&nbsp;: Add <code class="java">isCloseTo(...)</code> methods for <code class="java">Number</code>, <code class="java">DateValue</code>, <code class="java">TimeValue</code> and <code class="java">DateTimeValue</code></span></li>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/19">issue #19</a>&nbsp;: Add support for BLOBs and CLOBs</span></li>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/22">issue #22</a>&nbsp;: Add <code class="java">isEqualTo(Object)</code> for values. Add <code class="java">hasValues(Object...)</code> for columns. Add <code class="java">hasValues(Object)</code> and <code class="java">hasValues(Object, Object)</code> for columns of changes</span></li>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/25">issue #25</a>&nbsp;: Add <code class="java">containsValues(...)</code> methods for columns</span></li>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/29">issue #29</a>&nbsp;: Add <code class="java">hasNumberOfXXXGreaterThan(...)</code>, <code class="java">hasNumberOfXXXLessThan(...)</code>, <code class="java">hasNumberOfXXXGreaterThanOrEqualTo(...)</code> and <code class="java">hasNumberOfXXXLessThanOrEqualTo(...)</code> methods for the rows, columns, changes and modified columns</span></li>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/34">issue #34</a>&nbsp;: Enhance exception message when column does not exist</span></li>
+<li><a href="https://github.com/assertj/assertj-db/issues/18">issue #18</a>&nbsp;: Add <code class="java">isCloseTo(...)</code> methods for <code class="java">Number</code>, <code class="java">DateValue</code>, <code class="java">TimeValue</code> and <code class="java">DateTimeValue</code></span></li>
+<li><a href="https://github.com/assertj/assertj-db/issues/19">issue #19</a>&nbsp;: Add support for BLOBs and CLOBs</span></li>
+<li><a href="https://github.com/assertj/assertj-db/issues/22">issue #22</a>&nbsp;: Add <code class="java">isEqualTo(Object)</code> for values. Add <code class="java">hasValues(Object...)</code> for columns. Add <code class="java">hasValues(Object)</code> and <code class="java">hasValues(Object, Object)</code> for columns of changes</span></li>
+<li><a href="https://github.com/assertj/assertj-db/issues/25">issue #25</a>&nbsp;: Add <code class="java">containsValues(...)</code> methods for columns</span></li>
+<li><a href="https://github.com/assertj/assertj-db/issues/29">issue #29</a>&nbsp;: Add <code class="java">hasNumberOfXXXGreaterThan(...)</code>, <code class="java">hasNumberOfXXXLessThan(...)</code>, <code class="java">hasNumberOfXXXGreaterThanOrEqualTo(...)</code> and <code class="java">hasNumberOfXXXLessThanOrEqualTo(...)</code> methods for the rows, columns, changes and modified columns</span></li>
+<li><a href="https://github.com/assertj/assertj-db/issues/34">issue #34</a>&nbsp;: Enhance exception message when column does not exist</span></li>
 </ul>
 <div class="release-section-category">Bug fixes&nbsp;:</div>
 <ul>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/21">issue #21</a>&nbsp;: Add possibility to pass a reference containing a <code class="java">null</code> value like parameter to <code class="java">isEqualTo()</code> and <code class="java">isNotEqualTo()</code></span></li>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/23">issue #23</a>&nbsp;: Fix support of <code class="java">Number</code>s (bug when the mapping is a <code class="java">Double</code> instance)</span></li>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/31">issue #31</a>&nbsp;: Fix detection of primary keys (caused by letter case) in some DBMS</span></li>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/32">issue #32</a>&nbsp;: Fix SQL requests for DBMS with letter case different from upper case in the name of the DB elements</span></li>
+<li><a href="https://github.com/assertj/assertj-db/issues/21">issue #21</a>&nbsp;: Add possibility to pass a reference containing a <code class="java">null</code> value like parameter to <code class="java">isEqualTo()</code> and <code class="java">isNotEqualTo()</code></span></li>
+<li><a href="https://github.com/assertj/assertj-db/issues/23">issue #23</a>&nbsp;: Fix support of <code class="java">Number</code>s (bug when the mapping is a <code class="java">Double</code> instance)</span></li>
+<li><a href="https://github.com/assertj/assertj-db/issues/31">issue #31</a>&nbsp;: Fix detection of primary keys (caused by letter case) in some DBMS</span></li>
+<li><a href="https://github.com/assertj/assertj-db/issues/32">issue #32</a>&nbsp;: Fix SQL requests for DBMS with letter case different from upper case in the name of the DB elements</span></li>
 </ul>
 <h3 class="page-header"><span id="assertj-db-1.0.1"></span>AssertJ-DB 1.0.1&nbsp;:</h3>
 <p>Release date : 2015-08-09 (<a href="http://search.maven.org/#artifactdetails|org.assertj|assertj-db|1.0.1|bundle">dependency declaration</a>)</p>
 <p>Javadoc&nbsp;: <a href="db/1.0.x/api/index.html">for versions 1.0.x</a>
 <div class="release-section-category">Bug fixes&nbsp;:</div>
 <ul>
-<li><a href="https://github.com/joel-costigliola/assertj-db/issues/13">issue #13</a>&nbsp;: <code class="java">AbstractMethodError</code> when creating a <code class="java">Table</code> using a <code class="java">Datasource</code> instead of a <code class="java">Source</code></li>
+<li><a href="https://github.com/assertj/assertj-db/issues/13">issue #13</a>&nbsp;: <code class="java">AbstractMethodError</code> when creating a <code class="java">Table</code> using a <code class="java">Datasource</code> instead of a <code class="java">Source</code></li>
 </ul>
 
 <h3 class="page-header"><span id="assertj-db-1.0.0"></span>AssertJ-DB 1.0.0&nbsp;:</h3>
