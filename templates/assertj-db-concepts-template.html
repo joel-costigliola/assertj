@@ -273,7 +273,7 @@ $assertj_db_side_menu
       <p>A <a href="http://docs.oracle.com/javase/6/docs/api/javax/sql/DataSource.html">DataSource</a> is the classic Java way
       to get a <a href="http://docs.oracle.com/javase/6/docs/api/java/sql/Connection.html">Connection</a> to a database.</p>
       <h4 class="page-header" ><span id="source"></span>Source</h4>
-      <p>A <a href="db/current/api/org/assertj/db/type/Source.html">Source</a> is a way
+      <p>A <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Source.html">Source</a> is a way
       to connect if you have not access to a DataSource or if you do not want to use one. It allows you
       to pass the necessary connection information as constructor parameters. Below is an example of using a Source
       to connect to H2 in memory database :
@@ -283,9 +283,9 @@ $assertj_db_side_menu
 
       <h4 class="page-header" ><span id="datasourcewithlettercase"></span>DataSource with LetterCase</h4>
       <p><i>Since <a href="assertj-db-news.html#assertj-db-1.1.0">1.1.0</a></i></p>
-      <p>A <a href="db/current/api/org/assertj/db/type/DataSourceWithLetterCase.html">DataSourceWithLetterCase</a> is a 
+      <p>A <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/DataSourceWithLetterCase.html">DataSourceWithLetterCase</a> is a 
       <a href="http://docs.oracle.com/javase/6/docs/api/javax/sql/DataSource.html">DataSource</a> which allows to indicate the
-      <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> 
+      <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> 
       for the tables, columns and primary keys.</p>
       <pre><code class="java">DataSource ds = new DataSourceWithLetterCase(dataSource, 
                                              tableLetterCase, 
@@ -294,9 +294,9 @@ $assertj_db_side_menu
       <p>For more information, see the <a href="#dblettercase">paragraph on LetterCase</a>.</p>
       <h4 class="page-header" ><span id="sourcewithlettercase"></span>Source with LetterCase</h4>
       <p><i>Since <a href="assertj-db-news.html#assertj-db-1.1.0">1.1.0</a></i></p>
-      <p>A <a href="db/current/api/org/assertj/db/type/SourceWithLetterCase.html">SourceWithLetterCase</a> is a 
-      <a href="db/current/api/org/assertj/db/type/Source.html">Source</a> which allows to indicate the
-      <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> 
+      <p>A <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/SourceWithLetterCase.html">SourceWithLetterCase</a> is a 
+      <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Source.html">Source</a> which allows to indicate the
+      <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> 
       for the tables, columns and primary keys.</p>
       <pre><code class="java">Source s = new SourceWithLetterCase("jdbc:h2:mem:test", "sa", "", 
                                     tableLetterCase, 
@@ -306,25 +306,25 @@ $assertj_db_side_menu
 
       <h3 class="page-header" ><span id="elements"></span>Elements of the database</h3>
       <p>Here the elements on which it is possible to make assertions.</p>
-      <p>Note that, there are only 3 root elements : <a href="db/current/api/org/assertj/db/type/Table.html">Table</a>,
-      <a href="db/current/api/org/assertj/db/type/Request.html">Request</a>
-      and <a href="db/current/api/org/assertj/db/type/Changes.html">Changes</a>.</p>
+      <p>Note that, there are only 3 root elements : <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Table.html">Table</a>,
+      <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Request.html">Request</a>
+      and <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Changes.html">Changes</a>.</p>
       <p>That means that the other elements are components or sub components of a root element.</p>
       <p>A root element is an element on which the assertion start (in practice, the parameter of a <code class="java">assertThat(...)</code> method).</p>
       </p>
       <h4 class="page-header" ><span id="table"></span>Table</h4>
-      <p>A <a href="db/current/api/org/assertj/db/type/Table.html">Table</a> represents
+      <p>A <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Table.html">Table</a> represents
       a table in the database.<br/>
-      <p>A <a href="db/current/api/org/assertj/db/type/Table.html">Table</a> 
+      <p>A <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Table.html">Table</a> 
       needs a way to connect to the database (either a <a href="http://docs.oracle.com/javase/6/docs/api/javax/sql/DataSource.html">DataSource</a>
-      or a <a href="db/current/api/org/assertj/db/type/Source.html">Source</a>) and a name (the two mandatory constructor parameters).</p>
+      or a <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Source.html">Source</a>) and a name (the two mandatory constructor parameters).</p>
       <pre><code class="java">// Get a DataSource
 DataSource dataSource = ...
 // Declare the "members" table by using a DataSource
 Table table1 = new Table(dateSource, "members");
 // Declare the "members" table by using a Source
 Table table2 = new Table(source, "members");</code></pre>
-<p>The two <a href="db/current/api/org/assertj/db/type/Table.html">Table</a>s above 
+<p>The two <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Table.html">Table</a>s above 
 (<code class="java">table1</code> and <code class="java">table2</code>) are equivalent.</p>
 
       <table border="1" cellspacing="0" cellpadding="2">
@@ -373,7 +373,7 @@ Table table2 = new Table(source, "members");</code></pre>
 
       <br/>
 
-      <p>For a <a href="db/current/api/org/assertj/db/type/Table.html">Table</a>,
+      <p>For a <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Table.html">Table</a>,
       it is possible to choose the columns to include and to exclude in the assertions.</p>
       <pre><code class="java">// Get the data of the "id" and "name" columns of the "members" table
 Table table3 = new Table(source, &quot;members&quot;, new String[] { &quot;id&quot;, &quot;name&quot; }, null);
@@ -465,9 +465,9 @@ Table table5 = new Table(source, &quot;members&quot;, new String[] { &quot;id&qu
 
       <br/>
 
-      <p><i>Since version <a href="assertj-db-news.html#assertj-db-1.2.0">1.2.0</a></i>, there are the possibility to indicate delimiters (start delimiter and end delimiter) and <code class="java"><a href="db/current/api/org/assertj/db/type/Table.Order.html">Order</a></code>.</p>
+      <p><i>Since version <a href="assertj-db-news.html#assertj-db-1.2.0">1.2.0</a></i>, there are the possibility to indicate delimiters (start delimiter and end delimiter) and <code class="java"><a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Table.Order.html">Order</a></code>.</p>
       <p>The delimiters are usefull when the table name or column name is a reserved word or contains special characters (like space or '%').
-      <code class="java"><a href="db/current/api/org/assertj/db/type/Table.Order.html">Order</a></code> allows to choose the order of the <code class="java">Row</code>.
+      <code class="java"><a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Table.Order.html">Order</a></code> allows to choose the order of the <code class="java">Row</code>.
       </p>
       <pre><code class="java">// The line code below throws SQLException because &quot;group&quot; is SQL reserved word 
 Table table6 = new Table(source, &quot;group&quot;);
@@ -542,12 +542,12 @@ Table table8 = new Table(source, &quot;members&quot;, new Order[] {
 </div>
 
       <h4 class="page-header" ><span id="request"></span>Request</h4>
-      <p>A <a href="db/current/api/org/assertj/db/type/Request.html">Request</a> represents
+      <p>A <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Request.html">Request</a> represents
       a SQL request on the database.</p>
-      <p>Like a <a href="db/current/api/org/assertj/db/type/Table.html">Table</a>,
-      a <a href="db/current/api/org/assertj/db/type/Request.html">Request</a> 
+      <p>Like a <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Table.html">Table</a>,
+      a <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Request.html">Request</a> 
       needs a way to connect to the database (either a <a href="http://docs.oracle.com/javase/6/docs/api/javax/sql/DataSource.html">DataSource</a>
-      or a <a href="db/current/api/org/assertj/db/type/Source.html">Source</a>).<br/>
+      or a <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Source.html">Source</a>).<br/>
       </p>
       <pre><code class="java">// Get a DataSource
 DataSource dataSource = ...
@@ -559,7 +559,7 @@ Request request1 = new Request(source,
 // by using the DataSource
 Request request2 = new Request(dataSource, 
                                "select name, firstname from members where id = 2 or id = 3");</code></pre>
-<p>The two <a href="db/current/api/org/assertj/db/type/Request.html">Request</a>s above 
+<p>The two <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Request.html">Request</a>s above 
 (<code class="java">request1</code> and <code class="java">request2</code>) are equivalent.</p>
 
       <table border="1" cellspacing="0" cellpadding="2">
@@ -581,7 +581,7 @@ Request request2 = new Request(dataSource,
         </tr>
       </table>
 
-      <p>For a <a href="db/current/api/org/assertj/db/type/Request.html">Request</a>,
+      <p>For a <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Request.html">Request</a>,
       it is possible to use a simple SQL request or a SQL request with one or many parameters.
       </p>
       <pre><code class="java">// Declare a request which gets the name and the firstname of the members
@@ -636,7 +636,7 @@ Request request4 = new Request(dataSource,
       </table>
 </div>
       <h4 class="page-header" ><span id="changes"></span>Changes</h4>
-      <p>The <a href="db/current/api/org/assertj/db/type/Changes.html">Changes</a>
+      <p>The <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Changes.html">Changes</a>
       are the differences of states in database between a <code class="java">start point</code> and a <code class="java">end point</code>. 
       </p>
       <p align="center">
@@ -661,9 +661,9 @@ Changes changes5 = new Changes(request4);
 // The names of the columns used for the primary key are found in the metadata for a table
 // but for a request it can be important to set the primary key
 Changes changes6 = new Changes(request4).setPksName("name");</code></pre>
-<p>The two <a href="db/current/api/org/assertj/db/type/Changes.html">Changes</a> above 
+<p>The two <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Changes.html">Changes</a> above 
 (<code class="java">changes1</code> and <code class="java">changes2</code>) are equivalent.</p>
-<p>The two <a href="db/current/api/org/assertj/db/type/Changes.html">Changes</a> above 
+<p>The two <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Changes.html">Changes</a> above 
 (<code class="java">changes4</code> and <code class="java">changes5</code>) are also equivalent.</p>
 
 <p>The changes are ordered :</p>
@@ -1030,10 +1030,10 @@ In <i>Representation of "changes4" or "changes5"</i> the modification of first r
 <br/>
       <h4 class="page-header" ><span id="change"></span>Change</h4>
 
-<p>A <a href="db/current/api/org/assertj/db/type/Change.html">Change</a>
-is an element of the <a href="db/current/api/org/assertj/db/type/Changes.html">Changes</a>.
+<p>A <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Change.html">Change</a>
+is an element of the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Changes.html">Changes</a>.
 </p>
-<p>Below framed in red the first <a href="db/current/api/org/assertj/db/type/Change.html">Change</a>
+<p>Below framed in red the first <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Change.html">Change</a>
 of "changes3".
 </p>
 
@@ -1107,13 +1107,13 @@ of "changes3".
 
       <h4 class="page-header" ><span id="row"></span>Row</h4>
 
-<p>A <a href="db/current/api/org/assertj/db/type/Row.html">Row</a>
-can represent a row of a <a href="db/current/api/org/assertj/db/type/Table.html">Table</a>
-, of a <a href="db/current/api/org/assertj/db/type/Request.html">Request</a> or 
-of a <a href="db/current/api/org/assertj/db/type/Change.html">Change</a>.
+<p>A <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Row.html">Row</a>
+can represent a row of a <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Table.html">Table</a>
+, of a <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Request.html">Request</a> or 
+of a <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Change.html">Change</a>.
 </p>
 
-<p>Below framed in red the third <a href="db/current/api/org/assertj/db/type/Row.html">Row</a> of "table4".
+<p>Below framed in red the third <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Row.html">Row</a> of "table4".
 </p>
 
       <table border="1" cellspacing="0" cellpadding="2">
@@ -1157,7 +1157,7 @@ of a <a href="db/current/api/org/assertj/db/type/Change.html">Change</a>.
 
 <br/>
 
-<p>Below framed in red the second <a href="db/current/api/org/assertj/db/type/Row.html">Row</a> of "request3".
+<p>Below framed in red the second <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Row.html">Row</a> of "request3".
 </p>
       <table border="1" cellspacing="0" cellpadding="2">
       <caption style="font-size:70%">Representation of "request3"</caption>
@@ -1185,8 +1185,8 @@ of a <a href="db/current/api/org/assertj/db/type/Change.html">Change</a>.
 
 <br/>
 
-<p>Below framed in red the <a href="db/current/api/org/assertj/db/type/Row.html">Row</a> at end point of 
-the second <a href="db/current/api/org/assertj/db/type/Change.html">Change</a>
+<p>Below framed in red the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Row.html">Row</a> at end point of 
+the second <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Change.html">Change</a>
 of "changes3".
 </p>
 
@@ -1262,13 +1262,13 @@ of "changes3".
 
       <h4 class="page-header" ><span id="column"></span>Column</h4>
 
-<p>A <a href="db/current/api/org/assertj/db/type/Column.html">Column</a>
-can represent a column of a <a href="db/current/api/org/assertj/db/type/Table.html">Table</a>
-, of a <a href="db/current/api/org/assertj/db/type/Request.html">Request</a> or 
-of a <a href="db/current/api/org/assertj/db/type/Change.html">Change</a>.
+<p>A <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Column.html">Column</a>
+can represent a column of a <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Table.html">Table</a>
+, of a <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Request.html">Request</a> or 
+of a <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Change.html">Change</a>.
 </p>
 
-<p>Below framed in red the second <a href="db/current/api/org/assertj/db/type/Column.html">Column</a> of "table4".
+<p>Below framed in red the second <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Column.html">Column</a> of "table4".
 </p>
 
       <table border="1" cellspacing="0" cellpadding="2">
@@ -1311,7 +1311,7 @@ of a <a href="db/current/api/org/assertj/db/type/Change.html">Change</a>.
       </table>
 
 <br/>
-<p>Below framed in red the second <a href="db/current/api/org/assertj/db/type/Column.html">Column</a> of "request3".
+<p>Below framed in red the second <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Column.html">Column</a> of "request3".
 </p>
 
       <table border="1" cellspacing="0" cellpadding="2">
@@ -1338,8 +1338,8 @@ of a <a href="db/current/api/org/assertj/db/type/Change.html">Change</a>.
         </tr>
       </table>
 <br/>
-<p>Below framed in red the fourth <a href="db/current/api/org/assertj/db/type/Column.html">Column</a> of 
-the second <a href="db/current/api/org/assertj/db/type/Change.html">Change</a>
+<p>Below framed in red the fourth <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Column.html">Column</a> of 
+the second <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Change.html">Change</a>
 of "changes3".
 </p>
 
@@ -1415,16 +1415,16 @@ of "changes3".
 
       <h4 class="page-header" ><span id="value"></span>Value</h4>
 
-<p>A value can be in a <a href="db/current/api/org/assertj/db/type/Row.html">Row</a>
-or in a <a href="db/current/api/org/assertj/db/type/Column.html">Column</a>.
+<p>A value can be in a <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Row.html">Row</a>
+or in a <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Column.html">Column</a>.
 </p>
 
 <p>Below framed in red (depending of the path) :
 </p>
 <ul>
-<li>the second value of the third <a href="db/current/api/org/assertj/db/type/Row.html">Row</a> of "table4"
+<li>the second value of the third <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Row.html">Row</a> of "table4"
 </li>
-<li>the third value of the second <a href="db/current/api/org/assertj/db/type/Column.html">Column</a> of "table4"
+<li>the third value of the second <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Column.html">Column</a> of "table4"
 </li>
 </ul>
 
@@ -1471,9 +1471,9 @@ or in a <a href="db/current/api/org/assertj/db/type/Column.html">Column</a>.
 <p>Below framed in red (depending of the path) :
 </p>
 <ul>
-<li>the second value of the second <a href="db/current/api/org/assertj/db/type/Row.html">Row</a> of "request3"
+<li>the second value of the second <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Row.html">Row</a> of "request3"
 </li>
-<li>the second value of the second <a href="db/current/api/org/assertj/db/type/Column.html">Column</a> of "request3"
+<li>the second value of the second <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Column.html">Column</a> of "request3"
 </li>
 </ul>
 
@@ -1505,12 +1505,12 @@ or in a <a href="db/current/api/org/assertj/db/type/Column.html">Column</a>.
 <p>Below framed in red (depending of the path) :
 </p>
 <ul>
-<li>the fourth value of the <a href="db/current/api/org/assertj/db/type/Row.html">Row</a> at end point of 
-the second <a href="db/current/api/org/assertj/db/type/Change.html">Change</a>
+<li>the fourth value of the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Row.html">Row</a> at end point of 
+the second <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Change.html">Change</a>
 of "changes3"
 </li>
-<li>the value at end point of the fourth <a href="db/current/api/org/assertj/db/type/Column.html">Column</a> of 
-the second <a href="db/current/api/org/assertj/db/type/Change.html">Change</a>
+<li>the value at end point of the fourth <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Column.html">Column</a> of 
+the second <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Change.html">Change</a>
 of "changes3"
 </li>
 </ul>
@@ -1589,60 +1589,60 @@ of "changes3"
 
       <h3 class="page-header" ><span id="type"></span>Type</h3>
       <h4 class="page-header" ><span id="datatype"></span>Data Type</h4>
-      <p>As see above there are three root elements of database, but only <a href="db/current/api/org/assertj/db/type/Table.html">Table</a>
-      and <a href="db/current/api/org/assertj/db/type/Request.html">Request</a> are data elements.<br/> 
+      <p>As see above there are three root elements of database, but only <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Table.html">Table</a>
+      and <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Request.html">Request</a> are data elements.<br/> 
       All the possible types of data are contained in 
-      the <a href="db/current/api/org/assertj/db/type/DataType.html">DataType</a> enumeration.<br/>
+      the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/DataType.html">DataType</a> enumeration.<br/>
       The type of the data can be :
       </p>
       <ul>
-        <li><code class="java"><a href="db/current/api/org/assertj/db/type/DataType.html#TABLE">TABLE</a></code></li>
-        <li><code class="java"><a href="db/current/api/org/assertj/db/type/DataType.html#REQUEST">REQUEST</a></code></li>
+        <li><code class="java"><a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/DataType.html#TABLE">TABLE</a></code></li>
+        <li><code class="java"><a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/DataType.html#REQUEST">REQUEST</a></code></li>
       </ul>
       <h4 class="page-header" ><span id="changetype"></span>Change Type</h4>
       <p>The change can be a creation, a modification or a deletion.<br/> 
       All the possible types of change are contained in 
-      the <a href="db/current/api/org/assertj/db/type/ChangeType.html">ChangeType</a> enumeration.<br/>
+      the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/ChangeType.html">ChangeType</a> enumeration.<br/>
       The type of the change depends of operation on database :
       </p>
       <ul>
-        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ChangeType.html#CREATION">CREATION</a></code> for a <code class="sql">insert</code> sql request</li>
-        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ChangeType.html#MODIFICATION">MODIFICATION</a></code> for a <code class="sql">update</code> sql request</li>
-        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ChangeType.html#DELETION">DELETION</a></code> for a <code class="sql">delete</code> sql request</li>
+        <li><code class="java"><a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/ChangeType.html#CREATION">CREATION</a></code> for a <code class="sql">insert</code> sql request</li>
+        <li><code class="java"><a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/ChangeType.html#MODIFICATION">MODIFICATION</a></code> for a <code class="sql">update</code> sql request</li>
+        <li><code class="java"><a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/ChangeType.html#DELETION">DELETION</a></code> for a <code class="sql">delete</code> sql request</li>
       </ul>
       <h4 class="page-header" ><span id="valuetype"></span>Value Type</h4>
       <p>The value can be a date, a boolean or a text for example.<br/> 
       All the possible types of value are contained in 
-      the <a href="db/current/api/org/assertj/db/type/ValueType.html">ValueType</a> enumeration.<br/>
+      the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/ValueType.html">ValueType</a> enumeration.<br/>
       The type of the value depends of class of the object given by <code class="java">java.sql</code> when the data are got from database :
       </p>
       <ul>
-        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ValueType.html#BYTES">BYTES</a></code> for a array of bytes (<code class="java">byte[]</code>)</li>
-        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ValueType.html#BOOLEAN">BOOLEAN</a></code> for a <code class="java">java.lang.Boolean</code></li>
-        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ValueType.html#TEXT">TEXT</a></code> for a <code class="java">java.lang.String</code></li>
-        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ValueType.html#DATE">DATE</a></code> for a <code class="java">java.sql.Date</code></li>
-        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ValueType.html#TIME">TIME</a></code> for a <code class="java">java.sql.Time</code></li>
-        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ValueType.html#DATE_TIME">DATE_TIME</a></code> for a <code class="java">java.sql.Timestamp</code></li>
-        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ValueType.html#UUID">UUID</a></code> for a <code class="java">java.util.UUID</code> <small><i>(since <a href="assertj-db-news.html#assertj-db-1.1.0">1.1.0</a>)</i></small></li>
-        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ValueType.html#NUMBER">NUMBER</a></code> for a <code class="java">java.lang.Byte</code>, 
+        <li><code class="java"><a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/ValueType.html#BYTES">BYTES</a></code> for a array of bytes (<code class="java">byte[]</code>)</li>
+        <li><code class="java"><a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/ValueType.html#BOOLEAN">BOOLEAN</a></code> for a <code class="java">java.lang.Boolean</code></li>
+        <li><code class="java"><a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/ValueType.html#TEXT">TEXT</a></code> for a <code class="java">java.lang.String</code></li>
+        <li><code class="java"><a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/ValueType.html#DATE">DATE</a></code> for a <code class="java">java.sql.Date</code></li>
+        <li><code class="java"><a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/ValueType.html#TIME">TIME</a></code> for a <code class="java">java.sql.Time</code></li>
+        <li><code class="java"><a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/ValueType.html#DATE_TIME">DATE_TIME</a></code> for a <code class="java">java.sql.Timestamp</code></li>
+        <li><code class="java"><a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/ValueType.html#UUID">UUID</a></code> for a <code class="java">java.util.UUID</code> <small><i>(since <a href="assertj-db-news.html#assertj-db-1.1.0">1.1.0</a>)</i></small></li>
+        <li><code class="java"><a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/ValueType.html#NUMBER">NUMBER</a></code> for a <code class="java">java.lang.Byte</code>, 
         <code class="java">java.lang.Short</code>, 
         <code class="java">java.lang.Integer</code>, 
         <code class="java">java.lang.Long</code>, 
         <code class="java">java.lang.Double</code>, 
         <code class="java">java.lang.Float</code> or 
         <code class="java">java.math.BigDecimal</code></li>
-        <li><code class="java"><a href="db/current/api/org/assertj/db/type/ValueType.html#NOT_IDENTIFIED">NOT_IDENTIFIED</a></code> for other cases (for example when the value is <code class="java">null</code>)</li>
+        <li><code class="java"><a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/ValueType.html#NOT_IDENTIFIED">NOT_IDENTIFIED</a></code> for other cases (for example when the value is <code class="java">null</code>)</li>
       </ul>
       <h4 class="page-header" ><span id="ordertype"></span>Order Type</h4>
       <p><i>Since <a href="assertj-db-news.html#assertj-db-1.2.0">1.2.0</a></i></p>
       <p>The order can be a ascending or descending.<br/> 
       All the possible types of order are contained in 
-      the <a href="db/current/api/org/assertj/db/type/Table.Order.OrderType.html">Table.Order.OrderType</a> enumeration.<br/>
+      the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Table.Order.OrderType.html">Table.Order.OrderType</a> enumeration.<br/>
       The type of the order can be :
       </p>
       <ul>
-        <li><code class="java"><a href="db/current/api/org/assertj/db/type/Table.Order.OrderType.html#ASC">ASC</a></code> for an ascending order</li>
-        <li><code class="java"><a href="db/current/api/org/assertj/db/type/Table.Order.OrderType.html#DESC">DESC</a></code> for a descending order</li>
+        <li><code class="java"><a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Table.Order.OrderType.html#ASC">ASC</a></code> for an ascending order</li>
+        <li><code class="java"><a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Table.Order.OrderType.html#DESC">DESC</a></code> for a descending order</li>
       </ul>
 
 
@@ -1655,12 +1655,12 @@ of "changes3"
       <h4 class="page-header" ><span id="tableorrequestasroot"></span>With a Table or a Request as root</h4>
 
       <p>The <code class="java">assertThat(...)</code> static method of <code class="java">org.assertj.db.api.Assertions</code>
-      allows to create a root assertion on a <a href="db/current/api/org/assertj/db/type/Table.html">Table</a>.
+      allows to create a root assertion on a <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Table.html">Table</a>.
       </p>
       <pre><code class="java">import static org.assertj.db.api.Assertions.assertThat;
 
 assertThat(table)...</code></pre>
-      <p>or on a <a href="db/current/api/org/assertj/db/type/Request.html">Request</a>.
+      <p>or on a <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Request.html">Request</a>.
       </p>
       <pre><code class="java">import static org.assertj.db.api.Assertions.assertThat;
 
@@ -1677,7 +1677,7 @@ assertThat(request)...</code></pre>
       <h4 class="page-header" ><span id="changesasroot"></span>With Changes as root</h4>
 
       <p>The <code class="java">assertThat(...)</code> static method of <code class="java">org.assertj.db.api.Assertions</code>
-      allows to create a root assertion on <a href="db/current/api/org/assertj/db/type/Changes.html">Changes</a>.
+      allows to create a root assertion on <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Changes.html">Changes</a>.
       </p>
       <pre><code class="java">import static org.assertj.db.api.Assertions.assertThat;
 
@@ -1694,9 +1694,9 @@ assertThat(changes)...</code></pre>
       <h3 class="page-header" ><span id="datevalue-timevalue-datetimevalue"></span>DateValue, TimeValue and DateTimeValue</h3>
       <p>AssertJ-DB is compatible with Java 7, but we need a system to simply compare 
       data in a database with date, time and date/time like LocalDate, LocalTime and LocalDateTime of Java 8.</p>
-      <p>So The <a href="db/current/api/org/assertj/db/type/DateValue.html">DateValue</a>,
-      <a href="db/current/api/org/assertj/db/type/TimeValue.html">TimeValue</a> and
-      <a href="db/current/api/org/assertj/db/type/DateTimeValue.html">DateTimeValue</a> classes
+      <p>So The <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/DateValue.html">DateValue</a>,
+      <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/TimeValue.html">TimeValue</a> and
+      <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/DateTimeValue.html">DateTimeValue</a> classes
       are simpler but contains this kind of informations.
       </p>
       <p>There is 4 kinds of static methods to instantiate these values :
@@ -1798,83 +1798,83 @@ DateTimeValue dateTimeValue = DateTimeValue.now();       // The current date/tim
       <p>Databases have different letter cases for the name of the elements. For example, the name of the table can
       be upper case either the name is inputed in upper case or not. So this concept (and feature too) is here to
       manage these shades.</p>
-      <p>It is possible to declare a <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a>
+      <p>It is possible to declare a <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a>
       with a <a href="#datasourcewithlettercase">DataSource with LetterCase</a> or with a
       <a href="#sourcewithlettercase">Source with LetterCase</a>.</p>
-      <p>The concept of <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a>
-      is composed of <a href="db/current/api/org/assertj/db/type/lettercase/CaseConversion.html">CaseConversion</a>
-      and <a href="db/current/api/org/assertj/db/type/lettercase/CaseComparison.html">CaseComparison</a>.</p>
+      <p>The concept of <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a>
+      is composed of <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/CaseConversion.html">CaseConversion</a>
+      and <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/CaseComparison.html">CaseComparison</a>.</p>
       <h4 class="page-header" ><span id="caseconversion"></span>CaseConversion</h4>
-      <p>The <a href="db/current/api/org/assertj/db/type/lettercase/CaseConversion.html">CaseConversion</a> is used
+      <p>The <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/CaseConversion.html">CaseConversion</a> is used
       when getting a name with letter case from database : a table name, a column name or a primary key name.</p>
-      <p>There are three conversions modes : <a href="db/current/api/org/assertj/db/type/lettercase/CaseConversions.html#UPPER">UPPER</a>
+      <p>There are three conversions modes : <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/CaseConversions.html#UPPER">UPPER</a>
       which converts to upper case (<code class="java">"Name"</code> becomes <code class="java">"NAME"</code>),
-      <a href="db/current/api/org/assertj/db/type/lettercase/CaseConversions.html#LOWER">LOWER</a> which converts to lower case (<code class="java">"Name"</code> becomes <code class="java">"name"</code>)
-      and <a href="db/current/api/org/assertj/db/type/lettercase/CaseConversions.html#NO">NO</a> which keeps the case (<code class="java">"Name"</code> remains <code class="java">"Name"</code>).</p>
-      <p>Each name (table, column and primary key) got from the database is converted using a <a href="db/current/api/org/assertj/db/type/lettercase/CaseConversion.html">CaseConversion</a>.</p>
+      <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/CaseConversions.html#LOWER">LOWER</a> which converts to lower case (<code class="java">"Name"</code> becomes <code class="java">"name"</code>)
+      and <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/CaseConversions.html#NO">NO</a> which keeps the case (<code class="java">"Name"</code> remains <code class="java">"Name"</code>).</p>
+      <p>Each name (table, column and primary key) got from the database is converted using a <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/CaseConversion.html">CaseConversion</a>.</p>
       <h4 class="page-header" ><span id="casecomparison"></span>CaseComparison</h4>
-      <p>The <a href="db/current/api/org/assertj/db/type/lettercase/CaseComparison.html">CaseComparison</a> is used
+      <p>The <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/CaseComparison.html">CaseComparison</a> is used
       when comparing something with letter case from database or with a parameter.</p>
-      <p>There are two comparison modes : <a href="db/current/api/org/assertj/db/type/lettercase/CaseComparisons.html#IGNORE">IGNORE</a> which compares <code class="java">String</code>s by ignoring the case (<code class="java">"Name"</code> is considered equal to <code class="java">"NAME"</code>)
-      and <a href="db/current/api/org/assertj/db/type/lettercase/CaseComparisons.html#STRICT">STRICT</a> which compares <code class="java">String</code>s strictly (<code class="java">"Name"</code> is considered different from <code class="java">"NAME"</code>).</p>
-      <p>During navigation (e.g. from table to column) and assertion (e.g. on column name), the name are compared using a <a href="db/current/api/org/assertj/db/type/lettercase/CaseComparison.html">CaseComparison</a>.</p>
+      <p>There are two comparison modes : <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/CaseComparisons.html#IGNORE">IGNORE</a> which compares <code class="java">String</code>s by ignoring the case (<code class="java">"Name"</code> is considered equal to <code class="java">"NAME"</code>)
+      and <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/CaseComparisons.html#STRICT">STRICT</a> which compares <code class="java">String</code>s strictly (<code class="java">"Name"</code> is considered different from <code class="java">"NAME"</code>).</p>
+      <p>During navigation (e.g. from table to column) and assertion (e.g. on column name), the name are compared using a <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/CaseComparison.html">CaseComparison</a>.</p>
       <h4 class="page-header" ><span id="lettercase"></span>LetterCase</h4>
-      <p>A <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> is created with 
-      the <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html#getLetterCase-org.assertj.db.type.lettercase.CaseConversion-org.assertj.db.type.lettercase.CaseComparison-">getLetterCase</a>
+      <p>A <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> is created with 
+      the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/LetterCase.html#getLetterCase-org.assertj.db.type.lettercase.CaseConversion-org.assertj.db.type.lettercase.CaseComparison-">getLetterCase</a>
       static method which has a
-      <a href="db/current/api/org/assertj/db/type/lettercase/CaseConversion.html">CaseConversion</a> and a
-      <a href="db/current/api/org/assertj/db/type/lettercase/CaseComparison.html">CaseComparison</a> as parameters.
+      <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/CaseConversion.html">CaseConversion</a> and a
+      <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/CaseComparison.html">CaseComparison</a> as parameters.
       </p>
       <pre><code class="java">LetterCase letterCase = LetterCase.getLetterCase(CaseConversions.NO, CaseComparisons.IGNORE)</code></pre>
 
-      <p>In AssertJ-DB, there are three different uses of a <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> :
+      <p>In AssertJ-DB, there are three different uses of a <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> :
       the table name, the column name and the primary key name.
-      That is the reason why the <a href="db/current/api/org/assertj/db/type/DataSourceWithLetterCase.html">DataSourceWithLetterCase</a>
-      and the <a href="db/current/api/org/assertj/db/type/SourceWithLetterCase.html">SourceWithLetterCase</a> constructors
-      have three <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> parameters.
+      That is the reason why the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/DataSourceWithLetterCase.html">DataSourceWithLetterCase</a>
+      and the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/SourceWithLetterCase.html">SourceWithLetterCase</a> constructors
+      have three <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> parameters.
       </p>
-      <p>The <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> on the tables is used :
+      <p>The <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> on the tables is used :
       </p>
       <ul>
-      <li>to convert the table name : when a name is got from the database like for the <a href="db/current/api/org/assertj/db/type/Table.html">Table</a>
-      instantiation or for the table with changes found with <a href="db/current/api/org/assertj/db/type/Changes.html">Changes</a>.
+      <li>to convert the table name : when a name is got from the database like for the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Table.html">Table</a>
+      instantiation or for the table with changes found with <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Changes.html">Changes</a>.
       </li>
-      <li>to compare the table name : for the instantiation when the table is search in the database for <a href="db/current/api/org/assertj/db/type/Table.html">Table</a>, 
-      for navigation (e.g. from changes to a change on a table) or for a assertion (like <a href="db/current/api/org/assertj/db/api/assertions/AssertOnDataType.html#isOnTable-java.lang.String-">isOnTable(String name)</a>).
+      <li>to compare the table name : for the instantiation when the table is search in the database for <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Table.html">Table</a>, 
+      for navigation (e.g. from changes to a change on a table) or for a assertion (like <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnDataType.html#isOnTable-java.lang.String-">isOnTable(String name)</a>).
       </li>
       </ul>
-      <p>The <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> on the columns is used :
+      <p>The <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> on the columns is used :
       </p>
       <ul>
       <li>to convert the column name : when a column name is got from the database for a table or a request
       </li>
-      <li>to compare the column name : for the navigation (e.g. from a table to a column) or for a assertion (like <a href="db/current/api/org/assertj/db/api/assertions/AssertOnColumnName.html#hasColumnName-java.lang.String-">hasColumnName(String columnName)</a>).
+      <li>to compare the column name : for the navigation (e.g. from a table to a column) or for a assertion (like <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnColumnName.html#hasColumnName-java.lang.String-">hasColumnName(String columnName)</a>).
       </li>
       </ul>
-      <p>The <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> on the primary keys is used :
+      <p>The <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> on the primary keys is used :
       </p>
       <ul>
       <li>to convert the primary key name : when a primary key name is got from the database for a table
       </li>
-      <li>to compare the primary key name : for a assertion (like <a href="db/current/api/org/assertj/db/api/assertions/AssertOnPrimaryKey.html#hasPksNames-java.lang.String...-">hasPksNames(String... names)</a>).
+      <li>to compare the primary key name : for a assertion (like <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnPrimaryKey.html#hasPksNames-java.lang.String...-">hasPksNames(String... names)</a>).
       </li>
       </ul>
-      <p>The different <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> are explictly indicated
-      for <a href="db/current/api/org/assertj/db/type/DataSourceWithLetterCase.html">DataSourceWithLetterCase</a>
-      and <a href="db/current/api/org/assertj/db/type/SourceWithLetterCase.html">SourceWithLetterCase</a>. But for 
+      <p>The different <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a> are explictly indicated
+      for <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/DataSourceWithLetterCase.html">DataSourceWithLetterCase</a>
+      and <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/SourceWithLetterCase.html">SourceWithLetterCase</a>. But for 
       <a href="http://docs.oracle.com/javase/6/docs/api/javax/sql/DataSource.html">DataSource</a> and 
-      <a href="db/current/api/org/assertj/db/type/Source.html">Source</a>, there are <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a>
+      <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Source.html">Source</a>, there are <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/LetterCase.html">LetterCase</a>
       too but there are implicit :</p>
       <ul>
-      <li><a href="db/current/api/org/assertj/db/type/lettercase/CaseConversions.html#NO">NO</a> conversion 
-      and <a href="db/current/api/org/assertj/db/type/lettercase/CaseComparisons.html#IGNORE">IGNORE</a> comparison for table names
+      <li><a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/CaseConversions.html#NO">NO</a> conversion 
+      and <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/CaseComparisons.html#IGNORE">IGNORE</a> comparison for table names
       </li>
-      <li><a href="db/current/api/org/assertj/db/type/lettercase/CaseConversions.html#UPPER">UPPER</a> conversion 
-      and <a href="db/current/api/org/assertj/db/type/lettercase/CaseComparisons.html#IGNORE">IGNORE</a> comparison for the column and primary key name
+      <li><a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/CaseConversions.html#UPPER">UPPER</a> conversion 
+      and <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/CaseComparisons.html#IGNORE">IGNORE</a> comparison for the column and primary key name
       </li>
       </ul>
-      <p>In this example, The uses of <a href="db/current/api/org/assertj/db/type/Source.html">Source</a>
-      and <a href="db/current/api/org/assertj/db/type/SourceWithLetterCase.html">SourceWithLetterCase</a>
+      <p>In this example, The uses of <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Source.html">Source</a>
+      and <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/SourceWithLetterCase.html">SourceWithLetterCase</a>
       are equivalent :</p>
       <pre><code class="java">Source source = new Source("jdbc:h2:mem:test", "sa", "");
 Table table = new Table(source, "members");
@@ -1888,7 +1888,7 @@ Source sourceWithLC = new SourceWithLetterCase("jdbc:h2:mem:test", "sa", "",
                                                pkLetterCase);
 Table tableWithLC = new Table(sourceWithLC, "members");</code></pre>
       <p>And in this example, the uses of <a href="http://docs.oracle.com/javase/6/docs/api/javax/sql/DataSource.html">DataSource</a>
-      and <a href="db/current/api/org/assertj/db/type/DataSourceWithLetterCase.html">DataSourceWithLetterCase</a>
+      and <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/DataSourceWithLetterCase.html">DataSourceWithLetterCase</a>
       are equivalent :</p>
       <pre><code class="java">DataSource dataSource = .....
 Table table = new Table(dataSource, "members");
@@ -1901,9 +1901,9 @@ DataSource dataSourceWithLC = new DataSourceWithLetterCase(dataSource,
                                                            columnLetterCase,
                                                            pkLetterCase);
 Table tableWithLC = new Table(dataSourceWithLC, "members");</code></pre>
-      <p>Note that the letter case is extensible because the <a href="db/current/api/org/assertj/db/type/lettercase/LetterCase.html#getLetterCase-org.assertj.db.type.lettercase.CaseConversion-org.assertj.db.type.lettercase.CaseComparison-">getLetterCase</a>
-      static method's parameters are instances of the <a href="db/current/api/org/assertj/db/type/lettercase/CaseConversion.html">CaseConversion</a>
-      and the <a href="db/current/api/org/assertj/db/type/lettercase/CaseComparison.html">CaseComparison</a> interfaces.
+      <p>Note that the letter case is extensible because the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/LetterCase.html#getLetterCase-org.assertj.db.type.lettercase.CaseConversion-org.assertj.db.type.lettercase.CaseComparison-">getLetterCase</a>
+      static method's parameters are instances of the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/CaseConversion.html">CaseConversion</a>
+      and the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/lettercase/CaseComparison.html">CaseComparison</a> interfaces.
       So this is not limited to the implementations in the corresponding enumerations.
       </p>
       <h3 class="page-header" ><span id="output"></span>Output</h3>
@@ -1937,25 +1937,25 @@ output(table).toConsole();</code></pre>
       There are two outputs already implemented :
       </p>
       <ul>
-      <li><a href="db/current/api/org/assertj/db/output/impl/OutputType.html#PLAIN">PLAIN</a> : shown in the example above (the default output type)</li>
-      <li><a href="db/current/api/org/assertj/db/output/impl/OutputType.html#HTML">HTML</a> : which represents the result as an HTML document</li>
+      <li><a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/output/impl/OutputType.html#PLAIN">PLAIN</a> : shown in the example above (the default output type)</li>
+      <li><a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/output/impl/OutputType.html#HTML">HTML</a> : which represents the result as an HTML document</li>
       </ul>
       <pre><code class="java">// Change the output of the table to be HTML
 output(table).withType(OutputType.HTML).....;</code></pre>
       <p>Note that the type of output is extensible because the 
-      <a href="db/current/api/org/assertj/db/output/AbstractOutputter.html#withType-org.assertj.db.output.impl.Output-">withType(Output outputType)</a>
-      method's parameter is an instance of the <a href="db/current/api/org/assertj/db/output/impl/Output.html">Output</a>
+      <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/output/AbstractOutputter.html#withType-org.assertj.db.output.impl.Output-">withType(Output outputType)</a>
+      method's parameter is an instance of the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/output/impl/Output.html">Output</a>
       interface.
-      So this is not limited to the implementations in the <a href="db/current/api/org/assertj/db/output/impl/OutputType.html">OutputType</a> enum.
+      So this is not limited to the implementations in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/output/impl/OutputType.html">OutputType</a> enum.
       </p>
       <h4 class="page-header" ><span id="destination"></span>Destination</h4>
       <p>The destination is the way to print the display. There are three destinations :</p>
       <ul>
-      <li>the console (with the <a href="db/current/api/org/assertj/db/output/AbstractOutputter.html#toConsole--">toConsole()</a> method)
+      <li>the console (with the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/output/AbstractOutputter.html#toConsole--">toConsole()</a> method)
       </li>
-      <li>a file (with the <a href="db/current/api/org/assertj/db/output/AbstractOutputter.html#toFile-java.lang.String-">toFile(String fileName)</a> method)
+      <li>a file (with the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/output/AbstractOutputter.html#toFile-java.lang.String-">toFile(String fileName)</a> method)
       </li>
-      <li>a stream (with the <a href="db/current/api/org/assertj/db/output/AbstractOutputter.html#toStream-java.io.OutputStream-">toStream(OutputStream outputStream)</a> method)
+      <li>a stream (with the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/output/AbstractOutputter.html#toStream-java.io.OutputStream-">toStream(OutputStream outputStream)</a> method)
       </li>
       </ul>
       <p>Note that with this last method the possibilities of destination are really flexible.</p>
