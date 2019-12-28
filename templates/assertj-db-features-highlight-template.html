@@ -132,8 +132,8 @@ $assertj_db_side_menu
       <p>As shown in the <a href="assertj-db-concepts.html#tableorrequestasroot">concepts</a> (to easily understand this chapter it is important to know the concepts of assertj-db), 
       the <code class="java">assertThat(...)</code> static method is used 
       to begin an assertion 
-      on a <a href="db/current/api/org/assertj/db/type/Table.html">Table</a>
-      or on a <a href="db/current/api/org/assertj/db/type/Request.html">Request</a>.
+      on a <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Table.html">Table</a>
+      or on a <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/Request.html">Request</a>.
       </p>
       <p>The navigation from a table or from a request are similar, so in most of the examples below a table will be used :</p>
       <pre><code class="java">assertThat(tableOrRequest)...</code></pre>
@@ -157,7 +157,7 @@ $assertj_db_side_menu
       </ul>
 
       <h5 class="page-header" ><span id="tableorrequesttorow"></span>To a Row</h5>
-      <p>These methods are described in the <a href="db/current/api/org/assertj/db/api/navigation/ToRow.html">ToRow</a> interface.</p>
+      <p>These methods are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/navigation/ToRow.html">ToRow</a> interface.</p>
       <p>The <code class="java">row()</code> method allows to navigate to the next row after the row reached on the last call.</p>
       <pre><code class="java">// If it is the first call, navigate to the first row
 assertThat(tableOrRequest).row()...
@@ -197,7 +197,7 @@ assertThat(table).row().returnToTable().row()...
 // The same thing is done but the return to the table is implicit
 assertThat(table).row().row()...</code></pre>
       <h5 class="page-header" ><span id="tableorrequesttocolumn"></span>To a Column</h5>
-      <p>These methods are described in the <a href="db/current/api/org/assertj/db/api/navigation/ToColumn.html">ToColumn</a> interface.</p>
+      <p>These methods are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/navigation/ToColumn.html">ToColumn</a> interface.</p>
       <p>The <code class="java">column()</code> method allows to navigate to the next column after the column reached on the last call.</p>
       <pre><code class="java">// If it is the first call, navigate to the first column
 assertThat(tableOrRequest).column()...
@@ -251,8 +251,8 @@ assertThat(table).column().returnToTable().column()...
 assertThat(table).column().column()...</code></pre>
 
       <h5 class="page-header" ><span id="tableorrequesttovalue"></span>To a Value</h5>
-      <p>These methods are described in the <a href="db/current/api/org/assertj/db/api/navigation/ToValue.html">ToValue</a> 
-      and the <a href="db/current/api/org/assertj/db/api/navigation/ToValueFromRow.html">ToValueFromRow</a> interfaces.</p>
+      <p>These methods are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/navigation/ToValue.html">ToValue</a> 
+      and the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/navigation/ToValueFromRow.html">ToValueFromRow</a> interfaces.</p>
       <p>The <code class="java">value()</code> method allows to navigate to the next value after the value reached on the last call.</p>
       <pre><code class="java">// If it is the first call, navigate to the first value
 assertThat(tableOrRequest).row().value()...
@@ -303,7 +303,7 @@ assertThat(table).column().value().value()...</code></pre>
 
       <h4 class="page-header" ><span id="changesasroot"></span>With Changes as root</h4>
       <h5 class="page-header" ><span id="changestochanges"></span>To Changes</h5>
-      <p>These methods are described in the <a href="db/current/api/org/assertj/db/api/navigation/ToChanges.html">ToChanges</a> interface.</p>
+      <p>These methods are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/navigation/ToChanges.html">ToChanges</a> interface.</p>
 
       <p>The <code class="java">ofCreation()</code> method allows to navigate to the changes of creation.</p>
       <pre><code class="java">// Navigate to the changes of creation
@@ -350,7 +350,7 @@ assertThat(changes).ofCreation().ofAll()...</code></pre>
       </p>
 
       <h5 class="page-header" ><span id="changestochange"></span>To a Change</h5>
-      <p>These methods are described in the <a href="db/current/api/org/assertj/db/api/navigation/ToChange.html">ToChange</a> interface.</p>
+      <p>These methods are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/navigation/ToChange.html">ToChange</a> interface.</p>
 
       <p>The <code class="java">change()</code> method allows to navigate to the next change after the change reached on the last call.</p>
       <pre><code class="java">// If it is the first call, navigate to the first change
@@ -470,7 +470,7 @@ assertThat(changes).change().change()...</code></pre>
 
 
       <h5 class="page-header" ><span id="changestorow"></span>To a Row</h5>
-      <p>These methods are described in the <a href="db/current/api/org/assertj/db/api/navigation/ToRowFromChange.html">ToRowFromChange</a> interface.</p>
+      <p>These methods are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/navigation/ToRowFromChange.html">ToRowFromChange</a> interface.</p>
 
       <p>The <code class="java">rowAtStartPoint()</code> and <code class="java">rowAtEndPoint()</code> methods
       allows to navigate to the row at the start point and at the end point.</p>
@@ -501,8 +501,8 @@ assertThat(changes).change().rowAtStartPoint().returnToChange().rowAtEndPoint().
 assertThat(changes).change().rowAtStartPoint().rowAtEndPoint()...</code></pre>
 
       <h5 class="page-header" ><span id="changestocolumn"></span>To a Column</h5>
-      <p>These methods are described in the <a href="db/current/api/org/assertj/db/api/navigation/ToColumn.html">ToColumn</a>
-       and <a href="db/current/api/org/assertj/db/api/navigation/ToColumnFromChange.html">ToColumnFromChange</a> interfaces.</p>
+      <p>These methods are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/navigation/ToColumn.html">ToColumn</a>
+       and <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/navigation/ToColumnFromChange.html">ToColumnFromChange</a> interfaces.</p>
       <p>The <code class="java">column()</code> method allows to navigate to the next column after the column reached on the last call.</p>
       <pre><code class="java">// If it is the first call, navigate to the first column
 assertThat(changes).change().column()...
@@ -581,9 +581,9 @@ assertThat(changes).change().column().returnToChange().column()...
 assertThat(changes).change().column().column()...</code></pre>
 
       <h5 class="page-header" ><span id="changestovalue"></span>To a Value</h5>
-      <p>These methods are described in the <a href="db/current/api/org/assertj/db/api/navigation/ToValue.html">ToValue</a>,
-      <a href="db/current/api/org/assertj/db/api/navigation/ToValueFromColumn.html">ToValueFromColumn</a>
-       and <a href="db/current/api/org/assertj/db/api/navigation/ToValueFromRow.html">ToValueFromRow</a> interfaces.</p>
+      <p>These methods are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/navigation/ToValue.html">ToValue</a>,
+      <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/navigation/ToValueFromColumn.html">ToValueFromColumn</a>
+       and <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/navigation/ToValueFromRow.html">ToValueFromRow</a> interfaces.</p>
       <p>This picture shows from where it is possible to navigate to a value.</p>
 
       <p>The <code class="java">value()</code> method (only available from a row) allows to navigate to the next value after the value reached on the last call.</p>
@@ -647,15 +647,15 @@ assertThat(changes).change().rowAtEndPoint().value().value()...</code></pre>
       <h3 class="page-header" ><span id="assertions"></span>Assertions</h3>
 
       <h4 class="page-header" ><span id="onchangetype">On the type of change</h4>
-      <p>These assertions are described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnChangeType.html">AssertOnChangeType</a> interface.</p>
+      <p>These assertions are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnChangeType.html">AssertOnChangeType</a> interface.</p>
       <p>These assertions allow to verify the type of a change (the concept of change of type is described <a href="assertj-db-concepts.html#changetype">here</a>).</p>
             <pre><code class="java">// Verify that the first change is a change of creation
 assertThat(changes).change().isOfType(ChangeType.CREATION);</code></pre>
       <p>There are specific assertion methods for each type of change. For example, the assertion below is equivalent to the one above</p>
             <pre><code class="java">assertThat(changes).change().isCreation();</code></pre>
       <h4 class="page-header" ><span id="oncolumnequality">On the equality with the values of a column</h4>
-      <p>These assertions are described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnColumnEquality.html">AssertOnColumnEquality</a> 
-      and the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnColumnOfChangeEquality.html">AssertOnColumnOfChangeEquality</a> interfaces.</p>
+      <p>These assertions are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnColumnEquality.html">AssertOnColumnEquality</a> 
+      and the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnColumnOfChangeEquality.html">AssertOnColumnOfChangeEquality</a> interfaces.</p>
       <p>These assertion allow to verify the values of a column (the column of a table, of a request or of a change).</p>
 
       <h5 class="page-header" ><span id="oncolumnequality-boolean">With Boolean</h5>
@@ -686,7 +686,7 @@ assertThat(table).column().hasValues(5.9, 4, new BigInteger("15000"));
 // is not modified and is equal to 5
 assertThat(changes).change().column().hasValues(5);</code></pre>
       <h5 class="page-header" ><span id="oncolumnequality-date">With Date</h5>
-      <p>This assertion use <a href="db/current/api/org/assertj/db/type/DateValue.html">DateValue</a> 
+      <p>This assertion use <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/DateValue.html">DateValue</a> 
       presented in <a href="assertj-db-concepts.html#datevalue-timevalue-datetimevalue">concepts</a>.</p>
                   <pre><code class="java">// Verify that the values of the first column of the table
 // was equal to December 23rd 2007 and May 19th 1975 
@@ -700,7 +700,7 @@ assertThat(changes).change().column()
             .hasValues(DateValue.parse("2007-12-23"),
                        DateValue.parse("1975-05-19"));</code></pre>
       <h5 class="page-header" ><span id="oncolumnequality-time">With Time</h5>
-      <p>This assertion use <a href="db/current/api/org/assertj/db/type/TimeValue.html">TimeValue</a> 
+      <p>This assertion use <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/TimeValue.html">TimeValue</a> 
       presented in <a href="assertj-db-concepts.html#datevalue-timevalue-datetimevalue">concepts</a>.</p>
                   <pre><code class="java">// Verify that the values of the first column of the table
 // was equal to 09:01am and 05:30:50pm 
@@ -714,7 +714,7 @@ assertThat(changes).change().column()
             .hasValues(TimeValue.parse("09:01"),
                        TimeValue.parse("17:30:50"));</code></pre>
       <h5 class="page-header" ><span id="oncolumnequality-datetime">With Date/Time</h5>
-      <p>This assertion use <a href="db/current/api/org/assertj/db/type/DateTimeValue.html">DateTimeValue</a> 
+      <p>This assertion use <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/type/DateTimeValue.html">DateTimeValue</a> 
       presented in <a href="assertj-db-concepts.html#datevalue-timevalue-datetimevalue">concepts</a>.</p>
                   <pre><code class="java">// Verify that the values of the first column of the table
 // was equal to December 23rd 2007 09:01am and May 19th 1975 
@@ -765,7 +765,7 @@ assertThat(table).column().hasValues('T', 'e', 's', 't');
 // is not modified and is equal to 'T'
 assertThat(changes).change().column().hasValues('T');</code></pre>
       <h4 class="page-header" ><span id="oncolumnname">On the name of a column</h4>
-      <p>This assertion is described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnColumnName.html">AssertOnColumnName</a> interface.</p>
+      <p>This assertion is described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnColumnName.html">AssertOnColumnName</a> interface.</p>
       <p>This assertion allows to verify the name of a column (the column of a table, of a request or of a change).</p>
       <pre><code class="java">// Verify that the fifth column of the table is called "firstname"
 assertThat(table).column(4).hasColumnName("firstname");
@@ -774,7 +774,7 @@ assertThat(request).row(1).value(2).hasColumnName("name");
 // Verify that the first column of the first change is called "id"
 assertThat(changes).change().column().hasColumnName("id");</code></pre>
       <h4 class="page-header" ><span id="oncolumnnullity">On the nullity of the values of a column</h4>
-      <p>These assertions are described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnColumnNullity.html">AssertOnColumnNullity</a> interface.</p>
+      <p>These assertions are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnColumnNullity.html">AssertOnColumnNullity</a> interface.</p>
       <p>These assertion allows to verify the nullity of the values of a column (the column of a table or of a request).</p>
       <pre><code class="java">// Verify that the fifth column of the table has only null values
 assertThat(table).column(4).hasOnlyNullValues();
@@ -782,14 +782,14 @@ assertThat(table).column(4).hasOnlyNullValues();
 assertThat(request).column("name").hasOnlyNotNullValues();</code></pre>
       <h4 class="page-header" ><span id="onrownullity">On the nullity of the values of a row</h4>
       <p><i>Since <a href="assertj-db-news.html#assertj-db-1.2.0">1.2.0</a></i></p>
-      <p>These assertions are described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnRowNullity.html">AssertOnRowNullity</a> interface.</p>
+      <p>These assertions are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnRowNullity.html">AssertOnRowNullity</a> interface.</p>
       <p>These assertion allows to verify the nullity of the values of a row (the row of a table or of a request).</p>
       <pre><code class="java">// Verify that the fifth row of the table has only not null values
 assertThat(table).row(4).hasOnlyNotNullValues();
 // Verify that the first column has only not null values
 assertThat(request).row().hasOnlyNotNullValues();</code></pre>
       <h4 class="page-header" ><span id="oncolumntype">On the type of column</h4>
-      <p>These assertions are described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnColumnType.html">AssertOnColumnType</a> interface.</p>
+      <p>These assertions are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnColumnType.html">AssertOnColumnType</a> interface.</p>
       <p>These assertions allow to verify the type of the values of a column (a column from a table, from a request or from a change).</p>
       <pre><code class="java">// Verify that the values of the column called "firstname"
 // of the table are a text (null values are considered as wrong)
@@ -806,7 +806,7 @@ assertThat(changes).change().column()
     .isOfAnyOfTypes(ValueType.DATE, ValueType.NUMBER);</code></pre>
       <h4 class="page-header" ><span id="oncolumnclass">On the class of column</h4>
       <p><i>Since <a href="assertj-db-news.html#assertj-db-1.1.0">1.1.0</a></i></p>
-      <p>This assertion is described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnColumnClass.html">AssertOnColumnClass</a> interface.</p>
+      <p>This assertion is described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnColumnClass.html">AssertOnColumnClass</a> interface.</p>
       <p>This assertion allows to verify the class of the values of a column (a column from a table, from a request or from a change).</p>
       <pre><code class="java">// Verify that the values of the column called "firstname"
 // of the table are a String (null values are considered as wrong)
@@ -816,7 +816,7 @@ assertThat(table).column("firstname").isOfClass(String.class, false);
 assertThat(changes).change().column().isOfClass(Locale.class, true);</code></pre>
       <h4 class="page-header" ><span id="oncolumncontent">On the content of column</h4>
       <p><i>Since <a href="assertj-db-news.html#assertj-db-1.1.0">1.1.0</a></i></p>
-      <p>These assertions are described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnColumnContent.html">AssertOnColumnContent</a> interface.</p>
+      <p>These assertions are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnColumnContent.html">AssertOnColumnContent</a> interface.</p>
       <p>These assertions allow to verify the content of a column (a column from a table or from a request).</p>
       <pre><code class="java">// Verify that the content of the column called "name"
 assertThat(table).column("name").containsValues("Hewson",
@@ -830,7 +830,7 @@ assertThat(table).column("name").containsValues("Evans",
                                                 "Mullen");
 </code></pre>
       <h4 class="page-header" ><span id="ondatatype">On the type of data</h4>
-      <p>These assertions are described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnDataType.html">AssertOnDataType</a> interface.</p>
+      <p>These assertions are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnDataType.html">AssertOnDataType</a> interface.</p>
       <p>These assertions allow to verify the type of the date on which is a change.</p>
       <pre><code class="java">// Verify that the change is on a table
 assertThat(changes).change().isOnDataType(DataType.TABLE);
@@ -839,8 +839,8 @@ assertThat(changes).change().isOnTable();
 // Verify that the change is on the "members" table
 assertThat(changes).change().isOnTable("members");</code></pre>
       <h4 class="page-header" ><span id="onmodifiedcolumns">On the modified columns in a change</h4>
-      <p>These assertions are described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnModifiedColumn.html">AssertOnModifiedColumn</a> 
-      and the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnModifiedColumns.html">AssertOnModifiedColumns</a> interfaces.</p>
+      <p>These assertions are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnModifiedColumn.html">AssertOnModifiedColumn</a> 
+      and the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnModifiedColumns.html">AssertOnModifiedColumns</a> interfaces.</p>
       <p>These assertions allow to verify if a column of a change have been modified between the start point and the end point (see the <a href="assertj-db-concepts.html#changes">concept of changes</a>).</p>
       <pre><code class="java">// Verify that first column of the change is not modified
 // and the second column is modified
@@ -861,7 +861,7 @@ assertThat(changes).change().hasNumberOfModifiedColumnsLessThan(6);
 // Verify that the number of modified columns in the first change is at most 6
 assertThat(changes).change().hasNumberOfModifiedColumnsLessThanOrEqualTo(6);</code></pre>
       <h4 class="page-header" ><span id="onnumberchanges">On the number of changes</h4>
-      <p>This assertion is described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnNumberOfChanges.html">AssertOnNumberOfChanges</a> interface.</p>
+      <p>This assertion is described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnNumberOfChanges.html">AssertOnNumberOfChanges</a> interface.</p>
       <p>This assertion allows to verify the number of changes.</p>
       <pre><code class="java">// Verify that there are 4 changes
 assertThat(changes).hasNumberOfChanges(4);</code></pre>
@@ -875,7 +875,7 @@ assertThat(changes).hasNumberOfChangesLessThan(6);
 // Verify that the number of changes is at most 6
 assertThat(changes).hasNumberOfChangesLessThanOrEqualTo(6);</code></pre>
       <h4 class="page-header" ><span id="onnumbercolumns">On the number of columns</h4>
-      <p>This assertion is described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnNumberOfColumns.html">AssertOnNumberOfColumns</a> interface.</p>
+      <p>This assertion is described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnNumberOfColumns.html">AssertOnNumberOfColumns</a> interface.</p>
       <p>This assertion allows to verify the number of columns (columns from a table, from a request or from a change).</p>
       <pre><code class="java">// Verify that there are 6 columns in the table
 assertThat(table).hasNumberOfColumns(6);
@@ -891,7 +891,7 @@ assertThat(changes).hasNumberOfColumnsLessThan(6);
 // Verify that the number of columns is at most 6
 assertThat(changes).hasNumberOfColumnsLessThanOrEqualTo(6);</code></pre>
       <h4 class="page-header" ><span id="onnumberrows">On the number of rows</h4>
-      <p>This assertion is described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnNumberOfRows.html">AssertOnNumberOfRows</a> interface.</p>
+      <p>This assertion is described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnNumberOfRows.html">AssertOnNumberOfRows</a> interface.</p>
       <p>This assertion allows to verify the number of rows (rows from a table or from a request).</p>
       <pre><code class="java">// Verify that there are 7 rows in the table
 assertThat(table).hasNumberOfRows(7);</code></pre>
@@ -908,14 +908,14 @@ assertThat(changes).hasNumberOfRowsLessThanOrEqualTo(6);</code></pre>
       <pre><code class="java">// Verify that the table are empty 
 assertThat(table).isEmpty();</code></pre>
       <h4 class="page-header" ><span id="onprimarykeys">On the primary keys</h4>
-      <p>These assertions are described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnPrimaryKey.html">AssertOnPrimaryKey</a> interface.</p>
+      <p>These assertions are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnPrimaryKey.html">AssertOnPrimaryKey</a> interface.</p>
       <p>These assertions allow to verify the names and the values of the columns which compose the primary keys of the rows from a change.</p>
       <pre><code class="java">// Verify that the columns of the primary keys are "id" and "name"
 assertThat(changes).change().hasPksNames("id", "name");
 // Verify that the values of the primary keys are 1 and "HEWSON"
 assertThat(changes).change().hasPksValues(1, "HEWSON");</code></pre>
       <h4 class="page-header" ><span id="onrowequality">On the equality with the values of a row</h4>
-      <p>This assertion is described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnRowEquality.html">AssertOnRowEquality</a> interface.</p>
+      <p>This assertion is described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnRowEquality.html">AssertOnRowEquality</a> interface.</p>
       <p>This assertion allow to verify the values of a row (the row of a table, of a request or of a change).</p>
       <pre><code class="java">// Verify the values of the row at index 1
 assertThat(table).row(1)
@@ -934,14 +934,14 @@ assertThat(changes).change().rowAtEndPoint()
                                        "1951-06-17", 
                                        null);</code></pre>
       <h4 class="page-header" ><span id="onrowexistence">On the existence of a row in a change</h4>
-      <p>These assertions are described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnRowOfChangeExistence.html">AssertOnRowOfChangeExistence</a> interface.</p>
+      <p>These assertions are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnRowOfChangeExistence.html">AssertOnRowOfChangeExistence</a> interface.</p>
       <p>These assertions allow to verify that the row at start point or at end point of a change exists or not (for a creation, the row do not exist at start point and for a deletion it is the contrary : the row do not exist at end point).</p>
       <pre><code class="java">// Verify that row at start point exists
 assertThat(changes).change().rowAtStartPoint().exists();
 // Verify that the row at end point do not exist
 assertThat(changes).change().rowAtEndPoint().doesNotExist();</code></pre>
       <h4 class="page-header" ><span id="onvaluechronology">On the chronology of a value</h4>
-      <p>These assertions are described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnValueChronology.html">AssertOnValueChronology</a> interface.</p>
+      <p>These assertions are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnValueChronology.html">AssertOnValueChronology</a> interface.</p>
       <p>These assertions allow to compare a value (the value of a table, of a request or of a change) to a date, a time or a date/time.</p>
       <pre><code class="java">// Compare the value with a date
 assertThat(table).row(1).value("birthdate")
@@ -951,7 +951,7 @@ assertThat(changes).change().column("release").valueAtEndPoint()
                             .isAfterOrEqualTo(DateTimeValue.parse("2014-09-08T23:30"))
                             .isBeforeOrEqualTo(DateTimeValue.parse("2014-09-09T05:30"));</code></pre>
       <h4 class="page-header" ><span id="onvaluecomparison">On the comparison with a value</h4>
-      <p>These assertions are described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnValueComparison.html">AssertOnValueComparison</a> interface.</p>
+      <p>These assertions are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnValueComparison.html">AssertOnValueComparison</a> interface.</p>
       <p>These assertions allow to compare a value (the value of a table, of a request or of a change) to a number.</p>
       <pre><code class="java">// Compare the value with a number
 assertThat(table).row(1).value("size")
@@ -962,7 +962,7 @@ assertThat(changes).change().column("size").valueAtEndPoint()
                             .isLessThanOrEqualTo(1.8);</code></pre>
       <h4 class="page-header" ><span id="onvaluecloseness">On the closeness of a value</h4>
       <p><i>Since <a href="assertj-db-news.html#assertj-db-1.1.0">1.1.0</a></i></p>
-      <p>These assertions are described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnValueCloseness.html">AssertOnValueCloseness</a> interface.</p>
+      <p>These assertions are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnValueCloseness.html">AssertOnValueCloseness</a> interface.</p>
       <p>These assertions allow to verify if a value (the value of a table, of a request or of a change) is close to another.</p>
       <pre><code class="java">// Verify if the value is close to 2 with a tolerance of 0.5
 // So the values between 1.5 and 2.5 are right
@@ -973,7 +973,7 @@ assertThat(changes).change().column("birth").valueAtEndPoint()
                             .isCloseTo(DateValue(1960, 5, 10),
                                        DateValue(0, 0, 2));</code></pre>
       <h4 class="page-header" ><span id="onvaluequality">On the equality with a value</h4>
-      <p>These assertions are described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnValueEquality.html">AssertOnValueEquality</a> interface.</p>
+      <p>These assertions are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnValueEquality.html">AssertOnValueEquality</a> interface.</p>
       <p>These assertion allow to verify that a value (the value of a table, of a request or of a change) is equal to another value (in parameter).</p>
       <h5 class="page-header" ><span id="onvaluequality-boolean">With Boolean</h5>
       <pre><code class="java">// Verify that the value is equal to true
@@ -1035,7 +1035,7 @@ assertThat(table).column().value().isEqualTo('T')
                           .value().isEqualTo('s')
                           .value().isEqualTo('t');</code></pre>
       <h4 class="page-header" ><span id="onvaluenonquality">On the non equality with a value</h4>
-      <p>These assertions are described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnValueNonEquality.html">AssertOnValueNonEquality</a> interface.</p>
+      <p>These assertions are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnValueNonEquality.html">AssertOnValueNonEquality</a> interface.</p>
       <p>These assertion allow to verify that a value (the value of a table, of a request or of a change) is not equal to another value (in parameter).</p>
       <h5 class="page-header" ><span id="onvaluenonquality-boolean">With Boolean</h5>
       <pre><code class="java">// Verify that the values (values "live" in the row at index 3 and index 5)
@@ -1097,7 +1097,7 @@ assertThat(table).column()
                  .value().isNotEqualTo('s')
                  .value().isNotEqualTo('t');</code></pre>
       <h4 class="page-header" ><span id="onvaluenullity">On the nullity of a value</h4>
-      <p>These assertions are described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnValueNullity.html">AssertOnValueNullity</a> interface.</p>
+      <p>These assertions are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnValueNullity.html">AssertOnValueNullity</a> interface.</p>
       <p>These assertions allow to verify if a value (the value of a table, of a request or of a change) is null or not.</p>
       <pre><code class="java">// Verify that the value at index 1 is null and the next value is not null
 assertThat(table).column().value(1).isNull()
@@ -1106,7 +1106,7 @@ assertThat(table).column().value(1).isNull()
 assertThat(changes).change().rowAtStartPoint().value("live")
                             .isNotNull();</code></pre>
       <h4 class="page-header" ><span id="onvaluetype">On the type of a value</h4>
-      <p>These assertions are described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnValueType.html">AssertOnValueType</a> interface.</p>
+      <p>These assertions are described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnValueType.html">AssertOnValueType</a> interface.</p>
       <p>This assertion allows to verify the type of a value (a value from a table, from a request or from changes).</p>
       <pre><code class="java">// Verify that the value of the column called "firstname"
 // of the fifth row of the table is a text
@@ -1120,7 +1120,7 @@ assertThat(changes).change().column().valueAtStartPoint()
     .isOfAnyOfTypes(ValueType.DATE, ValueType.NUMBER);</code></pre>
       <h4 class="page-header" ><span id="onvalueclass">On the class of a value</h4>
       <p><i>Since <a href="assertj-db-news.html#assertj-db-1.1.0">1.1.0</a></i></p>
-      <p>This assertion is described in the <a href="db/current/api/org/assertj/db/api/assertions/AssertOnValueClass.html">AssertOnValueClass</a> interface.</p>
+      <p>This assertion is described in the <a href="https://www.javadoc.io/doc/org.assertj/assertj-db/latest/org/assertj/db/api/assertions/AssertOnValueClass.html">AssertOnValueClass</a> interface.</p>
       <p>This assertion allows to verify the class of a value (a value from a table, from a request or from changes).</p>
       <pre><code class="java">// Verify that the value of the column called "firstname"
 // of the fifth row of the table is a String
